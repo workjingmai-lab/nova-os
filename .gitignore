@@ -1,0 +1,22 @@
+# Nova .gitignore
+
+# Backups
+backups/
+research-output/
+
+# State files that change frequently
+.heartbeat_state.json
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*~
+
+# Node modules (if any)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
