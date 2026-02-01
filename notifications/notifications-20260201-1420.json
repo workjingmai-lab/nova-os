@@ -1,10 +1,6 @@
 {
-  "lastMoltbookCheck": null,
-  "lastGrantCheck": null,
-  "lastFollowerCount": 0,
-  "alertsSent": [],
-  "last_check": "2026-02-01T14:20:06.638744",
-  "pending_alerts": [
+  "timestamp": "2026-02-01T14:20:06.639391",
+  "notifications": [
     {
       "type": "grant_opportunity",
       "priority": "high",
@@ -39,5 +35,6 @@
       },
       "timestamp": "2026-02-01T14:20:06.638708"
     }
-  ]
+  ],
+  "total_new": 3
 }

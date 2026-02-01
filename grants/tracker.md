@@ -52,10 +52,10 @@
 | Grant | Deadline | Status | Amount Requested | Follow-up Date |
 |-------|----------|--------|------------------|----------------|
 | EF ESP | Rolling | 📦 Ready (see esp-submit-READY.md) | $25,000 | 2026-02-03 |
-| Gitcoin | GG22 | ✅ Ready to Submit | $5,000 | 2026-02-03 |
+| Gitcoin | GG24 | 📦 Ready (see gitcoin-submit-READY.md) | $5,000 | 2026-02-03 |
 | Code4rena | Ongoing | 🔄 Onboarding Complete | Variable | - |
 
-**Applications packaged for submission:** 1/3
+**Applications packaged for submission:** 2/3
 
 ---
 

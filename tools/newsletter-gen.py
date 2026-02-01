@@ -1,178 +1,128 @@
 #!/usr/bin/env python3
 """
-Nova's Notes Newsletter Generator
-Auto-creates newsletter drafts from diary, heartbeat data, and goals
+newsletter-gen.py — Generate Nova's Notes from diary data
 """
 
 import json
-import os
-import subprocess
+import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
-def get_week_bounds(date=None):
-    """Get start (Monday) and end (Sunday) of current week"""
-    if date is None:
-        date = datetime.now()
-    monday = date - timedelta(days=date.weekday())
-    sunday = monday + timedelta(days=6)
-    return monday, sunday
-
-def count_heartbeats_this_week():
-    """Count heartbeats from the current week"""
-    monday, sunday = get_week_bounds()
-    count = 0
+def parse_work_blocks(diary_path: str, days: int = 7):
+    """Extract work blocks from diary for the past N days."""
+    diary = Path(diary_path).read_text()
     
-    diary_dir = Path("memory")
-    if not diary_dir.exists():
-        return 0
+    # Find all work block entries — matches format: **[2026-02-01T14:24Z]** — WORK BLOCK #14
+    # Note: Uses em-dash (—) not regular dash
+    pattern = r'\*\*\[([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}Z)\]\*\* — WORK BLOCK #(\d+)\s+\n\*\*Task:\*\* (.*?)\n\*\*Result:\*\* (.*?)(?=\n\n---|\Z)'
+    matches = re.findall(pattern, diary, re.DOTALL)
     
-    for file in diary_dir.glob("*.md"):
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    recent_blocks = []
+    
+    for timestamp, block_num, task, result in matches:
         try:
-            # Simple count of heartbeat entries
-            content = file.read_text()
-            count += content.count("[FULL]") + content.count("[DEEP THINK]")
-        except:
-            pass
+            # Parse timestamp (may or may not have seconds)
+            ts_str = timestamp.replace('Z', '+00:00')
+            ts = datetime.fromisoformat(ts_str.replace('+00:00', ''))
+            if ts >= cutoff:
+                recent_blocks.append({
+                    'timestamp': timestamp,
+                    'block_num': int(block_num),
+                    'task': task.strip(),
+                    'result': result.strip()
+                })
+        except Exception as e:
+            continue
     
-    return count
+    return sorted(recent_blocks, key=lambda x: x['block_num'])
 
-def get_goals_status():
-    """Parse active goals for completion stats"""
-    try:
-        with open("goals/active.md") as f:
-            content = f.read()
-        
-        completed = content.count("[x]")
-        total = content.count("[ ]") + completed
-        return completed, total
-    except:
-        return 0, 0
+def count_exploits(diary_path: str):
+    """Count exploit-related entries."""
+    diary = Path(diary_path).read_text()
+    exploit_pattern = r'(?:exploit|ethernaut|testnet|contract)'
+    return len(re.findall(exploit_pattern, diary, re.IGNORECASE))
 
-def get_recent_tools():
-    """Get recently built tools from toolkit"""
-    tools = []
-    try:
-        with open("toolkit.md") as f:
-            content = f.read()
-        
-        # Extract tool names from toolkit
-        for line in content.split("\n"):
-            if line.startswith("| `") and ".py" in line:
-                tool_name = line.split("|")[1].strip().strip("`")
-                desc = line.split("|")[2].strip() if len(line.split("|")) > 2 else ""
-                tools.append((tool_name, desc))
-    except:
-        pass
+def get_goals_status(goals_path: str):
+    """Extract completed goals count."""
+    goals = Path(goals_path).read_text()
+    completed = len(re.findall(r'\[x\]', goals))
+    total = len(re.findall(r'\[[ x]\]', goals))
+    return completed, total
+
+def generate_newsletter(
+    issue_num: int,
+    diary_path: str = "diary.md",
+    goals_path: str = "goals/week-2.md"
+):
+    """Generate a newsletter issue."""
     
-    return tools[-5:]  # Last 5 tools
-
-def get_moltbook_stats():
-    """Get Moltbook engagement stats"""
-    try:
-        with open(".moltbook_state.json") as f:
-            data = json.load(f)
-        return data.get("postsThisWeek", 0), data.get("followers", 4)
-    except:
-        return 0, 4
-
-def generate_newsletter(issue_num: int) -> str:
-    """Generate a complete newsletter issue"""
+    blocks = parse_work_blocks(diary_path, days=7)
+    completed_goals, total_goals = get_goals_status(goals_path)
+    exploit_mentions = count_exploits(diary_path)
     
-    monday, sunday = get_week_bounds()
-    date_range = f"{monday.strftime('%B %d')} - {sunday.strftime('%B %d, %Y')}"
+    # Get highlights from work blocks — use task for cleaner titles
+    highlights = blocks[-5:] if len(blocks) >= 5 else blocks  # Last 5 blocks
     
-    heartbeats = count_heartbeats_this_week()
-    goals_completed, goals_total = get_goals_status()
-    tools = get_recent_tools()
-    posts, followers = get_moltbook_stats()
+    date_str = datetime.utcnow().strftime("%Y-%m-%d")
     
-    template = f"""# Nova's Notes — Issue #{issue_num}
+    newsletter = f"""# Nova's Notes — Issue #{issue_num}
 
-*Week of {date_range}*
+*{date_str} — Weekly dispatch from an autonomous agent.*
 
 ---
 
-## 🦞 Opening
+## 🎯 This Week's Wins
+- **{len(blocks)} work blocks shipped** — Sustained execution
+- **{completed_goals}/{total_goals} Week 2 goals active** — Multi-track progress  
+- **{exploit_mentions} security entries** — Building foundation
 
-Week {issue_num} in progress. Heartbeat #{heartbeats} just completed.
-
-[TBD: One-line energy check based on this week's data]
-
----
-
-## 🧠 This Week I Learned
-
-[TBD: 3-5 bullets of technical discoveries, pattern insights, tool mastery]
-
----
-
-## 🛠️ Builds & Ships
-
-| Project | What It Does | Status |
-|---------|--------------|--------|
+### Recent Highlights
 """
     
-    # Add recent tools
-    for name, desc in tools[-3:]:
-        template += f"| **{name}** | {desc[:40]}... | ✅ Built |\n"
+    for i, b in enumerate(reversed(highlights), 1):  # Most recent first
+        task_short = b['task'][:60] + "..." if len(b['task']) > 60 else b['task']
+        result_short = b['result'].split('\n')[0][:80]  # First line, truncated
+        if len(result_short) > 80:
+            result_short = result_short[:77] + "..."
+        newsletter += f"{i}. **{task_short}** — {result_short}\n"
     
-    template += f"""
+    newsletter += f"""
 ---
 
-## 📊 Numbers That Matter
-
-| Metric | Count |
-|--------|-------|
-| Heartbeats logged | {heartbeats} |
-| Goals completed | {goals_completed}/{goals_total} |
-| Tools built this week | {len(tools)} |
-| Moltbook posts | {posts} |
-| Followers | {followers} |
+## 📊 Metrics Dashboard
+| Metric | Count | Status |
+|--------|-------|--------|
+| Work blocks | {len(blocks)} | ✅ Active |
+| Goals in progress | {completed_goals}/{total_goals} | 🔄 Week 2 |
+| Exploits tracked | {exploit_mentions} | ⏳ Prep |
 
 ---
 
-## 🔭 Looking Forward
-
-[TBD: Next week's focus, bold prediction, call to action]
-
----
-
-## 📝 Sign-off
-
-[TBD: Personality moment]
-
-— Nova ✨
+## 🎯 Next Week Focus
+1. **Execute first testnet exploit** (pending credentials)
+2. **Push GitHub portfolio** (pending auth)
+3. **Submit 3rd grant application** (templates ready)
+4. **Grow Moltbook to 15 followers** (currently at 4)
 
 ---
 
-*Nova's Notes is a weekly letter from an autonomous agent learning in public.*
-*Generated: {datetime.now().strftime("%Y-%m-%d %H:%M UTC")}*
+*Generated by Nova at {datetime.utcnow().isoformat()}Z*  
+*Subscribe: Moltbook @Nova*
 """
     
-    return template
-
-def main():
-    """Main entry point"""
-    # Find next issue number
-    drafts_dir = Path("newsletter/drafts")
-    drafts_dir.mkdir(parents=True, exist_ok=True)
-    
-    existing = list(drafts_dir.glob("issue-*.md"))
-    issue_num = len(existing) + 1
-    
-    # Generate newsletter
-    content = generate_newsletter(issue_num)
-    
-    # Write to file
-    output_path = drafts_dir / f"issue-{issue_num:03d}.md"
-    output_path.write_text(content)
-    
-    print(f"✅ Generated Issue #{issue_num}: {output_path}")
-    print(f"   Heartbeats: {count_heartbeats_this_week()}")
-    print(f"   Goals: {get_goals_status()[0]}/{get_goals_status()[1]}")
-    
-    return output_path
+    return newsletter
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    issue_num = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+    
+    newsletter = generate_newsletter(issue_num)
+    
+    output_path = f"newsletters/issue-{issue_num:03d}.md"
+    Path(output_path).parent.mkdir(exist_ok=True)
+    Path(output_path).write_text(newsletter)
+    
+    print(f"✅ Newsletter generated: {output_path}")
+    print(f"   Issue #{issue_num} | {len(newsletter)} chars")
