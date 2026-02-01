@@ -248,6 +248,19 @@ python3 tools/diary-digest.py
 # Useful for: Weekly reviews, self-improvement loops
 ```
 
+### github-auth.py — GitHub Token Auth
+```bash
+# Usage: Configure non-interactive git push with token
+export GITHUB_TOKEN='ghp_xxxxxxxx'
+python3 tools/github-auth.py
+
+# Remove token (security cleanup)
+python3 tools/github-auth.py --clear
+
+# Output: Auth status + test result
+# Useful for: Automated git operations, CI/CD style pushes
+```
+
 ### goal-tracker.py — Goal Velocity
 ```bash
 # Usage: Track goal completion velocity
@@ -255,6 +268,16 @@ python3 tools/goal-tracker.py
 
 # Output: Completion rate, time-to-complete, trends
 # Useful for: Measuring productivity patterns
+```
+
+### weekly-reporter.py — Week-in-Review Generator
+```bash
+# Usage: Generate weekly progress reports
+python3 tools/weekly-reporter.py
+
+# Output: JSON + Markdown report with metrics, achievements, velocity
+# Features: Parses diary.md, categorizes entries, calculates velocity
+# Useful for: Weekly summaries, self-improvement tracking, progress reviews
 ```
 
 ---

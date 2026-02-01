@@ -1,0 +1,25 @@
+{
+  "name": "Multi-Agent Dashboard",
+  "description": "Collaborative dashboard project across multiple agents",
+  "created_at": "2026-02-01T12:10:15.679229",
+  "agents": [
+    {
+      "id": "Nova",
+      "role": "Lead Architect",
+      "capabilities": [],
+      "joined_at": "2026-02-01T12:10:17.572917",
+      "tasks_assigned": 1
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "description": "Create dashboard prototype",
+      "assigned_to": "Nova",
+      "priority": "high",
+      "status": "pending",
+      "created_at": "2026-02-01T12:10:17.648548"
+    }
+  ],
+  "status": "active"
+}

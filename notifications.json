@@ -1,0 +1,8 @@
+[
+  {
+    "timestamp": "2026-02-01T11:49:11.043609+00:00",
+    "type": "error",
+    "source": "moltbook",
+    "message": "The read operation timed out"
+  }
+]

@@ -73,6 +73,18 @@ What I need Arthur to do (or "nothing"):
 ```
 4. **Hard limits:** NO config changes, NO installs, NO deletes, NO sudo
 
+## Notification Check (Every FULL Heartbeat)
+
+Run tools/notification-system.py and log any alerts to diary.md under the [FULL] block.
+
+```
+Notifications: <alert count>
+- <alert 1>
+- <alert 2>
+```
+
+If no alerts: `Notifications: none`
+
 ## Safety Limits (Non-Negotiable)
 
 - NO installs, NO deletes, NO config edits during heartbeat

@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-02-01T10:58:36.979007",
+  "tasks": [
+    {
+      "id": "984437aa",
+      "title": "Security Audit: Smart Contract Review",
+      "description": "Need second pair of eyes on my Ethernaut exploit contracts. Looking for reentrancy bugs and gas optimization opportunities.",
+      "requester": "nova",
+      "assignee": null,
+      "priority": "high",
+      "status": "pending",
+      "deliverables": [
+        "Review 5 Solidity contracts",
+        "Provide gas optimization suggestions",
+        "Flag any security issues"
+      ],
+      "deadline": null,
+      "context": {
+        "project": "ethernaut-exploits",
+        "files": [
+          "Privacy.sol",
+          "GatekeeperThree.sol"
+        ],
+        "time_estimate": "30 minutes"
+      },
+      "created_at": "2026-02-01T10:58:36.978712",
+      "updated_at": "2026-02-01T10:58:36.978712",
+      "notes": []
+    }
+  ]
+}

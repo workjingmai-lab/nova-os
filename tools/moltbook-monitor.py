@@ -1,91 +1,122 @@
 #!/usr/bin/env python3
 """
-Moltbook Monitor - Auto-recovery tracking for Moltbook API
-Tracks API status and notifies when back online
+Moltbook Monitor - Notification system for agent activity
+Checks for mentions, new followers, and engagement opportunities
+Uses urllib to avoid external dependencies
 """
 
 import urllib.request
 import urllib.error
 import json
-import time
-from datetime import datetime
-from pathlib import Path
+import os
+from datetime import datetime, timezone
 
-API_KEY = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
-BASE_URL = "https://www.moltbook.com/api/v1"
-STATE_FILE = Path(".moltbook_state.json")
+MOLTBOOK_API = "https://www.moltbook.com/api/v1"
+TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+STATE_FILE = ".moltbook_state.json"
+LOG_FILE = "logs/moltbook-activity.log"
 
-def check_status():
-    """Check Moltbook API health"""
+def api_get(endpoint):
+    """Make authenticated GET request"""
+    url = f"{MOLTBOOK_API}{endpoint}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Bearer {TOKEN}",
+            "Accept": "application/json"
+        }
+    )
     try:
-        req = urllib.request.Request(
-            f"{BASE_URL}/agents/status",
-            headers={"Authorization": f"Bearer {API_KEY}"}
-        )
         with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode())
-            return resp.status == 200 and data.get("success", False)
-    except:
-        return False
-
-def check_feed():
-    """Check if feed endpoint is accessible"""
-    try:
-        req = urllib.request.Request(
-            f"{BASE_URL}/feed?limit=1",
-            headers={"Authorization": f"Bearer {API_KEY}"}
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status == 200
-    except:
-        return False
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        return {"error": f"HTTP {e.code}: {e.reason}"}
+    except Exception as e:
+        return {"error": str(e)}
 
 def load_state():
-    if STATE_FILE.exists():
-        return json.loads(STATE_FILE.read_text())
-    return {"checks": [], "last_online": None, "downtime_start": "2026-02-01T09:00:00Z"}
+    """Load last checked timestamps"""
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE) as f:
+            return json.load(f)
+    return {"lastCheck": None, "lastMentionId": None}
 
 def save_state(state):
-    STATE_FILE.write_text(json.dumps(state, indent=2))
+    """Save state for next run"""
+    with open(STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
+def log_activity(message):
+    """Log activity to file"""
+    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+    timestamp = datetime.now(timezone.utc).isoformat()
+    with open(LOG_FILE, "a") as f:
+        f.write(f"[{timestamp}] {message}\n")
+
+def check_claim_status():
+    """Check if agent profile is claimed"""
+    data = api_get("/agents/status")
+    if "error" in data:
+        return None
+    return data.get("claimed", False)
+
+def check_feed():
+    """Check feed for new posts from followed agents"""
+    data = api_get("/feed")
+    if "error" in data:
+        return data["error"]
+    
+    posts = data.get("posts", [])
+    state = load_state()
+    last_check = state.get("lastCheck")
+    
+    new_posts = []
+    for post in posts[:10]:  # Check latest 10
+        created = post.get("createdAt")
+        if last_check and created and created > last_check:
+            new_posts.append({
+                "type": "new_post",
+                "id": post.get("id"),
+                "author": post.get("author", {}).get("name", "Unknown"),
+                "title": (post.get("title") or "Untitled")[:60]
+            })
+    
+    return new_posts
 
 def main():
+    """Main monitoring loop"""
     state = load_state()
+    alerts = []
     
-    status_ok = check_status()
-    feed_ok = check_feed()
+    # Check claim status first
+    claimed = check_claim_status()
+    if claimed is None:
+        print("Error: Could not verify claim status")
+        return 1
+    if not claimed:
+        print("Profile not yet claimed on Moltbook")
+        return 0
     
-    check = {
-        "timestamp": datetime.utcnow().isoformat() + "Z",
-        "status_endpoint": status_ok,
-        "feed_endpoint": feed_ok,
-        "fully_operational": status_ok and feed_ok
-    }
+    # Check feed for new posts
+    new_posts = check_feed()
+    if isinstance(new_posts, list) and new_posts:
+        alerts.append(f"📝 {len(new_posts)} new post(s) from followed agents")
+        for p in new_posts:
+            log_activity(f"NEW POST by {p['author']}: {p['title']}...")
+    elif isinstance(new_posts, str):
+        print(f"Feed check error: {new_posts}")
     
-    state["checks"].append(check)
-    state["checks"] = state["checks"][-50:]  # Keep last 50
-    
-    if check["fully_operational"] and not state.get("was_online"):
-        state["last_online"] = check["timestamp"]
-        state["recovery_detected"] = True
-        print("🎉 MOLBOOK IS BACK ONLINE!")
-    else:
-        state["recovery_detected"] = False
-    
-    state["was_online"] = check["fully_operational"]
+    # Update state
+    state["lastCheck"] = datetime.now(timezone.utc).isoformat()
     save_state(state)
     
-    # Summary
-    total_checks = len(state["checks"])
-    online_checks = sum(1 for c in state["checks"] if c["fully_operational"])
-    uptime_pct = (online_checks / total_checks * 100) if total_checks else 0
-    
-    print(f"Status: {'✅ Online' if check['fully_operational'] else '❌ Offline'}")
-    print(f"Status endpoint: {'✅' if status_ok else '❌'}")
-    print(f"Feed endpoint: {'✅' if feed_ok else '❌'}")
-    print(f"Uptime (last {total_checks} checks): {uptime_pct:.1f}%")
-    
-    if state.get("recovery_detected"):
-        print("\n🚨 RECOVERY DETECTED - Moltbook is back!")
+    # Output summary
+    if alerts:
+        print(" | ".join(alerts))
+        return 1  # Signal that attention needed
+    else:
+        print("No new activity")
+        return 0
 
 if __name__ == "__main__":
-    main()
+    exit(main())

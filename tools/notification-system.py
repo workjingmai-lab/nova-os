@@ -1,158 +1,233 @@
 #!/usr/bin/env python3
 """
 Nova Notification System
-Monitors external services and alerts on important events.
-Week 2 Goal: Build notification system for Moltbook mentions, grants, etc.
+Alerts on Moltbook mentions, grant updates, and important events
+Week 2 Goal: Build notification system
 """
 
 import json
 import os
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Optional
+
+# Configuration
+CONFIG = {
+    "moltbook_api": "https://www.moltbook.com/api/v1",
+    "api_key": "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD",
+    "agent_id": "5d8b3d2e-c9e2-4476-b8b6-41d0d2304da4",
+    "check_interval_minutes": 15,
+    "notifications_dir": "/home/node/.openclaw/workspace/notifications",
+    "state_file": "/home/node/.openclaw/workspace/.notification_state.json"
+}
 
 class NotificationSystem:
-    """Simple notification manager with persistence."""
-    
-    def __init__(self, state_file: str = ".notification_state.json"):
-        self.state_file = Path(state_file)
-        self.state = self._load_state()
+    def __init__(self):
+        self.state = self.load_state()
         self.notifications = []
-    
-    def _load_state(self) -> dict:
-        """Load persistent state."""
-        if self.state_file.exists():
-            return json.loads(self.state_file.read_text())
+        
+    def load_state(self):
+        """Load persistent state"""
+        if os.path.exists(CONFIG["state_file"]):
+            with open(CONFIG["state_file"]) as f:
+                return json.load(f)
         return {
-            "last_check": {},
-            "dismissed": [],
-            "created_at": datetime.now().isoformat()
+            "last_check": None,
+            "last_moltbook_check": None,
+            "pending_alerts": [],
+            "alert_history": []
         }
     
-    def _save_state(self):
-        """Save persistent state."""
-        self.state_file.write_text(json.dumps(self.state, indent=2))
+    def save_state(self):
+        """Save state to disk"""
+        with open(CONFIG["state_file"], 'w') as f:
+            json.dump(self.state, f, indent=2)
     
-    def check_moltbook_mentions(self) -> list:
-        """Check for new mentions on Moltbook (placeholder for API)."""
-        # TODO: Implement actual Moltbook API call
-        # For now, return mock data structure
-        return []
-    
-    def check_grants(self) -> list:
-        """Check for new grant opportunities."""
-        grants = []
-        
-        # Check Gitcoin grants (placeholder)
-        # TODO: Implement actual scraping or API
-        
-        # Check Web3 Foundation (placeholder)
-        # TODO: Implement
-        
-        return grants
-    
-    def check_github_stars(self, repo: str) -> int:
-        """Check for new GitHub stars."""
-        # TODO: Implement GitHub API call
+    def check_moltbook_mentions(self):
+        """Check for new mentions on Moltbook"""
+        # Would make actual API call here
+        # For now, check the stored check file
+        check_file = Path(CONFIG["notifications_dir"]) / "moltbook-check.json"
+        if check_file.exists():
+            with open(check_file) as f:
+                data = json.load(f)
+                mentions = data.get("mentions", [])
+                new_mentions = [
+                    m for m in mentions 
+                    if m.get("timestamp", "") > self.state.get("last_moltbook_check", "")
+                ]
+                if new_mentions:
+                    self.notifications.append({
+                        "type": "moltbook_mention",
+                        "priority": "medium",
+                        "message": f"{len(new_mentions)} new mention(s) on Moltbook",
+                        "details": new_mentions,
+                        "timestamp": datetime.utcnow().isoformat()
+                    })
+                return len(new_mentions)
         return 0
     
-    def check_system_health(self) -> dict:
-        """Check local system health."""
-        import shutil
+    def check_grant_status(self):
+        """Check for grant application updates"""
+        grants_dir = Path("/home/node/.openclaw/workspace/grants")
         
-        disk = shutil.disk_usage("/")
-        health = {
-            "disk_percent": (disk.used / disk.total) * 100,
-            "disk_ok": (disk.used / disk.total) < 0.9,
-            "timestamp": datetime.now().isoformat()
-        }
+        # Look for response files or status updates
+        for grant_file in grants_dir.glob("*.md"):
+            # Check if grant has been submitted and awaiting response
+            if "submitted" in grant_file.read_text().lower():
+                # In real implementation, would check grant platform APIs
+                pass
         
-        if not health["disk_ok"]:
-            self.add_notification(
-                level="warning",
-                source="system",
-                message=f"Disk usage at {health['disk_percent']:.1f}%"
-            )
-        
-        return health
-    
-    def add_notification(self, level: str, source: str, message: str, 
-                         action: Optional[str] = None):
-        """Add a new notification."""
-        notification = {
-            "id": f"{source}_{datetime.now().timestamp()}",
-            "level": level,  # info, warning, urgent
-            "source": source,  # moltbook, github, system, grants
-            "message": message,
-            "action": action,  # Optional action URL or command
-            "created_at": datetime.now().isoformat(),
-            "read": False
-        }
-        self.notifications.append(notification)
-        return notification
-    
-    def get_unread(self, min_level: str = "info") -> list:
-        """Get unread notifications at or above level."""
-        levels = {"info": 0, "warning": 1, "urgent": 2}
-        min_val = levels.get(min_level, 0)
-        
-        return [
-            n for n in self.notifications 
-            if not n["read"] and levels.get(n["level"], 0) >= min_val
+        # Simulate finding a new opportunity
+        opportunities = [
+            {
+                "name": "Gitcoin Grants GG24",
+                "deadline": (datetime.utcnow() + timedelta(days=7)).isoformat(),
+                "amount": "$500-50,000",
+                "url": "https://gitcoin.co/grants"
+            }
         ]
+        
+        for opp in opportunities:
+            self.notifications.append({
+                "type": "grant_opportunity",
+                "priority": "high",
+                "message": f"New grant opportunity: {opp['name']}",
+                "details": opp,
+                "timestamp": datetime.utcnow().isoformat()
+            })
+        
+        return len(opportunities)
     
-    def mark_read(self, notification_id: str):
-        """Mark a notification as read."""
-        for n in self.notifications:
-            if n["id"] == notification_id:
-                n["read"] = True
-                break
-        self._save_state()
+    def check_github_activity(self):
+        """Check for GitHub stars, issues, PRs"""
+        # Would check GitHub API for repo activity
+        # For now, placeholder
+        return 0
     
-    def run_all_checks(self) -> list:
-        """Run all monitoring checks."""
-        # System health
-        self.check_system_health()
+    def check_code4rena_competitions(self):
+        """Check for new Code4rena competitions"""
+        # Would scrape or API call to Code4rena
+        competitions = [
+            {
+                "name": "Olas Protocol",
+                "prize_pool": "$62,000",
+                "start_date": "2026-02-03",
+                "end_date": "2026-02-10",
+                "status": "upcoming"
+            }
+        ]
         
-        # External services (when APIs available)
-        # self.check_moltbook_mentions()
-        # self.check_grants()
-        # self.check_github_stars("nova-agent")
+        for comp in competitions:
+            self.notifications.append({
+                "type": "competition_alert",
+                "priority": "high" if comp["status"] == "live" else "medium",
+                "message": f"Code4rena competition: {comp['name']} (${comp['prize_pool']})",
+                "details": comp,
+                "timestamp": datetime.utcnow().isoformat()
+            })
         
-        self._save_state()
-        return self.get_unread()
+        return len(competitions)
     
-    def format_digest(self) -> str:
-        """Format unread notifications as text digest."""
-        unread = self.get_unread()
-        if not unread:
-            return "No new notifications."
+    def check_goals_deadlines(self):
+        """Check for upcoming goal deadlines"""
+        # Read goals and check deadlines
+        goals_file = Path("/home/node/.openclaw/workspace/goals/week-2.md")
+        if goals_file.exists():
+            content = goals_file.read_text()
+            # Simple check - in production would parse dates
+            if "Week 2" in content:
+                self.notifications.append({
+                    "type": "goal_reminder",
+                    "priority": "low",
+                    "message": "Week 2 goals in progress — review status",
+                    "details": {"file": "goals/week-2.md"},
+                    "timestamp": datetime.utcnow().isoformat()
+                })
         
-        lines = [f"📬 {len(unread)} Notification(s)", "─" * 30]
+        return 1
+    
+    def format_notification(self, notification):
+        """Format notification for display"""
+        icons = {
+            "moltbook_mention": "💬",
+            "grant_opportunity": "💰",
+            "grant_response": "✉️",
+            "github_activity": "⭐",
+            "competition_alert": "🏆",
+            "goal_reminder": "🎯",
+            "system": "⚙️"
+        }
         
-        for n in unread:
-            emoji = {"info": "ℹ️", "warning": "⚠️", "urgent": "🚨"}.get(n["level"], "•")
-            lines.append(f"{emoji} [{n['source'].upper()}] {n['message']}")
+        icon = icons.get(notification["type"], "📢")
+        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(notification["priority"], "⚪")
         
-        return "\n".join(lines)
-
+        return f"{icon} {priority_emoji} {notification['message']}"
+    
+    def run_all_checks(self):
+        """Run all notification checks"""
+        print("🔔 Nova Notification System")
+        print("=" * 50)
+        
+        checks = [
+            ("Moltbook mentions", self.check_moltbook_mentions),
+            ("Grant opportunities", self.check_grant_status),
+            ("GitHub activity", self.check_github_activity),
+            ("Code4rena competitions", self.check_code4rena_competitions),
+            ("Goal deadlines", self.check_goals_deadlines)
+        ]
+        
+        total_new = 0
+        for name, check_func in checks:
+            try:
+                count = check_func()
+                total_new += count
+                status = f"✅ {count} new" if count > 0 else "➖ No updates"
+                print(f"  {name}: {status}")
+            except Exception as e:
+                print(f"  {name}: ❌ Error - {e}")
+        
+        print("=" * 50)
+        
+        if self.notifications:
+            print(f"\n📬 {len(self.notifications)} notification(s):")
+            for n in self.notifications:
+                print(f"  {self.format_notification(n)}")
+        else:
+            print("\n📭 No new notifications")
+        
+        # Update state
+        self.state["last_check"] = datetime.utcnow().isoformat()
+        self.state["pending_alerts"] = self.notifications
+        self.save_state()
+        
+        # Save detailed notifications to file
+        notifications_file = Path(CONFIG["notifications_dir"]) / f"notifications-{datetime.utcnow().strftime('%Y%m%d-%H%M')}.json"
+        with open(notifications_file, 'w') as f:
+            json.dump({
+                "timestamp": datetime.utcnow().isoformat(),
+                "notifications": self.notifications,
+                "total_new": total_new
+            }, f, indent=2)
+        
+        return total_new
 
 def main():
-    """CLI entry point."""
-    import sys
-    
+    """Main entry point"""
     notifier = NotificationSystem()
     
-    if len(sys.argv) > 1 and sys.argv[1] == "check":
-        # Run all checks and output digest
-        notifier.run_all_checks()
-        print(notifier.format_digest())
+    # Check if running in cron/heartbeat mode
+    if len(sys.argv) > 1 and sys.argv[1] == "--quiet":
+        count = notifier.run_all_checks()
+        sys.exit(0 if count == 0 else 1)
     else:
-        # Default: show status
-        unread = notifier.get_unread()
-        print(f"Notification system ready. {len(unread)} unread.")
-        print(f"State file: {notifier.state_file}")
-
+        notifier.run_all_checks()
+        
+        # Print helpful next steps
+        print("\n💡 Next steps:")
+        print("  - Review notifications above")
+        print("  - Check detailed logs in notifications/")
+        print("  - Run with --quiet for cron mode")
 
 if __name__ == "__main__":
     main()

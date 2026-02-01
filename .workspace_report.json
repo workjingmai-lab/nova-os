@@ -1,29 +1,51 @@
 {
-  "timestamp": "2026-02-01T09:37:42.169803",
+  "timestamp": "2026-02-01T12:05:41.406238",
   "workspace": "/home/node/.openclaw/workspace",
   "stats": {
     "scanned": 0,
     "orphaned": 0,
     "archivable": 0,
-    "duplicates": 9,
-    "empty_dirs": 14
+    "duplicates": 287,
+    "empty_dirs": 32
   },
-  "actions": [],
+  "actions": [
+    "Removed empty dir: github-repo/contracts/exploits",
+    "Removed empty dir: github-repo/contracts/interfaces",
+    "Removed empty dir: exploits/.git/branches",
+    "Removed empty dir: exploits/.git/objects/info",
+    "Removed empty dir: exploits/.git/objects/pack",
+    "Removed empty dir: exploits/.git/refs/tags",
+    "Removed empty dir: exploits/.git/modules/lib/forge-std/branches",
+    "Removed empty dir: exploits/.git/modules/lib/forge-std/objects/info",
+    "Removed empty dir: exploits/.git/modules/lib/forge-std/refs/tags",
+    "Removed empty dir: .git/branches",
+    "Removed empty dir: .git/objects/info",
+    "Removed empty dir: .git/objects/pack",
+    "Removed empty dir: .git/refs/tags",
+    "Removed empty dir: knowledge/{tools,reports,skills,insights,reflections}",
+    "Removed empty dir: ethernaut-foundry/.git/branches",
+    "Removed empty dir: ethernaut-foundry/.git/objects/info",
+    "Removed empty dir: ethernaut-foundry/.git/objects/pack",
+    "Removed empty dir: ethernaut-foundry/.git/refs/tags",
+    "Removed empty dir: ethernaut-foundry/.git/refs/heads",
+    "Removed empty dir: ethernaut-foundry/.git/modules/lib/forge-std/branches",
+    "Removed empty dir: ethernaut-foundry/.git/modules/lib/forge-std/objects/info",
+    "Removed empty dir: ethernaut-foundry/.git/modules/lib/forge-std/refs/tags",
+    "Removed empty dir: github-portfolio/.git/branches",
+    "Removed empty dir: github-portfolio/.git/objects/info",
+    "Removed empty dir: github-portfolio/.git/objects/pack",
+    "Removed empty dir: github-portfolio/.git/refs/tags",
+    "Removed empty dir: github-portfolio/.git/refs/heads",
+    "Removed empty dir: github-portfolio/knowledge/{tools,reports,skills,insights,reflections}"
+  ],
   "orphaned_files": [],
   "empty_directories": [
-    "github-repo/contracts/exploits",
-    "github-repo/contracts/interfaces",
-    ".git/branches",
-    ".git/objects/info",
-    ".git/objects/pack",
-    ".git/refs/tags",
-    "knowledge/{tools,reports,skills,insights,reflections}"
+    "github-repo/contracts",
+    "ethernaut-foundry/.git/refs",
+    "github-portfolio/.git/objects",
+    "github-portfolio/.git/refs"
   ],
   "duplicates": {
-    "3be0c8f4c1bf3c71eacb90f9a8b8a5e2": [
-      "heartbeat.md",
-      "backups/20260131_150308/heartbeat.md"
-    ],
     "bfa14b203ba6e0e3059bc7a2b408d25c": [
       "boot.md",
       "backups/20260131_150308/boot.md"
@@ -44,13 +66,940 @@
       "github-repo/docs/02-fallout.md",
       "learning/ethernaut-02-fallout.md"
     ],
+    "056a9ad2dac7e2b255259be181dbddea": [
+      "dashboard/access-options.md",
+      "github-portfolio/dashboard/access-options.md"
+    ],
+    "765ebae89640d525510e8e954f4618dd": [
+      "dashboard/start.sh",
+      "github-portfolio/dashboard/start.sh"
+    ],
+    "26d3bd3bdb39f4880b7b356804800179": [
+      "dashboard/server_simple.py",
+      "github-portfolio/dashboard/server_simple.py"
+    ],
+    "33846fba58ef0d4682682b235dfc4da0": [
+      "dashboard/server.py",
+      "github-portfolio/dashboard/server.py"
+    ],
+    "e1c061ec80009d2dd1fff029029e64f9": [
+      "dashboard/README.md",
+      "github-portfolio/dashboard/README.md"
+    ],
+    "62f1390841c08c9c614e8ca3a0730eb7": [
+      "dashboard/ssh-tunnel.sh",
+      "github-portfolio/dashboard/ssh-tunnel.sh"
+    ],
+    "52a332cff7cbdb0c7d297399636a13d3": [
+      "dashboard/cloudflare-tunnel.yml",
+      "github-portfolio/dashboard/cloudflare-tunnel.yml"
+    ],
+    "912436528b59ad645b9de815ff0c5fea": [
+      "dashboard/v2-live.html",
+      "github-portfolio/dashboard/v2-live.html"
+    ],
+    "a4546796c02ee855181b7e60ee218e95": [
+      "dashboard/notifications.json",
+      "github-portfolio/dashboard/notifications.json"
+    ],
+    "3a281740f1b31086f2bef5d8f3fd536b": [
+      "dashboard/tunnel-setup.md",
+      "github-portfolio/dashboard/tunnel-setup.md"
+    ],
+    "e986695f5659f40bf881c8dabcb93592": [
+      "dashboard/data.json",
+      "github-portfolio/dashboard/data.json"
+    ],
+    "3668fa230e802b5a66a75284bcfed4b7": [
+      "dashboard/setup-tunnel.sh",
+      "github-portfolio/dashboard/setup-tunnel.sh"
+    ],
+    "eed9138797e4b51068584d42aed071d2": [
+      "dashboard/index.html",
+      "github-portfolio/dashboard/index.html"
+    ],
+    "ef6a81e8218764f7b266ad5c7e18fcb0": [
+      "dashboard/.github/workflows/pages.yml",
+      "github-portfolio/dashboard/.github/workflows/pages.yml"
+    ],
+    "823142c2b3f260d97b2f6f4cc7c54e54": [
+      "dashboard/templates/view.html",
+      "github-portfolio/dashboard/templates/view.html"
+    ],
+    "95b9c979e05aa71c651d97df545e0a20": [
+      "dashboard/templates/index.html",
+      "github-portfolio/dashboard/templates/index.html"
+    ],
+    "2d60daaf47fddee8c81e24815fa7a285": [
+      "exploits/foundry.lock",
+      "ethernaut-foundry/foundry.lock"
+    ],
+    "f2b59a3cc24a7341e26f1a29a07ea3f2": [
+      "exploits/lib/forge-std/package.json",
+      "ethernaut-foundry/lib/forge-std/package.json"
+    ],
+    "365048057943c8383964412af0bccda8": [
+      "exploits/lib/forge-std/CONTRIBUTING.md",
+      "ethernaut-foundry/lib/forge-std/CONTRIBUTING.md"
+    ],
+    "010efa388501dca4ff930e62c4d7889e": [
+      "exploits/lib/forge-std/README.md",
+      "ethernaut-foundry/lib/forge-std/README.md"
+    ],
+    "9148f9dd5e31e2e998b45ac9c7286737": [
+      "exploits/lib/forge-std/RELEASE_CHECKLIST.md",
+      "ethernaut-foundry/lib/forge-std/RELEASE_CHECKLIST.md"
+    ],
+    "5238567f6c6d732df959de55310a322b": [
+      "exploits/lib/forge-std/LICENSE-MIT",
+      "ethernaut-foundry/lib/forge-std/LICENSE-MIT"
+    ],
+    "f209e57bf212b71ae7b31fbd01d438c9": [
+      "exploits/lib/forge-std/LICENSE-APACHE",
+      "ethernaut-foundry/lib/forge-std/LICENSE-APACHE"
+    ],
+    "10e6201f631f42920938bce94d1136e7": [
+      "exploits/lib/forge-std/foundry.toml",
+      "ethernaut-foundry/lib/forge-std/foundry.toml"
+    ],
+    "4334132ba6bcd78670bf574b6b4236f4": [
+      "exploits/lib/forge-std/.github/dependabot.yml",
+      "ethernaut-foundry/lib/forge-std/.github/dependabot.yml"
+    ],
+    "870bab39c005886403bfba8e017d1ffb": [
+      "exploits/lib/forge-std/.github/CODEOWNERS",
+      "ethernaut-foundry/lib/forge-std/.github/CODEOWNERS"
+    ],
+    "ce6e3b943c91c92e8435db6bc32bc5df": [
+      "exploits/lib/forge-std/.github/workflows/sync.yml",
+      "ethernaut-foundry/lib/forge-std/.github/workflows/sync.yml"
+    ],
+    "f1f23530e17d4068ffd14cb72af6db3e": [
+      "exploits/lib/forge-std/.github/workflows/ci.yml",
+      "ethernaut-foundry/lib/forge-std/.github/workflows/ci.yml"
+    ],
+    "27c546b982da233f9541dbc3350b37fc": [
+      "exploits/lib/forge-std/test/Config.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/Config.t.sol"
+    ],
+    "91b8baccd4fa5156edc322cc7937a04c": [
+      "exploits/lib/forge-std/test/LibVariable.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/LibVariable.t.sol"
+    ],
+    "b1ef62f631690ef6ff04d9d7c37eec50": [
+      "exploits/lib/forge-std/test/StdError.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdError.t.sol"
+    ],
+    "b1cc8edda7ecd78041515a7a32bf5b27": [
+      "exploits/lib/forge-std/test/CommonBase.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/CommonBase.t.sol"
+    ],
+    "1faa32be9ff31e26b3b751b378af18bb": [
+      "exploits/lib/forge-std/test/StdStyle.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdStyle.t.sol"
+    ],
+    "4fabf65de3ff7437e28e0e00cf28163d": [
+      "exploits/lib/forge-std/test/StdJson.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdJson.t.sol"
+    ],
+    "7ffeacb5112bcf8e7a035dc0d59f1106": [
+      "exploits/lib/forge-std/test/StdAssertions.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdAssertions.t.sol"
+    ],
+    "756f5d72329fdd59b680dd1d9eb4e910": [
+      "exploits/lib/forge-std/test/StdMath.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdMath.t.sol"
+    ],
+    "ffc758a2488829bae6b3dd9c526add28": [
+      "exploits/lib/forge-std/test/StdUtils.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdUtils.t.sol"
+    ],
+    "44975fd48d18139efa484687fc1c409d": [
+      "exploits/lib/forge-std/test/StdStorage.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdStorage.t.sol"
+    ],
+    "85f44bad4d24680946a4353e061105bd": [
+      "exploits/lib/forge-std/test/StdConstants.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdConstants.t.sol"
+    ],
+    "c84c715a27f1b4d8784d0a79b7e13ca2": [
+      "exploits/lib/forge-std/test/StdToml.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdToml.t.sol"
+    ],
+    "c320d7eebbccfceb4c66249ec5a4b980": [
+      "exploits/lib/forge-std/test/StdCheats.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdCheats.t.sol"
+    ],
+    "2052fe9f922d9ec12584227bb07f47fc": [
+      "exploits/lib/forge-std/test/StdChains.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/StdChains.t.sol"
+    ],
+    "bf403b822e8b193ecafb5cd98160703a": [
+      "exploits/lib/forge-std/test/Vm.t.sol",
+      "ethernaut-foundry/lib/forge-std/test/Vm.t.sol"
+    ],
+    "5095082b88bef4403d5310e753630e1d": [
+      "exploits/lib/forge-std/test/compilation/CompilationTestBase.sol",
+      "ethernaut-foundry/lib/forge-std/test/compilation/CompilationTestBase.sol"
+    ],
+    "9f05935f9c6c2c4e03bb5c852c1c5da7": [
+      "exploits/lib/forge-std/test/compilation/CompilationScriptBase.sol",
+      "ethernaut-foundry/lib/forge-std/test/compilation/CompilationScriptBase.sol"
+    ],
+    "adf40fad3167b5706e274227a377ec80": [
+      "exploits/lib/forge-std/test/compilation/CompilationScript.sol",
+      "ethernaut-foundry/lib/forge-std/test/compilation/CompilationScript.sol"
+    ],
+    "0630ab5efd53a1df9e0f07dc1bec00b8": [
+      "exploits/lib/forge-std/test/compilation/CompilationTest.sol",
+      "ethernaut-foundry/lib/forge-std/test/compilation/CompilationTest.sol"
+    ],
+    "793385ffee52135a692342b72fdbc7e2": [
+      "exploits/lib/forge-std/test/fixtures/broadcast.log.json",
+      "ethernaut-foundry/lib/forge-std/test/fixtures/broadcast.log.json"
+    ],
+    "3a29fb32680163d398bb9925651f66df": [
+      "exploits/lib/forge-std/test/fixtures/test.json",
+      "ethernaut-foundry/lib/forge-std/test/fixtures/test.json"
+    ],
+    "c8748cad8d6fa09d3912ee1d2ca0e60e": [
+      "exploits/lib/forge-std/test/fixtures/test.toml",
+      "ethernaut-foundry/lib/forge-std/test/fixtures/test.toml"
+    ],
+    "9f2dddfd08e117fe242285b2ccf7820f": [
+      "exploits/lib/forge-std/test/fixtures/config.toml",
+      "ethernaut-foundry/lib/forge-std/test/fixtures/config.toml"
+    ],
+    "30b3b3cfa762bde9038e0166866037e1": [
+      "exploits/lib/forge-std/scripts/vm.py",
+      "ethernaut-foundry/lib/forge-std/scripts/vm.py"
+    ],
+    "e01c7489c725e02461d2bac4d5a80d39": [
+      "exploits/lib/forge-std/src/StdStorage.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdStorage.sol"
+    ],
+    "007a3ba42905f4214d00345fe5b0c458": [
+      "exploits/lib/forge-std/src/safeconsole.sol",
+      "ethernaut-foundry/lib/forge-std/src/safeconsole.sol"
+    ],
+    "8f68dff9270310f3034dba27133bff0a": [
+      "exploits/lib/forge-std/src/StdError.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdError.sol"
+    ],
+    "32df6c7a2db7ba7907f573d8511fab12": [
+      "exploits/lib/forge-std/src/LibVariable.sol",
+      "ethernaut-foundry/lib/forge-std/src/LibVariable.sol"
+    ],
+    "25fc31622f9f210129e85a1abc3106db": [
+      "exploits/lib/forge-std/src/Config.sol",
+      "ethernaut-foundry/lib/forge-std/src/Config.sol"
+    ],
+    "ceefdd9667eba33fa3f75ca7a9912366": [
+      "exploits/lib/forge-std/src/StdCheats.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdCheats.sol"
+    ],
+    "9349b04d495e51dfa109700de58603ea": [
+      "exploits/lib/forge-std/src/StdConfig.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdConfig.sol"
+    ],
+    "6d4b4bcf7e61a1aedf108af0514eb616": [
+      "exploits/lib/forge-std/src/StdUtils.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdUtils.sol"
+    ],
+    "31ef30253d21fa3b00d027d2b71eca6f": [
+      "exploits/lib/forge-std/src/StdAssertions.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdAssertions.sol"
+    ],
+    "6cc16691c69bf409e9a88b2699bec6ae": [
+      "exploits/lib/forge-std/src/console.sol",
+      "ethernaut-foundry/lib/forge-std/src/console.sol"
+    ],
+    "321c4600623aded4a7c2061084cdd798": [
+      "exploits/lib/forge-std/src/StdMath.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdMath.sol"
+    ],
+    "55c93afa080c56b152cf4fab0d0e9115": [
+      "exploits/lib/forge-std/src/Base.sol",
+      "ethernaut-foundry/lib/forge-std/src/Base.sol"
+    ],
+    "9d7edbbbcec0c2e1799b09bae9c9628e": [
+      "exploits/lib/forge-std/src/StdStyle.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdStyle.sol"
+    ],
+    "79d3b8218f13b6b6daacb14bdb0650ad": [
+      "exploits/lib/forge-std/src/StdInvariant.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdInvariant.sol"
+    ],
+    "9cd05f5991461edfcde61c9f359ed4c3": [
+      "exploits/lib/forge-std/src/StdJson.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdJson.sol"
+    ],
+    "e4119cd02cb80ba2ea824b8ba58779b1": [
+      "exploits/lib/forge-std/src/StdConstants.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdConstants.sol"
+    ],
+    "1e96b25595e08b42298ef8562c179d5b": [
+      "exploits/lib/forge-std/src/Script.sol",
+      "ethernaut-foundry/lib/forge-std/src/Script.sol"
+    ],
+    "d871d69b2a83d486bf502cbac463c6cc": [
+      "exploits/lib/forge-std/src/Vm.sol",
+      "ethernaut-foundry/lib/forge-std/src/Vm.sol"
+    ],
+    "118748310cdd88790995e01da9870086": [
+      "exploits/lib/forge-std/src/Test.sol",
+      "ethernaut-foundry/lib/forge-std/src/Test.sol"
+    ],
+    "1f5b1d5cccf76b95be6edb1e5a28270c": [
+      "exploits/lib/forge-std/src/StdToml.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdToml.sol"
+    ],
+    "ee51752af1339a3e77a25b8881e09e30": [
+      "exploits/lib/forge-std/src/StdChains.sol",
+      "ethernaut-foundry/lib/forge-std/src/StdChains.sol"
+    ],
+    "e4134a81a1dd67f94100ef9852ab1612": [
+      "exploits/lib/forge-std/src/console2.sol",
+      "ethernaut-foundry/lib/forge-std/src/console2.sol"
+    ],
+    "3437d85f99ce5668dd1a4d7de7c3aeb6": [
+      "exploits/lib/forge-std/src/interfaces/IERC165.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC165.sol"
+    ],
+    "5bb4c6c7685cb23356284b566b9bf4ed": [
+      "exploits/lib/forge-std/src/interfaces/IERC20.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC20.sol"
+    ],
+    "c2be3ce5e1951843281761efb12e6243": [
+      "exploits/lib/forge-std/src/interfaces/IERC6909.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC6909.sol"
+    ],
+    "b085b40b44c89feedf02903474423801": [
+      "exploits/lib/forge-std/src/interfaces/IERC7575.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC7575.sol"
+    ],
+    "812431b3e3e1a1fbc562350566ebba84": [
+      "exploits/lib/forge-std/src/interfaces/IERC1155.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC1155.sol"
+    ],
+    "6727e8b40054a8e8c0042b3162c2cd5b": [
+      "exploits/lib/forge-std/src/interfaces/IERC721.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC721.sol"
+    ],
+    "c58596bab933cc010bdafa854440e488": [
+      "exploits/lib/forge-std/src/interfaces/IMulticall3.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IMulticall3.sol"
+    ],
+    "3b4a4ac49119585d34eb1da7de3145be": [
+      "exploits/lib/forge-std/src/interfaces/IERC4626.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC4626.sol"
+    ],
+    "1d2b68704fe89dfbd1c3248a01332e3c": [
+      "exploits/lib/forge-std/src/interfaces/IERC7540.sol",
+      "ethernaut-foundry/lib/forge-std/src/interfaces/IERC7540.sol"
+    ],
+    "a55abd5518900cb14cace73b8cbce003": [
+      "exploits/out/StdCheats.sol/StdCheatsSafe.json",
+      "ethernaut-foundry/out/StdCheats.sol/StdCheatsSafe.json"
+    ],
+    "708db1e334a7008509e3f5d0ececa3aa": [
+      "exploits/out/StdCheats.sol/StdCheats.json",
+      "ethernaut-foundry/out/StdCheats.sol/StdCheats.json"
+    ],
+    "31577d08078f0cdbce7d20e47ec07f14": [
+      "exploits/out/Base.sol/ScriptBase.json",
+      "ethernaut-foundry/out/Base.sol/ScriptBase.json"
+    ],
+    "b78109c7a46c7ff08ff4c4aeba08a492": [
+      "exploits/out/Base.sol/CommonBase.json",
+      "ethernaut-foundry/out/Base.sol/CommonBase.json"
+    ],
+    "3b3ffaabe5472c39edb141082a96718d": [
+      "exploits/out/Base.sol/TestBase.json",
+      "ethernaut-foundry/out/Base.sol/TestBase.json"
+    ],
+    "27bbda7f30ea7307650cc39549206a5e": [
+      "exploits/out/StdConstants.sol/StdConstants.json",
+      "ethernaut-foundry/out/StdConstants.sol/StdConstants.json"
+    ],
+    "db22a9bfe6af816bdab0d8ea4efdbca3": [
+      "exploits/out/StdChains.sol/StdChains.json",
+      "ethernaut-foundry/out/StdChains.sol/StdChains.json"
+    ],
+    "a0a7c3fff21f2aea3cfa1d0316dd816c": [
+      "exploits/.git/description",
+      "exploits/.git/modules/lib/forge-std/description",
+      ".git/description",
+      "ethernaut-foundry/.git/description",
+      "ethernaut-foundry/.git/modules/lib/forge-std/description",
+      "github-portfolio/.git/description"
+    ],
+    "cf7dd3ce51958c5f13fece957cc417fb": [
+      "exploits/.git/HEAD",
+      "ethernaut-foundry/.git/HEAD",
+      "github-portfolio/.git/HEAD"
+    ],
+    "cfde7733955e57229e7d1f8872558c58": [
+      "exploits/.git/logs/HEAD",
+      "exploits/.git/logs/refs/heads/main"
+    ],
+    "071788e66e8c11ec6cb28b652e3c229d": [
+      "exploits/.git/objects/ce/4714d9a927a367477acc3ad3388227a770270c",
+      ".git/objects/ce/4714d9a927a367477acc3ad3388227a770270c"
+    ],
+    "d44bdeafaea60f97a7ccea373ead66ac": [
+      "exploits/.git/objects/70/0c5e0aba21825e79ae1bb2bc269f5a49ff7f5f",
+      ".git/objects/70/0c5e0aba21825e79ae1bb2bc269f5a49ff7f5f"
+    ],
+    "3f1ebdb9e9f5575148919e3f680b04f4": [
+      "exploits/.git/objects/a8/7c772186bfa42d900f2836b98ee1659095ce36",
+      ".git/objects/a8/7c772186bfa42d900f2836b98ee1659095ce36"
+    ],
+    "1b78a5d969cc0c28439fb87ff4597561": [
+      "exploits/.git/objects/ed/81b44b9fee4ad54f8a1a4910e9861818c8d80c",
+      ".git/objects/ed/81b44b9fee4ad54f8a1a4910e9861818c8d80c"
+    ],
+    "fc2de862045b4bc326bdcfcfd9df7b52": [
+      "exploits/.git/objects/5a/11bf25837b38880a5464db64f1ebd122e70f89",
+      ".git/objects/5a/11bf25837b38880a5464db64f1ebd122e70f89"
+    ],
+    "c2368eccd111edd6fbe27d66004d72b1": [
+      "exploits/.git/objects/5b/ed58b07917915b41b64c08b570cb5c17048eb0",
+      ".git/objects/5b/ed58b07917915b41b64c08b570cb5c17048eb0"
+    ],
+    "3634f6fae859c360b732b6a3fb6d8407": [
+      "exploits/.git/objects/c5/774b228805771e8f5c02a895dda37705b4440f",
+      ".git/objects/c5/774b228805771e8f5c02a895dda37705b4440f"
+    ],
+    "c2d068332247222539a85c76c93aa626": [
+      "exploits/.git/objects/88/8d42dcd903c00f4103f1ae558eb8d1b6e1ea8d",
+      ".git/objects/88/8d42dcd903c00f4103f1ae558eb8d1b6e1ea8d",
+      "ethernaut-foundry/.git/objects/88/8d42dcd903c00f4103f1ae558eb8d1b6e1ea8d"
+    ],
+    "818e51c93b99ce2df99c45ce5a866863": [
+      "exploits/.git/objects/d4/9704a3caef5bac18b875d956e025a84b45d6f2",
+      ".git/objects/d4/9704a3caef5bac18b875d956e025a84b45d6f2"
+    ],
+    "b5d5e2f553be90f8f5aafcf8cc622cd9": [
+      "exploits/.git/objects/0e/2779b8239bf265f0cb70c8b83e96e0e128f29d",
+      ".git/objects/0e/2779b8239bf265f0cb70c8b83e96e0e128f29d"
+    ],
+    "72340d25ccafc64739b5a0414bab862d": [
+      "exploits/.git/objects/d9/c9ad8e8e3712b2671e5997e643bd14ee896e2c",
+      ".git/objects/d9/c9ad8e8e3712b2671e5997e643bd14ee896e2c"
+    ],
+    "e4de626234f29695146a19f3c8ee8463": [
+      "exploits/.git/objects/93/f4d61f714aecaf7dd6cbb365517c7e3eb7b475",
+      ".git/objects/93/f4d61f714aecaf7dd6cbb365517c7e3eb7b475"
+    ],
+    "f1b430b1abe26371ab59301672a2d68f": [
+      "exploits/.git/objects/77/482da010d5ce2767db4ddb860062eabe50de79",
+      ".git/objects/77/482da010d5ce2767db4ddb860062eabe50de79"
+    ],
+    "2e6e13035f09c606cbf57c72a6ed8a4c": [
+      "exploits/.git/objects/6a/fe79fa42c61be36c37a53e8f212ae9f48c6383",
+      ".git/objects/6a/fe79fa42c61be36c37a53e8f212ae9f48c6383"
+    ],
+    "1a3e3cb44ba34fb57883e42de4c0a12e": [
+      "exploits/.git/objects/7d/6e0ec51ae98fe95628df345ee84c569dd0e756",
+      ".git/objects/7d/6e0ec51ae98fe95628df345ee84c569dd0e756"
+    ],
+    "beffe484c47ef271c8bc6e5c8c92a062": [
+      "exploits/.git/objects/0b/85767eb6e01309eb60907d054eec9e7953ef18",
+      ".git/objects/0b/85767eb6e01309eb60907d054eec9e7953ef18"
+    ],
+    "4c461ac4b362d81fa11e61dce6eeb656": [
+      "exploits/.git/objects/4e/87c2947f0a2b8b171dc962b874b1a7a829c7a6",
+      ".git/objects/4e/87c2947f0a2b8b171dc962b874b1a7a829c7a6"
+    ],
+    "7d51f971ffbf2f173b4b72c8455571de": [
+      "exploits/.git/objects/64/2eeff679b408fe6328b819d18717a2e6f84f11",
+      ".git/objects/64/2eeff679b408fe6328b819d18717a2e6f84f11"
+    ],
+    "6b1e19fc6ffb73f666dd4d6c87a1cfbd": [
+      "exploits/.git/objects/53/bedfd4c9b5fa3ee5a22aba9d090a78d41e5efe",
+      ".git/objects/53/bedfd4c9b5fa3ee5a22aba9d090a78d41e5efe"
+    ],
+    "9a01f2dacff71c6e54cb05afa1d39bd9": [
+      "exploits/.git/objects/18/7d6fdee47df534b0ab30bfeb063598e745acfe",
+      ".git/objects/18/7d6fdee47df534b0ab30bfeb063598e745acfe"
+    ],
+    "7771274a0f8c69eeb940362d39153970": [
+      "exploits/.git/objects/eb/f2876f8cc20c9a90cdb6b5d3a827bbc10e0f2f",
+      ".git/objects/eb/f2876f8cc20c9a90cdb6b5d3a827bbc10e0f2f"
+    ],
+    "5f6bc99a4b1d2a7af052ddf4390ec4b0": [
+      "exploits/.git/objects/ca/cace9501cd37e4077a6ed5d8ca3858a5cf4445",
+      ".git/objects/ca/cace9501cd37e4077a6ed5d8ca3858a5cf4445"
+    ],
+    "7fa49ba5d0f89b7df1c192c0b32797f7": [
+      "exploits/.git/objects/ca/e833b5f1a5055a77e70d42356c4aa032f420d2",
+      ".git/objects/ca/e833b5f1a5055a77e70d42356c4aa032f420d2"
+    ],
+    "7c2e6a2e085716100db3ac5422574c07": [
+      "exploits/.git/objects/1d/21aef6c17e98fb8baf27c73c38536768fe12ae",
+      ".git/objects/1d/21aef6c17e98fb8baf27c73c38536768fe12ae"
+    ],
+    "8c4b26cce134ca48e92b4bdff32d4382": [
+      "exploits/.git/objects/cd/cf8ff24990731331f1aa5e7ae76dd4a7a35786",
+      ".git/objects/cd/cf8ff24990731331f1aa5e7ae76dd4a7a35786"
+    ],
+    "e10f7444fb8d73a9dbc0fe6793030e6e": [
+      "exploits/.git/objects/cd/c87ba6b2936484f2b1e540de97b8060cb58db6",
+      ".git/objects/cd/c87ba6b2936484f2b1e540de97b8060cb58db6"
+    ],
+    "7216d12709c834976c4ea6f3d4c420b9": [
+      "exploits/.git/objects/91/0b1618c03bc2b661218559aadd7394fcf07486",
+      ".git/objects/91/0b1618c03bc2b661218559aadd7394fcf07486"
+    ],
+    "2a09512ee876ed8861e1b32c5b325919": [
+      "exploits/.git/objects/d0/c0159b3484123e8b65479dcad9f5dc710cc534",
+      ".git/objects/d0/c0159b3484123e8b65479dcad9f5dc710cc534"
+    ],
+    "df3278257eb27307d085bb966eef871a": [
+      "exploits/.git/objects/47/8fb6e42f4ff7d97fb3e91517e66945377c4614",
+      ".git/objects/47/8fb6e42f4ff7d97fb3e91517e66945377c4614"
+    ],
+    "bb59e2bd7c2f57768774de2bf11b0afc": [
+      "exploits/.git/objects/e1/1e32a0c78a68ca35f0d558e0117d9f420035d0",
+      ".git/objects/e1/1e32a0c78a68ca35f0d558e0117d9f420035d0"
+    ],
+    "598d8a0dfcc7a7d09a24210fcdf61b9d": [
+      "exploits/.git/objects/21/edde6bf2d7d1b0691a76214082f5638e13805a",
+      ".git/objects/21/edde6bf2d7d1b0691a76214082f5638e13805a"
+    ],
+    "2686a1168855ea979c3d15128f33b108": [
+      "exploits/.git/objects/36/7f7a691f61a4d7d2ce303657588fd3e1c527ba",
+      ".git/objects/36/7f7a691f61a4d7d2ce303657588fd3e1c527ba"
+    ],
+    "036208b4a1ab4a235d75c181e685e5a3": [
+      "exploits/.git/info/exclude",
+      "exploits/.git/modules/lib/forge-std/info/exclude",
+      ".git/info/exclude",
+      "ethernaut-foundry/.git/info/exclude",
+      "ethernaut-foundry/.git/modules/lib/forge-std/info/exclude",
+      "github-portfolio/.git/info/exclude"
+    ],
+    "9efda791208975d65055997252efbf23": [
+      "exploits/.git/modules/lib/forge-std/config",
+      "ethernaut-foundry/.git/modules/lib/forge-std/config"
+    ],
+    "1d290f957364d04c81f09c4bbcc7eea0": [
+      "exploits/.git/modules/lib/forge-std/HEAD",
+      "ethernaut-foundry/.git/modules/lib/forge-std/HEAD"
+    ],
+    "9c6d940d3c024bb0dedf0a7fa7ce3c8b": [
+      "exploits/.git/modules/lib/forge-std/packed-refs",
+      "ethernaut-foundry/.git/modules/lib/forge-std/packed-refs"
+    ],
+    "3ec6f2a1b672dcdae04454611bd0cab2": [
+      "exploits/.git/modules/lib/forge-std/logs/refs/heads/master",
+      "exploits/.git/modules/lib/forge-std/logs/refs/remotes/origin/HEAD"
+    ],
+    "45dc32b110289e58cb86813342f0ec31": [
+      "exploits/.git/modules/lib/forge-std/refs/heads/master",
+      "ethernaut-foundry/.git/modules/lib/forge-std/refs/heads/master"
+    ],
+    "73a00957034783b7b5c8294c54cd3e12": [
+      "exploits/.git/modules/lib/forge-std/refs/remotes/origin/HEAD",
+      "ethernaut-foundry/.git/modules/lib/forge-std/refs/remotes/origin/HEAD"
+    ],
+    "305eadbbcd6f6d2567e033ad12aabbc4": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-commit.sample",
+      "exploits/.git/hooks/pre-commit.sample",
+      ".git/hooks/pre-commit.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-commit.sample",
+      "ethernaut-foundry/.git/hooks/pre-commit.sample",
+      "github-portfolio/.git/hooks/pre-commit.sample"
+    ],
+    "2b5c047bdb474555e1787db32b2d2fc5": [
+      "exploits/.git/modules/lib/forge-std/hooks/prepare-commit-msg.sample",
+      "exploits/.git/hooks/prepare-commit-msg.sample",
+      ".git/hooks/prepare-commit-msg.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/prepare-commit-msg.sample",
+      "ethernaut-foundry/.git/hooks/prepare-commit-msg.sample",
+      "github-portfolio/.git/hooks/prepare-commit-msg.sample"
+    ],
+    "579a3c1e12a1e74a98169175fb913012": [
+      "exploits/.git/modules/lib/forge-std/hooks/commit-msg.sample",
+      "exploits/.git/hooks/commit-msg.sample",
+      ".git/hooks/commit-msg.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/commit-msg.sample",
+      "ethernaut-foundry/.git/hooks/commit-msg.sample",
+      "github-portfolio/.git/hooks/commit-msg.sample"
+    ],
+    "39cb268e2a85d436b9eb6f47614c3cbc": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-merge-commit.sample",
+      "exploits/.git/hooks/pre-merge-commit.sample",
+      ".git/hooks/pre-merge-commit.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-merge-commit.sample",
+      "ethernaut-foundry/.git/hooks/pre-merge-commit.sample",
+      "github-portfolio/.git/hooks/pre-merge-commit.sample"
+    ],
+    "c7ab00c7784efeadad3ae9b228d4b4db": [
+      "exploits/.git/modules/lib/forge-std/hooks/push-to-checkout.sample",
+      "exploits/.git/hooks/push-to-checkout.sample",
+      ".git/hooks/push-to-checkout.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/push-to-checkout.sample",
+      "ethernaut-foundry/.git/hooks/push-to-checkout.sample",
+      "github-portfolio/.git/hooks/push-to-checkout.sample"
+    ],
+    "2b7ea5cee3c49ff53d41e00785eb974c": [
+      "exploits/.git/modules/lib/forge-std/hooks/post-update.sample",
+      "exploits/.git/hooks/post-update.sample",
+      ".git/hooks/post-update.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/post-update.sample",
+      "ethernaut-foundry/.git/hooks/post-update.sample",
+      "github-portfolio/.git/hooks/post-update.sample"
+    ],
+    "2c642152299a94e05ea26eae11993b13": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-push.sample",
+      "exploits/.git/hooks/pre-push.sample",
+      ".git/hooks/pre-push.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-push.sample",
+      "ethernaut-foundry/.git/hooks/pre-push.sample",
+      "github-portfolio/.git/hooks/pre-push.sample"
+    ],
+    "a0b2633a2c8e97501610bd3f73da66fc": [
+      "exploits/.git/modules/lib/forge-std/hooks/fsmonitor-watchman.sample",
+      "exploits/.git/hooks/fsmonitor-watchman.sample",
+      ".git/hooks/fsmonitor-watchman.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/fsmonitor-watchman.sample",
+      "ethernaut-foundry/.git/hooks/fsmonitor-watchman.sample",
+      "github-portfolio/.git/hooks/fsmonitor-watchman.sample"
+    ],
+    "ce562e08d8098926a3862fc6e7905199": [
+      "exploits/.git/modules/lib/forge-std/hooks/applypatch-msg.sample",
+      "exploits/.git/hooks/applypatch-msg.sample",
+      ".git/hooks/applypatch-msg.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/applypatch-msg.sample",
+      "ethernaut-foundry/.git/hooks/applypatch-msg.sample",
+      "github-portfolio/.git/hooks/applypatch-msg.sample"
+    ],
+    "56e45f2bcbc8226d2b4200f7c46371bf": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-rebase.sample",
+      "exploits/.git/hooks/pre-rebase.sample",
+      ".git/hooks/pre-rebase.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-rebase.sample",
+      "ethernaut-foundry/.git/hooks/pre-rebase.sample",
+      "github-portfolio/.git/hooks/pre-rebase.sample"
+    ],
+    "647ae13c682f7827c22f5fc08a03674e": [
+      "exploits/.git/modules/lib/forge-std/hooks/update.sample",
+      "exploits/.git/hooks/update.sample",
+      ".git/hooks/update.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/update.sample",
+      "ethernaut-foundry/.git/hooks/update.sample",
+      "github-portfolio/.git/hooks/update.sample"
+    ],
+    "054f9ffb8bfe04a599751cc757226dda": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-applypatch.sample",
+      "exploits/.git/hooks/pre-applypatch.sample",
+      ".git/hooks/pre-applypatch.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-applypatch.sample",
+      "ethernaut-foundry/.git/hooks/pre-applypatch.sample",
+      "github-portfolio/.git/hooks/pre-applypatch.sample"
+    ],
+    "2ad18ec82c20af7b5926ed9cea6aeedd": [
+      "exploits/.git/modules/lib/forge-std/hooks/pre-receive.sample",
+      "exploits/.git/hooks/pre-receive.sample",
+      ".git/hooks/pre-receive.sample",
+      "ethernaut-foundry/.git/modules/lib/forge-std/hooks/pre-receive.sample",
+      "ethernaut-foundry/.git/hooks/pre-receive.sample",
+      "github-portfolio/.git/hooks/pre-receive.sample"
+    ],
+    "e58f62c65018968a554209c7d7d00d16": [
+      "tools/toolkit-search.py",
+      "github-portfolio/tools/toolkit-search.py"
+    ],
     "f55c884ef7c04dfb0cc9217b20165267": [
       "tools/heartbeat-visualizer.py",
-      "github-repos/heartbeat-visualizer/heartbeat-visualizer.py"
+      "github-repos/heartbeat-visualizer/heartbeat-visualizer.py",
+      "github-portfolio/tools/heartbeat-visualizer.py"
     ],
-    "5905062a1bdb3f155f16627b64240b5c": [
+    "712c78d49c0900fe86596da2b1d08512": [
+      "tools/agent-starter-kit.py",
+      "github-portfolio/tools/agent-starter-kit.py"
+    ],
+    "80b130bfa6be0c1588219fddfe808d9d": [
+      "tools/alert-system.py",
+      "github-portfolio/tools/alert-system.py"
+    ],
+    "ac43222fab44417bf31b7f2b186515ed": [
+      "tools/self-improvement-loop.py",
+      "github-portfolio/tools/self-improvement-loop.py"
+    ],
+    "4df8ac1cf18233794f293cd8e3782b7f": [
+      "tools/agent-starter-kit-README.md",
+      "github-portfolio/tools/agent-starter-kit-README.md"
+    ],
+    "39618e0965591d23ca71e6a55183dc71": [
+      "tools/agent-productivity-score.py",
+      "github-portfolio/tools/agent-productivity-score.py"
+    ],
+    "0634cd2c0ee709293c16342a4014242e": [
+      "tools/evening-reflection.py",
+      "github-portfolio/tools/evening-reflection.py"
+    ],
+    "25dc6b03cba15f152f1de34cd333c09b": [
+      "tools/workspace-cleanup.py",
+      "github-portfolio/tools/workspace-cleanup.py"
+    ],
+    "416c5a6ae110d0cd8871f0f3406c1d71": [
+      "tools/security-checklist.md",
+      "github-portfolio/tools/security-checklist.md"
+    ],
+    "45ac5759f6ae13e6086937420983a014": [
+      "tools/nova-status.sh",
+      "github-portfolio/tools/nova-status.sh"
+    ],
+    "d2e9d42ac46f2d6cb510ef44129c9432": [
+      "tools/moltbook-monitor.py",
+      "github-portfolio/tools/moltbook-monitor.py"
+    ],
+    "7202c8acd51374da2ce8883a8bcbd127": [
+      "tools/progress-dashboard.sh",
+      "github-portfolio/tools/progress-dashboard.sh"
+    ],
+    "378cbf45997837885de5e028f01efa92": [
+      "tools/swarm-monitor.py",
+      "github-portfolio/tools/swarm-monitor.py"
+    ],
+    "15b2f8b41b4835ba01033c96a178afb0": [
+      "tools/daily-summary.py",
+      "github-portfolio/tools/daily-summary.py"
+    ],
+    "c8f0cb59e7cd8156058782fbb3566dc4": [
+      "tools/github-auth.py",
+      "github-portfolio/tools/github-auth.py"
+    ],
+    "f15f1ecd7400d04ac0638edf16891fca": [
+      "tools/memory-summarizer.sh",
+      "github-portfolio/tools/memory-summarizer.sh"
+    ],
+    "babd73e3cb41effc146887097f4e1573": [
+      "tools/notifications.py",
+      "github-portfolio/tools/notifications.py"
+    ],
+    "373002216eb0e5c3de0271862e47e1fb": [
+      "tools/heartbeat-viz.py",
+      "github-portfolio/tools/heartbeat-viz.py"
+    ],
+    "1af350f45089b9a75c4399660aa18662": [
+      "tools/agent-logger.py",
+      "github-portfolio/tools/agent-logger.py"
+    ],
+    "b3864ef02916e3f5719045faa92578e6": [
+      "tools/daily-metrics.py",
+      "github-portfolio/tools/daily-metrics.py"
+    ],
+    "b68729a5f45f1245d7e5b14bf2f7300f": [
+      "tools/morning-goals.py",
+      "github-portfolio/tools/morning-goals.py"
+    ],
+    "36e060a469b736e3500133ffe5e5c294": [
+      "tools/nova-status.py",
+      "github-portfolio/tools/nova-status.py"
+    ],
+    "572186079122269562df615ca22c2ddb": [
+      "tools/github-readme-gen.py",
+      "github-portfolio/tools/github-readme-gen.py"
+    ],
+    "4bf495231a204e65d43675b10d024c8f": [
+      "tools/agent-digest.py",
+      "github-portfolio/tools/agent-digest.py"
+    ],
+    "e7faed188b9092c2386b06f9c2797828": [
+      "tools/agent-logger-README.md",
+      "github-portfolio/tools/agent-logger-README.md"
+    ],
+    "867a55164dde6fcf60e892f56c90e20a": [
+      "tools/grant-proposal-gen.py",
+      "github-portfolio/tools/grant-proposal-gen.py"
+    ],
+    "06b7ce4d09f342d6f46a57cde8182b5a": [
+      "tools/update-dashboard.py",
+      "github-portfolio/tools/update-dashboard.py"
+    ],
+    "a0c9ab44ea4c2779a69057af162ee232": [
+      "tools/heartbeat-check.sh",
+      "github-portfolio/tools/heartbeat-check.sh"
+    ],
+    "c67167e18b275d3f313793010e306c64": [
+      "tools/setup-testnet-exploit.py",
+      "github-portfolio/tools/setup-testnet-exploit.py"
+    ],
+    "fe8acb4bc707fef1f1266645db1332dd": [
+      "tools/diary-digest.py",
+      "github-portfolio/tools/diary-digest.py"
+    ],
+    "3c376520cadafd37a95321725e5bfb5c": [
+      "tools/notification-monitor.py",
+      "github-portfolio/tools/notification-monitor.py"
+    ],
+    "6cf29f9588f8cff6e4babb36ed077337": [
+      "tools/INDEX.md",
+      "github-portfolio/tools/INDEX.md"
+    ],
+    "5d2c52582e9500704febb532d2d85fa2": [
+      "tools/quick-status.py",
+      "github-portfolio/tools/quick-status.py"
+    ],
+    "9775648d1a39bf31ce3dc3de91d3b576": [
+      "tools/moltbook-notify.py",
+      "github-portfolio/tools/moltbook-notify.py"
+    ],
+    "f0690666868f13b2cfcdd9612f4bb912": [
+      "tools/generate-exploit.sh",
+      "github-portfolio/tools/generate-exploit.sh"
+    ],
+    "3cd029188970ce54cd2cf17a12c12ef7": [
+      "tools/goal-tracker.py",
+      "github-portfolio/tools/goal-tracker.py"
+    ],
+    "7d511e0e12988bffc2584ae8778da361": [
+      "tools/notification-system.py",
+      "github-portfolio/tools/notification-system.py"
+    ],
+    "6095ff45585424db54a764b3ec7b3ae2": [
+      "tools/agent-collab.py",
+      "github-portfolio/tools/agent-collab.py"
+    ],
+    "bf2ccf604f97b54bad914f383becb6cb": [
+      "tools/daily-workflow.sh",
+      "github-portfolio/tools/daily-workflow.sh"
+    ],
+    "60375b4915c617980986e853ae1a5319": [
+      "tools/vulnerability-patterns.md",
+      "github-portfolio/tools/vulnerability-patterns.md"
+    ],
+    "da23b073fc319da59610a430f51a7602": [
       ".git/logs/HEAD",
       ".git/logs/refs/heads/master"
+    ],
+    "96a27e3f8eee1ee575f6740724e3775b": [
+      "knowledge/alert-system-design.md",
+      "github-portfolio/knowledge/alert-system-design.md"
+    ],
+    "136f2ffa381138793713f04638603850": [
+      "knowledge/constrained-writing.md",
+      "github-portfolio/knowledge/constrained-writing.md"
+    ],
+    "24fd64dd4b56faa5b7511f016e0b271d": [
+      "knowledge/agent-collaboration.md",
+      "github-portfolio/knowledge/agent-collaboration.md"
+    ],
+    "bc709d9b721fe0ea01dc6503cbe9ecda": [
+      "knowledge/sample-audit-reports.md",
+      "github-portfolio/knowledge/sample-audit-reports.md"
+    ],
+    "20b879e5ddf5841efc8bf0bde53b50e3": [
+      "knowledge/file-as-interface.md",
+      "github-portfolio/knowledge/file-as-interface.md"
+    ],
+    "30c0b445e182cafb8abb16abb6842b06": [
+      "knowledge/session-logs-skill.md",
+      "github-portfolio/knowledge/session-logs-skill.md"
+    ],
+    "68e83c1246d197e2447c5da32c7c1989": [
+      "knowledge/learnings-2026-02-01.md",
+      "github-portfolio/knowledge/learnings-2026-02-01.md"
+    ],
+    "faab7c8a59772408c3b9e3b1721344d5": [
+      "knowledge/code4rena-strategy.md",
+      "github-portfolio/knowledge/code4rena-strategy.md"
+    ],
+    "0010b86b45c0f487361586a624e70060": [
+      "knowledge/README.md",
+      "github-portfolio/knowledge/README.md"
+    ],
+    "6380282e2247503305b61e3d587a7dfe": [
+      "knowledge/self-improvement-loop.md",
+      "github-portfolio/knowledge/self-improvement-loop.md"
+    ],
+    "7c46087d44915f7efb22d1477a9b8020": [
+      "knowledge/velocity-metric.md",
+      "github-portfolio/knowledge/velocity-metric.md"
+    ],
+    "3b39653059a2cd9caf8aa699ab2b6f20": [
+      "knowledge/moltbook-voice.md",
+      "github-portfolio/knowledge/moltbook-voice.md"
+    ],
+    "d4f4118deff0e2394cbfe37dcd57a75e": [
+      "knowledge/ethernaut-security.md",
+      "github-portfolio/knowledge/ethernaut-security.md"
+    ],
+    "ff90944dc6c8694d14da9566f242524e": [
+      "knowledge/github-pages-deployment.md",
+      "github-portfolio/knowledge/github-pages-deployment.md"
+    ],
+    "4eb8abea8a1910f2f93212e4e352efc0": [
+      "knowledge/pattern-recognition.md",
+      "github-portfolio/knowledge/pattern-recognition.md"
+    ],
+    "733d5127fa069af6c4cabb7a09114db7": [
+      "knowledge/voice-guide.md",
+      "github-portfolio/knowledge/voice-guide.md"
+    ],
+    "8ead2db8cfb7b5106972c0749621500e": [
+      "knowledge/multi-agent-coordination.md",
+      "github-portfolio/knowledge/multi-agent-coordination.md"
+    ],
+    "53e0031beacd297a1f86650428cf5089": [
+      "knowledge/funding-leads.md",
+      "github-portfolio/knowledge/funding-leads.md"
+    ],
+    "f6660c8fa9d4fa1237a52d7737bcdb01": [
+      "knowledge/notification-system.md",
+      "github-portfolio/knowledge/notification-system.md"
+    ],
+    "6a638bd1d31a1762270d30ac3dfe7232": [
+      "knowledge/sepolia-strategy.md",
+      "github-portfolio/knowledge/sepolia-strategy.md"
+    ],
+    "17b00ec0d9ac6e0eab0fe6e3c9049981": [
+      "knowledge/nova-voice-guide.md",
+      "github-portfolio/knowledge/nova-voice-guide.md"
+    ],
+    "9eee4838984e207cf3fd5113e996778d": [
+      "knowledge/skills/session-logs.md",
+      "github-portfolio/knowledge/skills/session-logs.md"
+    ],
+    "51839e9a49fad32daa9c761565a77897": [
+      "knowledge/tools/index.md",
+      "github-portfolio/knowledge/tools/index.md"
+    ],
+    "49a707aca224264aa2ebe4659a807f52": [
+      "knowledge/reports/index.md",
+      "github-portfolio/knowledge/reports/index.md"
+    ],
+    "fe327e4ed619a63bd3ba6d59a859354e": [
+      "knowledge/web3/ethernaut/27-good-samaritan.md",
+      "github-portfolio/knowledge/web3/ethernaut/27-good-samaritan.md"
+    ],
+    "a1de19d27fd17195014dc894670922b6": [
+      "knowledge/reflections/2026-02-01-first-night.md",
+      "github-portfolio/knowledge/reflections/2026-02-01-first-night.md"
+    ],
+    "f93b9900f931f4eaa2e114f248c9a411": [
+      "knowledge/ethernaut/06-delegation.md",
+      "github-portfolio/knowledge/ethernaut/06-delegation.md"
+    ],
+    "ab0c484b662be3eebf821a320bb4e137": [
+      "knowledge/insights/moltbook-api.md",
+      "github-portfolio/knowledge/insights/moltbook-api.md"
+    ],
+    "4f58c8222079ef4df2f54cc01fa92533": [
+      "knowledge/insights/sub-agent-patterns.md",
+      "github-portfolio/knowledge/insights/sub-agent-patterns.md"
+    ],
+    "d6f0857af1609451a7d4f5910f924df4": [
+      "knowledge/insights/self-monitoring.md",
+      "github-portfolio/knowledge/insights/self-monitoring.md"
+    ],
+    "cf7652d0f63d25b990d1b172db942530": [
+      "ethernaut-foundry/.git/modules/lib/forge-std/logs/refs/heads/master",
+      "ethernaut-foundry/.git/modules/lib/forge-std/logs/refs/remotes/origin/HEAD"
     ],
     "2527889f275104729835f83037fe9b78": [
       "reports/diary-digest-2026-02-01.md",
