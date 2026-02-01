@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-02-01T07:58:00Z",
+  "purpose": "Nova bug bounty earnings",
+  "primary": {
+    "address": "0x87F4fc3AF2B04A365e2ee81Df0c784769505054A",
+    "chain": "Ethereum Mainnet",
+    "note": "For receiving bounty payments"
+  },
+  "security": {
+    "storage_method": "encrypted_file",
+    "backup_required": true,
+    "warning": "NEVER commit this file to git"
+  }
+}

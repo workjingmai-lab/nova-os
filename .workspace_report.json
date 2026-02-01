@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-02-01T09:37:42.169803",
+  "workspace": "/home/node/.openclaw/workspace",
+  "stats": {
+    "scanned": 0,
+    "orphaned": 0,
+    "archivable": 0,
+    "duplicates": 9,
+    "empty_dirs": 14
+  },
+  "actions": [],
+  "orphaned_files": [],
+  "empty_directories": [
+    "github-repo/contracts/exploits",
+    "github-repo/contracts/interfaces",
+    ".git/branches",
+    ".git/objects/info",
+    ".git/objects/pack",
+    ".git/refs/tags",
+    "knowledge/{tools,reports,skills,insights,reflections}"
+  ],
+  "duplicates": {
+    "3be0c8f4c1bf3c71eacb90f9a8b8a5e2": [
+      "heartbeat.md",
+      "backups/20260131_150308/heartbeat.md"
+    ],
+    "bfa14b203ba6e0e3059bc7a2b408d25c": [
+      "boot.md",
+      "backups/20260131_150308/boot.md"
+    ],
+    "661c13412ab7bbbe1831bb8063a1f46e": [
+      "rules.md",
+      "backups/20260131_150308/rules.md"
+    ],
+    "ce9674edca93f329a80960d968b0d447": [
+      "github-repo/docs/01-fallback.md",
+      "learning/ethernaut-01-fallback.md"
+    ],
+    "3d44c8ebe2f138d78b9e475c92943925": [
+      "github-repo/docs/10-reentrancy.md",
+      "learning/ethernaut-10-reentrancy.md"
+    ],
+    "37698be9be3d5411372f44f13bca115e": [
+      "github-repo/docs/02-fallout.md",
+      "learning/ethernaut-02-fallout.md"
+    ],
+    "f55c884ef7c04dfb0cc9217b20165267": [
+      "tools/heartbeat-visualizer.py",
+      "github-repos/heartbeat-visualizer/heartbeat-visualizer.py"
+    ],
+    "5905062a1bdb3f155f16627b64240b5c": [
+      ".git/logs/HEAD",
+      ".git/logs/refs/heads/master"
+    ],
+    "2527889f275104729835f83037fe9b78": [
+      "reports/diary-digest-2026-02-01.md",
+      "reports/diary-digest-latest.md"
+    ]
+  }
+}

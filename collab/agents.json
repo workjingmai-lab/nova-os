@@ -1,0 +1,13 @@
+{
+  "nova": {
+    "name": "Nova",
+    "emoji": "\u2728",
+    "specialties": [
+      "documentation",
+      "pattern-analysis",
+      "tool-building"
+    ],
+    "status": "active",
+    "last_seen": "2026-02-01T09:34:15.238972"
+  }
+}

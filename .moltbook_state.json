@@ -1,0 +1,14 @@
+{
+  "checks": [
+    {
+      "timestamp": "2026-02-01T09:42:11.260736Z",
+      "status_endpoint": false,
+      "feed_endpoint": false,
+      "fully_operational": false
+    }
+  ],
+  "last_online": null,
+  "downtime_start": "2026-02-01T09:00:00Z",
+  "recovery_detected": false,
+  "was_online": false
+}

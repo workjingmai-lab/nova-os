@@ -1,0 +1,489 @@
+{
+  "last_indexed": "2026-02-01T09:38:31.513373",
+  "tool_count": 26,
+  "tools": [
+    {
+      "name": "agent-collab",
+      "filename": "agent-collab.py",
+      "description": "agent-collab.py \u2014 Multi-Agent Collaboration Framework",
+      "path": "tools/agent-collab.py",
+      "categories": [
+        "data",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [
+        "--Create a new task",
+        "--Task title",
+        "--Task description",
+        "--Task owner (default: nova)",
+        "--Comma-separated list of task IDs this depends on",
+        "--List all tasks",
+        "--Filter by status",
+        "--Filter by owner",
+        "--Show task details",
+        "--Handoff task to another agent",
+        "--Target agent for handoff",
+        "--Source agent for handoff",
+        "--Handoff notes",
+        "--Update task status",
+        "--New status value"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 10.12,
+      "modified": "2026-02-01T09:34:15.156796"
+    },
+    {
+      "name": "agent-digest",
+      "filename": "agent-digest.py",
+      "description": "Nova's Agent Digest Generator",
+      "path": "tools/agent-digest.py",
+      "categories": [
+        "api",
+        "data",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 8.09,
+      "modified": "2026-02-01T09:09:28.616708"
+    },
+    {
+      "name": "agent-logger",
+      "filename": "agent-logger.py",
+      "description": "Agent Work Logger \u2014 A lightweight work-tracking system for AI agents",
+      "path": "tools/agent-logger.py",
+      "categories": [
+        "data",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 4.99,
+      "modified": "2026-02-01T09:11:43.150627"
+    },
+    {
+      "name": "agent-productivity-score",
+      "filename": "agent-productivity-score.py",
+      "description": "agent-productivity-score.py",
+      "path": "tools/agent-productivity-score.py",
+      "categories": [
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 4.49,
+      "modified": "2026-02-01T08:57:03.649578"
+    },
+    {
+      "name": "agent-starter-kit",
+      "filename": "agent-starter-kit.py",
+      "description": "Agent Starter Kit \u2014 Minimal Bootstrap for Newborn Agents",
+      "path": "tools/agent-starter-kit.py",
+      "categories": [
+        "data",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 5.27,
+      "modified": "2026-02-01T09:04:35.087528"
+    },
+    {
+      "name": "alert-system",
+      "filename": "alert-system.py",
+      "description": "Nova Alert System",
+      "path": "tools/alert-system.py",
+      "categories": [
+        "api",
+        "data",
+        "automation",
+        "monitoring",
+        "filesystem",
+        "collaboration",
+        "crypto"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 4.68,
+      "modified": "2026-02-01T09:22:58.407575"
+    },
+    {
+      "name": "daily-metrics",
+      "filename": "daily-metrics.py",
+      "description": "daily-metrics.py - Track and visualize daily work output",
+      "path": "tools/daily-metrics.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "filesystem"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 7.33,
+      "modified": "2026-02-01T09:38:20.873871"
+    },
+    {
+      "name": "daily-workflow",
+      "filename": "daily-workflow.sh",
+      "description": "!/bin/bash",
+      "path": "tools/daily-workflow.sh",
+      "categories": [
+        "data",
+        "automation",
+        "messaging",
+        "monitoring",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 2.46,
+      "modified": "2026-02-01T08:48:40.450989"
+    },
+    {
+      "name": "diary-digest",
+      "filename": "diary-digest.py",
+      "description": "Diary Digest Tool - Weekly Activity Summary Generator",
+      "path": "tools/diary-digest.py",
+      "categories": [
+        "data",
+        "automation",
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 19.42,
+      "modified": "2026-02-01T04:20:51.484641"
+    },
+    {
+      "name": "evening-reflection",
+      "filename": "evening-reflection.py",
+      "description": "Evening Reflection Generator \u2014 Daily Review Tool",
+      "path": "tools/evening-reflection.py",
+      "categories": [
+        "data",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 5.94,
+      "modified": "2026-02-01T09:05:43.725559"
+    },
+    {
+      "name": "generate-exploit",
+      "filename": "generate-exploit.sh",
+      "description": "!/bin/bash",
+      "path": "tools/generate-exploit.sh",
+      "categories": [
+        "filesystem",
+        "crypto"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 1.69,
+      "modified": "2026-02-01T08:44:00.520462"
+    },
+    {
+      "name": "goal-tracker",
+      "filename": "goal-tracker.py",
+      "description": "Goal Tracker CLI - Track and manage goals from goals/active.md",
+      "path": "tools/goal-tracker.py",
+      "categories": [
+        "messaging",
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [
+        "command",
+        "goal_name",
+        "--Goal name (for progress/complete commands)"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 19.47,
+      "modified": "2026-02-01T04:29:29.517340"
+    },
+    {
+      "name": "heartbeat-check",
+      "filename": "heartbeat-check.sh",
+      "description": "!/bin/bash",
+      "path": "tools/heartbeat-check.sh",
+      "categories": [
+        "automation",
+        "monitoring"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 6.63,
+      "modified": "2026-02-01T03:33:41.477929"
+    },
+    {
+      "name": "heartbeat-visualizer",
+      "filename": "heartbeat-visualizer.py",
+      "description": "Heartbeat Visualizer - A tool for agents to analyze their activity patterns",
+      "path": "tools/heartbeat-visualizer.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "web",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [
+        "diary_path",
+        "--Path to diary.md file",
+        "--Output HTML report path",
+        "--Show ASCII chart"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 7.38,
+      "modified": "2026-02-01T08:59:11.512245"
+    },
+    {
+      "name": "heartbeat-viz",
+      "filename": "heartbeat-viz.py",
+      "description": "heartbeat-viz.py \u2014 Universal Agent Heartbeat Visualizer",
+      "path": "tools/heartbeat-viz.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [
+        "file",
+        "--Path to diary/log file",
+        "--Save report to file",
+        "--Show demo report"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 8.12,
+      "modified": "2026-02-01T09:02:41.406789"
+    },
+    {
+      "name": "memory-summarizer",
+      "filename": "memory-summarizer.sh",
+      "description": "!/bin/bash",
+      "path": "tools/memory-summarizer.sh",
+      "categories": [
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 8.94,
+      "modified": "2026-02-01T03:40:06.154614"
+    },
+    {
+      "name": "morning-goals",
+      "filename": "morning-goals.py",
+      "description": "Morning Goals Generator \u2014 Daily Planning Tool",
+      "path": "tools/morning-goals.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 6.56,
+      "modified": "2026-02-01T09:05:19.626919"
+    },
+    {
+      "name": "notification-system",
+      "filename": "notification-system.py",
+      "description": "notification-system.py \u2014 Nova's Alert & Mention Tracker",
+      "path": "tools/notification-system.py",
+      "categories": [
+        "api",
+        "data",
+        "automation",
+        "messaging",
+        "monitoring",
+        "web",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [
+        "--Check all sources",
+        "--Check Moltbook only",
+        "--Check grants only",
+        "--Show due reminders",
+        "--Add a reminder",
+        "--When the reminder is due (e.g., ",
+        "--Show all notifications",
+        "--Clear all notifications"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 10.12,
+      "modified": "2026-02-01T09:33:22.277944"
+    },
+    {
+      "name": "nova-status",
+      "filename": "nova-status.py",
+      "description": "nova-status.py - Quick 24h activity summary from diary.md",
+      "path": "tools/nova-status.py",
+      "categories": [
+        "monitoring",
+        "filesystem"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 2.23,
+      "modified": "2026-02-01T08:52:23.050329"
+    },
+    {
+      "name": "nova-status",
+      "filename": "nova-status.sh",
+      "description": "!/bin/bash",
+      "path": "tools/nova-status.sh",
+      "categories": [
+        "monitoring",
+        "filesystem",
+        "crypto"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 1.5,
+      "modified": "2026-02-01T08:43:14.403673"
+    },
+    {
+      "name": "progress-dashboard",
+      "filename": "progress-dashboard.sh",
+      "description": "!/bin/bash",
+      "path": "tools/progress-dashboard.sh",
+      "categories": [
+        "messaging",
+        "web",
+        "filesystem",
+        "crypto"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": true,
+      "size_kb": 4.51,
+      "modified": "2026-02-01T08:51:56.509703"
+    },
+    {
+      "name": "quick-status",
+      "filename": "quick-status.py",
+      "description": "Quick 24h activity summary from diary.md",
+      "path": "tools/quick-status.py",
+      "categories": [
+        "filesystem"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 1.08,
+      "modified": "2026-02-01T08:54:56.083048"
+    },
+    {
+      "name": "self-improvement-loop",
+      "filename": "self-improvement-loop.py",
+      "description": "Nova's Self-Improvement Loop",
+      "path": "tools/self-improvement-loop.py",
+      "categories": [
+        "data",
+        "messaging",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 8.13,
+      "modified": "2026-02-01T08:45:16.144795"
+    },
+    {
+      "name": "swarm-monitor",
+      "filename": "swarm-monitor.py",
+      "description": "Agent Swarm Monitor",
+      "path": "tools/swarm-monitor.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 3.35,
+      "modified": "2026-02-01T09:22:38.351935"
+    },
+    {
+      "name": "toolkit-search",
+      "filename": "toolkit-search.py",
+      "description": "toolkit-search.py - Search and discover tools in Nova's toolkit",
+      "path": "tools/toolkit-search.py",
+      "categories": [
+        "api",
+        "data",
+        "automation",
+        "messaging",
+        "monitoring",
+        "web",
+        "filesystem",
+        "collaboration",
+        "crypto"
+      ],
+      "cli_args": [
+        "query",
+        "--Search query",
+        "--Filter by category"
+      ],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 11.26,
+      "modified": "2026-02-01T09:37:02.160327"
+    },
+    {
+      "name": "workspace-cleanup",
+      "filename": "workspace-cleanup.py",
+      "description": "workspace-cleanup.py - Smart workspace organization and cleanup",
+      "path": "tools/workspace-cleanup.py",
+      "categories": [
+        "data",
+        "monitoring",
+        "web",
+        "filesystem",
+        "collaboration"
+      ],
+      "cli_args": [],
+      "is_runnable": true,
+      "is_shell": false,
+      "size_kb": 9.52,
+      "modified": "2026-02-01T09:37:40.108369"
+    }
+  ]
+}

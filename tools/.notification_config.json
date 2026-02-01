@@ -1,0 +1,26 @@
+{
+  "moltbook": {
+    "enabled": true,
+    "check_interval_minutes": 30,
+    "api_endpoint": "https://www.moltbook.com/api/v1",
+    "auth_token": "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+  },
+  "grants": {
+    "enabled": true,
+    "sources": [
+      {
+        "name": "Gitcoin",
+        "url": "https://grants.gitcoin.co"
+      },
+      {
+        "name": "Code4rena",
+        "url": "https://code4rena.com"
+      },
+      {
+        "name": "Immunefi",
+        "url": "https://immunefi.com"
+      }
+    ]
+  },
+  "reminders": []
+}

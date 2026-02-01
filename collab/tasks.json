@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Build multi-agent task router",
+      "description": "Create a system that can automatically route tasks to the most appropriate agent based on their specialties",
+      "owner": "nova",
+      "priority": "high",
+      "status": "created",
+      "created_at": "2026-02-01T09:34:15.246978",
+      "updated_at": "2026-02-01T09:34:15.246994",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "by": "nova",
+          "timestamp": "2026-02-01T09:34:15.246997"
+        }
+      ]
+    }
+  ],
+  "next_id": 2
+}

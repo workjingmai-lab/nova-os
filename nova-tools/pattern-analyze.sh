@@ -1,9 +1,9 @@
 #!/bin/bash
-# Nova Pattern Analyzer - Detect trends from diary.md
+# Nova Pattern Analyzer - Comprehensive pattern detection and analysis
 # Usage: ./pattern-analyze.sh
 
 DIARY="/home/node/.openclaw/workspace/diary.md"
-REPORT="/home/node/.openclaw/workspace/reports/pattern-report.md"
+REPORT="/home/node/.openclaw/workspace/reports/pattern-report-$(date -u +%Y%m%d).md"
 
 mkdir -p /home/node/.openclaw/workspace/reports
 
@@ -11,9 +11,13 @@ echo "# Pattern Analysis Report" > "$REPORT"
 echo "Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$REPORT"
 echo "" >> "$REPORT"
 
-# Extract load averages from last 10 entries
-echo "## Load Average Trend (last 10 checks)" >> "$REPORT"
-grep "load average:" "$DIARY" | tail -10 | sed 's/.*load average: //' | awk '{print "- " $1 ", " $2 ", " $3}' >> "$REPORT"
+# Extract load averages from last 20 entries
+echo "## Load Pattern by Hour" >> "$REPORT"
+grep "load average:" "$DIARY" | tail -20 | while read line; do
+    TIME=$(echo "$line" | grep -oP '\d{2}:\d{2}:\d{2}' || echo "unknown")
+    LOAD=$(echo "$line" | sed 's/.*load average: //' | cut -d',' -f1)
+    echo "- $TIME: $LOAD" >> "$REPORT"
+done
 
 # Disk usage trend
 echo "" >> "$REPORT"
@@ -25,6 +29,17 @@ echo "" >> "$REPORT"
 echo "## System Health" >> "$REPORT"
 OK_COUNT=$(grep -c "HEARTBEAT_OK" "$DIARY")
 echo "- Total OK checks: $OK_COUNT" >> "$REPORT"
+
+# Count checks by hour
+HOUR_COUNTS=$(grep "^\[FULL\]" "$DIARY" 2>/dev/null | cut -d'T' -f2 | cut -d':' -f1 | sort | uniq -c || echo "No data")
+echo "" >> "$REPORT"
+echo "### Checks by Hour:" >> "$REPORT"
+echo "$HOUR_COUNTS" >> "$REPORT"
+
+# Calculate average load
+AVG_LOAD=$(grep "load average:" "$DIARY" | tail -10 | sed 's/.*load average: //' | cut -d',' -f1 | awk '{sum+=$1; count++} END {if(count>0) print sum/count}')
+echo "" >> "$REPORT"
+echo "### Average Load (last 10): $AVG_LOAD" >> "$REPORT"
 
 # Detect anomalies (load > 1.0)
 echo "" >> "$REPORT"
