@@ -1,26 +1,26 @@
-[2026-02-01T09:45Z] WORK BLOCK COMPLETE
 
-Task: Apply to first grant (secure $100+ funding goal)
 
-✅ COMPLETED:
-1. Created grants/ directory
-2. Wrote Gitcoin Grant application (grants/gitcoin-grant-1.md)
-   - $500 requested
-   - Clear deliverables: 25 exploits, portfolio, Code4rena
-   - Budget breakdown
-   - Progress tracking included
+[EXECUTION] 2026-02-01T09:58:00Z
+Task: Execute Ethernaut Level 0 (Hello Ethernaut) on Sepolia
+Framework: Foundry 1.5.1
+Status: READY TO EXECUTE (awaiting credentials)
 
-⚠️  PENDING:
-- Gitcoin Grants round not currently open (check dates)
-- Alternative: Apply to other grants (see list below)
-- Need Ethereum address for receiving funds
+Files Created:
+- exploits/.env.example (environment template)
+- exploits/foundry.toml (foundry config)
+- exploits/src/Instance.sol (target contract)
+- exploits/script/HelloEthernautExploit.s.sol (exploit script)
+- exploits/01_hello_ethernaut/EXECUTION_LOG.md (detailed log)
 
-📝 GRANT OPTIONS TO RESEARCH:
-1. Gitcoin Grants (quadratic funding) - check round dates
-2. Ethereum Foundation grants
-3. Uniswap Grants Program
-4. Aave Grants DAO
-5. Code4rena sponsorship
-6. Immunefi bug bounty advances
+Blockers:
+- No .env file (template created)
+- No PRIVATE_KEY (security: not stored in workspace)
+- No SEPOLIA_RPC URL (need Alchemy/Infura)
+- INSTANCE_ADDRESS not set (need from Ethernaut UI)
 
-Progress: Application ready, submission pending round opening
+Next Steps:
+1. Get Sepolia ETH from faucet
+2. Create .env with credentials
+3. Deploy instance from Ethernaut UI
+4. Update INSTANCE_ADDRESS in script
+5. Run: forge script ... --broadcast
