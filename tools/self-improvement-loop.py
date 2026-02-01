@@ -45,7 +45,7 @@ def save_metrics(data):
         json.dump(data, f, indent=2)
 
 def parse_diary_entries():
-    """Extract metrics from diary entries."""
+    """Extract metrics from diary entries and today.md for velocity."""
     metrics = {
         "entries_count": 0,
         "tasks_completed": 0,
@@ -215,6 +215,75 @@ def generate_report():
         for metric, data in velocity.items():
             arrow = "↑" if data["direction"] == "up" else "↓" if data["direction"] == "down" else "→"
             print(f"  {metric.replace('_', ' ').title():20} {arrow} {data['current']} (was {data['previous']})")
+    
+    # Growth predictions (integrated from growth-predictor.py)
+    print("\n🚀 GROWTH PREDICTIONS")
+    print("-" * 40)
+    daily = metrics_data.get("metrics", {}).get("daily", {})
+    if len(daily) >= 3:
+        dates = sorted(daily.keys())
+        tools_ts = [daily.get(d, {}).get("tools_built", 0) for d in dates]
+        tasks_ts = [daily.get(d, {}).get("tasks_completed", 0) for d in dates]
+        
+        # Simple growth rate calculation
+        if len(dates) >= 2:
+            recent_tools = tools_ts[-3:] if len(tools_ts) >= 3 else tools_ts
+            recent_tasks = tasks_ts[-3:] if len(tasks_ts) >= 3 else tasks_ts
+            
+            tools_rate = sum(recent_tools) / len(recent_tools)
+            tasks_rate = sum(recent_tasks) / len(recent_tasks)
+            
+            total_tools = sum(tools_ts)
+            total_tasks = sum(tasks_ts)
+            
+            print(f"  Tools: {total_tools} total (~{tools_rate:.1f}/day)")
+            if tools_rate > 0:
+                days_to_20 = max(0, (20 - total_tools) / tools_rate)
+                pred_date = datetime.now() + timedelta(days=days_to_20)
+                if total_tools < 20:
+                    print(f"    → 20 tools by {pred_date.strftime('%b %d')} ({days_to_20:.0f} days)")
+            
+            print(f"  Tasks: {total_tasks} total (~{tasks_rate:.0f}/day)")
+            if tasks_rate > 0:
+                days_to_500 = max(0, (500 - total_tasks) / tasks_rate)
+                pred_date = datetime.now() + timedelta(days=days_to_500)
+                if total_tasks < 500:
+                    print(f"    → 500 tasks by {pred_date.strftime('%b %d')} ({days_to_500:.0f} days)")
+    else:
+        print("  Need 3+ days of data for predictions")
+    
+    # Detect WOW moments
+    if len(daily) >= 3:
+        print("\n🔥 RECENT ACHIEVEMENTS")
+        print("-" * 40)
+        recent = daily.get(dates[-1], {})
+        avg_tools = sum(daily.get(d, {}).get("tools_built", 0) for d in dates) / len(dates)
+        avg_tasks = sum(daily.get(d, {}).get("tasks_completed", 0) for d in dates) / len(dates)
+        
+        tools_today = recent.get("tools_built", 0)
+        tasks_today = recent.get("tasks_completed", 0)
+        
+        if tools_today >= 2 and tools_today > avg_tools * 1.5:
+            print(f"  🔥 Building sprint: {tools_today} tools today")
+        
+        if tasks_today >= 20 and tasks_today > avg_tasks * 1.3:
+            print(f"  ⚡ Execution spike: {tasks_today} tasks today")
+        
+        # Check for streaks
+        streak = 0
+        for date in reversed(dates):
+            if daily.get(date, {}).get("tools_built", 0) > 0:
+                streak += 1
+            else:
+                break
+        
+        if streak >= 5:
+            print(f"  ✨ {streak}-day building streak!")
+        
+        if not any([tools_today >= 2 and tools_today > avg_tools * 1.5,
+                    tasks_today >= 20 and tasks_today > avg_tasks * 1.3,
+                    streak >= 5]):
+            print("  Keep executing — wow moments coming!")
     
     # Next actions
     print("\n⚡ NEXT ACTIONS")

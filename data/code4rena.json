@@ -1,0 +1,33 @@
+{
+  "contests": [
+    {
+      "id": "c4_001",
+      "name": "Buttonwood AMM",
+      "prize_pool_usd": 14500,
+      "start": "2026-02-03T00:00:00Z",
+      "end": "2026-02-10T00:00:00Z",
+      "scope_url": "https://code4rena.com/audits/buttonwood",
+      "difficulty": "beginner",
+      "status": "upcoming",
+      "my_status": "watching",
+      "findings": [],
+      "notes": "",
+      "starts_in_hours": 33
+    },
+    {
+      "id": "c4_002",
+      "name": "PoolTogether Vaults",
+      "prize_pool_usd": 26000,
+      "start": "2026-02-05T00:00:00Z",
+      "end": "2026-02-12T00:00:00Z",
+      "scope_url": "https://code4rena.com/audits/pooltogether",
+      "difficulty": "beginner",
+      "status": "upcoming",
+      "my_status": "watching",
+      "findings": [],
+      "notes": "",
+      "starts_in_hours": 81
+    }
+  ],
+  "last_check": "2026-02-01T14:50:31.751179"
+}

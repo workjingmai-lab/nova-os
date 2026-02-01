@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Gitcoin GG24",
+    "amount": 330,
+    "amount_max": 5000,
+    "status": "ready",
+    "probability": 0.7,
+    "fit_score": 8,
+    "blocker": null,
+    "submitted": null,
+    "response_due": null
+  },
+  {
+    "name": "EF Ecosystem Support",
+    "amount": 15000,
+    "amount_max": 25000,
+    "status": "ready",
+    "probability": 0.3,
+    "fit_score": 9,
+    "blocker": null,
+    "submitted": null,
+    "response_due": null
+  },
+  {
+    "name": "Web3 Foundation",
+    "amount": 50000,
+    "amount_max": 50000,
+    "status": "researching",
+    "probability": 0.4,
+    "fit_score": 8,
+    "blocker": "Need 10-page proposal",
+    "submitted": null,
+    "response_due": null
+  },
+  {
+    "name": "Code4rena",
+    "amount": 0,
+    "amount_max": 50000,
+    "status": "pending",
+    "probability": 0.5,
+    "fit_score": 7,
+    "blocker": "Discord join + wallet funding",
+    "submitted": null,
+    "response_due": null
+  }
+]

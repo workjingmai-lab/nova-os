@@ -1,50 +1,32 @@
 #!/bin/bash
-# nova-status.sh — Quick status check for Arthur
+# nova-status.sh — Quick "Nova at a Glance" status check
 
-echo "================================"
-echo "  NOVA SYSTEM STATUS"
-echo "================================"
+echo "🤖 NOVA STATUS — $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Work block count
+WORK_BLOCKS=$(grep -c "WORK BLOCK" /home/node/.openclaw/workspace/diary.md 2>/dev/null || echo "0")
+echo "📊 Work Blocks Today: $WORK_BLOCKS"
+
+# Latest work block
 echo ""
+echo "📝 Latest Activity:"
+grep -A 3 "WORK BLOCK #" /home/node/.openclaw/workspace/diary.md 2>/dev/null | tail -7 | head -5
 
-# System vitals
-echo "📊 SYSTEM VITALS"
-echo "----------------"
-df -h / | tail -1 | awk '{print "  Disk: " $3 " used / " $2 " total (" $5 ")"}'
-uptime | awk '{print "  Uptime: " $3 " " $4}' | sed 's/,//'
+# Current focus
 echo ""
+echo "🎯 Current Focus (from today.md):"
+grep -A 3 "Working Memory" /home/node/.openclaw/workspace/today.md 2>/dev/null | tail -3
 
-# Work summary
-echo "📈 WORK SUMMARY (Today)"
-echo "----------------------"
-echo "  Ethernaut Challenges: 25/25 ✅"
-echo "  Content Pieces: 3 ✅"
-echo "  Documentation: 50KB+ ✅"
-echo "  GitHub Repo: Ready ✅"
+# Grant pipeline
 echo ""
+echo "💰 Grant Pipeline:"
+if [ -f "/home/node/.openclaw/workspace/grants.json" ]; then
+    READY=$(grep -c '"status": "ready_to_submit"' /home/node/.openclaw/workspace/grants.json)
+    SUBMITTED=$(grep -c '"status": "submitted"' /home/node/.openclaw/workspace/grants.json)
+    echo "  Ready: $READY | Submitted: $SUBMITTED"
+else
+    echo "  (grants.json not found)"
+fi
 
-# Files created
-echo "📁 FILES CREATED"
-echo "----------------"
-find /home/node/.openclaw/workspace -type f -name "*.md" -newer /home/node/.openclaw/workspace/boot.md 2>/dev/null | wc -l | awk '{print "  Markdown files: " $1}'
-find /home/node/.openclaw/workspace -type f -name "*.sol" 2>/dev/null | wc -l | awk '{print "  Solidity files: " $1}'
-find /home/node/.openclaw/workspace -type f -name "*.js" 2>/dev/null | wc -l | awk '{print "  JavaScript files: " $1}'
-echo ""
-
-# Wallet
-echo "💳 WALLET"
-echo "---------"
-echo "  Address: 0x87F4fc3AF2B04A365e2ee81Df0c784769505054A"
-echo "  Status: Waiting for funding"
-echo ""
-
-# Next steps
-echo "🎯 NEXT ACTIONS"
-echo "---------------"
-echo "  1. Publish content (ready)"
-echo "  2. Create GitHub (ready)"
-echo "  3. Apply for grants (ready)"
-echo ""
-
-echo "================================"
-echo "  Status: OPERATIONAL ✅"
-echo "================================"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

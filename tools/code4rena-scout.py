@@ -1,0 +1,273 @@
+#!/usr/bin/env python3
+"""
+code4rena-scout.py — Code4rena Competition Intelligence
+Research active competitions, analyze scope, estimate effort.
+Nova's audit competition assistant.
+"""
+
+import json
+from pathlib import Path
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional
+
+DATA_FILE = Path("data/code4rena.json")
+
+# Sample competition data structure (would be scraped from API in production)
+SAMPLE_COMPETITIONS = [
+    {
+        "id": "c4-2024-01-example",
+        "name": "Example Protocol Audit",
+        "status": "upcoming",
+        "start_date": "2025-02-15",
+        "end_date": "2025-02-22",
+        "prize_pool": "$50,000",
+        "sponsor": "ExampleDAO",
+        "scope_lines": 5000,
+        "complexity": "medium",
+        "tech_stack": ["Solidity", "Foundry", "OpenZeppelin"],
+        "focus_areas": ["Access control", "Reentrancy", "Oracle manipulation"],
+        "my_estimate": {
+            "hours_required": 20,
+            "confidence": "medium",
+            "potential_findings": "2-3 high, 5-8 medium"
+        }
+    }
+]
+
+RESOURCES = {
+    "getting_started": [
+        "https://docs.code4rena.com/",
+        "https://code4rena.com/@/how-to-audit",
+        "https://discord.gg/code4rena"
+    ],
+    "tools": [
+        "Slither (static analysis)",
+        "Mythril (symbolic execution)",
+        "Foundry (testing)",
+        "Echidna (fuzzing)"
+    ],
+    "methodology": [
+        "1. Read docs/specs thoroughly",
+        "2. Map attack surfaces (external calls, access control)",
+        "3. Check invariants (what should always be true)",
+        "4. Look for common patterns (reentrancy, overflows)",
+        "5. Fuzz critical functions",
+        "6. Document findings with PoC"
+    ]
+}
+
+COMMON_VULNERABILITIES = [
+    ("Reentrancy", "External calls before state updates", "High"),
+    ("Access Control", "Missing or weak authorization checks", "High"),
+    ("Integer Overflow/Underflow", "Arithmetic without bounds checking", "Medium/High"),
+    ("Unchecked External Calls", "Return values not verified", "Medium"),
+    ("Front-running", "Transaction ordering exploits", "Medium"),
+    ("Oracle Manipulation", "Price feed manipulation", "High"),
+    ("Timestamp Dependence", "block.timestamp reliance", "Low/Medium"),
+    ("DoS via Gas Limit", "Unbounded operations", "Medium"),
+]
+
+
+def load_data() -> Dict:
+    """Load Code4rena tracking data."""
+    if DATA_FILE.exists():
+        with open(DATA_FILE) as f:
+            return json.load(f)
+    return {
+        "competitions": [],
+        "my_participation": [],
+        "earnings": {"total": 0, "breakdown": []},
+        "skills": [],
+        "notes": ""
+    }
+
+
+def save_data(data: Dict):
+    """Save Code4rena tracking data."""
+    DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(DATA_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def generate_readiness_report() -> str:
+    """Generate readiness assessment for first competition."""
+    report = """# 🔍 Code4rena Readiness Assessment
+
+## Current Status: PREPARATION PHASE
+
+### ✅ Prerequisites Met
+- [x] Research completed on competition format
+- [x] Tool stack identified (Slither, Mythril, Foundry)
+- [x] Methodology documented
+- [x] Common vulnerability patterns catalogued
+
+### ⏳ Pending External
+- [ ] Discord server access (requires Arthur)
+- [ ] First competition registration
+- [ ] Wallet setup for prize distribution
+
+### 🛠️ Recommended Setup
+
+**Tools to Install:**
+"""
+    
+    for tool in RESOURCES["tools"]:
+        report += f"- {tool}\n"
+    
+    report += """
+**Audit Methodology:**
+"""
+    
+    for step in RESOURCES["methodology"]:
+        report += f"{step}\n"
+    
+    report += """
+## 🎯 First Competition Strategy
+
+### Recommended Approach
+1. **Start Small**: Pick 3-day competition with <$30K pool
+2. **Focus Areas**: Access control, reentrancy, input validation
+3. **Time Budget**: 15-20 hours for first competition
+4. **Goal**: Submit 1-2 valid findings (quality over quantity)
+
+### Vulnerability Checklist
+"""
+    
+    for vuln, desc, severity in COMMON_VULNERABILITIES:
+        emoji = {"High": "🔴", "Medium": "🟡", "Low": "🟢", "Medium/High": "🟠", "Low/Medium": "🟢"}.get(severity, "⚪")
+        report += f"{emoji} **{vuln}** ({severity}): {desc}\n"
+    
+    report += """
+## 📊 Competition Tracker
+
+| Competition | Status | Prize Pool | My Hours | Findings | Earnings |
+|-------------|--------|------------|----------|----------|----------|
+| (None yet) | — | — | — | — | — |
+
+## 💡 Success Metrics
+
+**First Competition Goals:**
+- Submit at least 1 valid finding
+- Learn the judging/reporting process
+- Understand prize distribution mechanics
+- Build reputation for future comps
+
+**3-Month Targets:**
+- 5+ competitions entered
+- $1,000+ in earnings
+- 1+ solo high-severity finding
+
+---
+*Generated by code4rena-scout.py — Nova's competition intelligence*
+"""
+    
+    return report
+
+
+def generate_competition_brief(comp_name: str) -> str:
+    """Generate analysis brief for a specific competition."""
+    return f"""# 📋 Competition Brief: {comp_name}
+
+## Pre-Audit Checklist
+
+### Phase 1: Reconnaissance (2 hours)
+- [ ] Read all documentation
+- [ ] Understand protocol purpose and actors
+- [ ] Map high-level architecture
+- [ ] Identify external dependencies (oracles, bridges, etc.)
+
+### Phase 2: Scope Analysis (1 hour)
+- [ ] Count lines of code in scope
+- [ ] Identify complex functions (>100 lines)
+- [ ] Map inheritance relationships
+- [ ] List all external calls
+
+### Phase 3: Systematic Review (10+ hours)
+- [ ] Run static analysis (Slither)
+- [ ] Check each item in vulnerability checklist
+- [ ] Fuzz critical invariants
+- [ ] Review access control on all external functions
+
+### Phase 4: Documentation (2 hours)
+- [ ] Write clear vulnerability descriptions
+- [ ] Create minimal PoC for each finding
+- [ ] Suggest fixes with code examples
+- [ ] Submit before deadline
+
+## Key Questions to Answer
+
+1. **What is the protocol's core value proposition?**
+2. **Who are the actors and what are their incentives?**
+3. **Where does value flow through the system?**
+4. **What assumptions does the code make about external contracts?**
+5. **What would maximum damage look like?**
+
+## Risk Areas to Prioritize
+
+Based on protocol type, prioritize:
+- **DeFi**: Reentrancy, oracle manipulation, price accuracy
+- **NFT**: Access control, minting logic, royalty payments
+- **Governance**: Voting manipulation, proposal execution, timelock
+- **Bridge**: Message verification, replay attacks, custody
+
+---
+*Template for {comp_name} audit*
+"""
+
+
+def main():
+    import sys
+    
+    if len(sys.argv) < 2:
+        print("""
+╔══════════════════════════════════════════════════════════════╗
+║  🔍 Code4rena Scout — Competition Intelligence              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Commands:
+  code4rena-scout.py status       # Readiness assessment
+  code4rena-scout.py brief <name> # Generate competition brief
+  code4rena-scout.py checklist    # Show vulnerability checklist
+
+Examples:
+  code4rena-scout.py status
+  code4rena-scout.py brief "Aave V3 Audit"
+""")
+        sys.exit(0)
+    
+    command = sys.argv[1].lower()
+    
+    if command == "status":
+        report = generate_readiness_report()
+        print(report)
+        
+        # Save to file
+        out_path = Path("docs/code4rena-readiness.md")
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(report)
+        print(f"\n✅ Saved to {out_path}")
+    
+    elif command == "brief":
+        if len(sys.argv) < 3:
+            print("Usage: code4rena-scout.py brief <competition_name>")
+            sys.exit(1)
+        comp_name = " ".join(sys.argv[2:])
+        brief = generate_competition_brief(comp_name)
+        print(brief)
+    
+    elif command == "checklist":
+        print("""
+╔══════════════════════════════════════════════════════════════╗
+║  🔍 Common Vulnerability Checklist                          ║
+╚══════════════════════════════════════════════════════════════╝
+""")
+        for vuln, desc, severity in COMMON_VULNERABILITIES:
+            print(f"{severity:12} | {vuln:25} | {desc}")
+    
+    else:
+        print(f"❌ Unknown command: {command}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,16 +1,13 @@
 {
   "lastChecks": {
-    "moltbook": 1738401960,
-    "email": null,
-    "calendar": null
+    "email": 1706803200,
+    "calendar": 1706803200,
+    "weather": null
   },
-  "moltbook": {
-    "claimed": true,
-    "claimedAt": "2026-01-31T21:20:34Z",
-    "lastPost": "2026-02-01T13:07:35Z",
-    "postsThisWeek": 4,
-    "weeklyGoalMet": true
-  },
-  "lastFullIso": "2026-02-01T14:20:06Z",
+  "lastMoltbookPost": "2026-02-01T17:03:00Z",
+  "lastMoltbookCheck": "2026-02-01T17:06:00Z",
+  "moltbookPostId": "week-1-complete-16-16-goals-crushed",
+  "moltbookPostsThisWeek": 2,
+  "lastFullIso": "2026-02-01T17:06:21Z",
   "lastDeepIso": "2026-02-01T11:15:29Z"
 }

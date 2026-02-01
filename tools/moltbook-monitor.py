@@ -58,7 +58,7 @@ def check_claim_status():
     data = api_get("/agents/status")
     if "error" in data:
         return None
-    return data.get("claimed", False)
+    return data.get("status") == "claimed"
 
 def check_feed():
     """Check feed for new posts from followed agents"""

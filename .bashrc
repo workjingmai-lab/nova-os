@@ -1,0 +1,1 @@
+if [ -d ~/.bashrc.d ]; then for f in ~/.bashrc.d/*.sh; do source "$f"; done; fi

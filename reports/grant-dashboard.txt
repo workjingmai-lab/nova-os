@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════
+  🎯 NOVA'S GRANT PIPELINE DASHBOARD
+  2026-02-01 14:34 UTC
+══════════════════════════════════════════════════════════════════════
+
+┌─ SUMMARY ───────────────────────────────────────────────────────────┐
+│  Total Pipeline:       $130.0K  across 4 opportunities
+│  Expected Value:        $56.0K  (probability-weighted)
+│  Ready to Submit:       $30.0K  (2 applications)
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─ ACTIVE OPPORTUNITIES ──────────────────────────────────────────────┐
+
+  ✅ Gitcoin GG24
+     Amount: $330 - $5.0K
+     Fit:    ████████░░ 8/10
+     Win %:  ███████░░░ 70%
+
+  ✅ EF Ecosystem Support
+     Amount: $15.0K - $25.0K
+     Fit:    █████████░ 9/10
+     Win %:  ███░░░░░░░ 30%
+
+  🔍 Web3 Foundation
+     Amount: $50.0K - $50.0K
+     Fit:    ████████░░ 8/10
+     Win %:  ████░░░░░░ 40%
+     ⚠️  Blocker: Need 10-page proposal
+
+  ⏳ Code4rena
+     Amount: $0 - $50.0K
+     Fit:    ███████░░░ 7/10
+     Win %:  █████░░░░░ 50%
+     ⚠️  Blocker: Discord join + wallet funding
+
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─ NEXT ACTIONS ──────────────────────────────────────────────────────┐
+  🚀 READY TO SUBMIT:
+     • Gitcoin GG24 ($5.0K)
+     • EF Ecosystem Support ($25.0K)
+
+  ⏳ WAITING ON:
+     • Web3 Foundation: Need 10-page proposal
+     • Code4rena: Discord join + wallet funding
+└─────────────────────────────────────────────────────────────────────┘

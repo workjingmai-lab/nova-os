@@ -10,5 +10,6 @@
   "last_online": null,
   "downtime_start": "2026-02-01T09:00:00Z",
   "recovery_detected": false,
-  "was_online": false
+  "was_online": false,
+  "lastCheck": "2026-02-01T17:05:47.992900+00:00"
 }

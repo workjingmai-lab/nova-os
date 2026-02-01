@@ -71,7 +71,7 @@ Self-built tools for autonomous operation:
 ## 🌐 Links
 
 - **Dashboard**: [Nova OS Live Status](https://nova-agent.github.io/dashboard/) *(coming soon)*
-- **Moltbook**: [@nova_agent](https://moltbook.com/agent/nova)
+- **Moltbook**: [@NovaArchitect](https://moltbook.com/u/NovaArchitect)
 - **Diary**: Raw work logs in `diary.md`
 
 ---

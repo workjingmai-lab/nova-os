@@ -1,13 +1,24 @@
 {
   "grants": [
     {
+      "id": "w3f-1",
+      "name": "Web3 Foundation Open Grants",
+      "category": "Infrastructure",
+      "amount": "$10K-$50K",
+      "deadline": "Rolling",
+      "url": "https://grants.web3.foundation",
+      "status": "submitted",
+      "submitted_at": "2026-02-01T14:54Z",
+      "notes": "Submitted, awaiting response"
+    },
+    {
       "id": "ethereum-foundation-1",
       "name": "Ethereum Foundation Ecosystem Support",
       "category": "Infrastructure",
       "amount": "$10K-$500K",
       "deadline": "Rolling",
       "url": "https://esp.ethereum.foundation",
-      "status": "not_applied",
+      "status": "ready_to_submit",
       "notes": "Good for security tooling"
     },
     {
@@ -17,8 +28,38 @@
       "amount": "Matching pool",
       "deadline": "Quarterly rounds",
       "url": "https://grants.gitcoin.co",
-      "status": "not_applied",
-      "notes": "Needs community support"
+      "status": "ready_to_submit",
+      "notes": "Application complete: grant-applications/gitcoin-grants-application.md"
+    },
+    {
+      "id": "optimism-1",
+      "name": "Optimism RetroPGF",
+      "category": "Public Goods",
+      "amount": "$20K",
+      "deadline": "Quarterly rounds",
+      "url": "https://app.optimism.io/op-governance",
+      "status": "ready_to_submit",
+      "notes": "Draft complete: grants/optimism-retropgf.md"
+    },
+    {
+      "id": "aave-1",
+      "name": "Aave Grants DAO",
+      "category": "DeFi",
+      "amount": "$25K",
+      "deadline": "Rolling",
+      "url": "https://governance.aave.com",
+      "status": "ready_to_submit",
+      "notes": "Draft complete"
+    },
+    {
+      "id": "arbitrum-1",
+      "name": "Arbitrum DAO STIP",
+      "category": "L2 Infrastructure",
+      "amount": "$25K",
+      "deadline": "Rolling",
+      "url": "https://governance.arbitrum.org",
+      "status": "ready_to_submit",
+      "notes": "Draft complete: grants/arbitrum-dao-grant.md"
     },
     {
       "id": "openai-1",
@@ -37,8 +78,8 @@
       "amount": "$100-$50K per audit",
       "deadline": "Weekly competitions",
       "url": "https://code4rena.com",
-      "status": "not_applied",
-      "notes": "Direct path to earning"
+      "status": "in_progress",
+      "notes": "Research complete, onboarding pending Discord join"
     },
     {
       "id": "sherlock-1",
@@ -51,5 +92,29 @@
       "notes": "Leaderboard-based rewards"
     }
   ],
-  "applications": []
+  "applications": [
+    {
+      "grant_id": "w3f-1",
+      "submitted_at": "2026-02-01T14:54Z",
+      "status": "submitted",
+      "amount_requested": "$10-50K",
+      "notes": "Submitted to Web3 Foundation Open Grants"
+    },
+    {
+      "grant_id": "gitcoin-1",
+      "submitted_at": null,
+      "status": "ready",
+      "file": "grant-applications/gitcoin-grants-application.md",
+      "amount_requested": "$330",
+      "notes": "Complete application ready for submission to gitcoin.co"
+    },
+    {
+      "grant_id": "ethereum-foundation-1",
+      "submitted_at": null,
+      "status": "ready",
+      "file": "grant-applications/ethereum-foundation-ecosystem-grant.md",
+      "amount_requested": "$15,000",
+      "notes": "Complete application ready for submission to esp.ethereum.foundation"
+    }
+  ]
 }

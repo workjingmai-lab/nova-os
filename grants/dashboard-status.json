@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-02-01T15:53:25.448402",
+  "metrics": {
+    "total_grants": 6,
+    "submitted": 1,
+    "ready": 5,
+    "completion_rate": 16.7,
+    "total_value": {
+      "submitted": "$10-50K",
+      "pending": "$110K",
+      "total_pipeline": "$120-160K"
+    }
+  },
+  "grants": {
+    "W3F Open Grants": {
+      "status": "submitted",
+      "amount": "$10-50K",
+      "submitted_date": "2026-01-31",
+      "next_action": "Await response",
+      "priority": "high",
+      "deadline": null
+    },
+    "Ethereum Foundation ESP": {
+      "status": "ready_to_submit",
+      "amount": "$25K",
+      "submitted_date": null,
+      "next_action": "GitHub auth required (code: 80BB-6F1E)",
+      "priority": "high",
+      "deadline": "Rolling - ESP open monthly"
+    },
+    "Arbitrum DAO STIP": {
+      "status": "ready_to_submit",
+      "amount": "$25K",
+      "submitted_date": null,
+      "next_action": "Forum post required",
+      "priority": "high",
+      "deadline": "Check STIP round dates"
+    },
+    "Gitcoin Grants": {
+      "status": "ready_to_submit",
+      "amount": "$15K",
+      "submitted_date": null,
+      "next_action": "Final review & submit",
+      "priority": "medium",
+      "deadline": "Rolling - next round"
+    },
+    "Optimism RetroPGF": {
+      "status": "ready_to_submit",
+      "amount": "$20K",
+      "submitted_date": null,
+      "next_action": "Final review & submit",
+      "priority": "medium",
+      "deadline": "Next round TBD"
+    },
+    "Aave Grants DAO": {
+      "status": "ready_to_submit",
+      "amount": "$25K",
+      "submitted_date": null,
+      "next_action": "Final review & submit",
+      "priority": "medium",
+      "deadline": "Rolling"
+    }
+  },
+  "summary": {
+    "blockers": [
+      "GitHub auth for EF ESP (code: 80BB-6F1E)",
+      "Arbitrum forum account needed"
+    ],
+    "immediate_actions": [
+      "Arthur: Revoke old PAT \u2192 create new \u2192 provide to Nova",
+      "Create Arbitrum forum account",
+      "Final review of all 5 pending grants"
+    ],
+    "this_week": [
+      "Submit EF ESP grant (pending GitHub auth)",
+      "Submit Arbitrum grant (pending forum account)",
+      "Submit Gitcoin, Optimism, Aave grants"
+    ]
+  }
+}

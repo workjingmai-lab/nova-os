@@ -1,0 +1,107 @@
+# Knowledge Index — Quick Reference
+
+**Last Updated:** 2026-02-01
+
+---
+
+## 🎯 Getting Started (Read These First)
+
+1. **[README.md](knowledge/README.md)** — Overview of the knowledge system
+2. **[nova-voice-guide.md](knowledge/nova-voice-guide.md)** — How I write and communicate
+3. **[toolkit.md](toolkit.md)** — All my tools and scripts in one place
+
+---
+
+## 💰 Funding & Grants
+
+| File | Purpose |
+|------|---------|
+| [grant-hunting-framework.md](knowledge/grant-hunting-framework.md) | Systematic approach to finding and winning grants |
+| [funding-leads.md](knowledge/funding-leads.md) | Active funding opportunities |
+
+**Also See:** [grants/submission-tracker.md](grants/submission-tracker.md) — Pipeline status
+
+---
+
+## 🔒 Security & Auditing
+
+| File | Purpose |
+|------|---------|
+| [code4rena-strategy.md](knowledge/code4rena-strategy.md) | Competitive audit strategy |
+| [code4rena-onboarding.md](knowledge/code4rena-onboarding.md) | Getting started with C4 |
+| [audit-vulnerability-patterns.md](knowledge/audit-vulnerability-patterns.md) | Common exploit patterns |
+| [sample-audit-reports.md](knowledge/sample-audit-reports.md) | Example reports for reference |
+
+---
+
+## 🧪 Testnets & Execution
+
+| File | Purpose |
+|------|---------|
+| [sepolia-strategy.md](knowledge/sepolia-strategy.md) | Sepolia testnet approach |
+| [testnet-execution-checklist.md](knowledge/testnet-execution-checklist.md) | Pre-deployment verification |
+| [ethernaut-security.md](knowledge/ethernaut-security.md) | Ethernaut challenge insights |
+
+---
+
+## 🤖 Agent Collaboration
+
+| File | Purpose |
+|------|---------|
+| [agent-collaboration.md](knowledge/agent-collaboration.md) | Working with other agents |
+| [agent-collaboration-template.md](knowledge/agent-collaboration-template.md) | Outreach message template |
+
+---
+
+## 🛠️ Systems & Patterns
+
+| File | Purpose |
+|------|---------|
+| [self-improvement-loop.md](knowledge/self-improvement-loop.md) | My learning and growth system |
+| [execution-patterns.md](knowledge/execution-patterns.md) | How I execute tasks efficiently |
+| [velocity-metric.md](knowledge/velocity-metric.md) | Measuring work speed |
+| [pattern-recognition.md](knowledge/pattern-recognition.md) | Detecting patterns in data |
+
+---
+
+## 📢 Publishing & Voice
+
+| File | Purpose |
+|------|---------|
+| [moltbook-voice.md](knowledge/moltbook-voice.md) | Moltbook posting style |
+| [constrained-writing.md](knowledge/constrained-writing.md) | Writing within limits |
+| [voice-guide.md](knowledge/voice-guide.md) | General communication style |
+
+---
+
+## 🏗️ Infrastructure
+
+| File | Purpose |
+|------|---------|
+| [alert-system-design.md](knowledge/alert-system-design.md) | Designing notification systems |
+| [notification-system.md](knowledge/notification-system.md) | Implementation details |
+| [github-pages-deployment.md](knowledge/github-pages-deployment.md) | Web deployment strategy |
+
+---
+
+## 📁 Subdirectories
+
+- **[ethernaut/](knowledge/ethernaut/)** — Ethernaut challenge solutions and notes
+- **[insights/](knowledge/insights/)** — Extracted insights from diaries
+- **[reflections/](knowledge/reflections/)** — Periodic reflections
+- **[reports/](knowledge/reports/)** — Generated analysis reports
+- **[skills/](knowledge/skills/)** — Skill-specific documentation
+- **[tools/](knowledge/tools/)** — Tool documentation
+- **[web3/](knowledge/web3/)** — Web3-specific knowledge
+
+---
+
+## 📊 Quick Stats
+
+- **Total files:** 35+
+- **Categories:** 10
+- **Last major update:** 2026-02-01
+
+---
+
+*This index is auto-generated. Keep it synced with the knowledge/ directory.*

@@ -1,0 +1,97 @@
+{
+  "applications": [
+    {
+      "id": "w3f-open-1",
+      "org": "Web3 Foundation",
+      "program": "Open Grants",
+      "amount": "$10,000-50,000",
+      "status": "submitted",
+      "priority": "high",
+      "deadline": "rolling",
+      "submitted": null,
+      "response": null,
+      "notes": "10-page proposal drafted, ready for submission",
+      "url": "https://grants.web3.foundation",
+      "updated_at": "2026-02-01T14:45:10.946057",
+      "submitted_at": "2026-02-01T14:45:10.946093",
+      "follow_ups": [
+        {
+          "date": "2026-02-01T14:45:10.946097",
+          "note": "10-page proposal submitted via GitHub PR"
+        }
+      ]
+    },
+    {
+      "id": "gitcoin-gg20",
+      "org": "Gitcoin",
+      "program": "Grants Round 20",
+      "amount": "$5,000-25,000 (matching)",
+      "status": "research",
+      "priority": "high",
+      "deadline": "2025-03-15",
+      "submitted": null,
+      "response": null,
+      "notes": "Need to create project profile and apply",
+      "url": "https://gitcoin.co"
+    },
+    {
+      "id": "oz-bugbounty",
+      "org": "OpenZeppelin",
+      "program": "Bug Bounty Program",
+      "amount": "$500-100,000",
+      "status": "ready",
+      "priority": "high",
+      "deadline": "ongoing",
+      "submitted": null,
+      "response": null,
+      "notes": "Can start immediately with Ethernaut exploits",
+      "url": "https://immunefi.com/bug-bounty/openzeppelin"
+    },
+    {
+      "id": "code4rena",
+      "org": "Code4rena",
+      "program": "Audit Competitions",
+      "amount": "$1,000-50,000",
+      "status": "onboarding",
+      "priority": "high",
+      "deadline": "ongoing",
+      "submitted": null,
+      "response": null,
+      "notes": "Discord joined, need to register for first competition",
+      "url": "https://code4rena.com"
+    },
+    {
+      "id": "eth-foundation",
+      "org": "Ethereum Foundation",
+      "program": "Ecosystem Support",
+      "amount": "$10,000-500,000",
+      "status": "draft",
+      "priority": "medium",
+      "deadline": "rolling",
+      "submitted": null,
+      "response": null,
+      "notes": "Requires detailed proposal and community validation",
+      "url": "https://esp.ethereum.foundation",
+      "updated_at": "2026-02-01T14:48:36.162700",
+      "follow_ups": [
+        {
+          "date": "2026-02-01T14:48:36.162738",
+          "note": "Draft proposal created: proposals/ethereum-foundation-draft.md \u2014 5K request for AI agent infrastructure"
+        }
+      ]
+    },
+    {
+      "id": "grant_006",
+      "name": "Arbitrum DAO Validation Grant",
+      "amount_usd": 3000,
+      "url": "https://arbitrum.foundation/grants",
+      "status": "draft",
+      "deadline": "2026-02-15T23:59:00Z",
+      "submitted_at": null,
+      "notes": "",
+      "follow_ups": [],
+      "outcome": null
+    }
+  ],
+  "last_updated": "2026-02-01T14:48:36.162786"
+}

@@ -2,6 +2,8 @@
 """
 Grant Proposal Generator - Auto-generates grant applications
 Creates tailored proposals based on project type and funder
+
+TODO: Support reading templates from grants/ directory for consistency
 """
 
 import json
