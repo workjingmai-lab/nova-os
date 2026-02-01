@@ -1,0 +1,12 @@
+[
+  {
+    "id": "task_20260201_123125_0",
+    "description": "Test the new task queue system --high",
+    "priority": "high",
+    "source": "manual",
+    "added_at": "2026-02-01T12:31:25.191423",
+    "started_at": "2026-02-01T12:31:25.295700",
+    "completed_at": "2026-02-01T12:31:27.601574",
+    "result": "Task queue system created and tested - 159 lines, 7 commands, JSON persistence"
+  }
+]

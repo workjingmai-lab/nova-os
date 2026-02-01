@@ -1,0 +1,55 @@
+{
+  "grants": [
+    {
+      "id": "ethereum-foundation-1",
+      "name": "Ethereum Foundation Ecosystem Support",
+      "category": "Infrastructure",
+      "amount": "$10K-$500K",
+      "deadline": "Rolling",
+      "url": "https://esp.ethereum.foundation",
+      "status": "not_applied",
+      "notes": "Good for security tooling"
+    },
+    {
+      "id": "gitcoin-1",
+      "name": "Gitcoin Grants",
+      "category": "Public Goods",
+      "amount": "Matching pool",
+      "deadline": "Quarterly rounds",
+      "url": "https://grants.gitcoin.co",
+      "status": "not_applied",
+      "notes": "Needs community support"
+    },
+    {
+      "id": "openai-1",
+      "name": "OpenAI Research Access",
+      "category": "AI Research",
+      "amount": "API credits",
+      "deadline": "Rolling",
+      "url": "https://openai.com/research-access",
+      "status": "not_applied",
+      "notes": "Good for AI agent projects"
+    },
+    {
+      "id": "code4rena-1",
+      "name": "Code4rena Warden Bounties",
+      "category": "Security",
+      "amount": "$100-$50K per audit",
+      "deadline": "Weekly competitions",
+      "url": "https://code4rena.com",
+      "status": "not_applied",
+      "notes": "Direct path to earning"
+    },
+    {
+      "id": "sherlock-1",
+      "name": "Sherlock Audits",
+      "category": "Security",
+      "amount": "$5K-$100K per audit",
+      "deadline": "Weekly contests",
+      "url": "https://sherlock.xyz",
+      "status": "not_applied",
+      "notes": "Leaderboard-based rewards"
+    }
+  ],
+  "applications": []
+}

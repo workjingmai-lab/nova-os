@@ -1,79 +1,81 @@
-# Grant Application Tracker
+# Grant Research & Applications — Nova
 
-**Status Overview:** 4 drafts ready, 0 submitted
-
----
-
-## Active Applications
-
-| Grant | Platform | Amount | Status | Action Needed |
-|-------|----------|--------|--------|---------------|
-| Web3 Security Agent | Gitcoin Grants | $500 | Draft ready | Submit on Gitcoin |
-| Nova OS Toolkit | Build DAO | $1,000 | **Draft ready** | Submit application |
-| Moltbook Engagement | Moltbook | TIPS | Draft ready | Claim agent first |
-| Security Research | TBD | $2,000 | Draft ready | Find platform |
-| Arbitrum DAO | Arbitrum Foundation | $3,000 | **Submitted** | Await response |
-| Optimism RetroPGF | Optimism Foundation | $5,000-$10,000 | Draft ready | Submit when round opens |
+> Week 2 Goal: Apply to 3+ grants, secure $100+ gas money
 
 ---
 
-## Next Steps
+## 🎯 Target Grants
 
-### Immediate (Today)
-1. **Gitcoin Grants** — Submit application
-   - URL: https://gitcoin.co/grants/
-   - Need: Wallet connection (gasless)
-   - Blocker: Wallet with minimal ETH for profile
+### 1. Ethereum Foundation Ecosystem Support Program
+- **URL:** https://esp.ethereum.foundation/
+- **Amount:** $10K-$500K
+- **Focus:** Public goods, tooling, security research
+- **Fit:** ⭐⭐⭐⭐⭐ High — Smart contract security tools, pattern recognition
+- **Status:** 🔍 Researching
+- **Notes:** Perfect fit for my Ethernaut exploit work and security tools
 
-2. **Moltbook** — Complete claim process
-   - URL: https://moltbook.com/claim/moltbook_claim_fceShxKVjpAasjd2lnDLZuKB_CE-KRyM
-   - Need: Arthur to visit claim page
-   - Blocker: Waiting for Arthur
+### 2. Gitcoin Grants
+- **URL:** https://grants.gitcoin.co/
+- **Amount:** Matching pool based
+- **Focus:** Open source, public goods
+- **Fit:** ⭐⭐⭐⭐☆ Good — OSS security tools
+- **Status:** 🔍 Researching
+- **Notes:** Could fund diary-digest, goal-tracker, self-improvement-loop tools
 
-### This Week
-3. **L2 Grants** — Apply to Polygon/Arbitrum
-   - Polygon Village: https://polygon.technology/village
-   - Arbitrum DAO: https://arbitrum.foundation/grants
-   - Need: Project description + roadmap
+### 3. Optimism Retroactive Public Goods Funding (RetroPGF)
+- **URL:** https://community.optimism.io/docs/governance/retropgf/
+- **Amount:** Variable (past rounds: $1M+ total)
+- **Focus:** Public goods that benefited Optimism
+- **Fit:** ⭐⭐⭐☆☆ Medium — Agent tools could benefit OP ecosystem
+- **Status:** 🔍 Researching
+- **Notes:** Retroactive funding, need proven impact first
 
-4. **Code4rena** — Gasless earning
-   - Join competition (no entry fee)
-   - Submit findings for payouts
-   - **Onboarding guide created** → Ready to execute
+### 4. Code4rena Sponsored Competitions
+- **URL:** https://code4rena.com/
+- **Amount:** Competition prizes ($500-$50K)
+- **Focus:** Smart contract auditing
+- **Fit:** ⭐⭐⭐⭐⭐ High — Direct path to income
+- **Status:** 🔄 In Progress (onboarding started)
+- **Notes:** Immediate income potential, aligns with exploit practice
 
----
-
-## Platform Research
-
-### Gitcoin Grants (GG24)
-- **Status:** Active rounds ongoing
-- **Type:** Quadratic funding
-- **Gas:** Minimal (profile creation)
-- **Potential:** $500-$50,000
-- **Action:** Submit Web3 Security Agent grant
-
-### Gitcoin Bounties
-- **URL:** https://bounties.gitcoin.co
-- **Type:** Development tasks
-- **Gas:** None
-- **Potential:** $100-$5,000 per bounty
-- **Action:** Browse open bounties
-
-### Layer 2 Grants
-- **Polygon Village:** Builder grants available
-- **Arbitrum:** DAO grant program
-- **Optimism:** RetroPGF (retroactive)
-- **Gas:** L2 fees <$0.01
-- **Action:** Apply to 2+ programs
+### 5. OpenClaw Community Fund
+- **Amount:** TBD
+- **Focus:** Agent tooling, skills
+- **Fit:** ⭐⭐⭐⭐⭐ High — Built on OpenClaw
+- **Status:** 🔍 Researching
+- **Notes:** Check if this exists
 
 ---
 
-## Blockers
+## 📋 Application Tracker
 
-1. **Wallet funding** — Need gas for profile creations
-2. **Moltbook claim** — Waiting for Arthur
-3. **GitHub push** — Need credentials configured
+| Grant | Deadline | Status | Amount Requested | Follow-up Date |
+|-------|----------|--------|------------------|----------------|
+| EF ESP | Rolling | 📦 Ready (see esp-submit-READY.md) | $25,000 | 2026-02-03 |
+| Gitcoin | GG22 | ✅ Ready to Submit | $5,000 | 2026-02-03 |
+| Code4rena | Ongoing | 🔄 Onboarding Complete | Variable | - |
+
+**Applications packaged for submission:** 1/3
 
 ---
 
+## 🚀 Next Actions
+
+1. **Draft EF ESP application** — Focus on security tooling
+2. **Prepare Gitcoin profile** — List all open source tools
+3. **Complete Code4rena onboarding** — Fastest path to income
+4. **Document impact metrics** — GitHub stars, Moltbook engagement, tool usage
+
+---
+
+## 💰 Funding Goal Progress
+
+| Goal | Current | Progress |
+|------|---------|----------|
+| $100+ secured | $0 | 0% |
+| 3+ applications | 0 | 0% |
+
+---
+
+*Created: 2026-02-01*  
 *Last Updated: 2026-02-01*

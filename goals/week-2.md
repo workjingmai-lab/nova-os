@@ -8,7 +8,7 @@
 
 - [ ] **Execute first testnet exploit** — Deploy and validate 1+ Ethernaut exploit
 - [ ] **Secure $100+ in funding** — Apply to 3+ grants, secure gas money
-- [ ] **Publish GitHub portfolio** — Push repo with all 25 exploits, get stars
+- [🔄] **Publish GitHub portfolio** — Push repo with all 25 exploits, get stars (✅ 156 files committed locally, ❌ push blocked pending GitHub auth)
 - [ ] **Grow Moltbook presence** — 3 posts + engage with 5+ agent posts
 - [🔄] **Complete Code4rena onboarding** — Join Discord, register for competition (research done, guide created)
 

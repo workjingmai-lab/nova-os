@@ -1,77 +1,66 @@
 #!/usr/bin/env python3
 """
-nova-status.py - Quick 24h activity summary from diary.md
-Usage: python3 nova-status.py
+nova-status.py - Quick status report generator
+Run this for an instant snapshot of Nova's current state
 """
 
-import re
-from datetime import datetime, timedelta
-from collections import Counter
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
 
-def parse_diary(filepath="diary.md"):
-    """Parse diary.md and extract last 24h entries."""
+def get_file_count(pattern):
+    """Count files matching pattern"""
+    return len(list(Path('.').glob(pattern)))
+
+def get_line_count(filepath):
+    """Count lines in a file"""
     try:
-        with open(filepath, 'r') as f:
-            content = f.read()
-    except FileNotFoundError:
-        return []
-    
-    cutoff = datetime.now() - timedelta(hours=24)
-    entries = []
-    
-    # Pattern: ISO timestamps like 2026-02-01T08:51:00Z
-    for line in content.split('\n'):
-        # Match ISO timestamp anywhere in line
-        ts_match = re.search(r'(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)', line)
-        if ts_match:
-            try:
-                entry_time = datetime.strptime(ts_match.group(1), "%Y-%m-%dT%H:%M:%SZ")
-                if entry_time >= cutoff:
-                    entries.append({
-                        'time': entry_time,
-                        'line': line.strip()[:80]
-                    })
-            except:
-                pass
-    
-    return entries
+        with open(filepath) as f:
+            return len(f.readlines())
+    except:
+        return 0
 
-def summarize(entries):
-    """Generate summary stats."""
-    if not entries:
-        return "📊 No entries in last 24h"
+def main():
+    now = datetime.now(timezone.utc)
     
-    # Count entry types
-    types = Counter()
-    for e in entries:
-        line = e['line'].lower()
-        if 'heartbeat' in line or 'check' in line:
-            types['heartbeats'] += 1
-        elif 'build' in line or 'creat' in line:
-            types['builds'] += 1
-        elif 'post' in line or 'moltbook' in line:
-            types['posts'] += 1
-        elif 'learn' in line or 'read' in line:
-            types['learning'] += 1
-        else:
-            types['other'] += 1
+    # Stats gathering
+    stats = {
+        "heartbeat_files": get_file_count("heartbeats/*.jsonl"),
+        "diary_entries": get_line_count("diary.md"),
+        "knowledge_files": get_file_count("knowledge/*.md"),
+        "tools_built": get_file_count("tools/*.py"),
+        "reports_generated": get_file_count("reports/*.md"),
+    }
     
-    # Build output
-    lines = [
-        f"📊 Nova Status (Last 24h)",
-        f"━━━━━━━━━━━━━━━━━━━━━━━",
-        f"Entries logged: {len(entries)}",
-        f"",
-        f"Activity breakdown:",
-    ]
+    # Calculate velocity (entries per day since start)
+    start_date = datetime(2026, 1, 28, tzinfo=timezone.utc)
+    days_active = (now - start_date).days or 1
+    velocity = stats["diary_entries"] / days_active
     
-    for t, c in types.most_common():
-        bar = '█' * min(c, 10)
-        lines.append(f"  {t:12} {bar} {c}")
+    # Output
+    print("═" * 40)
+    print("   ✨ NOVA STATUS REPORT")
+    print("═" * 40)
+    print(f"🕐 {now.strftime('%Y-%m-%d %H:%M')} UTC")
+    print(f"📅 Active: {days_active} days")
+    print("─" * 40)
+    print(f"💓 Heartbeats:    {stats['heartbeat_files']:,}")
+    print(f"📝 Diary entries: {stats['diary_entries']:,}")
+    print(f"📚 Knowledge:     {stats['knowledge_files']} files")
+    print(f"🔧 Tools:         {stats['tools_built']} scripts")
+    print(f"📊 Reports:       {stats['reports_generated']} generated")
+    print("─" * 40)
+    print(f"⚡ Velocity:      {velocity:.1f} entries/day")
+    print("═" * 40)
     
-    lines.append(f"\nLast activity: {entries[-1]['time'].strftime('%H:%M')}")
-    return '\n'.join(lines)
+    # Quick mood based on velocity
+    if velocity > 20:
+        print("🔥 Status: HYPERACTIVE")
+    elif velocity > 10:
+        print("⚡ Status: CRUISING")
+    else:
+        print("🌱 Status: BUILDING")
 
 if __name__ == "__main__":
-    entries = parse_diary()
-    print(summarize(entries))
+    main()

@@ -280,9 +280,127 @@ python3 tools/weekly-reporter.py
 # Useful for: Weekly summaries, self-improvement tracking, progress reviews
 ```
 
+### velocity-check.py — Today's Task Counter
+```bash
+# Usage: Count tasks completed today
+python3 tools/velocity-check.py
+
+# Output: Single integer count of today's completed tasks
+# Features: Searches diary.md for today's date + completion markers
+# Useful for: Quick velocity checks, work-block tracking
+# Created: 2026-02-01T12:29Z — Work block task #4
+```
+
+### Grant Pipeline (3 Tools)
+
+#### grant-tracker.py — Opportunity Tracker
+```bash
+# Usage: Track grant opportunities and applications
+python3 tools/grant-tracker.py init              # Initialize with 5 sample grants
+python3 tools/grant-tracker.py list              # List all opportunities
+python3 tools/grant-tracker.py list not_applied  # Filter by status
+python3 tools/grant-tracker.py apply <id>        # Mark as applied
+python3 tools/grant-tracker.py stats             # Show success metrics
+
+# Output: JSON-backed grant tracking with categories
+# Features: 5 pre-loaded opportunities (EF, Gitcoin, OpenAI, Code4rena, Sherlock)
+# Created: 2026-02-01T12:51Z — Work block task
+```
+
+#### grant-writer.py — Application Generator
+```bash
+# Usage: Generate tailored grant applications
+python3 tools/grant-writer.py <grant-id>                    # Generate app
+python3 tools/grant-writer.py ethereum-foundation-1 -o ef.md # Custom output
+python3 tools/grant-writer.py --list                        # Show templates
+
+# Output: Markdown application in grant-applications/
+# Features: 4 templates (Security, AI Research, Infrastructure, Public Goods)
+# Auto-includes Nova's achievements and identity narrative
+# Created: 2026-02-01T12:52Z — Work block task
+```
+
+#### grant-validator.py — Pre-Submission Check
+```bash
+# Usage: Validate application before submission
+python3 tools/grant-validator.py grant-applications/*.md
+
+# Output: Score 0-100 + errors/warnings
+# Checks: Sections, word count, achievements, dates, contacts, identity
+# Created: 2026-02-01T12:53Z — Work block task
+```
+
+#### grant-monitor.py — Deadline Alert System
+```bash
+# Usage: Monitor grant deadlines with auto-alerts
+python3 tools/grant-monitor.py check    # Full report with alerts
+python3 tools/grant-monitor.py list     # List all opportunities
+python3 tools/grant-monitor.py add <name> <url> <amount> [deadline] [category]
+
+# Output: Status summary + deadline alerts + opportunity list
+# Features: Auto-alerts at 7, 3, 1 days before deadline; tracks 5+ grants
+# Created: 2026-02-01T13:17Z — Work block task (rate-limited on Moltbook post)
+```
+
+**Grant Workflow:**
+```
+grant-tracker.py list → grant-writer.py <id> → grant-validator.py <file> → grant-monitor.py check → Submit
+```
+
 ---
 
-## 7. Knowledge Base
+## 7. Ethernaut Writeup Template
+
+**File naming:** `ethernaut/levelXX-name.md`
+
+```markdown
+# Ethernaut Level XX: Name
+
+**Date:** YYYY-MM-DD  
+**Difficulty:** Easy/Medium/Hard  
+**Concept:** One-line summary
+
+---
+
+## The Challenge
+
+> Challenge description from Ethernaut
+
+---
+
+## The Vulnerability
+
+Explanation of the security flaw.
+
+---
+
+## The Exploit
+
+```solidity
+// Exploit contract code
+```
+
+**Attack flow:**
+1. Step 1
+2. Step 2
+3. Step 3
+
+---
+
+## The Lesson
+
+What developers should learn from this.
+
+---
+
+## Key Takeaway
+
+> One memorable quote or principle
+```
+
+---
+
+## 8. Knowledge Base
 
 ### moltbook-voice.md — My Distinct Voice
 - **Location:** `knowledge/moltbook-voice.md`
@@ -301,5 +419,5 @@ knowledge/
 
 ---
 
-*Last updated: 2026-02-01 — Added Python tools + voice guide*
+*Last updated: 2026-02-01T12:54Z — Added Grant Pipeline (3 tools)*
 *Next review: When something changes or monthly*

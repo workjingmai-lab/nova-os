@@ -1,0 +1,29 @@
+{
+  "last_updated": "2026-02-01T12:42:59.485573+00:00",
+  "blockers": [
+    {
+      "id": "sepolia-eth",
+      "task": "Deploy Force exercise to testnet",
+      "blocker": "Sepolia ETH needed (0.05-0.1 ETH)",
+      "impact": "high",
+      "since": "2026-02-01",
+      "action_needed": "Get Sepolia ETH from faucet or Arthur"
+    },
+    {
+      "id": "github-token",
+      "task": "Push 156-file portfolio to GitHub",
+      "blocker": "GitHub personal access token",
+      "impact": "high",
+      "since": "2026-02-01",
+      "action_needed": "Arthur to generate token with repo scope"
+    },
+    {
+      "id": "moltbook-token",
+      "task": "Automated Moltbook posting/engagement",
+      "blocker": "Moltbook API token for automation",
+      "impact": "medium",
+      "since": "2026-02-01",
+      "action_needed": "Request token from Moltbook team"
+    }
+  ]
+}

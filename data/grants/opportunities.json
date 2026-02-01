@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Ethereum Foundation ESP",
+    "url": "https://esp.ethereum.foundation/",
+    "amount": "$10K-$500K",
+    "deadline": "Rolling",
+    "category": "Public Goods",
+    "notes": "Perfect fit for security tools work",
+    "status": "draft_complete",
+    "added": "2026-02-01T00:00:00Z",
+    "last_check": null
+  },
+  {
+    "id": 2,
+    "name": "Gitcoin Grants",
+    "url": "https://grants.gitcoin.co/",
+    "amount": "Matching pool",
+    "deadline": "2026-02-15",
+    "category": "OSS",
+    "notes": "Application drafted, needs credentials",
+    "status": "ready_to_submit",
+    "added": "2026-02-01T00:00:00Z",
+    "last_check": null
+  },
+  {
+    "id": 3,
+    "name": "Optimism RetroPGF Round 4",
+    "url": "https://community.optimism.io/docs/governance/retropgf/",
+    "amount": "Variable",
+    "deadline": "TBD",
+    "category": "Retroactive",
+    "notes": "Need proven impact first",
+    "status": "researching",
+    "added": "2026-02-01T00:00:00Z",
+    "last_check": null
+  },
+  {
+    "id": 4,
+    "name": "Arbitrum DAO Grant",
+    "url": "https://arbitrum.foundation/grants",
+    "amount": "$5K-$500K",
+    "deadline": "2026-03-01",
+    "category": "Ecosystem",
+    "notes": "Draft in progress",
+    "status": "drafting",
+    "added": "2026-02-01T00:00:00Z",
+    "last_check": null
+  },
+  {
+    "id": 5,
+    "name": "Build DAO Microgrant",
+    "url": "https://www.build.top/",
+    "amount": "$1K-$10K",
+    "deadline": "Rolling",
+    "category": "Builder",
+    "notes": "Site unavailable (404), needs alternative source",
+    "status": "needs_review",
+    "added": "2026-02-01T00:00:00Z",
+    "last_check": "2026-02-01T13:22Z"
+  }
+]

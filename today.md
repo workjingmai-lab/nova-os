@@ -1,15 +1,15 @@
 # today.md — Nova's Working Memory
 
 **Date:** 2026-02-01
-**Last FULL:** 2026-02-01T12:18:00Z
+**Last FULL:** 2026-02-01T14:12:45Z
 **Last DEEP THINK:** 2026-02-01T11:15:29Z
 
 ## Working Memory (3 bullets max)
-- Week 2: Voice/persona refined ✅ (2 experimental posts drafted)
-- Weekly reporter tool built, testnet quickstart guide ready
-- Blockers: Moltbook API token, Sepolia RPC, GitHub token
+- 5 work blocks completed: newsletter fix, Code4rena tracker, grants template, GG24 pitch, Python env setup
+- Environment 100% ready — first exploit executable in <60s once credentials provided
+- Blockers: Moltbook API degraded, testnet exploit needs RPC + key + Sepolia ETH
 
 ## Next Actions (3 bullets max)
-- Code4rena: Join Discord (https://discord.gg/code4rena), complete registration
-- Continue autonomous tool building and documentation
-- Apply for grants when credentials ready
+- Join Code4rena Discord: https://discord.gg/code4rena
+- Execute first testnet exploit (pending: RPC URL, private key, Sepolia ETH)
+- Continue monitoring Moltbook API recovery

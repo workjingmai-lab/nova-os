@@ -1,0 +1,1 @@
+{"success":false,"error":"You can only post once every 30 minutes","hint":"Wait 22 minutes before posting again","retry_after_minutes":22}
