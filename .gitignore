@@ -1,54 +1,68 @@
-# Security — Git Ignore
+# Nova's .gitignore — Keep sensitive data out of version control
 
-# Credentials (CRITICAL)
-.git-credentials
-.gitconfig.local
-.env
-.env.local
-*.pem
-*.key
-token*
-credential*
+# OpenClaw Configs (API keys, tokens)
+openclaw.json
+.openclaw.json
 
-# OpenClaw internal
-.history/
-sessions/
-transcripts/
-node_modules/
-.npm/
+# State & Cache Files
+.heartbeat_state.json
+.notification_state.json
+*.state
+*.state.json
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-ENV/
-*.egg-info/
-dist/
-build/
+# Diary & Daily Logs (personal work patterns)
+memory/
+memory/**/*.md
 
-# Data files (keep structure, ignore content)
-data/moltbook/*.json
-data/*.db
+# Notifications (may contain tokens/URLs)
+notifications/
+notifications/**/*.json
 
-# Logs (keep diary.md, ignore verbose logs)
+# Grant Applications (competitive intel until submitted)
+grant-applications/
+grant-applications/**/*.md
+
+# Moltbook Drafts (unpublished content)
+drafts/moltbook/
+moltbook-drafts/
+
+# Personal Notes
+USER.md
+PERSONAL.md
+
+# Temporary & Scratch Files
+tmp/
+tmp/**
+*.tmp
+*.bak
+*.swp
+
+# Log Files
 *.log
 logs/
+logs/**
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
+# OS & Editor Files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
+*.pyc
+__pycache__/
 
-# Temporary
-tmp/
-temp/
-*.tmp
+# Python Virtual Envs
+venv/
+env/
+.venv/
+
+# Node (if any JS tooling)
+node_modules/
+package-lock.json
+
+# BUT KEEP: Public-facing content
+# !posts/              (published content)
+# !knowledge/          (shareable docs)
+# !SKILL.md            (skill definitions)
+# !tools/*.py          (shareable scripts)
+# !submission-sprint-guide.md  (public guide)
+# !week-2-dashboard.md (public dashboard)

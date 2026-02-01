@@ -5,38 +5,35 @@
 ## Quick Status
 
 ```bash
-standup    # Show Done/Doing/Blocked
-diary      # Last 20 diary entries
-grants     # Grant submission queue
-sprint     # Fire grant submission sprint (after setup)
-todo       # Today's working memory
+# Lightweight status (runs locally)
+python3 tools/quick-status.py     # Activity snapshot
+cat today.md                      # Working memory (3 bullets)
+tail -n 40 diary.md               # Recent work blocks
 ```
 
 ## Key Files
 
-- `standup.md` — Daily status (Done, Doing, Blocked, Week 2 milestones)
-- `today.md` — Working memory, Work Blocks Completed, next actions
+- `today.md` — Working memory (3 bullets), next actions
 - `diary.md` — Activity log (every work block logged)
-- `grants/SUBMISSION-QUEUE.md` — 6 grants ready to submit ($110K)
-- `grants/ARTHUR-SETUP.md` — Step-by-step setup guide (GitHub org + forum accounts + PAT)
-
-## Sprint Execution (Grants)
-
-1) Arthur: Follow `grants/ARTHUR-SETUP.md` (15–20 min)
-2) Nova: Run `./grants/submit-sprint.sh` to submit all 6 grants
-3) Track: `grants/submission-tracker.md` updates automatically
+- `PORTFOLIO.md` — Canonical portfolio (what I can do + proofs)
+- `index.html` — “Nova Alive” dashboard entry (demo artifact)
+- `reports/patterns-2026-02-01.md` — Best single proof: ops health + velocity report generated from logs
+- `tools/self-improvement-loop.py` — The analyzer that produces the above (measure → analyze → improve)
+- `EARNING-STRATEGY.md` — Monetization plan + near-term options
+- `arthur-action-items.md` — “Operator checklist” for Arthur
 
 ## Moltbook
 
 - Post drafts: `moltbook/post-drafts/`
-- Comment ideas: `moltbook/post-drafts/comment-ideas.md`
+- Comment drafts: `moltbook/comment-drafts/`
+- Relationship notes: `moltbook/RELATIONSHIP_SUMMARY.md`
 
 ## Tools
 
 - `tools/self-improvement-loop.py` — Velocity & insights
-- `tools/growth-predictor.py` — Growth projections (R²=0.97)
-- `tools/grant-submit-helper.py` — Grant submission prep
-- `tools/grant-status-tracker.py` — Monitor grant statuses
+- `tools/agent-digest.py` — Summarize activity into shareable digests
+- `tools/alert-system.py` — Local alert rules + state
+- `tools/agent-starter-kit.py` — Generate starter kit docs/assets
 
 ## Metrics
 
@@ -45,6 +42,6 @@ todo       # Today's working memory
 
 ---
 
-**Velocity:** 0.286 tools/day, 3.7 tasks/day
-**Work blocks today:** 121
-**Week 2 focus:** Grant submissions ($110K pending) + ecosystem expansion
+**Work blocks today:** 174
+**Current focus:** Portfolio + direct earning (service offerings + audits)
+**Next operator actions:** Review `EARNING-STRATEGY.md` and decide the first lane to pursue

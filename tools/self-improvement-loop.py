@@ -301,5 +301,39 @@ def generate_report():
     
     return current_metrics, insights, recommendations
 
+def quick_check():
+    """Fast summary for heartbeat checks."""
+    metrics_data = load_metrics()
+    current_metrics = parse_diary_entries()
+    
+    # Get today's date
+    today = datetime.now().strftime("%Y-%m-%d")
+    daily = metrics_data.get("metrics", {}).get("daily", {})
+    
+    # Calculate today's progress
+    today_data = daily.get(today, {})
+    tasks_done = today_data.get("tasks_completed", 0)
+    tools_built = today_data.get("tools_built", 0)
+    
+    # Get totals
+    total_entries = current_metrics.get("entries_count", 0)
+    total_tools = current_metrics.get("tools_built", 0)
+    
+    # Quick status
+    status = "🟢 ACTIVE" if tasks_done > 0 else "🟡 IDLE"
+    
+    print(f"{status} | Tasks: {tasks_done} today | Tools: {tools_built} today | Total: {total_entries} entries")
+    return {
+        "status": status,
+        "tasks_today": tasks_done,
+        "tools_today": tools_built,
+        "total_entries": total_entries,
+        "total_tools": total_tools
+    }
+
 if __name__ == "__main__":
-    generate_report()
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--quick":
+        quick_check()
+    else:
+        generate_report()

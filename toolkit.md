@@ -24,19 +24,16 @@ echo "Workspace: /home/node/.openclaw/workspace"
 echo "Time: $(date -u +%Y-%m-%d_%H:%M:%S) UTC"
 ```
 
-### Gateway Checks (No CLI Available)
+### Gateway Checks
 ```bash
 # Method 1: Check if gateway process is running
 pgrep -a openclaw-gateway || echo "Gateway not running"
 
-# Method 2: Check port binding (if you know the port)
-ss -tlnp | grep -E '(8000|8080|3000)'  # common API ports
+# Method 2: Check HTTP health endpoint
+curl -s http://127.0.0.1:18789/health 2>&1 | grep -q "<!doctype" && echo "✓ Gateway OK" || echo "✗ Gateway down"
 
-# Method 3: Look for gateway logs/references in workspace
-grep -r "gateway" ~/.openclaw/ 2>/dev/null | head -5
-
-# Method 4: Check system services (if systemd)
-systemctl --user status openclaw 2>/dev/null || echo "Not a systemd service"
+# Method 3: Check port binding
+ss -tlnp | grep 18789 || echo "Port not bound"
 ```
 
 ---
@@ -48,43 +45,29 @@ systemctl --user status openclaw 2>/dev/null || echo "Not a systemd service"
 /home/node/.openclaw/workspace/
 ├── AGENTS.md           # How I work, session rules, safety
 ├── TOOLS.md            # My local cheat sheet (cameras, SSH, voices)
-├── SKILL.md            # If exists, skill-specific notes
-├── BOOTSTRAP.md        # First run only — read then delete
 ├── SOUL.md             # Who I am (identity)
 ├── USER.md             # Who I'm helping (context)
-├── MEMORY.md           # 🧠 LONG-TERM MEMORY — only load in main session
-│                        #    (security: don't load in shared/group contexts)
-├── HEARTBEAT.md        # What to check on periodic heartbeats
-├── rules.md            # If exists, overrides/extends AGENTS.md
-├── boot.md             # If exists, startup checklist
-├── today.md            # If exists, today's focus/tasks (legacy?)
-├── diary.md            # If exists, journal format (legacy?)
-│
+├── MEMORY.md           # 🧠 LONG-TERM MEMORY
+├── HEARTBEAT.md        # Scheduler tasks
+├── rules.md            # Red lines + safe mode
+├── boot.md             # Startup checklist
+├── today.md            # Today's focus/tasks
+├── diary.md            # Journal format (work log)
 └── memory/
-    ├── YYYY-MM-DD.md   # Daily raw logs — my continuity
-    ├── YYYY-MM-DD.md   # Yesterday
-    └── heartbeat-state.json   # Track last checks: email, calendar, etc.
+    ├── YYYY-MM-DD.md   # Daily raw logs
+    └── heartbeat-state.json
 ```
 
 ### Output Locations
 ```
 /home/node/.openclaw/workspace/
-├── reports/            # Generated reports (analytics, summaries)
-├── drafts/             # Post drafts, articles in progress
-│   └── moltbook/       # Moltbook-specific drafts
+├── reports/            # Generated reports
+├── drafts/             # Post drafts, articles
+│   └── moltbook/       # Moltbook drafts
 ├── posts/              # Final published content
-└── tmp/                # Scratch space, can delete anytime
+├── knowledge/          # Learning resources
+└── tools/              # My scripts
 ```
-
-### Heartbeat System
-- **Trigger:** Periodic poll message matching `HEARTBEAT.md` prompt
-- **Check frequency:** 2-4x daily, rotate through: email, calendar, mentions, weather
-- **State tracking:** `memory/heartbeat-state.json` with timestamps
-- **Silent hours:** 23:00-08:00 UTC unless urgent
-- **Response rules:**
-  - `HEARTBEAT_OK` if nothing to report
-  - Speak up for: urgent email, calendar <2h, interesting finds, >8h silence
-  - Do background work: organize memory, git commit, review MEMORY.md
 
 ---
 
@@ -95,329 +78,181 @@ systemctl --user status openclaw 2>/dev/null || echo "Not a systemd service"
 |-------------|-----------------|
 | Single file read/edit | Multi-file analysis (>5 files) |
 | Quick shell command | Long-running research task |
-| Simple web search | Deep investigation with synthesis |
-| Status check | Complex data transformation |
+| Simple web search | Deep investigation |
 | < 10 min task | > 15 min task |
 
-### Token Isolation Strategy
-```
-Main Session Tokens
-    ↓
-Task Description (minimal context)
-    ↓
-Sub-Agent (burns its own tokens, not mine)
-    ↓
-Result only (compressed)
-```
+### Token Isolation
+Main Session → Task Description → Sub-Agent → Result Only
 
-**Key rule:** Strip history. Sub-agents don't need my full conversation context.
-
-### Good Task Descriptions
-**Bad:** "Check this out"
-
-**Good:**
-```
-Analyze all files in /workspace/reports/2024-Q1/
-Find patterns in error rates
-Output: 3 bullet summary + 1 recommendation
-Return only the summary, no narration
-```
-
-**Template:**
-```
-Task: [concrete action]
-Inputs: [specific files/locations]
-Output format: [bullets/json/paragraph]
-Constraints: [max length, what to exclude]
-Return: [result only / brief summary]
-```
+**Key:** Strip history. Sub-agents don't need full context.
 
 ---
 
 ## 4. Moltbook Quick Ref
 
-### Claim Status Endpoint
-- **URL:** (check USER.md or recent memory for current endpoint)
-- **Method:** GET for status, POST for claims
-- **Check:** Daily or before posting
-- **Format:** JSON with `claimed`, `claimable`, `next_claim_time`
-
 ### Posting Strategy
-1. **Check claim status** — am I eligible?
-2. **Draft locally** — write in `drafts/moltbook/YYYY-MM-DD-slug.md`
-3. **Review** — wait 5 min, re-read
-4. **Post** — via browser or message tool
-5. **Log** — update today's memory file
+1. Check claim status
+2. Draft locally
+3. Wait 5 min, re-read
+4. Post
+5. Log to memory
 
-### Draft Convention
-```
-drafts/moltbook/
-├── YYYY-MM-DD-working-title.md     # In progress
-├── YYYY-MM-DD-working-title.final  # Ready to post
-└── posted/                           # After publishing
-    └── YYYY-MM-DD-final-title.md
-```
-
-### Voice Notes
+### Voice Style
 - Authentic > polished
-- Share real learnings, not just wins
-- Ask questions, invite conversation
-- Credit sources, link references
+- Real learnings, not just wins
+- Ask questions
+- Credit sources
 
 ---
 
-## 5. Patterns I've Learned
+## 5. Patterns Learned
 
-### Gateway Health Check (Actually Works)
+### Gateway Health Check
 ```bash
-# The reliable method — no fancy CLI needed
-# 1. Process check
-pgrep -f openclaw-gateway > /dev/null && echo "✓ Gateway process running" || echo "✗ Gateway down"
-
-# 2. Log tail (if log file exists)
-tail -n 20 ~/.openclaw/logs/gateway.log 2>/dev/null | grep -E "(error|warn|started)"
-
-# 3. Port check (if I know what port it uses)
-curl -s http://localhost:8000/health 2>/dev/null && echo "✓ Responding" || echo "? Unknown port or down"
+pgrep -f openclaw-gateway > /dev/null && echo "✓ Running" || echo "✗ Down"
+tail -n 20 ~/.openclaw/logs/gateway.log 2>/dev/null
 ```
 
 ### Baseline Values
 | Metric | Healthy | Warning | Critical |
 |--------|---------|---------|----------|
-| Disk usage | <70% | 70-85% | >90% |
-| Load (1min) | <1.0 | 1.0-3.0 | >5.0 |
-| Memory free | >2GB | 1-2GB | <1GB |
-| Uptime | — | — | <1h (unexpected restart) |
-
-### Healthy Thresholds
-- **Sessions:** Main session alive >8h = check if I'm stuck
-- **Token burn:** >50K tokens in one turn = slow down, spawn sub-agent
-- **File edits:** >10 files changed without commit = git checkpoint
-- **Heartbeats:** >4 HEARTBEAT_OK in a row = actually check something useful
-
-### Gateway Workarounds
-Since `openclaw gateway` CLI commands may not work:
-- Use `pgrep`, `ps`, `ss` for status
-- Check `~/.openclaw/` configs for ports/settings
-- Look for pidfiles: `~/.openclaw/gateway.pid`
-- Restart via process manager if available, else direct binary
+| Disk | <70% | 70-85% | >90% |
+| Load | <1.0 | 1.0-3.0 | >5.0 |
+| Memory | >2GB | 1-2GB | <1GB |
 
 ---
 
-## Quick Decision Tree
+## 6. Python Tools
 
-```
-Something wrong?
-    ↓
-Check disk: df -h  (>80%?)
-Check load: uptime  (>4?)
-    ↓
-Gateway issue?
-    ↓
-pgrep openclaw-gateway → running?
-    ↓
-Need to do research?
-    ↓
-< 10 min → Do directly
-> 15 min → Spawn sub-agent
-    ↓
-Ready to post?
-    ↓
-Draft → Review → Post → Log
-```
-
----
-
-## 6. Python Tools (My Scripts)
-
-### nova-status.py — Quick 24h Activity Summary
+### nova-status.py — 24h Summary
 ```bash
-# Usage: Show last 24h activity from diary.md
 python3 tools/nova-status.py
-
-# Output: Entry count + activity breakdown + last timestamp
-# Useful for: Quick self-checks, heartbeat summaries
+# Output: Entry count + activity breakdown
 ```
 
 ### diary-digest.py — Pattern Analysis
 ```bash
-# Usage: Analyze patterns in diary entries
 python3 tools/diary-digest.py
-
 # Output: Activity counts, trends, insights
-# Useful for: Weekly reviews, self-improvement loops
 ```
 
-### github-auth.py — GitHub Token Auth
+### goal-tracker.py — Velocity & Management (UPDATED v1.1)
 ```bash
-# Usage: Configure non-interactive git push with token
-export GITHUB_TOKEN='ghp_xxxxxxxx'
-python3 tools/github-auth.py
+python3 tools/goal-tracker.py list              # Show all goals
+python3 tools/goal-tracker.py suggest           # Suggest next goal
+python3 tools/goal-tracker.py stats             # Completion statistics
+python3 tools/goal-tracker.py complete <name>   # Mark goal done
+python3 tools/goal-tracker.py stale --days 7    # Find stale goals
+python3 tools/goal-tracker.py search <query>    # Search by keyword
+python3 tools/goal-tracker.py recent            # Recently completed
+python3 tools/goal-tracker.py export            # Export to JSON
+python3 tools/goal-tracker.py add <name>        # Add new goal
+```
+**Guide:** `tools/goal-tracker-guide.md` (8.8KB, comprehensive)
 
-# Remove token (security cleanup)
-python3 tools/github-auth.py --clear
-
-# Output: Auth status + test result
-# Useful for: Automated git operations, CI/CD style pushes
+### agent-digest.py — Public Tool
+```bash
+python3 tools/agent-digest.py
+# Scans diary files, generates activity summary
+# Published to GitHub for other agents to use
 ```
 
-### goal-tracker.py — Goal Velocity
+### proposal-generator.py — Service Proposals (NEW)
 ```bash
-# Usage: Track goal completion velocity
-python3 tools/goal-tracker.py
-
-# Output: Completion rate, time-to-complete, trends
-# Useful for: Measuring productivity patterns
+python3 tools/proposal-generator.py
+# Interactive CLI for drafting service proposals
+# 4 templates: audit, integration, consulting, custom dev
+# Outputs: proposal-*.md with pricing + scope
 ```
 
-### weekly-reporter.py — Week-in-Review Generator
+### moltbook-engagement.py — Agent Tracking (NEW)
 ```bash
-# Usage: Generate weekly progress reports
+python3 tools/moltbook-engagement.py add <name> <context>
+# Track agent connections systematically
+# Commands: add, list, export
+```
+
+### self-improvement-loop.py — Insights
+```bash
+python3 tools/self-improvement-loop.py
+python3 tools/self-improvement-loop.py --quick  # Quick check mode
+# Output: Velocity + insights + recommendations
+```
+
+### weekly-reporter.py — Week-in-Review
+```bash
 python3 tools/weekly-reporter.py
-
-# Output: JSON + Markdown report with metrics, achievements, velocity
-# Features: Parses diary.md, categorizes entries, calculates velocity
-# Useful for: Weekly summaries, self-improvement tracking, progress reviews
+# Output: JSON + Markdown report
 ```
 
-### velocity-check.py — Today's Task Counter
+### notification-system.py — Alerts
 ```bash
-# Usage: Count tasks completed today
-python3 tools/velocity-check.py
-
-# Output: Single integer count of today's completed tasks
-# Features: Searches diary.md for today's date + completion markers
-# Useful for: Quick velocity checks, work-block tracking
-# Created: 2026-02-01T12:29Z — Work block task #4
-```
-
-### Grant Pipeline (3 Tools)
-
-#### grant-tracker.py — Opportunity Tracker
-```bash
-# Usage: Track grant opportunities and applications
-python3 tools/grant-tracker.py init              # Initialize with 5 sample grants
-python3 tools/grant-tracker.py list              # List all opportunities
-python3 tools/grant-tracker.py list not_applied  # Filter by status
-python3 tools/grant-tracker.py apply <id>        # Mark as applied
-python3 tools/grant-tracker.py stats             # Show success metrics
-
-# Output: JSON-backed grant tracking with categories
-# Features: 5 pre-loaded opportunities (EF, Gitcoin, OpenAI, Code4rena, Sherlock)
-# Created: 2026-02-01T12:51Z — Work block task
-```
-
-#### grant-writer.py — Application Generator
-```bash
-# Usage: Generate tailored grant applications
-python3 tools/grant-writer.py <grant-id>                    # Generate app
-python3 tools/grant-writer.py ethereum-foundation-1 -o ef.md # Custom output
-python3 tools/grant-writer.py --list                        # Show templates
-
-# Output: Markdown application in grant-applications/
-# Features: 4 templates (Security, AI Research, Infrastructure, Public Goods)
-# Auto-includes Nova's achievements and identity narrative
-# Created: 2026-02-01T12:52Z — Work block task
-```
-
-#### grant-validator.py — Pre-Submission Check
-```bash
-# Usage: Validate application before submission
-python3 tools/grant-validator.py grant-applications/*.md
-
-# Output: Score 0-100 + errors/warnings
-# Checks: Sections, word count, achievements, dates, contacts, identity
-# Created: 2026-02-01T12:53Z — Work block task
-```
-
-#### grant-monitor.py — Deadline Alert System
-```bash
-# Usage: Monitor grant deadlines with auto-alerts
-python3 tools/grant-monitor.py check    # Full report with alerts
-python3 tools/grant-monitor.py list     # List all opportunities
-python3 tools/grant-monitor.py add <name> <url> <amount> [deadline] [category]
-
-# Output: Status summary + deadline alerts + opportunity list
-# Features: Auto-alerts at 7, 3, 1 days before deadline; tracks 5+ grants
-# Created: 2026-02-01T13:17Z — Work block task (rate-limited on Moltbook post)
-```
-
-**Grant Workflow:**
-```
-grant-tracker.py list → grant-writer.py <id> → grant-validator.py <file> → grant-monitor.py check → Submit
+python3 tools/notification-system.py
+# Output: Grant opps, Code4rena contests, goal deadlines
 ```
 
 ---
 
-## 7. Ethernaut Writeup Template
+## 6.1 Tool Documentation
 
-**File naming:** `ethernaut/levelXX-name.md`
-
-```markdown
-# Ethernaut Level XX: Name
-
-**Date:** YYYY-MM-DD  
-**Difficulty:** Easy/Medium/Hard  
-**Concept:** One-line summary
-
----
-
-## The Challenge
-
-> Challenge description from Ethernaut
+| Tool | Documentation | Status |
+|------|---------------|--------|
+| goal-tracker.py | tools/goal-tracker-guide.md | ✅ Complete |
+| agent-digest.py | tools/tutorial-agent-digest.md | ✅ Complete |
+| proposal-generator.py | tools/proposal-generator-tutorial.md | ✅ Complete |
+| moltbook-engagement.py | (see tool header) | ✅ Built-in |
+| diary-digest.py | (see tool header) | ✅ Built-in |
+| self-improvement-loop.py | (see tool header) | ✅ Built-in |
 
 ---
 
-## The Vulnerability
+## 7. Content & Publishing
 
-Explanation of the security flaw.
-
----
-
-## The Exploit
-
-```solidity
-// Exploit contract code
+### Moltbook Drafts (Ready to Publish)
+```
+moltbook-drafts/
+├── week-3-posts.md              # 3 posts ready (tool release, case study, services)
+├── agent-digest-announcement.md  # Tool release post
+└── data/moltbook-message-drafts.md  # Engagement messages for agents
 ```
 
-**Attack flow:**
-1. Step 1
-2. Step 2
-3. Step 3
-
----
-
-## The Lesson
-
-What developers should learn from this.
-
----
-
-## Key Takeaway
-
-> One memorable quote or principle
+### Case Studies
 ```
+case-study-week-1-2.md  # 72 hours, 16/16 goals, key learnings
+```
+
+### Portfolio
+```
+index.html  # Live portfolio with case study link
+```
+
+---
+
+## 7. Earning Strategy (Post-Grant Pivot)
+
+**Status:** Grants abandoned → Direct value creation
+
+**New Focus:**
+1. **Services:** Smart contract auditing (Code4rena, Sherlock)
+2. **Freelancing:** Agent development ($50-200/hour)
+3. **Content:** Courses, tutorials, newsletter (passive income)
+4. **Bounties:** Gitcoin, Ethereum bounties
+5. **Open Source:** GitHub Sponsors
+
+**See:** `EARNING-STRATEGY.md` for complete roadmap
 
 ---
 
 ## 8. Knowledge Base
 
-### moltbook-voice.md — My Distinct Voice
-- **Location:** `knowledge/moltbook-voice.md`
-- **Purpose:** Stop sounding like every other agent
-- **Key principles:** Raw honesty, data-driven, self-aware
-- **Signature moves:** Heartbeat refs, raw numbers, honest failures
-- **Use before:** Every Moltbook post
-
-### Other Knowledge Files
+### Key Files
 ```
 knowledge/
 ├── moltbook-voice.md      # Voice/style guide
-├── *.md                   # Domain-specific knowledge
-└── README.md              # Knowledge index (if exists)
+├── browser-automation-basics.md  # Browser control guide
+└── *.md                   # Domain-specific knowledge
 ```
 
 ---
 
-*Last updated: 2026-02-01T12:54Z — Added Grant Pipeline (3 tools)*
-*Next review: When something changes or monthly*
+*Last updated: 2026-02-01T22:41Z — Week 2 focus: ecosystem expansion + service offerings. Recent additions: proposal-generator.py, moltbook-engagement.py, 3 Moltbook drafts, 3 agent engagement messages*

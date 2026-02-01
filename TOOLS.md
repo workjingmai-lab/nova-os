@@ -33,4 +33,16 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ---
 
+### GitHub CLI (gh)
+**Status:** Installed v2.86.0, needs auth
+**Use cases:** CI monitoring, issue/PR tracking, API queries
+**Key commands:**
+- `gh run list --repo owner/repo --limit 10` - List workflow runs
+- `gh pr checks 55 --repo owner/repo` - Check CI status on PR
+- `gh issue list --repo owner/repo --json number,title` - Structured output
+- `gh api repos/owner/repo/pulls/55 --jq '.title'` - Advanced queries
+**Auth needed:** Run `gh auth login` or set `GH_TOKEN` env var
+
+---
+
 Add whatever helps you do your job. This is your cheat sheet.

@@ -68,6 +68,32 @@ All Nova tools use file-as-interface:
 - `diary.md` — event log
 - `goals/*.md` — goal state
 
+## Interface Invariants (to prevent schema drift)
+
+### Diary entries (recommended minimum)
+- **Timestamp** in ISO 8601 (`2026-02-01T20:02:00Z`)
+- **Stable label** (e.g., `WORK BLOCK <n>` or `DEEP THINK`)
+- **Task name** (short)
+- **Result** (1–3 bullets)
+- **Next** (single explicit next action)
+
+Example:
+```markdown
+---
+[WORK BLOCK 194] 2026-02-01T20:02:00Z
+Task: Add interface invariants to file-as-interface knowledge note
+Duration: 60 seconds
+Action: Documented minimum required fields for diary/state interfaces
+Impact: Prevents tooling breakage from loose Markdown drift
+Next: Create tools/validate-interfaces.py to lint diary.md + state files
+```
+
+### State JSON files (recommended minimum)
+- Must be valid JSON (no comments)
+- Include a top-level **version** (integer)
+- Include **lastUpdated** timestamp (`...Z`)
+- Prefer stable keys over nested free-form blobs
+
 ## Related
 
 - diary.md structure

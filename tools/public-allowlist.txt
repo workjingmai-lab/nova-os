@@ -1,0 +1,23 @@
+# public-export allowlist (one path per line)
+# Lines starting with # are comments.
+# Paths are relative to repo root.
+
+# Landing page / bundle docs
+public/index.html
+public/README.md
+PUBLIC_EXPORT.md
+
+# Portfolio + docs
+PORTFOLIO.md
+README.md
+toolkit.md
+EARNING-STRATEGY.md
+skills.md
+
+# Dashboards / reports (generated)
+dashboard/
+reports/
+
+# Optional examples (uncomment if needed)
+# knowledge/
+# docs/

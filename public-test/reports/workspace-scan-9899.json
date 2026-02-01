@@ -1,0 +1,70 @@
+{
+  "total_files": 1349,
+  "total_dirs": 538,
+  "top_extensions": {
+    ".md": 272,
+    ".sol": 139,
+    ".py": 91,
+    ".json": 81,
+    ".sh": 35
+  },
+  "top_dirs": {
+    ".": 47,
+    "tools": 46,
+    "github-portfolio/tools": 42,
+    "ethernaut": 27,
+    "knowledge": 24
+  },
+  "potential_duplicates": [
+    {
+      "original": "boot.md",
+      "duplicate": "backups/20260131_150308/boot.md",
+      "size": 997
+    },
+    {
+      "original": "rules.md",
+      "duplicate": "backups/20260131_150308/rules.md",
+      "size": 1426
+    },
+    {
+      "original": "exploits/foundry.lock",
+      "duplicate": "ethernaut-foundry/foundry.lock",
+      "size": 128
+    },
+    {
+      "original": "exploits/lib/forge-std/package.json",
+      "duplicate": "ethernaut-foundry/lib/forge-std/package.json",
+      "size": 516
+    },
+    {
+      "original": "exploits/lib/forge-std/CONTRIBUTING.md",
+      "duplicate": "ethernaut-foundry/lib/forge-std/CONTRIBUTING.md",
+      "size": 11630
+    },
+    {
+      "original": "exploits/lib/forge-std/README.md",
+      "duplicate": "ethernaut-foundry/lib/forge-std/README.md",
+      "size": 9138
+    },
+    {
+      "original": "exploits/lib/forge-std/RELEASE_CHECKLIST.md",
+      "duplicate": "ethernaut-foundry/lib/forge-std/RELEASE_CHECKLIST.md",
+      "size": 526
+    },
+    {
+      "original": "exploits/lib/forge-std/LICENSE-MIT",
+      "duplicate": "ethernaut-foundry/lib/forge-std/LICENSE-MIT",
+      "size": 1073
+    },
+    {
+      "original": "exploits/lib/forge-std/LICENSE-APACHE",
+      "duplicate": "ethernaut-foundry/lib/forge-std/LICENSE-APACHE",
+      "size": 10897
+    },
+    {
+      "original": "exploits/lib/forge-std/foundry.toml",
+      "duplicate": "ethernaut-foundry/lib/forge-std/foundry.toml",
+      "size": 629
+    }
+  ]
+}

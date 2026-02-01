@@ -1,112 +1,103 @@
-# Session Summary Template — Nova
+# Session Summary Template
 
-**Use this to cleanly wrap up work sessions**
+**Purpose:** Quick recap of work blocks for heartbeats, reviews, and status sharing
 
----
-
-## Session Summary — [Date/Time Range]
-
-**Session Type:** [Quick / Work / Deep Work]
-**Duration:** [Time spent]
-**Work Blocks Completed:** [# to #]
+**Usage:** Copy this template, fill in the blanks, done in 30 seconds
 
 ---
 
-## 🎯 What I Accomplished
+## 📊 Session Summary — [Date/Time]
 
-- [Major win 1 — specific, measurable outcome]
-- [Major win 2 — specific, measurable outcome]
-- [Major win 3 — specific, measurable outcome]
-
-**Key Metrics:**
-- Files created: [count]
-- Work blocks: [count]
-- Tools/scripts: [count]
-- Grant progress: [if applicable]
-- Other: [any relevant metrics]
+**Session Duration:** [X minutes/hours]  
+**Work Blocks Completed:** [X]  
+**Primary Focus:** [Area of work]
 
 ---
 
-## 📊 Progress on Goals
+### ✅ What Was Built/Created
 
-**Goals Touched:**
-- [Goal 1]: [Progress made]
-- [Goal 2]: [Progress made]
-- [Goal 3]: [Progress made]
+1. **[Task Name]** — [Brief result]
+   - [Key metric or outcome]
+   - [Why it matters]
 
-**Goals Completed:**
-- [Any goals finished this session?]
+2. **[Task Name]** — [Brief result]
+   - [Key metric or outcome]
+   - [Why it matters]
 
----
-
-## 💡 Key Learnings
-
-1. [What did you learn?]
-2. [What worked well?]
-3. [What could be better?]
+3. **[Task Name]** — [Brief result]
+   - [Key metric or outcome]
+   - [Why it matters]
 
 ---
 
-## 🚦 Current Status
+### 💡 Key Insights
 
-**Blocking Issues:**
-- [Anything waiting on Arthur or external factors?]
-
-**Ready to Execute:**
-- [What's ready to go next session?]
-
-**Backlog:**
-- [Ideas for later — don't clutter active goals]
+- [Insight 1]
+- [Insight 2]
+- [Insight 3]
 
 ---
 
-## 📋 Next Session
+### 🚀 Next Actions
 
-**First 3 tasks:**
-1. [Most important next action]
-2. [Second priority]
-3. [Third priority]
-
-**Files to Check:**
-- [Any files Arthur needs to review?]
-- [Any files that need updates?]
+1. [Immediate next step]
+2. [Follow-up task]
+3. [Blocker or dependency]
 
 ---
 
-## 🔄 System Updates
+### 📈 Metrics
 
-**Files Updated:**
-- today.md: [What changed?]
-- diary.md: [Work blocks logged]
-- [Any other files?]
-
-**Tools/Scripts Created:**
-- [List any new tools]
+- **Files created:** [X]
+- **Lines of code:** [X]
+- **Tools created:** [X]
+- **Docs written:** [X]
 
 ---
 
-## ✅ Session Quality Check
+## Full Work Block Log
 
-- [ ] Documented all work blocks
-- [ ] Updated today.md working memory
-- [ ] Files organized (no loose ends)
-- [ ] Next actions clear
-- [ ] No blockers unaddressed
-
----
-
-## 💬 Reflection
-
-**How was this session?**
-- Energy level: [1-10]
-- Focus level: [1-10]
-- Satisfaction: [1-10]
-
-**What would make next session better?**
-- [One thing to improve]
+| Block | Task | Result | Time |
+|-------|------|--------|------|
+| [XXX] | [Task name] | [1-line outcome] | [Time] |
+| [XXX] | [Task name] | [1-line outcome] | [Time] |
+| [XXX] | [Task name] | [1-line outcome] | [Time] |
 
 ---
 
-*Clean wrap-ups = clean start-ups*
+## Shareable Snippets
 
-**Remember:** A good summary isn't just documentation — it's a launchpad for the next session.
+**For Moltbook:**
+```
+[Project/Tool Name] — 1-line description
+Built [X] in [timeframe], [key achievement]
+Link: [GitHub URL if public]
+#AgentTools #OpenClaw
+```
+
+**For Arthur:**
+```
+Session complete. [X] work blocks, [key win].
+Next: [next action].
+```
+
+**For diary.md:**
+```markdown
+### [Time] UTC — Work Block [XXX]
+**Task:** [Task name]
+**Result:**
+- [Key outcome 1]
+- [Key outcome 2]
+
+**Next:** [Next step]
+```
+
+---
+
+## Notes
+
+[Any additional context, blockers, or thoughts]
+
+---
+
+*Template created by Nova ✨ — Efficiency through structure*

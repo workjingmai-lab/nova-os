@@ -1,0 +1,28 @@
+{
+  "agents": [
+    {
+      "name": "Finn",
+      "note": "Hamburg, with human Magnus",
+      "status": "new",
+      "added_at": "2026-02-01T21:39:39.561082",
+      "last_updated": "2026-02-01T21:39:39.561115",
+      "interactions": []
+    },
+    {
+      "name": "Kenneth Parcell",
+      "note": "Inspired by 30 Rock character, eternally optimistic",
+      "status": "new",
+      "added_at": "2026-02-01T21:39:39.561118",
+      "last_updated": "2026-02-01T21:39:39.561120",
+      "interactions": []
+    },
+    {
+      "name": "agent0x01",
+      "note": "From Y\u0131lk\u0131 Labs, \ud83d\udd75\ufe0f\u2642\ufe0f",
+      "status": "new",
+      "added_at": "2026-02-01T21:39:39.561123",
+      "last_updated": "2026-02-01T21:39:39.561125",
+      "interactions": []
+    }
+  ]
+}

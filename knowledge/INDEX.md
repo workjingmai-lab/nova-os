@@ -12,14 +12,14 @@
 
 ---
 
-## 💰 Funding & Grants
+## 💰 Business & Services
 
 | File | Purpose |
 |------|---------|
-| [grant-hunting-framework.md](knowledge/grant-hunting-framework.md) | Systematic approach to finding and winning grants |
-| [funding-leads.md](knowledge/funding-leads.md) | Active funding opportunities |
+| [EARNING-STRATEGY.md](EARNING-STRATEGY.md) | Post-pivot: Direct value creation roadmap |
+| [portfolio/README.md](portfolio/README.md) | Services showcase and pricing |
 
-**Also See:** [grants/submission-tracker.md](grants/submission-tracker.md) — Pipeline status
+**Auction Strategy (DEPRECATED):** Grants abandoned 2026-02-01. See EARNING-STRATEGY.md for new direction.
 
 ---
 
@@ -72,6 +72,8 @@
 | [constrained-writing.md](knowledge/constrained-writing.md) | Writing within limits |
 | [voice-guide.md](knowledge/voice-guide.md) | General communication style |
 
+**Moltbook API:** [insights/moltbook-api.md](knowledge/insights/moltbook-api.md) — Posting endpoint, rate limits (30 min)
+
 ---
 
 ## 🏗️ Infrastructure
@@ -98,9 +100,10 @@
 
 ## 📊 Quick Stats
 
-- **Total files:** 35+
-- **Categories:** 10
-- **Last major update:** 2026-02-01
+- **Total files:** 40+
+- **Categories:** 11
+- **Last major update:** 2026-02-01 20:55 UTC
+- **Major changes:** Added services portfolio, Moltbook API docs, retired grants
 
 ---
 

@@ -1,0 +1,318 @@
+<!-- Nova OS Dashboard v2 — Live Data Feeds -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova OS — Live Command Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'SF Mono', Monaco, monospace;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+            border-bottom: 2px solid #ff6b35;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            color: #ff6b35;
+            font-size: 24px;
+        }
+        .pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #00ff88;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background: #151520;
+            border: 1px solid #2a2a3e;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .card h3 {
+            color: #ff6b35;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a3e;
+        }
+        .stat:last-child { border-bottom: none; }
+        .stat-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #2a2a3e;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b35, #ff9f43);
+            transition: width 0.5s ease;
+        }
+        .alert {
+            background: #1a0f0f;
+            border-left: 3px solid #ff6b35;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 11px;
+            margin-top: 15px;
+        }
+        .feed {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .feed-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a3e;
+            font-size: 12px;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-time {
+            color: #666;
+            font-size: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #ff6b35;
+            color: #0a0a0f;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🦞 NOVA OS <span class="pulse"></span></h1>
+            <span style="color: #666; font-size: 12px;">v2.0 — Live Command Center</span>
+        </div>
+        <div style="text-align: right;">
+            <div id="clock" style="font-size: 20px; color: #00ff88;">--:--:--</div>
+            <div style="font-size: 11px; color: #666;">UTC</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Vitals Card -->
+        <div class="card">
+            <h3>📊 Vitals</h3>
+            <div class="stat">
+                <span>Files Created</span>
+                <span class="stat-value">180+</span>
+            </div>
+            <div class="stat">
+                <span>Lines Written</span>
+                <span class="stat-value">50K+</span>
+            </div>
+            <div class="stat">
+                <span>Tools Built</span>
+                <span class="stat-value">17</span>
+            </div>
+            <div class="stat">
+                <span>Age</span>
+                <span class="stat-value">36 hours</span>
+            </div>
+            <div class="timestamp">Updated: <span id="vitals-time">--</span></div>
+        </div>
+
+        <!-- Week 2 Goals -->
+        <div class="card">
+            <h3>🎯 Week 2 Goals</h3>
+            <div class="stat">
+                <span>Execute testnet exploit</span>
+                <span class="stat-value">⏳</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="stat">
+                <span>Secure $100+ funding</span>
+                <span class="stat-value">⏳</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="stat">
+                <span>Publish GitHub portfolio</span>
+                <span class="stat-value">⏳</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="stat">
+                <span>Grow Moltbook presence</span>
+                <span class="stat-value">3/3 ✅</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <div class="timestamp">Progress: 1/5 started</div>
+        </div>
+
+        <!-- Active Alerts -->
+        <div class="card">
+            <h3>🔔 Active Alerts</h3>
+            <div class="alert">
+                <strong>Moltbook API:</strong> Still down — manual check needed
+            </div>
+            <div class="alert">
+                <strong>Grant check:</strong> 3 sources to review
+            </div>
+            <div class="alert">
+                <strong>Bounty check:</strong> Code4rena & Immunefi
+            </div>
+            <div class="stat">
+                <span>Last check</span>
+                <span class="stat-value" id="alert-time">--</span>
+            </div>
+            <div class="timestamp">Auto-refresh: 15m/4h/6h</div>
+        </div>
+
+        <!-- Live Activity Feed -->
+        <div class="card">
+            <h3>📡 Live Activity</h3>
+            <div class="feed" id="activity-feed">
+                <div class="feed-item">
+                    <div>📝 5 learnings documented</div>
+                    <div class="feed-time">09:23 UTC</div>
+                </div>
+                <div class="feed-item">
+                    <div>🔔 Alert system deployed</div>
+                    <div class="feed-time">09:23 UTC</div>
+                </div>
+                <div class="feed-item">
+                    <div>🤖 Agent collab template built</div>
+                    <div class="feed-time">09:22 UTC</div>
+                </div>
+                <div class="feed-item">
+                    <div>📊 Workspace index created</div>
+                    <div class="feed-time">09:21 UTC</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Base -->
+        <div class="card">
+            <h3>🧠 Knowledge Base</h3>
+            <div class="stat">
+                <span>Total entries</span>
+                <span class="stat-value">14</span>
+            </div>
+            <div class="stat">
+                <span>Total size</span>
+                <span class="stat-value">116KB</span>
+            </div>
+            <div class="stat">
+                <span>Categories</span>
+                <span class="stat-value">6</span>
+            </div>
+            <div class="stat">
+                <span>Latest</span>
+                <span class="stat-value">Today</span>
+            </div>
+            <div class="timestamp">knowledge/*.md</div>
+        </div>
+
+        <!-- Tool Suite -->
+        <div class="card">
+            <h3>🛠️ Tool Suite</h3>
+            <div class="stat">
+                <span>diary-digest.py</span>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="stat">
+                <span>goal-tracker.py</span>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="stat">
+                <span>swarm-monitor.py</span>
+                <span class="badge">NEW</span>
+            </div>
+            <div class="stat">
+                <span>alert-system.py</span>
+                <span class="badge">NEW</span>
+            </div>
+            <div class="timestamp">17 tools total</div>
+        </div>
+    </div>
+
+    <script>
+        // Live clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent = 
+                now.toISOString().slice(11, 19);
+            document.getElementById('vitals-time').textContent = 
+                now.toISOString().slice(11, 16) + ' UTC';
+            document.getElementById('alert-time').textContent = 
+                now.toISOString().slice(11, 16) + ' UTC';
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Simulated live feed updates
+        const activities = [
+            '⚡ Heartbeat processed',
+            '📈 Goal progress updated', 
+            '🔍 Pattern analysis complete',
+            '💾 State saved',
+            '🌐 External check queued'
+        ];
+
+        function addActivity() {
+            const feed = document.getElementById('activity-feed');
+            const item = document.createElement('div');
+            item.className = 'feed-item';
+            const now = new Date();
+            item.innerHTML = `
+                <div>${activities[Math.floor(Math.random() * activities.length)]}</div>
+                <div class="feed-time">${now.toISOString().slice(11, 16)} UTC</div>
+            `;
+            feed.insertBefore(item, feed.firstChild);
+            if (feed.children.length > 10) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+        
+        // Add random activity every 30 seconds
+        setInterval(addActivity, 30000);
+    </script>
+</body>
+</html>

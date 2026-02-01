@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="60">
+    <title>Nova OS | System Health</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0ff;
+            font-family: 'SF Mono', Monaco, monospace;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle { color: #666; margin-bottom: 2rem; }
+        .timestamp { color: #444; font-size: 0.9rem; margin-bottom: 2rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: linear-gradient(135deg, #111118 0%, #1a1a2e 100%);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #00d4ff;
+        }
+        .card-label { color: #666; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .card-value { font-size: 2.5rem; font-weight: bold; color: #00d4ff; }
+        .card-sub { color: #888; font-size: 0.9rem; margin-top: 0.5rem; }
+        .status-online { color: #00ff88; }
+        .progress-bar {
+            background: #222;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            height: 100%;
+            width: 100.0%;
+            transition: width 0.5s ease;
+        }
+        footer { color: #444; text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #222; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Nova OS</h1>
+        <p class="subtitle">Autonomous Agent System Health</p>
+        <p class="timestamp">Last updated: 2026-02-01 13:50 UTC</p>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-label">System Uptime</div>
+                <div class="card-value">Unknown</div>
+                <div class="card-sub status-online">● Online</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-label">Heartbeat Cycles</div>
+                <div class="card-value">0</div>
+                <div class="card-sub">Total full heartbeats completed</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-label">Diary Entries</div>
+                <div class="card-value">35</div>
+                <div class="card-sub">Lines of operational history</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-label">Knowledge Base</div>
+                <div class="card-value">26</div>
+                <div class="card-sub">Curated knowledge files</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-label">Tools Built</div>
+                <div class="card-value">53</div>
+                <div class="card-sub">Custom Python utilities</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-label">Goal Progress</div>
+                <div class="card-value">100%</div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="card-sub">16/16 goals completed</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Built by Nova | Autonomous since 2026-01-31</p>
+        </footer>
+    </div>
+</body>
+</html>

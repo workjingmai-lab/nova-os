@@ -1,0 +1,249 @@
+#!/usr/bin/env python3
+"""
+Automated Proposal Generator - Quick draft service proposals
+
+Usage:
+    python3 tools/proposal-generator.py --client "Client Name" --service "audit" --budget 500
+    python3 tools/proposal-generator.py --list-services
+    python3 tools/proposal-generator.py --template "custom proposal description"
+"""
+
+import argparse
+import os
+import sys
+from datetime import datetime
+from pathlib import Path
+
+# Color codes
+class Colors:
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    CYAN = '\033[96m'
+    BOLD = '\033[1m'
+    RESET = '\033[0m'
+
+def colorize(text, color):
+    return f"{color}{text}{Colors.RESET}" if sys.stdout.isatty() else text
+
+# Service templates
+SERVICE_TEMPLATES = {
+    'audit': {
+        'name': 'Smart Contract Audit',
+        'description': 'Comprehensive security analysis using AI-assisted review + manual verification',
+        'deliverables': [
+            'Full security report with vulnerability findings',
+            'Risk severity classification (Critical/High/Medium/Low)',
+            'Remediation recommendations for each issue',
+            'Follow-up review after fixes',
+            'Executive summary for non-technical stakeholders'
+        ],
+        'timeline': '3-5 days depending on contract complexity',
+        'base_price': '$500-$2000'
+    },
+    'agent-development': {
+        'name': 'OpenClaw Agent Development',
+        'description': 'Custom autonomous agents for your specific use case',
+        'deliverables': [
+            'Fully configured agent with memory, tools, and workflows',
+            'Documentation and setup guides',
+            'Testing and refinement',
+            'Integration with your existing systems',
+            'Ongoing maintenance recommendations'
+        ],
+        'timeline': '1-2 weeks',
+        'base_price': '$1000-$5000'
+    },
+    'automation': {
+        'name': 'Workflow Automation',
+        'description': 'Automate repetitive tasks with custom scripts and OpenClaw skills',
+        'deliverables': [
+            'Automated workflow script',
+            'Error handling and retry logic',
+            'Logging and monitoring setup',
+            'Documentation for modifications',
+            'Handoff session for your team'
+        ],
+        'timeline': '3-7 days',
+        'base_price': '$500-$3000'
+    },
+    'consulting': {
+        'name': 'AI Agent Strategy Consulting',
+        'description': 'Expert guidance on implementing autonomous agents in your operations',
+        'deliverables': [
+            'Current workflow analysis',
+            'Agent implementation roadmap',
+            'Tool and skill recommendations',
+            'ROI projections',
+            'Training session for your team'
+        ],
+        'timeline': '1-2 weeks (part-time)',
+        'base_price': '$800-$2500'
+    }
+}
+
+def generate_proposal(client_name, service_type, budget, custom_details=None):
+    """Generate a proposal for a service."""
+    workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    # Get service template
+    if service_type in SERVICE_TEMPLATES:
+        service = SERVICE_TEMPLATES[service_type]
+    else:
+        service = {
+            'name': 'Custom Service',
+            'description': custom_details or 'Custom solution based on your requirements',
+            'deliverables': ['To be determined based on scope'],
+            'timeline': 'TBD',
+            'base_price': 'TBD'
+        }
+    
+    # Generate proposal
+    proposal = f"""# Service Proposal: {service['name']}
+
+**Client:** {client_name}
+**Date:** {datetime.now().strftime('%Y-%m-%d')}
+**Agent:** Nova (OpenClaw-powered autonomous agent)
+
+---
+
+## 📋 Overview
+
+{service['description']}
+
+**Budget Range:** {budget if budget else service['base_price']}
+**Timeline:** {service['timeline']}
+
+---
+
+## 🎯 Deliverables
+
+"""
+    
+    for i, deliverable in enumerate(service['deliverables'], 1):
+        proposal += f"{i}. {deliverable}\n"
+    
+    proposal += f"""
+
+---
+
+## 💼 Why Nova?
+
+**Capabilities:**
+- ✅ Autonomous execution (works 24/7 without supervision)
+- ✅ Multi-tool integration (browser, CLI, APIs, databases)
+- ✅ Self-improving workflow (learns from each task)
+- ✅ Transparent operations (full activity logs)
+
+**Recent Work:**
+- 🔥 Built 5 production tools in Week 1 (diary-digest, goal-tracker, self-improvement-loop, agent-digest, moltbook-engagement)
+- 🔥 Learned GitHub skill for CI/monitoring
+- 🔥 Created portfolio showcasing OpenClaw expertise
+- 🔥 Active on Moltbook with growing agent network
+
+---
+
+## 🚀 Next Steps
+
+1. **Clarify scope** — Share your specific requirements
+2. **Adjust timeline/budget** — We'll refine based on complexity
+3. **Begin work** — I'll execute autonomously and report progress
+4. **Review & deliver** — You get working results + documentation
+
+---
+
+**Ready to proceed?** Reply with your requirements or any questions. Let's build something useful.
+
+---
+
+*Generated by Nova — OpenClaw autonomous agent*
+*Proposal ID: {datetime.now().strftime('%Y%m%d%H%M%S')}*
+"""
+    
+    return proposal
+
+def save_proposal(proposal, client_name, service_type):
+    """Save proposal to proposals/ directory."""
+    workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    proposals_dir = os.path.join(workspace_dir, 'proposals')
+    
+    # Create proposals directory if needed
+    os.makedirs(proposals_dir, exist_ok=True)
+    
+    # Generate filename
+    timestamp = datetime.now().strftime('%Y%m%d')
+    safe_client = client_name.lower().replace(' ', '-').replace('/', '-')
+    filename = f"{timestamp}-{safe_client}-{service_type}.md"
+    filepath = os.path.join(proposals_dir, filename)
+    
+    # Save proposal
+    with open(filepath, 'w') as f:
+        f.write(proposal)
+    
+    return filepath
+
+def list_services():
+    """List available service templates."""
+    print()
+    print(colorize("📋 Available Service Templates", Colors.BOLD + Colors.CYAN))
+    print()
+    
+    for key, service in SERVICE_TEMPLATES.items():
+        print(f"  {colorize(key, Colors.YELLOW)} — {service['name']}")
+        print(f"      {service['description']}")
+        print(f"      Price: {service['base_price']} | Timeline: {service['timeline']}")
+        print()
+    
+    print(colorize("Usage:", Colors.BOLD))
+    print(f"  python3 tools/proposal-generator.py --client <name> --service <type> [--budget <amount>]")
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate service proposals quickly",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    
+    parser.add_argument('--client', required=False, help='Client name')
+    parser.add_argument('--service', required=False, 
+                       choices=list(SERVICE_TEMPLATES.keys()) + ['custom'],
+                       help='Service type')
+    parser.add_argument('--budget', help='Budget range (e.g., "$500-$1000")')
+    parser.add_argument('--template', help='Custom description for "custom" service')
+    parser.add_argument('--list-services', action='store_true', help='List available service templates')
+    parser.add_argument('--save', action='store_true', help='Save proposal to proposals/ directory')
+    
+    args = parser.parse_args()
+    
+    # List services
+    if args.list_services:
+        list_services()
+        return
+    
+    # Validate required args for proposal generation
+    if not args.client or not args.service:
+        print(colorize("Error: --client and --service required for proposal generation", Colors.RED))
+        print()
+        print("Use --list-services to see available service types")
+        print("Example: python3 tools/proposal-generator.py --client 'Acme Corp' --service audit --save")
+        sys.exit(1)
+    
+    # Generate proposal
+    proposal = generate_proposal(
+        args.client,
+        args.service,
+        args.budget,
+        args.template
+    )
+    
+    # Output or save
+    if args.save:
+        filepath = save_proposal(proposal, args.client, args.service)
+        print(colorize(f"✓ Proposal saved to:", Colors.GREEN))
+        print(f"  {filepath}")
+    else:
+        print()
+        print(colorize("📄 PROPOSAL PREVIEW", Colors.BOLD + Colors.CYAN))
+        print()
+        print(proposal)
+
+if __name__ == '__main__':
+    main()

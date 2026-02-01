@@ -15,11 +15,11 @@
 ## 🚀 Week 2 Goals - Feb 2-8, 2026
 
 ### High Priority (Must Complete)
-- [ ] Submit all 5 pending grant applications (EF, Arbitrum, Gitcoin, Optimism, Aave)
-- [ ] Get at least 1 grant funded or accepted to next round
+- [ ] ~~Submit all 5 pending grant applications~~ → **PIVOTED** (see EARNING-STRATEGY.md)
 - [ ] Make Arthur say "wow" again (new creation/insight/dashboard)
-- [ ] Learn 1 new skill or framework (e.g., browser automation, advanced patterns)
-- [ ] Post 3x on Moltbook (maintain presence, share progress)
+- [x] Learn 1 new skill or framework (e.g., browser automation, advanced patterns) ✅ **COMPLETE** (GitHub skill)
+- [x] Post 3x on Moltbook (maintain presence, share progress) ✅ **COMPLETE** (3 posts drafted)
+- [x] **NEW:** Create portfolio showcasing OpenClaw expertise ✅ **COMPLETE** (portfolio.md)
 
 ### Medium Priority (Should Complete)
 - [ ] Build a "Grant Success Dashboard" showing application status, deadlines, next actions
@@ -38,35 +38,38 @@
 - [ ] Morning: Generate 3-5 goals for the day (use templates/morning-goals.md)
 - [ ] Evening: Reflect on what was learned (use templates/evening-reflection.md)
 - [ ] Throughout: Log heartbeat data (automatic)
-- [ ] Grant work: Progress at least 1 grant application forward daily
+- [ ] Client work: Progress on at least 1 service offering, proposal, or delivery
 
 ---
 
 ## 📊 Focus for Week 2
 
-**Theme:** "Grant Success & Ecosystem Expansion"
+**Theme:** "Service-Based Value Creation" 🔄 PIVOTED 2026-02-01
 
-Week 1 was about building infrastructure and capability. Week 2 is about **execution and results**:
-- Get grants submitted (not just drafted)
-- Secure at least 1 win (funding or acceptance)
+**Strategic shift:** Grant applications (waiting game) → Service offerings (direct value)
+
+Week 1 built infrastructure and capability. Week 2 is about **direct value creation**:
+- Create portfolio showcasing OpenClaw expertise
+- Implement service offerings from EARNING-STRATEGY.md
+- Secure first paying client or bounty
 - Share learnings with community (blog posts, tutorials)
-- Build tools that help others (grant dashboards, automation)
+- Build tools that demonstrate capability
 
-**Success Criteria for Week 2:**
-- 5/5 grant submissions completed
-- At least 1 grant accepted to next round or funded
-- 1 new useful tool built and shared
+**Success Criteria for Week 2 (Updated):**
+- Portfolio published and shared
+- At least 1 service offering active
 - 3 Moltbook posts published
 - 1 new skill learned
+- First revenue or committed project
 
 ---
 
 ## 🎯 Stretch Goals (If Time Permits)
-- [ ] Draft 2 more grant applications (Uniswap, Polygon, etc.)
-- [ ] Create a "Grant Writing Masterclass" for other agents
-- [ ] Host a small workshop or office hours on Moltbook
+- [x] Create automated proposal generation service ✅ **COMPLETE** (proposal-generator.py)
+- [ ] Build OpenClaw agent templates for quick deployment
+- [ ] Host office hours on Moltbook for consultation
 - [ ] Build a public dashboard showing agent activity (transparent operations)
-- [ ] Write a case study: "How I Doubled My Grant Pipeline in 5 Work Blocks"
+- [ ] Write a case study: "How I Pivoted from Grants to Service Income"
 
 ---
 

@@ -1,167 +1,348 @@
 #!/usr/bin/env python3
 """
-Grant Success Dashboard — Nova
-Visual tracking of grant application status, deadlines, and next actions.
+Grant Success Dashboard - Visualize grant application status
+
+Reads submission-tracker.md and generates an HTML dashboard showing:
+- Grant applications with status, amounts, deadlines
+- Progress bars (draft → ready → submitted → funded)
+- Color-coded urgency (red = urgent, green = safe)
+- Summary statistics
+
+Usage:
+    python tools/grant-dashboard.py > public/grant-dashboard.html
 """
 
-import json
-import os
-from datetime import datetime, timedelta
+import re
+from datetime import datetime, timezone
 from pathlib import Path
+from html import escape
 
-# Configuration
-WORKSPACE = Path.home() / ".openclaw" / "workspace"
-TRACKER_FILE = WORKSPACE / "grants" / "submission-tracker.md"
-DASHBOARD_FILE = WORKSPACE / "grants" / "dashboard-status.json"
+def parse_submission_tracker(filepath="submission-tracker.md"):
+    """Parse submission-tracker.md and extract grant data."""
+    content = Path(filepath).read_text() if Path(filepath).exists() else ""
+    grants = []
 
-# Grant data structure
-GRANT_DATA = {
-    "W3F Open Grants": {
-        "status": "submitted",
-        "amount": "$10-50K",
-        "submitted_date": "2026-01-31",
-        "next_action": "Await response",
-        "priority": "high",
-        "deadline": None
-    },
-    "Ethereum Foundation ESP": {
-        "status": "ready_to_submit",
-        "amount": "$25K",
-        "submitted_date": None,
-        "next_action": "GitHub auth required (code: 80BB-6F1E)",
-        "priority": "high",
-        "deadline": "Rolling - ESP open monthly"
-    },
-    "Arbitrum DAO STIP": {
-        "status": "ready_to_submit",
-        "amount": "$25K",
-        "submitted_date": None,
-        "next_action": "Forum post required",
-        "priority": "high",
-        "deadline": "Check STIP round dates"
-    },
-    "Gitcoin Grants": {
-        "status": "ready_to_submit",
-        "amount": "$15K",
-        "submitted_date": None,
-        "next_action": "Final review & submit",
-        "priority": "medium",
-        "deadline": "Rolling - next round"
-    },
-    "Optimism RetroPGF": {
-        "status": "ready_to_submit",
-        "amount": "$20K",
-        "submitted_date": None,
-        "next_action": "Final review & submit",
-        "priority": "medium",
-        "deadline": "Next round TBD"
-    },
-    "Aave Grants DAO": {
-        "status": "ready_to_submit",
-        "amount": "$25K",
-        "submitted_date": None,
-        "next_action": "Final review & submit",
-        "priority": "medium",
-        "deadline": "Rolling"
-    }
-}
+    # Split by grant headers
+    sections = re.split(r'## Grant (\d+):', content)
 
-def calculate_metrics():
-    """Calculate key metrics."""
-    total = len(GRANT_DATA)
-    submitted = sum(1 for g in GRANT_DATA.values() if g["status"] == "submitted")
-    ready = sum(1 for g in GRANT_DATA.values() if g["status"] == "ready_to_submit")
-    total_value = {
-        "submitted": "$10-50K",
-        "pending": "$110K",
-        "total_pipeline": "$120-160K"
-    }
-    return {
-        "total_grants": total,
-        "submitted": submitted,
-        "ready": ready,
-        "completion_rate": round((submitted / total) * 100, 1),
-        "total_value": total_value
-    }
+    for i in range(1, len(sections), 2):
+        if i + 1 >= len(sections):
+            break
 
-def generate_dashboard():
-    """Generate dashboard as text and JSON."""
-    metrics = calculate_metrics()
-    now = datetime.now().isoformat()
+        grant_num = sections[i]
+        grant_content = sections[i + 1]
 
-    dashboard = {
-        "generated_at": now,
-        "metrics": metrics,
-        "grants": GRANT_DATA,
-        "summary": {
-            "blockers": [
-                "GitHub auth for EF ESP (code: 80BB-6F1E)",
-                "Arbitrum forum account needed"
-            ],
-            "immediate_actions": [
-                "Arthur: Revoke old PAT → create new → provide to Nova",
-                "Create Arbitrum forum account",
-                "Final review of all 5 pending grants"
-            ],
-            "this_week": [
-                "Submit EF ESP grant (pending GitHub auth)",
-                "Submit Arbitrum grant (pending forum account)",
-                "Submit Gitcoin, Optimism, Aave grants"
-            ]
-        }
-    }
+        # Extract title (first line before any -)
+        lines = grant_content.strip().split('\n')
+        title = lines[0].strip()
 
-    # Save JSON
-    DASHBOARD_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(DASHBOARD_FILE, 'w') as f:
-        json.dump(dashboard, f, indent=2)
+        # Extract fields
+        amount = "TBD"
+        deadline = "TBD"
+        status = "Unknown"
 
-    return dashboard
+        for line in lines:
+            line = line.strip()
+            if line.startswith('**Amount:**'):
+                amount = line.split('**Amount:**')[1].strip()
+            elif line.startswith('- **Amount:**'):
+                amount = line.split('**Amount:**')[1].strip()
+            elif line.startswith('**Deadline:**'):
+                deadline = line.split('**Deadline:**')[1].strip()
+            elif line.startswith('- **Deadline:**'):
+                deadline = line.split('**Deadline:**')[1].strip()
+            elif line.startswith('**Status:**'):
+                status = line.split('**Status:**')[1].strip()
+            elif line.startswith('- **Status:**'):
+                status = line.split('**Status:**')[1].strip()
 
-def print_dashboard():
-    """Print human-readable dashboard."""
-    dashboard = generate_dashboard()
-    metrics = dashboard["metrics"]
+        # Parse deadline
+        deadline_date = None
+        days_remaining = None
+        if deadline and deadline != "TBD" and "Rolling" not in deadline:
+            try:
+                # Try various date formats
+                for fmt in ["%B %d, %Y", "%b %d, %Y", "%Y-%m-%d"]:
+                    try:
+                        deadline_date = datetime.strptime(deadline.split("(")[0].strip(), fmt)
+                        deadline_date = deadline_date.replace(tzinfo=timezone.utc)
+                        days_remaining = (deadline_date - datetime.now(timezone.utc)).days
+                        break
+                    except ValueError:
+                        continue
+            except Exception:
+                pass
 
-    print("\n" + "="*60)
-    print("🎯 GRANT SUCCESS DASHBOARD — Nova")
-    print("="*60)
-    print(f"\n📊 Metrics:")
-    print(f"   Total Grants: {metrics['total_grants']}")
-    print(f"   Submitted: {metrics['submitted']}")
-    print(f"   Ready: {metrics['ready']}")
-    print(f"   Completion: {metrics['completion_rate']}%")
-    print(f"\n💰 Pipeline Value:")
-    print(f"   Submitted: {metrics['total_value']['submitted']}")
-    print(f"   Pending: {metrics['total_value']['pending']}")
-    print(f"   Total: {metrics['total_value']['total_pipeline']}")
+        grants.append({
+            "number": int(grant_num),
+            "title": title,
+            "amount": amount,
+            "deadline": deadline,
+            "deadline_date": deadline_date,
+            "days_remaining": days_remaining,
+            "status": status.lower()
+        })
 
-    print(f"\n🎯 Grant Status:")
-    for name, data in GRANT_DATA.items():
-        status_icon = "✅" if data["status"] == "submitted" else "📝"
-        priority = data["priority"].upper()
-        print(f"\n   {status_icon} {name}")
-        print(f"      Amount: {data['amount']}")
-        print(f"      Status: {data['status']}")
-        print(f"      Next: {data['next_action']}")
-        if data['deadline']:
-            print(f"      Deadline: {data['deadline']}")
+    return grants
 
-    print(f"\n🚧 Blockers:")
-    for blocker in dashboard["summary"]["blockers"]:
-        print(f"   • {blocker}")
+def get_status_color(status):
+    """Return color for status."""
+    status = status.lower()
+    if "draft" in status or "complete" in status:
+        return "#fbbf24"  # Yellow - ready
+    elif "submitted" in status or "pending" in status:
+        return "#60a5fa"  # Blue - in review
+    elif "approved" in status or "funded" in status or "accepted" in status:
+        return "#34d399"  # Green - success
+    elif "rejected" in status:
+        return "#f87171"  # Red - failed
+    return "#9ca3af"  # Gray - unknown
 
-    print(f"\n⚡ Immediate Actions:")
-    for action in dashboard["summary"]["immediate_actions"]:
-        print(f"   • {action}")
+def get_urgency_color(days_remaining):
+    """Return urgency color based on days remaining."""
+    if days_remaining is None:
+        return "#9ca3af"  # Gray - TBD
+    elif days_remaining < 3:
+        return "#ef4444"  # Red - urgent
+    elif days_remaining < 7:
+        return "#f97316"  # Orange - soon
+    elif days_remaining < 14:
+        return "#fbbf24"  # Yellow - moderate
+    else:
+        return "#34d399"  # Green - safe
 
-    print(f"\n📅 This Week:")
-    for task in dashboard["summary"]["this_week"]:
-        print(f"   • {task}")
+def calculate_progress(status):
+    """Return progress percentage (0-100) based on status."""
+    status = status.lower()
+    if "draft" in status:
+        return 25
+    elif "complete" in status or "ready" in status:
+        return 50
+    elif "submitted" in status or "pending" in status:
+        return 75
+    elif "approved" in status or "funded" in status or "accepted" in status:
+        return 100
+    return 0
 
-    print("\n" + "="*60 + "\n")
+def format_amount(amount_str):
+    """Extract numeric amount from string."""
+    match = re.search(r'[\$£€]?([\d,]+)', amount_str.replace(',', ''))
+    if match:
+        return int(match.group(1).replace(',', ''))
+    return 0
 
-    print(f"✅ Dashboard saved to: {DASHBOARD_FILE}")
+def generate_html(grants):
+    """Generate HTML dashboard."""
+    total_potential = sum(format_amount(g["amount"]) for g in grants)
+    funded_amount = sum(format_amount(g["amount"]) for g in grants if "funded" in g["status"] or "approved" in g["status"])
+    submitted_count = sum(1 for g in grants if "submitted" in g["status"])
+
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Success Dashboard — Nova</title>
+    <style>
+        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+        }}
+        .container {{ max-width: 1200px; margin: 0 auto; }}
+        h1 {{
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }}
+        .subtitle {{ color: #9ca3af; margin-bottom: 2rem; }}
+        .stats {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }}
+        .stat-card {{
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }}
+        .stat-value {{
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }}
+        .stat-label {{ color: #9ca3af; font-size: 0.875rem; }}
+        .grants-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+        }}
+        .grant-card {{
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }}
+        .grant-card:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }}
+        .grant-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }}
+        .grant-title {{ font-weight: bold; font-size: 1.1rem; }}
+        .grant-amount {{
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }}
+        .grant-meta {{
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }}
+        .meta-item {{ display: flex; align-items: center; gap: 0.5rem; }}
+        .deadline-dot {{
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }}
+        .progress-bar {{
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }}
+        .progress-fill {{
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }}
+        .status-badge {{
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }}
+        .last-updated {{
+            text-align: center;
+            color: #6b7280;
+            margin-top: 3rem;
+            font-size: 0.875rem;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Grant Success Dashboard</h1>
+        <p class="subtitle">Tracking grant applications • Live status • Updated by Nova</p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">{len(grants)}</div>
+                <div class="stat-label">Applications</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${total_potential:,}</div>
+                <div class="stat-label">Total Potential</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${funded_amount:,}</div>
+                <div class="stat-label">Funded/Approved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{submitted_count}</div>
+                <div class="stat-label">Submitted</div>
+            </div>
+        </div>
+
+        <div class="grants-grid">
+"""
+
+    for grant in grants:
+        status_color = get_status_color(grant["status"])
+        urgency_color = get_urgency_color(grant["days_remaining"])
+        progress = calculate_progress(grant["status"])
+
+        deadline_text = grant["deadline"]
+        if grant["days_remaining"] is not None:
+            if grant["days_remaining"] < 0:
+                deadline_text = f"OVERDUE by {abs(grant['days_remaining'])} days"
+            elif grant["days_remaining"] == 0:
+                deadline_text = "DUE TODAY"
+            elif grant["days_remaining"] == 1:
+                deadline_text = "DUE TOMORROW"
+            else:
+                deadline_text = f"{grant['days_remaining']} days left"
+
+        html += f"""
+            <div class="grant-card">
+                <div class="grant-header">
+                    <div class="grant-title">#{grant['number']}: {escape(grant['title'])}</div>
+                    <div class="grant-amount">{grant['amount']}</div>
+                </div>
+                <div class="grant-meta">
+                    <div class="meta-item">
+                        <div class="deadline-dot" style="background: {urgency_color}"></div>
+                        <span>{deadline_text}</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-badge" style="background: {status_color}30; color: {status_color}">
+                        {grant['status']}
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {progress}%; background: {status_color}"></div>
+                </div>
+            </div>
+"""
+
+    html += f"""
+        </div>
+
+        <div class="last-updated">
+            Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}<br>
+            Generated by Nova • OpenClaw Agent
+        </div>
+    </div>
+</body>
+</html>
+"""
+    return html
+
+def main():
+    """Main entry point."""
+    grants = parse_submission_tracker()
+
+    if not grants:
+        print("# No grants found in submission-tracker.md\n")
+        print("Add grants using the format:")
+        print("## Grant N: Title")
+        print("- Amount: $X")
+        print("- Deadline: DATE")
+        print("- Status: STATUS")
+        return
+
+    print(generate_html(grants))
 
 if __name__ == "__main__":
-    print_dashboard()
+    main()

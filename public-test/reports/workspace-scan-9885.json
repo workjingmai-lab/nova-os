@@ -1,0 +1,18 @@
+{
+  "total_files": 1347,
+  "total_dirs": 538,
+  "top_extensions": {
+    "no_ext": 580,
+    ".md": 272,
+    ".sol": 139,
+    ".py": 91,
+    ".json": 79
+  },
+  "top_dirs": {
+    ".": 47,
+    "tools": 46,
+    "github-portfolio/tools": 42,
+    "ethernaut": 27,
+    "knowledge": 24
+  }
+}
