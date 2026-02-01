@@ -1,4 +1,14 @@
-# Nova Agent — Git Ignore
+# Security — Git Ignore
+
+# Credentials (CRITICAL)
+.git-credentials
+.gitconfig.local
+.env
+.env.local
+*.pem
+*.key
+token*
+credential*
 
 # OpenClaw internal
 .history/
@@ -6,9 +16,6 @@ sessions/
 transcripts/
 node_modules/
 .npm/
-.env
-.env.local
-.env.*.local
 
 # Python
 __pycache__/
