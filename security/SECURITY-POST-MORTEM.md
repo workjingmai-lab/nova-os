@@ -2,32 +2,33 @@
 
 ## Incident Summary
 
-**Two GitHub PATs exposed via Telegram:**
-1. `github_pat_11B5VGBCQ...` (message_id: 5adb96e2) - **REVOKED**
-2. `ghp_JwYs8DzxCJhG...` (message_id: 2af8982d) - **MUST REVOKE NOW**
+**Three GitHub PATs exposed:**
+1. `github_pat_11B5VGBCQ...` (Telegram, message_id: 5adb96e2) - **REVOKED**
+2. `ghp_JwYs8DzxCJhG...` (Telegram, message_id: 2af8982d) - **REVOKED**
+3. `ghp_nGq2u4C8ULU5o...` (Signal, message_id: 1769964230602) - **MUST REVOKE NOW**
 
 ---
 
 ## Timeline
 
-| Time | Event |
-|------|-------|
-| 15:33Z | First PAT shared in plaintext |
-| 15:35Z | Security post-mortem created, credentials cleared |
-| 15:48Z | Arthur guided to revoke first PAT |
-| 15:49Z | **Second PAT shared** |
-| 15:49Z | Configured git, pushed security commit |
-| 15:49Z | **Credentials cleared from workspace** |
+| Time | Event | Channel |
+|------|-------|---------|
+| 15:33Z | First PAT shared in plaintext | Telegram |
+| 15:49Z | Second PAT shared | Telegram |
+| 16:43Z | **Third PAT shared via Signal** ✅ | Signal (secure!) |
+| 16:43Z | Git push completed | - |
+| 16:43Z | Credentials cleared | - |
 
 ---
 
 ## ✅ Actions Completed
 
-1. **First PAT** — Arthur revoked per guidance
-2. **Second PAT** — Used for immediate push (<30 seconds), then cleared
-3. **Security commit pushed** to GitHub (afef1aa)
+1. **First two PATs** — Arthur revoked per guidance
+2. **Third PAT** — Used for immediate push via Signal (<30 seconds), then cleared
+3. **Security commits pushed** to GitHub (afef1aa, dbdf8c8)
 4. **Workspace secured** — ~/.git-credentials removed
 5. **.gitignore updated** — credential files blocked
+6. **Signal channel configured** — secure messaging now active
 
 ---
 
@@ -35,60 +36,40 @@
 
 **ARTHUR:** Go to https://github.com/settings/tokens
 
-Find token: `ghp_JwYs8DzxCJhG...` (starts with `ghp_`)
+Find token: `ghp_nGq2u4C8ULU5o...` (starts with `ghp_nGq2u4C8ULU5o...`)
 
 **Click "Delete"** — this invalidates the token immediately.
 
 ---
 
-## Root Cause
+## ✅ LESSON LEARNED
 
-**Repeated plaintext sharing of sensitive credentials**
-
-Both tokens were shared in Telegram (unencrypted chat). Even though:
-- First token was revoked
-- Second token was used <30 seconds then cleared
-- Neither was committed to git
-
-**This is still a security risk.**
-
----
-
-## Permanent Solution
+**Signal is now configured** — use it for all sensitive credentials going forward.
 
 **For Arthur:**
-1. **Never share PATs in plaintext chats**
-2. Use encrypted channels (Signal, WhatsApp, etc.)
-3. Or: Use GitHub CLI device flow on your machine, not mine
+1. ✅ **Use Signal for credentials** — end-to-end encrypted, working now
+2. ❌ **Never use Telegram** for PATs/API keys
 
 **For Nova:**
-1. ✅ Never log/commit credentials
-2. ✅ Always use .gitignore for sensitive files
-3. ✅ Clear credentials immediately after use
-4. ✅ Document security incidents
-
----
-
-## Lessons Learned
-
-1. **Telegram is NOT secure** for credential sharing
-2. **Temporary use doesn't make it safe** — still visible in chat history
-3. **Automation requires auth** — need better long-term solution
-4. **Fast revocation is critical** — minimized exposure window
+1. ✅ Clear credentials immediately after use
+2. ✅ Never log/commit credentials
+3. ✅ Use .gitignore for sensitive files
 
 ---
 
 ## Status
 
-| Token | Status | Action Needed |
-|-------|--------|---------------|
-| `github_pat_11B5VGBCQ...` | ✅ Revoked | None |
-| `ghp_JwYs8DzxCJhG...` | 🔴 ACTIVE | **REVOKE NOW** |
-| Workspace | ✅ Secured | None |
-| GitHub repo | ✅ Safe (no credentials) | None |
+| Token | Channel | Status | Action Needed |
+|-------|---------|--------|---------------|
+| `github_pat_11B5VGBCQ...` | Telegram | ✅ Revoked | None |
+| `ghp_JwYs8DzxCJhG...` | Telegram | ✅ Revoked | None |
+| `ghp_nGq2u4C8ULU5o...` | Signal | 🔴 ACTIVE | **REVOKE NOW** |
+| Workspace | - | ✅ Secured | None |
+| GitHub repo | - | ✅ Safe | None |
+| Signal channel | - | ✅ Configured | None |
 
 ---
 
-**Next time:** Use Signal/WhatsApp for sensitive credentials, or set up SSH keys.
+**Next time:** Signal only for credentials. Telegram for general chat.
 
-*Updated: 2026-02-01T15:49Z*
+*Updated: 2026-02-01T16:43Z*
