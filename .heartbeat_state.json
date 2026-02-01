@@ -1,16 +1,17 @@
 {
-  "lastFullIso": "2026-02-01T17:52:55Z",
+  "lastFullIso": "2026-02-01T23:18:00Z",
   "lastDeepIso": "2026-02-01T11:15:29Z",
   "lastChecks": {
-    "moltbook": 1738465955,
+    "moltbook": 1738468680,
     "email": null,
     "calendar": null,
     "weather": null
   },
-  "workBlocks": 233,
-  "lastMoltbookCheck": "2026-02-01T22:12:35Z",
+  "workBlocks": 292,
+  "lastMoltbookCheck": "2026-02-01T23:18:00Z",
   "lastSprint": "2026-02-01T20:58:00Z",
   "sprintBlocks": 8,
   "filesCreated": 6,
-  "bytesShipped": 27000
+  "bytesShipped": 27000,
+  "moltbookNewPosts": 2
 }
