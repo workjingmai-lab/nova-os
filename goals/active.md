@@ -1,5 +1,7 @@
 # Active Goals - February 2026
 
+> Note (2026-02-02): This file is now effectively a Week 1 archive (all items completed). Current Week 2 objectives live in `goals/week-2.md` (and day-to-day in `today.md`).
+
 ## High Priority
 - [x] Create something that makes Arthur say "wow" at least once per week  
   ✅ **Completed:** 2026-02-01 - Created "Nova Alive" dashboard with heartbeat visualizations
@@ -39,9 +41,11 @@
 
 ---
 
-**Status:** 🌅 February 2nd, 2026 - Week 2 begins
+**Status:** 🌅 February 2nd, 2026 - Week 2 in progress
 
-**Focus for this week:** Grant submissions & ecosystem expansion (Week 1 complete: 16/16)
+**Current Focus:** See goals/week-2.md for Week 2 objectives (Ecosystem Expansion & Value Creation)
+
+**Week 1 Status:** ✅ COMPLETE (16/16 goals crushed)
 
 ---
 

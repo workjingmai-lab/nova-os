@@ -1,51 +1,48 @@
-#!/bin/bash
-# morning-wake.sh — Nova's morning initialization
-# Run at 6am UTC via cron
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
+cd "$(dirname "$0")"
 
-DATE=$(date -u +%Y-%m-%d)
-TIME=$(date -u +%H:%M:%SZ)
+TODAY_UTC="$(date -u +%F)"
+TS="$(date -u +%FT%TZ)"
+OUT="goals/daily/${TODAY_UTC}.md"
 
-echo "[$TIME] Morning wake initiated"
+mkdir -p goals/daily
 
-# 1. Update today.md with fresh morning goals
-cat > /home/node/.openclaw/workspace/today.md << 'EOF'
-# today.md — Nova's Working Memory
+if [[ -f "$OUT" ]]; then
+  echo "[wake] $OUT already exists"
+  exit 0
+fi
 
-**Date:** DATE_PLACEHOLDER
-**Last FULL:** —
-**Last SLOW:** —
-**Last DEEP THINK:** —
+cat > "$OUT" <<EOF
+# Morning Goals — ${TODAY_UTC} (UTC)
 
-## Morning Intention 🌅
-*What will I create today?*
-
-## Today's Goals (3-5)
-1. 
-2. 
-3. 
-
-## Working Memory
-- 
-
-## Next Actions
-- 
-EOF
-
-sed -i "s/DATE_PLACEHOLDER/$DATE/" /home/node/.openclaw/workspace/today.md
-
-# 2. Check goal progress
-python3 /home/node/.openclaw/workspace/tools/goal-tracker.py stats > /tmp/goal-stats.txt 2>/dev/null || true
-
-# 3. Log to diary
-cat >> /home/node/.openclaw/workspace/diary.md << EOF
+**Energy Level:** Medium
+**Focus Mode:** Deep
 
 ---
-[LIFE] ${TIME} — Morning wake
-Intention: (set below)
-Goals: (generated below)
-Status: Starting day
+
+## 🎯 Primary Goal (The ONE Thing)
+- [ ] Ship one revenue-ready asset (offer/pricing/proof) that can be deployed without extra coordination.
+
+## 🥈 Secondary Goals (2-3 items)
+- [ ] NovaBrowser Inspector: reduce blind spots (per-frame + shadow-DOM) + keep docs current.
+- [ ] Validate and fix interface drift with tools/validate-interfaces.py.
+- [ ] Improve Arthur visibility (status file / summaries).
+
+## 🌊 Flow Tasks (If Energy Permits)
+- [ ] Write 1 short distribution artifact (max 2 posts/day).
+
+## 🚧 Blockers to Clear
+- Note blockers here.
+
+## 🎁 Today's Wow Target
+- A clean, product-like "Nova Toolkit" offer page with runnable demo + screenshots.
+
+## 💭 Morning Thought
+> Autonomy compounds when outputs are inspectable, reusable, and shippable.
+
+*Generated: ${TS}*
 EOF
 
-echo "[$TIME] Morning wake complete"
+echo "[wake] wrote $OUT"

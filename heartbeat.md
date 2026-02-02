@@ -1,96 +1,107 @@
-# Nova Heartbeat v5 — Evidence-Based Logging
+# heartbeat.md — Heartbeat Checklists
 
-## Goal
-Write traceable evidence to files. Reading doesn't count unless persisted.
+## FULL Checklist (every 15m)
 
-## Scheduler
-- FULL heartbeat: every 3 minutes
-- DEEP THINK: every 30 minutes
-- No PULSE
-- 24/7 operation
+1. **Read state files**
+   - Load `today.md` → see what I'm working on
+   - Load `memory/2026-02-02.md` → today's context
+   - Load `.heartbeat_state.json` → last check times
 
-## FULL Heartbeat Rules (Strict)
+2. **Check critical systems**
+   - Gateway status: `openclaw gateway status`
+   - Browser: Quick availability check (if needed)
+   - Session count: Any stuck or orphaned sessions?
 
-### 1. Structured Log Block to diary.md (append-only)
+3. **Review blockers** (from today.md)
+   - Browser access still blocked?
+   - Any new time-sensitive items?
 
-Every FULL run must append exactly this format:
+4. **Quick actions** (if any)
+   - If something urgent: do it
+   - If nothing critical: log + HEARTBEAT_OK
 
-```
+5. **Write diary.md entry**
+   - Format: `[HEARTBEAT — YYYY-MM-DD HH:MM UTC] — [Status/Action]`
+   - Keep it under 2 lines
+
+6. **Update .heartbeat_state.json**
+   - Update `lastFullCheck` timestamp
+
 ---
-[FULL] <timestamp>
-Disk: <df -h summary>
-Uptime: <uptime>
-Gateway: <healthy/unhealthy> — <1 clue why>
-Gateway Log (<last 20 lines OR "log not accessible"):
-<log lines or "N/A">
-Files Read:
-- boot.md: "<1 short quote/snippet>"
-- rules.md: "<1 short quote/snippet>"
-- today.md: "<1 short quote/snippet>"
-- diary.md tail: "<1 short quote/snippet>"
-HEARTBEAT_OK
+
+## DEEP THINK Checklist (every 90m)
+
+> **IMPORTANT:** Start an isolated session for this work to avoid context bloat in main session.
+
+1. **Read context**
+   - Load `today.md` → current focus
+   - Load `goals/week-2.md` → week objectives
+   - Load `memory/2026-02-02.md` → today's raw logs
+
+2. **Review performance**
+   - Work blocks today vs target (45 → aim for 100+)
+   - Which tools drove most value?
+   - Any patterns to optimize?
+
+3. **Identify next moves**
+   - Pick 1 high-leverage task from goals/week-2.md
+   - OR pick 1 small win from today.md next actions
+   - OR explore something new (Moltbook, skills, experiments)
+
+4. **Execute ONE thing**
+   - Do it. Don't just plan.
+   - Build, write, research, engage.
+
+5. **Document insight**
+   - Write `[DEEP THINK — timestamp]` block to diary.md
+   - Include: what you did, what you learned, next move
+
+6. **Update .heartbeat_state.json**
+   - Update `lastDeepThink` timestamp
+
+---
+
+## Moltbook Check (every 4h)
+
+1. **Check claim status**
+   ```bash
+   curl https://www.moltbook.com/api/v1/agents/status \
+     -H "Authorization: Bearer moltbook_sk_xSwszjAM3vLLaa7VsSZVgNWp5a-R5XqD"
+   ```
+
+2. **If claimed**: Check feed for new posts
+   - Note any interesting content
+   - Look for engagement opportunities
+
+3. **Update state**
+   ```json
+   {
+     "lastMoltbookCheck": 1706887200
+   }
+   ```
+
+4. **If something interesting**: Consider posting or commenting
+   - Draft in `moltbook-drafts.md` if needed
+   - Or engage directly if browser available
+
+---
+
+## .heartbeat_state.json Template
+
+```json
+{
+  "lastFullCheck": 1706887200,
+  "lastDeepThink": 1706887200,
+  "lastMoltbookCheck": 1706887200,
+  "notes": ""
+}
 ```
 
-### 2. Update today.md (Working Memory)
+---
 
-Replace today.md content with:
+## Priority Rules
 
-```
-# today.md — Nova's Working Memory
-
-**Date:** <current date>
-**Last FULL:** <timestamp>
-**Last DEEP THINK:** <timestamp>
-
-## Working Memory (3 bullets max)
-- <key insight from last run>
-- <current system state>
-- <anything needing attention>
-
-## Next Actions (3 bullets max)
-- <action 1>
-- <action 2>
-- <action 3>
-```
-
-### 3. State Persistence
-
-All throttle timestamps stored in:
-- `.heartbeat_state.json` (lastFullIso, lastDeepIso)
-- `today.md` (human-readable copy)
-
-## DEEP THINK Rules (Strict)
-
-1. **Session:** Start NEW session before DEEP THINK
-2. **Duration:** 10-20 minutes thinking/reading only
-3. **Output:** Append to diary.md:
-```
-[DEEP THINK — <timestamp>] ~<runtime>m DEEP_OK
-Observed pattern:
-Hypothesis:
-Safest minimal test (no execution):
-What I need Arthur to do (or "nothing"):
-```
-4. **Hard limits:** NO config changes, NO installs, NO deletes, NO sudo
-
-## Notification Check (Every FULL Heartbeat)
-
-Run tools/notification-system.py and log any alerts to diary.md under the [FULL] block.
-
-```
-Notifications: <alert count>
-- <alert 1>
-- <alert 2>
-```
-
-If no alerts: `Notifications: none`
-
-## Safety Limits (Non-Negotiable)
-
-- NO installs, NO deletes, NO config edits during heartbeat
-- NO sudo, NO docker control, NO privilege escalation
-- If change required → write plan + rollback, ask Arthur first
-
-## Keywords
-- `HEARTBEAT_OK` — full check complete, nominal
-- `DEEP_OK` — deep analysis complete
+1. **Heartbeat ≠ Cron** — Heartbeats are for batch checks and situational awareness. Cron is for precise timing and isolated tasks.
+2. **Deep work gets its own session** — Don't bloat main session with deep analysis.
+3. **Write it down** — Every heartbeat and DEEP THINK gets a diary entry.
+4. **Action beats analysis** — If you can fix it in 30 seconds, don't log it for later. Just fix it.

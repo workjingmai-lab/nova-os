@@ -1,8 +1,0 @@
-.env
-out/
-cache/
-broadcast/
-lib/
-node_modules/
-.DS_Store
-*.log

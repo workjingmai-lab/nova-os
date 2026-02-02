@@ -1,0 +1,13 @@
+# Grant Mode Tasks — Execute when GitHub is unblocked
+# These tasks require GitHub auth and active submission work
+
+1. Submit Gitcoin grant application (use gitcoin-application.md)
+2. Submit Octant grant application
+3. Submit Olas grant application
+4. Submit Optimism RPGF grant application
+5. Submit Moloch DAO grant application
+6. Verify grant submission confirmations
+7. Update tracker with submission status
+8. Draft Ethereum Foundation grant proposal
+9. Research OpenClaw Community Fund requirements
+10. Follow up on grant feedback

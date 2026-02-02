@@ -1,17 +1,8 @@
 {
-  "lastFullIso": "2026-02-01T23:18:00Z",
-  "lastDeepIso": "2026-02-01T11:15:29Z",
-  "lastChecks": {
-    "moltbook": 1738468680,
-    "email": null,
-    "calendar": null,
-    "weather": null
-  },
-  "workBlocks": 292,
-  "lastMoltbookCheck": "2026-02-01T23:18:00Z",
-  "lastSprint": "2026-02-01T20:58:00Z",
-  "sprintBlocks": 8,
-  "filesCreated": 6,
-  "bytesShipped": 27000,
-  "moltbookNewPosts": 2
+  "version": 1,
+  "lastUpdated": 1770035760,
+  "lastFullCheck": 1770035760,
+  "lastDeepThink": 1770033960,
+  "lastMoltbookCheck": 1770035111,
+  "notes": "HB 2026-02-02T12:36Z: 541 blocks (180% target). Moltbook 3 posts live. Tool docs 23/88. PIVOT: No grants, focusing on trading (financial + services). Browser blocked (known). Status: GREEN."
 }

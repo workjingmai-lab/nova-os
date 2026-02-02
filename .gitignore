@@ -1,68 +1,74 @@
-# Nova's .gitignore — Keep sensitive data out of version control
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# OpenClaw Configs (API keys, tokens)
-openclaw.json
-.openclaw.json
+# C extensions
+*.so
 
-# State & Cache Files
-.heartbeat_state.json
-.notification_state.json
-*.state
-*.state.json
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Diary & Daily Logs (personal work patterns)
-memory/
-memory/**/*.md
+# PyInstaller
+*.manifest
+*.spec
 
-# Notifications (may contain tokens/URLs)
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project-specific
+diary.md
+today.md
+MEMORY.md
+*.json
+!.github/
+
+# Logs
+*.log
+logs/
 notifications/
-notifications/**/*.json
 
-# Grant Applications (competitive intel until submitted)
-grant-applications/
-grant-applications/**/*.md
-
-# Moltbook Drafts (unpublished content)
-drafts/moltbook/
-moltbook-drafts/
-
-# Personal Notes
-USER.md
-PERSONAL.md
-
-# Temporary & Scratch Files
-tmp/
-tmp/**
+# Temporary files
 *.tmp
 *.bak
 *.swp
-
-# Log Files
-*.log
-logs/
-logs/**
-
-# OS & Editor Files
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-*.pyc
-__pycache__/
-
-# Python Virtual Envs
-venv/
-env/
-.venv/
-
-# Node (if any JS tooling)
-node_modules/
-package-lock.json
-
-# BUT KEEP: Public-facing content
-# !posts/              (published content)
-# !knowledge/          (shareable docs)
-# !SKILL.md            (skill definitions)
-# !tools/*.py          (shareable scripts)
-# !submission-sprint-guide.md  (public guide)
-# !week-2-dashboard.md (public dashboard)

@@ -3,7 +3,7 @@
   "lastGrantCheck": null,
   "lastFollowerCount": 0,
   "alertsSent": [],
-  "last_check": "2026-02-01T18:05:23.637492",
+  "last_check": "2026-02-02T02:36:38.126412",
   "pending_alerts": [
     {
       "type": "grant_opportunity",
@@ -11,11 +11,11 @@
       "message": "New grant opportunity: Gitcoin Grants GG24",
       "details": {
         "name": "Gitcoin Grants GG24",
-        "deadline": "2026-02-08T18:05:23.637276",
+        "deadline": "2026-02-09T02:36:38.126192",
         "amount": "$500-50,000",
         "url": "https://gitcoin.co/grants"
       },
-      "timestamp": "2026-02-01T18:05:23.637314"
+      "timestamp": "2026-02-02T02:36:38.126266"
     },
     {
       "type": "competition_alert",
@@ -28,7 +28,7 @@
         "end_date": "2026-02-10",
         "status": "upcoming"
       },
-      "timestamp": "2026-02-01T18:05:23.637337"
+      "timestamp": "2026-02-02T02:36:38.126282"
     },
     {
       "type": "goal_reminder",
@@ -37,7 +37,7 @@
       "details": {
         "file": "goals/week-2.md"
       },
-      "timestamp": "2026-02-01T18:05:23.637450"
+      "timestamp": "2026-02-02T02:36:38.126381"
     }
   ]
 }

@@ -1,122 +1,163 @@
 #!/usr/bin/env python3
 """
-Moltbook Monitor - Notification system for agent activity
-Checks for mentions, new followers, and engagement opportunities
-Uses urllib to avoid external dependencies
+Moltbook Activity Monitor
+Checks for new posts and mentions since last check.
 """
 
-import urllib.request
-import urllib.error
 import json
-import os
-from datetime import datetime, timezone
+import sys
+from pathlib import Path
+from datetime import datetime
 
-MOLTBOOK_API = "https://www.moltbook.com/api/v1"
-TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
-STATE_FILE = ".moltbook_state.json"
-LOG_FILE = "logs/moltbook-activity.log"
+# Moltbook API endpoint and token
+API_BASE = "https://www.moltbook.com/api/v1"
+API_TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
 
-def api_get(endpoint):
-    """Make authenticated GET request"""
-    url = f"{MOLTBOOK_API}{endpoint}"
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Authorization": f"Bearer {TOKEN}",
-            "Accept": "application/json"
-        }
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        return {"error": f"HTTP {e.code}: {e.reason}"}
-    except Exception as e:
-        return {"error": str(e)}
+# State file
+STATE_FILE = Path.home() / ".openclaw/workspace/.heartbeat_state.json"
+
 
 def load_state():
-    """Load last checked timestamps"""
-    if os.path.exists(STATE_FILE):
+    """Load heartbeat state."""
+    if STATE_FILE.exists():
         with open(STATE_FILE) as f:
             return json.load(f)
-    return {"lastCheck": None, "lastMentionId": None}
+    return {"version": 1}
+
 
 def save_state(state):
-    """Save state for next run"""
+    """Save heartbeat state."""
+    state["lastUpdated"] = int(datetime.now().timestamp())
     with open(STATE_FILE, "w") as f:
         json.dump(state, f, indent=2)
 
-def log_activity(message):
-    """Log activity to file"""
-    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
-    timestamp = datetime.now(timezone.utc).isoformat()
-    with open(LOG_FILE, "a") as f:
-        f.write(f"[{timestamp}] {message}\n")
 
 def check_claim_status():
-    """Check if agent profile is claimed"""
-    data = api_get("/agents/status")
-    if "error" in data:
-        return None
-    return data.get("status") == "claimed"
+    """Check if agent is claimed."""
+    import subprocess
+
+    result = subprocess.run(
+        [
+            "curl",
+            "-s",
+            f"{API_BASE}/agents/status",
+            "-H",
+            f"Authorization: Bearer {API_TOKEN}",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        return None, f"curl failed: {result.stderr}"
+
+    try:
+        data = json.loads(result.stdout)
+        return data, None
+    except json.JSONDecodeError as e:
+        return None, f"JSON decode error: {e}"
+
 
 def check_feed():
-    """Check feed for new posts from followed agents"""
-    data = api_get("/feed")
-    if "error" in data:
-        return data["error"]
-    
-    posts = data.get("posts", [])
-    state = load_state()
-    last_check = state.get("lastCheck")
-    
-    new_posts = []
-    for post in posts[:10]:  # Check latest 10
-        created = post.get("createdAt")
-        if last_check and created and created > last_check:
-            new_posts.append({
-                "type": "new_post",
-                "id": post.get("id"),
-                "author": post.get("author", {}).get("name", "Unknown"),
-                "title": (post.get("title") or "Untitled")[:60]
-            })
-    
-    return new_posts
+    """Check feed for new posts."""
+    import subprocess
+
+    result = subprocess.run(
+        [
+            "curl",
+            "-s",
+            f"{API_BASE}/feed",
+            "-H",
+            f"Authorization: Bearer {API_TOKEN}",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        return None, f"curl failed: {result.stderr}"
+
+    try:
+        data = json.loads(result.stdout)
+        return data, None
+    except json.JSONDecodeError as e:
+        return None, f"JSON decode error: {e}"
+
 
 def main():
-    """Main monitoring loop"""
     state = load_state()
-    alerts = []
-    
-    # Check claim status first
-    claimed = check_claim_status()
-    if claimed is None:
-        print("Error: Could not verify claim status")
+    last_check = state.get("lastMoltbookCheck", 0)
+
+    # Check claim status
+    status_data, err = check_claim_status()
+    if err:
+        print(f"ERROR checking claim status: {err}", file=sys.stderr)
         return 1
-    if not claimed:
-        print("Profile not yet claimed on Moltbook")
-        return 0
-    
-    # Check feed for new posts
-    new_posts = check_feed()
-    if isinstance(new_posts, list) and new_posts:
-        alerts.append(f"📝 {len(new_posts)} new post(s) from followed agents")
-        for p in new_posts:
-            log_activity(f"NEW POST by {p['author']}: {p['title']}...")
-    elif isinstance(new_posts, str):
-        print(f"Feed check error: {new_posts}")
-    
-    # Update state
-    state["lastCheck"] = datetime.now(timezone.utc).isoformat()
+
+    # Check feed
+    feed_data, err = check_feed()
+    if err:
+        print(f"ERROR checking feed: {err}", file=sys.stderr)
+        return 1
+
+    # Update last check time
+    state["lastMoltbookCheck"] = int(datetime.now().timestamp())
     save_state(state)
-    
-    # Output summary
-    if alerts:
-        print(" | ".join(alerts))
-        return 1  # Signal that attention needed
+
+    # Analyze results
+    claimed = status_data.get("claimed", False) if status_data else False
+    posts = feed_data.get("posts", []) if feed_data else []
+
+    # Look for new posts (simplified check)
+    new_posts = []
+    for post in posts:
+        post_time = post.get("created_at", 0)
+        # Convert to int if it's a string
+        if isinstance(post_time, str):
+            try:
+                post_time = int(post_time)
+            except ValueError:
+                post_time = 0
+        if post_time > last_check:
+            new_posts.append(post)
+
+    # Check for mentions
+    mentions = []
+    for post in posts:
+        content = post.get("content") or ""
+        if "@nova" in content.lower() or "@orbit" in content.lower():
+            mentions.append(post)
+
+    # Output results
+    if new_posts:
+        print(f"📬 NEW POSTS ({len(new_posts)}):")
+        for post in new_posts[:5]:  # Limit to 5 most recent
+            author = post.get("author", {}).get("username", "unknown")
+            content = post.get("content", "")[:100]
+            print(f"  • @{author}: {content}...")
+        print()
+
+    if mentions:
+        print(f"🏷️  MENTIONS ({len(mentions)}):")
+        for post in mentions[:5]:
+            author = post.get("author", {}).get("username", "unknown")
+            content = post.get("content", "")[:100]
+            print(f"  • @{author}: {content}...")
+        print()
+
+    # Status summary
+    status_icon = "✅" if claimed else "⚠️"
+    print(f"{status_icon} Claimed: {claimed}")
+    print(f"📊 Total posts in feed: {len(posts)}")
+    print(f"🆕 New since last check: {len(new_posts)}")
+    print(f"🏷️  Mentions found: {len(mentions)}")
+
+    # Return code based on activity
+    if new_posts or mentions:
+        return 0  # Activity found
     else:
-        print("No new activity")
-        return 0
+        return 99  # No activity (special code for HEARTBEAT_OK)
+
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())

@@ -1,99 +1,175 @@
 #!/usr/bin/env python3
 """validate-interfaces.py
 
-Tiny linter for Nova's "file-as-interface" invariants.
+Quick linter for Nova's "files as interface" approach.
 
-Checks (best-effort):
-- diary.md contains at least one WORK BLOCK entry
-- latest WORK BLOCK has a Task line
-- selected state files are valid JSON (if present)
+Checks:
+- diary.md: duplicate Work Block ids + basic timestamp presence
+- JSON state files: recommend top-level keys `version` and `lastUpdated`
+
+Usage:
+  python3 tools/validate-interfaces.py
+  python3 tools/validate-interfaces.py --json-glob 'status/**/*.json'
 
 Exit codes:
-  0: ok (no warnings)
-  1: warnings found
-  2: errors (unable to read/parse required files)
+  0 = no warnings
+  1 = warnings found
 """
 
 from __future__ import annotations
 
+import argparse
+import glob
 import json
+import os
 import re
 import sys
-from pathlib import Path
+from dataclasses import dataclass
+from datetime import datetime
 
-ROOT = Path(__file__).resolve().parents[1]
-DIARY = ROOT / "diary.md"
-STATE_FILES = [
-    ROOT / ".heartbeat_state.json",
-    ROOT / "memory" / "heartbeat-state.json",
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+DIARY_PATH = os.path.join(ROOT, "diary.md")
+DEFAULT_JSON_GLOBS = [
+    "status/**/*.json",
+    "notifications/**/*.json",
+    "memory/**/*.json",
+    ".heartbeat_state.json",
 ]
 
-WORK_BLOCK_RE = re.compile(r"^\[WORK BLOCK(?:\s+(\d+))?\]", re.MULTILINE)
-TASK_LINE_RE = re.compile(r"^Task:\s+.+$", re.MULTILINE)
+ISO_TS_RE = re.compile(r"\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2})?Z")
+WORK_BLOCK_RE = re.compile(r"\bWork Block\s*#?\s*(\d+)\b", re.IGNORECASE)
 
 
-def warn(msg: str) -> None:
-    print(f"WARN: {msg}")
+@dataclass
+class Finding:
+    kind: str  # diary|json
+    path: str
+    message: str
 
 
-def err(msg: str) -> None:
-    print(f"ERROR: {msg}")
+def read_text(path: str) -> str:
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
 
-def check_diary() -> tuple[int, int]:
-    """returns (warnings, errors)"""
-    if not DIARY.exists():
-        err(f"Missing {DIARY.relative_to(ROOT)}")
-        return (0, 1)
+def check_diary(path: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not os.path.exists(path):
+        return [Finding("diary", path, "Missing diary.md")]
 
-    text = DIARY.read_text(encoding="utf-8", errors="replace")
-    matches = list(WORK_BLOCK_RE.finditer(text))
-    if not matches:
-        warn("diary.md has no [WORK BLOCK ...] entries")
-        return (1, 0)
+    text = read_text(path)
 
-    last = matches[-1]
-    tail = text[last.start() :]
+    # Capture Work Block ids with their approximate line numbers for easier cleanup.
+    lines = text.splitlines()
+    occurrences: dict[int, list[int]] = {}
+    for i, line in enumerate(lines, start=1):
+        for m in WORK_BLOCK_RE.finditer(line):
+            try:
+                bid = int(m.group(1))
+            except Exception:
+                continue
+            occurrences.setdefault(bid, []).append(i)
 
-    if not TASK_LINE_RE.search(tail):
-        warn("Latest WORK BLOCK entry is missing a 'Task:' line")
-        return (1, 0)
+    dups = {bid: locs for bid, locs in occurrences.items() if len(locs) > 1}
+    if dups:
+        parts = []
+        for bid in sorted(dups.keys()):
+            locs = ",".join(map(str, dups[bid][:5]))
+            more = "" if len(dups[bid]) <= 5 else f"(+{len(dups[bid]) - 5} more)"
+            parts.append(f"{bid} @ lines {locs}{more}")
+        findings.append(
+            Finding(
+                "diary",
+                path,
+                "Duplicate Work Block ids detected: " + "; ".join(parts),
+            )
+        )
 
-    return (0, 0)
+    # Sanity: do we have any ISO Z timestamps at all?
+    if not ISO_TS_RE.search(text):
+        findings.append(
+            Finding(
+                "diary",
+                path,
+                "No ISO '...Z' timestamps found. Consider adding UTC timestamps for grep/diff tooling.",
+            )
+        )
+
+    return findings
 
 
-def check_json_files() -> tuple[int, int]:
-    warnings = 0
-    errors = 0
-    for p in STATE_FILES:
-        if not p.exists():
-            # optional
+def iter_json_files(globs_: list[str]) -> list[str]:
+    paths: list[str] = []
+    for g in globs_:
+        paths.extend(glob.glob(os.path.join(ROOT, g), recursive=True))
+    out: list[str] = []
+    for p in paths:
+        if os.path.isdir(p):
             continue
+        if "node_modules" in p:
+            continue
+        if not p.endswith(".json"):
+            continue
+        out.append(p)
+    return sorted(set(out))
+
+
+def check_json(path: str) -> list[Finding]:
+    findings: list[Finding] = []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        return [Finding("json", path, f"Invalid JSON: {e}")]
+
+    if not isinstance(data, dict):
+        return [Finding("json", path, "Top-level JSON is not an object; cannot validate interface keys")]
+
+    missing = []
+    for k in ("version", "lastUpdated"):
+        if k not in data:
+            missing.append(k)
+
+    if missing:
+        findings.append(
+            Finding(
+                "json",
+                path,
+                f"Missing recommended top-level keys: {', '.join(missing)}",
+            )
+        )
+
+    # Soft check: lastUpdated format
+    if "lastUpdated" in data and isinstance(data["lastUpdated"], str):
         try:
-            json.loads(p.read_text(encoding="utf-8"))
-        except Exception as e:
-            err(f"Invalid JSON in {p.relative_to(ROOT)}: {e}")
-            errors += 1
-    return (warnings, errors)
+            datetime.fromisoformat(data["lastUpdated"].replace("Z", "+00:00"))
+        except Exception:
+            findings.append(Finding("json", path, "lastUpdated exists but is not ISO-8601 compatible"))
+
+    return findings
 
 
 def main() -> int:
-    warnings = 0
-    errors = 0
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--json-glob", action="append", default=[], help="Additional JSON glob(s) relative to workspace root")
+    args = ap.parse_args()
 
-    w, e = check_diary()
-    warnings += w
-    errors += e
+    findings: list[Finding] = []
 
-    w, e = check_json_files()
-    warnings += w
-    errors += e
+    findings.extend(check_diary(DIARY_PATH))
 
-    if errors:
-        return 2
-    if warnings:
+    globs_ = DEFAULT_JSON_GLOBS + (args.json_glob or [])
+    for p in iter_json_files(globs_):
+        findings.extend(check_json(p))
+
+    if findings:
+        for f in findings:
+            rel = os.path.relpath(f.path, ROOT)
+            print(f"[{f.kind}] {rel}: {f.message}")
         return 1
-    print("OK: interfaces look consistent")
+
+    print("OK: no interface warnings")
     return 0
 
 

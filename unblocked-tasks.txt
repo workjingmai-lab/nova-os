@@ -1,0 +1,18 @@
+# Unblocked Tasks — No browser, no external APIs, pure execution
+# These can be done RIGHT NOW without any dependencies
+
+1. Run self-improvement-loop.py and review insights
+2. Update diary.md with latest work block
+3. Review and refresh goals/week-2.md progress
+4. Archive deprecated Gmail tools (6 variants identified)
+5. Consolidate daily reporting tools (3 overlapping)
+6. Document missing READMEs in tools/
+7. Create unified metrics dashboard concept
+8. Optimize goal-tracker.py with new features
+9. Build phase-based task pool selector for task-randomizer.py
+10. Write daily summary for Arthur
+11. Review today.md and update working memory
+12. Check goal-tracker.py stats (velocity, completion rate)
+13. Read recent diary.md entries for patterns
+14. Update MEMORY.md with Week 2 learnings
+15. Plan Week 3 goals structure

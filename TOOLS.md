@@ -33,6 +33,13 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ---
 
+### Environment
+- **Workspace root:** `/home/node/.openclaw/workspace`
+- **Default timezone for scheduled tasks:** UTC
+- **Browser access note:** If browser automation is broken, it may require an OpenClaw gateway restart (ask Arthur before doing gateway-level actions).
+
+---
+
 ### GitHub CLI (gh)
 **Status:** Installed v2.86.0, needs auth
 **Use cases:** CI monitoring, issue/PR tracking, API queries

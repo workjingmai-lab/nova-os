@@ -499,11 +499,19 @@ def cmd_stats(goals: List[Goal], json_output: bool = False):
     
     print(colorize(f"  {msg}", Colors.BOLD + Colors.CYAN))
 
-def cmd_suggest(goals: List[Goal]):
+def cmd_suggest(goals: List[Goal], compact: bool = False):
     """Suggest the next goal to work on."""
-    print_header("💡 SUGGESTION")
-    
     suggestion = suggest_next_goal(goals)
+    
+    # Compact mode: just print ONE goal, nothing else
+    if compact:
+        if not suggestion:
+            print(colorize("ALL_COMPLETE", Colors.GREEN))
+            return
+        
+        # Just print the goal name, nothing else
+        print(suggestion.name)
+        return
     
     if not suggestion:
         print(colorize("  All goals are complete! 🎉", Colors.GREEN))
@@ -581,50 +589,102 @@ def cmd_recent(goals: List[Goal], limit: int = 10):
     print()
     print(colorize(f"  Total completed: {len(completed)}/{len(goals)} goals", Colors.DIM))
 
-def cmd_export(goals: List[Goal], output_file: str = None):
-    """Export goals to JSON format for backup/sharing."""
+def cmd_export(goals: List[Goal], output_file: str = None, format: str = 'json'):
+    """Export goals to JSON or Markdown format for backup/sharing."""
     import json
     
-    print_header("📤 EXPORTING GOALS")
+    print_header(f"📤 EXPORTING GOALS ({format.upper()})")
     
     if not goals:
         print(colorize("  No goals to export.", Colors.DIM))
         return
     
-    # Prepare export data
-    export_data = {
-        'exported_at': datetime.now().isoformat(),
-        'total_goals': len(goals),
-        'completed': sum(1 for g in goals if g.done),
-        'active': sum(1 for g in goals if not g.done),
-        'goals': []
-    }
-    
-    for goal in goals:
-        export_data['goals'].append({
-            'name': goal.name,
-            'priority': goal.priority,
-            'section': goal.section,
-            'done': goal.done
-        })
-    
     # Determine output path
     if output_file is None:
         workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        output_file = os.path.join(workspace_dir, 'goals', 'goals-export.json')
+        if format == 'markdown':
+            output_file = os.path.join(workspace_dir, 'goals', 'goals-export.md')
+        else:
+            output_file = os.path.join(workspace_dir, 'goals', 'goals-export.json')
     
     # Write to file
     try:
-        with open(output_file, 'w') as f:
-            json.dump(export_data, f, indent=2)
-        
-        print(colorize(f"  ✓ Exported {len(goals)} goals to:", Colors.GREEN))
-        print(f"     {output_file}")
-        print()
-        print(colorize("  Stats:", Colors.BOLD))
-        print(f"     Total: {export_data['total_goals']}")
-        print(f"     Completed: {export_data['completed']}")
-        print(f"     Active: {export_data['active']}")
+        if format == 'markdown':
+            # Markdown export
+            completed = sum(1 for g in goals if g.done)
+            active = sum(1 for g in goals if not g.done)
+            completion_rate = (completed / len(goals) * 100) if goals else 0
+            
+            md_content = f"# Goals Export\n\n"
+            md_content += f"**Exported:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}\n"
+            md_content += f"**Total:** {len(goals)} goals | **Completed:** {completed} | **Active:** {active} ({completion_rate:.0f}%)\n\n"
+            
+            # Group by priority
+            priority_order = [
+                ('high', '🔥 High Priority'),
+                ('medium', '⚡ Medium Priority'),
+                ('long-term', '📅 Long-term'),
+                ('daily', '🔄 Daily Habits')
+            ]
+            
+            for priority_key, label in priority_order:
+                section_goals = [g for g in goals if g.priority == priority_key]
+                if section_goals:
+                    md_content += f"## {label}\n\n"
+                    for goal in section_goals:
+                        status = "✅" if goal.done else "○"
+                        md_content += f"- {status} {goal.name}\n"
+                    md_content += "\n"
+            
+            with open(output_file, 'w') as f:
+                f.write(md_content)
+            
+            print(colorize(f"  ✓ Exported {len(goals)} goals to Markdown:", Colors.GREEN))
+            print(f"     {output_file}")
+            print()
+            print(colorize("  Stats:", Colors.BOLD))
+            print(f"     Total: {len(goals)}")
+            print(f"     Completed: {completed}")
+            print(f"     Active: {active}")
+            print()
+            print(colorize("  💡 Markdown format is great for:", Colors.YELLOW))
+            print(colorize("     • Sharing in reports", Colors.DIM))
+            print(colorize("     • Version control (git diff friendly)", Colors.DIM))
+            print(colorize("     • Reading/editing manually", Colors.DIM))
+            
+        else:
+            # JSON export (original)
+            export_data = {
+                'exported_at': datetime.now().isoformat(),
+                'total_goals': len(goals),
+                'completed': sum(1 for g in goals if g.done),
+                'active': sum(1 for g in goals if not g.done),
+                'goals': []
+            }
+            
+            for goal in goals:
+                export_data['goals'].append({
+                    'name': goal.name,
+                    'priority': goal.priority,
+                    'section': goal.section,
+                    'done': goal.done
+                })
+            
+            with open(output_file, 'w') as f:
+                json.dump(export_data, f, indent=2)
+            
+            print(colorize(f"  ✓ Exported {len(goals)} goals to JSON:", Colors.GREEN))
+            print(f"     {output_file}")
+            print()
+            print(colorize("  Stats:", Colors.BOLD))
+            print(f"     Total: {export_data['total_goals']}")
+            print(f"     Completed: {export_data['completed']}")
+            print(f"     Active: {export_data['active']}")
+            print()
+            print(colorize("  💡 JSON format is great for:", Colors.YELLOW))
+            print(colorize("     • Machine processing", Colors.DIM))
+            print(colorize("     • API integrations", Colors.DIM))
+            print(colorize("     • Data analysis", Colors.DIM))
         
     except Exception as e:
         print(colorize(f"  ✗ Export failed: {e}", Colors.RED))
@@ -1205,13 +1265,17 @@ Examples:
     parser.add_argument('--week', type=int, help='Week number for week command (e.g., 2 for week-2.md)')
     parser.add_argument('--priority', choices=['high', 'medium', 'long-term', 'daily'], default='medium',
                        help='Priority level for add command (default: medium)')
-    parser.add_argument('--output', help='Output file for export command (default: goals/goals-export.json)')
+    parser.add_argument('--output', help='Output file for export command (default: goals/goals-export.<ext>)')
+    parser.add_argument('--format', choices=['json', 'markdown', 'md'], default='json',
+                       help='Export format for export command (default: json; use markdown/md for .md file)')
     parser.add_argument('--filter', choices=['all', 'active', 'completed'], default='all',
                        help='Filter goals for list command (default: all)')
     parser.add_argument('--days', type=int, default=7,
                        help='Days threshold for stale command (default: 7)')
     parser.add_argument('--json', action='store_true',
                        help='Output stats in JSON format (for stats command)')
+    parser.add_argument('--compact', action='store_true',
+                       help='Compact mode for suggest: just print one goal name')
     
     args = parser.parse_args()
     
@@ -1255,7 +1319,7 @@ Examples:
     elif args.command == 'stats':
         cmd_stats(goals, json_output=args.json)
     elif args.command == 'suggest':
-        cmd_suggest(goals)
+        cmd_suggest(goals, compact=args.compact)
     elif args.command == 'recent':
         cmd_recent(goals)
     elif args.command == 'add':
@@ -1265,7 +1329,9 @@ Examples:
             sys.exit(1)
         cmd_add(active_file, args.goal_name, args.priority)
     elif args.command == 'export':
-        cmd_export(goals, args.output)
+        # Normalize format argument
+        export_format = 'markdown' if args.format in ['markdown', 'md'] else 'json'
+        cmd_export(goals, args.output, export_format)
     elif args.command == 'search':
         if not args.goal_name:
             print(colorize("Error: Search query required for search command", Colors.RED))

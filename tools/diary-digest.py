@@ -84,6 +84,7 @@ class DiaryDigest:
         """Parse various timestamp formats found in diary entries."""
         formats = [
             "%Y-%m-%dT%H:%M:%SZ",
+            "%Y-%m-%dT%H:%MZ",
             "%Y-%m-%d %H:%M:%S UTC",
             "%Y-%m-%d %H:%M UTC",
         ]
@@ -195,6 +196,45 @@ class DiaryDigest:
                     if "✅ COMPLETE" in block_content or "complete" in block_content.lower():
                         self.stats["goal_completions"].append(entry)
         
+        # Try pattern 3: "## [WORK BLOCK N — 2026-02-02T00:42Z]" (current diary format)
+        if not entries:
+            wb_heading_pattern = (
+                r"##\s+\[WORK BLOCK\s+(\d+)\s+—\s+"
+                r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z)\]"
+                r"(.*?)(?=\n##\s+\[WORK BLOCK|\Z)"
+            )
+
+            for match in re.finditer(wb_heading_pattern, content, re.MULTILINE | re.DOTALL):
+                block_num = match.group(1)
+                timestamp_str = match.group(2)
+                block_content = match.group(3).strip()
+
+                timestamp = self.parse_timestamp(timestamp_str)
+                if not timestamp:
+                    continue
+                # normalize to UTC-aware
+                if timestamp.tzinfo is None:
+                    timestamp = timestamp.replace(tzinfo=timezone.utc)
+
+                if timestamp < self.cutoff_date:
+                    continue
+
+                entry_type = f"WORK BLOCK {block_num}"
+                entry = {
+                    "type": entry_type,
+                    "timestamp": timestamp,
+                    "content": block_content,
+                    "source": "diary.md",
+                }
+                entries.append(entry)
+
+                self.stats["work_blocks"].append(entry)
+                day_key = timestamp.date().isoformat()
+                self.stats["daily_blocks"][day_key] += 1
+
+                if "✅" in block_content and "COMPLETE" in block_content:
+                    self.stats["goal_completions"].append(entry)
+
         return sorted(entries, key=lambda x: x["timestamp"])
     
     def extract_memory_sessions(self) -> List[Dict]:

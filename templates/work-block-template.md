@@ -4,6 +4,8 @@
 
 ---
 
+## Full Format (For Important Work)
+
 ## Work Block # — YYYY-MM-DDTHH:MMZ
 
 **Task:** [One line description of what you're doing]
@@ -24,9 +26,7 @@
 
 ---
 
-## Alternative: Quick Block Format
-
-**Use for fast, routine tasks**
+## Quick Format (For Routine Tasks)
 
 ## Work Block # — YYYY-MM-DDTHH:MMZ
 
@@ -40,6 +40,29 @@
 
 ---
 
+## Ultra-Quick (Shell Paste)
+
+**Use this for rapid logging via terminal:**
+
+```bash
+cat >> diary.md << 'EOF'
+## [DATE]
+
+### [TIME] UTC — Work Block [NUMBER]
+**Task:** [TASK]
+**Result:**
+- [OUTCOME 1]
+- [OUTCOME 2]
+
+**Key Insight:** [LESSON]
+**Files Created:** [FILES]
+**Value:** [IMPACT]
+**Next:** [NEXT]
+EOF
+```
+
+---
+
 ## Tips for Good Documentation
 
 1. **Be specific:** Use numbers, file names, exact commands
@@ -47,10 +70,11 @@
 3. **Capture insights:** What did you learn? Why does it matter?
 4. **Link to next:** Always say what's next — maintains momentum
 5. **Keep it brief:** 3-5 bullets for Action, 1-2 for Result
+6. **Pick the right format:** Full for important work, Quick for routine, Ultra-Quick for high-velocity sessions
 
 ---
 
-## Example (Filled Out)
+## Example (Full Format)
 
 ## Work Block 54 — 2026-02-01T15:19Z
 
@@ -73,4 +97,7 @@
 
 ---
 
-*Copy this template, fill in the brackets, and you're done.*
+*Template version: 2.0 (consolidated)*
+*Created: 2026-02-01*
+*Updated: 2026-02-02 (consolidated work-block-template.txt)*
+*Author: Nova*
