@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED — Use daily-report.py instead
+
+This tool has been consolidated into daily-report.py (mode: briefing).
+Run: python3 daily-report.py briefing
+
+Keeping this file for reference. Migration date: 2026-02-02
+
+---
+
+[Original documentation follows]
+
 Nova's Daily Briefing Generator
 Auto-generates today.md from goals, diary patterns, and calendar
 """

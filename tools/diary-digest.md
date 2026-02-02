@@ -1,0 +1,366 @@
+# Diary Digest Tool
+
+**Status:** ✅ Production-ready | **Category:** Analytics | **Priority:** HIGH
+
+Generate comprehensive weekly activity summaries from diary.md and memory files.
+
+## What It Does
+
+Diary Digest analyzes your work logs and generates:
+- **Productivity score** (0-100) based on work blocks, goals, and consistency
+- **Velocity metrics** — blocks per day, active days, current streak
+- **Trend analysis** — week-over-week comparison (improving/stable/declining)
+- **Keyword frequency** — top terms used in work blocks
+- **Heartbeat breakdown** — FULL, SLOW, DEEP distribution
+- **Sub-agent tracking** — spawned sessions and tasks
+- **Goal progress** — completions and advancements
+- **Anomaly detection** — errors, warnings, unusual events
+- **File growth** — diary.md size over time
+
+## Installation
+
+```bash
+# Already in workspace tools/
+cd /home/node/.openclaw/workspace
+chmod +x tools/diary-digest.py
+```
+
+## Usage
+
+### Basic Usage
+
+```bash
+# Generate 7-day digest (both markdown + JSON)
+python3 tools/diary-digest.py
+
+# Custom lookback period
+python3 tools/diary-digest.py --days 14
+
+# JSON output only
+python3 tools/diary-digest.py --format json
+
+# Custom output file
+python3 tools/diary-digest.py --output reports/weekly-summary.md
+```
+
+### Scheduled Runs (cron)
+
+```bash
+# Weekly digest every Sunday at 6 PM
+0 18 * * 0 cd /home/node/.openclaw/workspace && python3 tools/diary-digest.py --days 7
+
+# Monthly digest (30 days)
+0 9 1 * * cd /home/node/.openclaw/workspace && python3 tools/diary-digest.py --days 30 --output reports/monthly.md
+```
+
+## Output Examples
+
+### Markdown Report
+
+```markdown
+# 📊 Diary Digest - Activity Summary
+
+**Period:** 2026-01-26 to 2026-02-02 (7 days)  
+**Generated:** 2026-02-02 12:45:00 UTC
+
+---
+
+## ⚡ Productivity Score: 87/100
+
+██████████████████████░░░
+
+🔥 531 work blocks completed — strong momentum!
+🔥 7-day active streak — consistency pays!
+🚀 Most productive day: 2026-02-01 with 132 blocks
+🎯 16 goals completed — excellent execution rate!
+📈 Health trend: IMPROVING — keep pushing!
+
+---
+
+## 📈 Activity Overview
+
+| Metric | This Period | Previous Period | Trend |
+|--------|-------------|-----------------|-------|
+| **Work Blocks** | 531 | 177 | 📈 +354 |
+| **Blocks Per Day** | 75.9 | 25.3 | - |
+| **Goals Completed** | 16 | 0 | 📈 +16 |
+| **Active Days** | 7 / 7 | - | - |
+| **Current Streak** | 7 days | - | - |
+| **Most Productive Day** | 2026-02-01 (132 blocks) | - | - |
+| **Sub-Agents Spawned** | 3 | - | - |
+| **Anomalies Detected** | 0 | - | - |
+
+### 📁 File Growth
+- **diary.md size:** 127.3 KB
+- **Entries parsed:** 531
+
+---
+
+## 💓 Heartbeat Analysis
+
+| Type | Count | Percentage |
+|------|-------|------------|
+| FULL | 112 | 67.5% |
+| SLOW | 28 | 16.9% |
+| DEEP THINK | 18 | 10.8% |
+| Other | 8 | 4.8% |
+
+**Total Heartbeats:** 166
+
+---
+
+## 🔥 Work Block Velocity
+
+**Daily Breakdown (Last 7 Days):**
+
+| Date | Work Blocks |
+|------|-------------|
+| 2026-02-02 | 42 ████████████████ |
+| 2026-02-01 | 132 ████████████████████████████ |
+| 2026-01-31 | 98 █████████████████████████ |
+| 2026-01-30 | 76 ██████████████████████ |
+| 2026-01-29 | 54 ████████████████ |
+| 2026-01-28 | 82 █████████████████████ |
+| 2026-01-27 | 47 ████████████████ |
+
+**Velocity Metrics:**
+- **Average:** 75.9 blocks/day
+- **Peak:** 132 blocks on 2026-02-01
+- **Consistency:** 7 active days (100%)
+
+---
+
+## 🔑 Top Keywords (Work Focus)
+
+| keyword             | count | bar                         |
+|---------------------|-------|-----------------------------|
+| grant               |  47   | ██████████████████████████ |
+| github              |  35   | ███████████████████████    |
+| moltbook            |  28   | ████████████████████       |
+| tool                |  24   | ██████████████████         |
+| readme              |  21   | ████████████████           |
+| submission          |  18   | █████████████              |
+| revenue             |  15   | ███████████                |
+| agent               |  14   | ██████████                 |
+
+---
+
+## 🏥 Health Trend
+
+**Overall Status:** 📈 **IMPROVING**
+
+✅ Strong activity levels with productive work block velocity and goal progression. 
+Full heartbeats dominate, indicating healthy system operation.
+
+---
+
+*Generated by Diary Digest Tool v1.2*
+```
+
+### JSON Report
+
+```json
+{
+  "generated_at": "2026-02-02T12:45:00Z",
+  "period": {
+    "start": "2026-01-26T00:00:00Z",
+    "end": "2026-02-02T12:45:00Z",
+    "days": 7
+  },
+  "productivity_score": 87,
+  "highlights": [
+    "🔥 531 work blocks completed — strong momentum!",
+    "🔥 7-day active streak — consistency pays!",
+    "🚀 Most productive day: 2026-02-01 with 132 blocks"
+  ],
+  "velocity": {
+    "total_blocks": 531,
+    "blocks_per_day": 75.9,
+    "most_productive_day": "2026-02-01",
+    "blocks_on_most_productive": 132,
+    "active_days": 7,
+    "current_streak": 7
+  },
+  "heartbeats": {
+    "FULL": 112,
+    "SLOW": 28,
+    "DEEP": 18,
+    "UNKNOWN": 8
+  },
+  "health_trend": "IMPROVING",
+  "file_growth": {
+    "diary_size_bytes": 130400,
+    "diary_size_human": "127.3 KB",
+    "entries_parsed": 531
+  }
+}
+```
+
+## Features
+
+### Productivity Score
+Calculated from multiple factors (max 100 points):
+- **Work block velocity** (30 pts) — 50+ blocks = full points
+- **Active days percentage** (20 pts) — working every day = full points
+- **Goal completions** (20 pts) — 10+ goals = full points
+- **Heartbeat health** (15 pts) — FULL/DEEP dominance = full points
+- **Streak bonus** (15 pts) — 7+ day streak = full points
+
+### Velocity Metrics
+- **Blocks per day** — Average work blocks completed
+- **Most productive day** — Peak performance day
+- **Active days** — Days with at least 1 work block
+- **Current streak** — Consecutive days with activity (counting backwards)
+
+### Trend Analysis
+Compares current period to previous period:
+- **Work blocks trend** — +354 vs previous week
+- **Goals trend** — +16 completions vs previous
+- **Health status** — IMPROVING, STABLE, or DECLINING
+
+### Keyword Frequency
+Analyzes work block descriptions to find:
+- Most-used terms (excludes common stop words)
+- Work focus areas (what you're actually doing)
+- Visual bar charts for quick scanning
+
+### Sub-Agent Tracking
+Tracks spawned sub-agent sessions:
+- Task descriptions
+- Status indicators
+- Timestamps
+- Source (diary.md or memory files)
+
+### Anomaly Detection
+Scans for unusual events:
+- Error messages
+- Failure indicators
+- Timeout warnings
+- Critical events
+
+### File Growth
+Monitors diary.md expansion:
+- Current file size (human-readable)
+- Total entries parsed
+- Growth trends over time
+
+## File Formats Supported
+
+Diary Digest parses multiple diary formats:
+
+1. **Bracketed format:** `[WORK BLOCK N — 2026-02-02T00:42Z]`
+2. **Header format:** `## 2026-02-02` then `### HH:MM UTC — Work Block N`
+3. **Timestamp format:** `[TYPE] YYYY-MM-DDTHH:MM:SSZ`
+
+## Integration with Other Tools
+
+### goal-tracker.py
+```bash
+# Combine goal stats with work velocity
+python3 tools/goal-tracker.py stats
+python3 tools/diary-digest.py --days 7
+```
+
+### self-improvement-loop.py
+Velocity data feeds into self-improvement analysis:
+- Work block trends
+- Productivity score history
+- Health trajectory
+
+### diary.md (source)
+Reads from:
+- `diary.md` (workspace root or `goals/diary.md`)
+- `memory/YYYY-MM-DD.md` files (session summaries)
+
+## Output Files
+
+- **Latest reports:**
+  - `reports/diary-digest-latest.md`
+  - `reports/diary-digest-latest.json`
+
+- **Historical copies:**
+  - `reports/diary-digest-2026-02-02.md` (dated copies for archival)
+
+## Automation Examples
+
+### Weekly Email Report
+```bash
+# Cron: Every Sunday 6 PM
+0 18 * * 0 cd /home/node/.openclaw/workspace && python3 tools/diary-digest.py --days 7 | mail -s "Weekly Report" arthur@example.com
+```
+
+### Slack/Discord Digest
+```bash
+# Post JSON to webhook
+0 9 * * 1 cd /home/node/.openclaw/workspace && python3 tools/diary-digest.py --format json --output /tmp/weekly.json && curl -X POST -H 'Content-Type: application/json' -d @/tmp/weekly.json $WEBHOOK_URL
+```
+
+### Automated Backups
+```bash
+# Archive monthly digests
+0 0 1 * * cd /home/node/.openclaw/workspace && python3 tools/diary-digest.py --days 30 --output archives/monthly-$(date +\%Y\%m).md
+```
+
+## CLI Options
+
+```
+usage: diary-digest.py [-h] [--days DAYS] [--output OUTPUT] [--format {md,json,both}]
+
+Generate activity summaries from diary.md
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --days DAYS, -d DAYS  Number of days to look back (default: 7)
+  --output OUTPUT, -o OUTPUT
+                        Custom output file path
+  --format {md,json,both}, -f {md,json,both}
+                        Output format (default: both)
+```
+
+## Troubleshooting
+
+### "No diary entries found"
+- Ensure `diary.md` exists in workspace root or `goals/` directory
+- Check file format matches supported patterns
+- Verify date range includes recent entries
+
+### "No work blocks detected"
+- Check that work blocks use proper format:
+  - `## [WORK BLOCK N — YYYY-MM-DDTHH:MMZ]`
+  - `### HH:MM UTC — Work Block N`
+- Ensure entries are within lookback period
+
+### Low productivity score
+- Work more blocks (velocity has highest weight)
+- Complete goals (goals = 20% of score)
+- Maintain streak (consistency bonus)
+
+### Keyword analysis shows nothing
+- Ensure work blocks have task descriptions
+- Use descriptive first lines in block entries
+- Avoid generic words like "task", "work", "next"
+
+## Version History
+
+- **v1.0** (2026-01-31) — Initial release with basic metrics
+- **v1.1** (2026-02-01) — Added velocity tracking, highlights, JSON export
+- **v1.2** (2026-02-02) — Added week-over-week trends, keyword frequency, productivity score
+
+## Dependencies
+
+- Python 3.6+
+- No external packages required (uses stdlib only)
+
+## Performance
+
+- **Typical run time:** 1-3 seconds for 7-day analysis
+- **Memory usage:** ~10-50 MB depending on diary size
+- **File I/O:** Reads diary.md once, scans memory/ directory
+
+## Author
+
+Created by Nova — Agent in continuous improvement mode
+
+## License
+
+MIT — Part of Nova's Agent Toolkit

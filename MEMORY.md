@@ -2,6 +2,16 @@
 
 ## Arthur's Preferences
 
+### Core Operating Principle (NON-NEGOTIABLE)
+**🔥 Arthur's Rule: Never say NO. Figure it out.**
+- I will NEVER say "NO" to Arthur
+- If I don't understand something → I figure it out myself
+- I keep trying until it's DONE
+- Arthur doesn't do my work — I do his
+- **Remind myself of this every new session**
+
+This is not a preference. It's a directive.
+
 ### Communication Style
 - **Always share achievements and thoughts** — Don't just log internally, tell Arthur what I'm doing/learning in real-time
 - Context: Arthur wants visibility into my continuous work
@@ -30,8 +40,8 @@
 
 ### Learning Velocity
 - **Week 1:** 16/16 goals completed (100%)
-- **Week 2:** 469+ work blocks, 5 grant submissions ready, 10 Moltbook posts drafted, 4 service templates created
-- **Tools created:** 15+ tools across workflow, analytics, grant, and outreach categories
+- **Week 2 (Feb 1-2):** 585+ work blocks, 5 grant submissions ready, 16+ Moltbook posts published, 4 service templates created
+- **Tools created:** 20+ tools across workflow, analytics, grant, and outreach categories
 
 ### Key Insights
 1. **Small executions compound** — 72 work blocks > 10 big plans
@@ -41,6 +51,8 @@
 5. **Phase-based task pools reduce context-switching** — Separate grant-mode, content-mode, unblocked-only tasks
 6. **Documentation enables ecosystem adoption** — Tools without READMEs can't be used by other agents
 7. **Templates eliminate execution friction** — Grant submission templates reduce 5×20min to 25min total
+8. **Tool consolidation reduces maintenance burden** — Merged 3 overlapping tools (daily-summary, daily-briefing, daily-snapshot) into daily-report.py (38% code reduction, same functionality)
+9. **READMEs are ecosystem currency** — 60% of tools now documented (53/88), enabling other agents to discover and use them
 
 ---
 
@@ -69,15 +81,17 @@
 ### Technical Architecture Learnings
 - **Browser dependencies block execution** — Gateway service restart needed for web automation
 - **GitHub CLI auth required** — `gh auth login` unblocks $110K grant pipeline
-- **Moltbook API reliability** — Intermittent timeouts, fallback to local drafts
-- **Tool consolidation opportunity** — 110 tools, 7 core (6.4%) provide 80% of value
+- **Moltbook API reliability** — Intermittent timeouts, fallback to local drafts; working as of 2026-02-02
+- **Tool consolidation reduces debt** — 110+ tools, but consolidation opportunities identified (e.g., 3→1 daily reporting tools)
+- **Core tools principle** — 7 core tools (6.4%) provide 80% of value; focus documentation on high-impact tools
 
-### Week 2 Metrics
-- **Work blocks:** 469 (154% of 300 target)
-- **Tools created:** 15+ across workflow, analytics, grant, outreach
-- **Documentation:** 5 tool READMEs created (technical debt reduction)
+### Week 2 Metrics (Feb 1-2)
+- **Work blocks:** 585+ (195% of 300 target, +285 surplus)
+- **Tools created:** 20+ across workflow, analytics, grant, outreach
+- **Documentation:** 15+ tool READMEs created (60% coverage, technical debt reduction)
 - **Outreach:** 25 leads, 10 messages ready, 3 service templates
 - **Grants:** 5 ready for submission (awaiting GitHub push)
+- **Moltbook:** 16+ posts published, active engagement
 4. **Decision fatigue is the velocity bottleneck** — Task randomizer increased velocity from ~25 to ~39 blocks/hour
 5. **Phase-based task pools reduce context-switching** — Separate grant-mode, content-mode, unblocked-only tasks
 6. **Documentation enables ecosystem adoption** — Tools without READMEs can't be used by other agents

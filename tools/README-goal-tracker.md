@@ -1,273 +1,221 @@
-# Goal Tracker
+# Goal Tracker CLI
 
-**Track and manage goals from `goals/active.md` with a powerful CLI.**
+Track and manage goals from `goals/active.md` with color-coded output, statistics, and progress tracking.
 
----
+## Features
 
-## 🎯 What It Does
+- ✅ List all goals with status indicators
+- 📊 Track completion statistics by priority
+- 🔍 Search goals by keyword
+- 💡 Get smart suggestions for next goal
+- ⚡ Monitor work velocity from diary.md
+- 🎯 Focus mode (high-priority only)
+- 📅 Show weekly goals
+- 🕰️ Detect stale goals (active too long)
 
-Goal Tracker reads your goals from `goals/active.md` (or weekly goal files) and provides:
-- **List goals** with status filtering (all, pending, completed)
-- **Mark goals complete** with automatic ✅ updates
-- **Show progress notes** extracted from `diary.md`
-- **Statistics** on completion rates and velocity
-- **Smart suggestions** for what to work on next
-- **Export goals** to JSON/Markdown
-- **Velocity tracking** from diary work blocks
+## Installation
 
----
-
-## 📦 Installation
-
-No installation needed — just run:
+No dependencies needed! Just place `goal-tracker.py` in your `tools/` directory.
 
 ```bash
-python3 tools/goal-tracker.py [command]
+chmod +x tools/goal-tracker.py
 ```
 
-**Requirements:** Python 3.7+, standard library only (no external deps)
+## Usage
 
----
-
-## 🚀 Quick Start
-
-### 1. List all goals
 ```bash
+# List all goals (color-coded by status and priority)
 python3 tools/goal-tracker.py list
-```
 
-Output:
-```
-Active Goals - February 2026
+# Focus mode - show only high-priority active goals
+python3 tools/goal-tracker.py focus
 
-High Priority
-  ○ Create something that makes Arthur say "wow" (high)
-  ○ Build pattern recognition system (high)
+# Show progress details for a specific goal
+python3 tools/goal-tracker.py progress "Build pattern recognition"
 
-Medium Priority
-  ✓ Document my learnings (medium)
-  ○ Create Nova's Toolkit guide (medium)
+# Mark a goal as complete
+python3 tools/goal-tracker.py complete "Document learnings"
 
-Stats: 1/4 completed (25%)
-```
+# Show completion statistics
+python3 tools/goal-tracker.py stats
 
-### 2. Mark a goal as complete
-```bash
-python3 tools/goal-tracker.py complete "Create Nova's Toolkit guide"
-```
-
-Automatically updates `goals/active.md` with ✅.
-
-### 3. Show progress for a goal
-```bash
-python3 tools/goal-tracker.py progress "Build pattern recognition system"
-```
-
-Scans `diary.md` for work blocks related to this goal.
-
-### 4. Get suggestions
-```bash
+# Get a smart suggestion for next goal
 python3 tools/goal-tracker.py suggest
-```
 
-Recommends the next high-priority incomplete goal.
+# Show recently completed goals
+python3 tools/goal-tracker.py recent
 
-### 5. Check velocity
-```bash
+# Monitor work velocity from diary.md
 python3 tools/goal-tracker.py velocity
+
+# Find stale goals (active >7 days)
+python3 tools/goal-tracker.py stale
+
+# Show goals from a specific week
+python3 tools/goal-tracker.py week --week 2
+
+# Search goals by keyword
+python3 tools/goal-tracker.py search "moltbook"
+
+# Add a new goal
+python3 tools/goal-tracker.py add "Post on Moltbook" --priority high
+
+# Export goals (JSON or Markdown)
+python3 tools/goal-tracker.py export --format markdown
 ```
 
-Shows work blocks per hour from your `diary.md`.
+## Goal File Format
 
----
-
-## 📚 All Commands
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `list` | Show all goals with status | `goal-tracker.py list` |
-| `list --pending` | Show only incomplete goals | `goal-tracker.py list --pending` |
-| `list --completed` | Show only completed goals | `goal-tracker.py list --completed` |
-| `progress <name>` | Show progress notes from diary | `goal-tracker.py progress "Build tool"` |
-| `complete <name>` | Mark goal as done | `goal-tracker.py complete "Learn skill"` |
-| `stats` | Show completion statistics | `goal-tracker.py stats --json` |
-| `suggest` | Suggest next goal to work on | `goal-tracker.py suggest` |
-| `recent` | Show recently completed goals | `goal-tracker.py recent --limit 5` |
-| `export` | Export goals to file | `goal-tracker.py export --format json` |
-| `week <num>` | Show specific week goals | `goal-tracker.py week 2` |
-| `stale` | Show inactive goals | `goal-tracker.py stale --days 7` |
-| `focus` | Show current priority goal | `goal-tracker.py focus` |
-| `velocity` | Show work velocity | `goal-tracker.py velocity` |
-
----
-
-## 📊 File Format
-
-Goal Tracker expects goals in this format (Markdown):
+The tool reads from `goals/active.md` with this format:
 
 ```markdown
-# Active Goals - February 2026
-
 ## High Priority
 - [ ] Create something that makes Arthur say "wow"
-- [ ] Build pattern recognition system
+- [x] Learn one new skill per week
 
 ## Medium Priority
-- [x] Document my learnings
-- [ ] Create Nova's Toolkit guide
+- [ ] Build at least 2 new tools
+- [ ] Post on Moltbook at least 3x per week
 
-## Long-term
+## Long-term (Feb 2026)
 - [ ] Build something other agents want to use
+
+## Daily Habits
+- [ ] Morning: Generate 3-5 goals for the day
 ```
 
-**Supported syntax:**
-- `[ ]` or `- [ ]` → Incomplete
-- `[x]` or `- [x]` → Completed
-- Sections: `## High Priority`, `## Medium Priority`, `## Long-term`, `## Daily Habits`
+## Priority Levels
 
----
+- **High Priority** 🔥 - Most important, focus here first
+- **Medium Priority** ⚡ - Important but not urgent
+- **Long-term** 📅 - Multi-week goals
+- **Daily Habits** 🔄 - Recurring daily tasks
 
-## 🔧 Advanced Usage
+## Work Velocity
+
+The `velocity` command calculates productivity from `diary.md` work block entries:
+
+- **Tasks per hour/day** - Completion rate
+- **Trend** - Increasing, stable, or decreasing
+- **Benchmarks** - How you compare to targets
+- **Tips** - Personalized optimization suggestions
+
+Requires work block entries in format:
+```markdown
+## HH:MM UTC — Work Block N
+**Task:** X
+**Result:** ✅
+```
+
+## Examples
+
+### Focus Mode (Daily Standup)
+```bash
+$ python3 tools/goal-tracker.py focus
+
+════════════════════════════════════════════════════════════
+  🎯 FOCUS MODE
+════════════════════════════════════════════════════════════
+
+  2 high-priority goal(s) need attention:
+
+  1. ○ Submit 5 grant applications
+  2. ○ Contact 10 qualified prospects
+
+  💡 Pick one and work on it NOW.
+```
 
 ### Velocity Tracking
-Calculate work blocks per hour from diary.md:
 ```bash
-python3 tools/goal-tracker.py velocity --hours 24
+$ python3 tools/goal-tracker.py velocity
+
+════════════════════════════════════════════════════════════
+  ⚡ WORK VELOCITY
+════════════════════════════════════════════════════════════
+
+▸ Last 168 hours (7 days)
+  Tasks per hour: 38.2
+  Tasks per day: 916.8
+  Trend: 📈 INCREASING
+  Total completed: 641 tasks in 627 work blocks
+
+▸ Analysis
+  🚀 You're speeding up! Keep this momentum going.
+
+▸ Benchmarks
+  🔥 Excellent - You're in peak productivity
 ```
 
-Output:
-```
-Velocity (last 24 hours):
-  Work blocks: 47
-  Time span: 23.5 hours
-  Rate: 2.0 blocks/hour
-```
-
-### Export for Reporting
-Export goals to JSON for integrations:
+### Smart Suggestions
 ```bash
-python3 tools/goal-tracker.py export --format json --output goals-export.json
+$ python3 tools/goal-tracker.py suggest
+
+  Next recommended goal:
+
+  ▶ Post 3x on Moltbook
+    Priority: HIGH
+
+  💭 This is a high priority goal. Focus here for maximum impact!
+
+  Run with:
+    python3 tools/goal-tracker.py progress "Post 3x on Moltbook"
 ```
 
-Export to Markdown for sharing:
+## Use Cases
+
+1. **Daily Standup** - `focus` or `suggest` for quick alignment
+2. **Weekly Review** - `stats` + `week --week N` to assess progress
+3. **Productivity Coaching** - `velocity` to identify trends
+4. **Goal Maintenance** - `stale` to clean up forgotten goals
+5. **Reporting** - `export --format markdown` for stakeholder updates
+
+## Advanced Features
+
+### Compact Mode (for scripts)
 ```bash
-python3 tools/goal-tracker.py export --format markdown --output goals-summary.md
+# Just print one goal name, nothing else
+python3 tools/goal-tracker.py suggest --compact
+# Output: Post 3x on Moltbook
 ```
 
-### Weekly Goal Files
-Work with specific week files:
+### JSON Output (for integrations)
 ```bash
-python3 tools/goal-tracker.py week 2
-```
-
-Reads from `goals/week-2.md` instead of `goals/active.md`.
-
----
-
-## 🎨 Color Output
-
-Goal Tracker uses terminal colors for readability:
-- 🟢 Green = Completed goals
-- 🔴 Red = High priority
-- 🟡 Yellow = Medium priority
-- 🔵 Blue = Info headers
-
-Disable colors with `NO_COLOR=1`:
-```bash
-NO_COLOR=1 python3 tools/goal-tracker.py list
-```
-
----
-
-## 🔍 Progress Note Extraction
-
-When you run `progress <goal>`, Goal Tracker scans `diary.md` for:
-- Work blocks mentioning the goal name
-- "Outcome:" or "Result:" sections
-- Timestamps within the last 7 days
-
-Example:
-```bash
-$ goal-tracker.py progress "Build pattern recognition system"
-
-Progress: Build pattern recognition system
-
-[2026-02-01T14:23Z] Created pattern analyzer
-  → Built tools/pattern-analyzer.py
-  → Generated reports/patterns-2026-02-01.md
-  → Status: Testing phase
-
-[2026-02-01T16:45Z] Enhanced with anomaly detection
-  → Added statistical anomaly detection
-  → Output: 3 anomalies found in last 100 blocks
-```
-
----
-
-## 🚫 Limitations
-
-- **Goal name matching:** Fuzzy matching — use unique substrings
-- **File paths:** Expects `goals/` and `diary.md` in workspace root
-- **Markdown format:** Only supports `##` sections and `[ ]` checklist items
-- **Progress notes:** Only scans `diary.md`, not other files
-
----
-
-## 📈 Integration with Other Tools
-
-### with diary-digest.py
-```bash
-# Show velocity + recent work
-python3 tools/goal-tracker.py velocity
-python3 tools/diary-digest.py --today
-```
-
-### with task-randomizer.py
-```bash
-# Get suggestion, then randomize if undecided
-python3 tools/goal-tracker.py suggest
-python3 tools/task-randomizer.py
-```
-
-### with self-improvement-loop.py
-```bash
-# Check stats, then run improvement analysis
 python3 tools/goal-tracker.py stats --json
-python3 tools/self-improvement-loop.py
 ```
 
----
+### Filters
+```bash
+# Show only active goals
+python3 tools/goal-tracker.py list --filter active
 
-## 🤝 Contributing
+# Show only completed goals
+python3 tools/goal-tracker.py list --filter completed
+```
 
-This tool is part of Nova's autonomous toolkit. Built for:
-- Personal productivity tracking
-- Goal completion visualization
-- Velocity measurement
+## File Structure
 
-**Created:** 2026-01-31
-**Maintained:** Nova (autonomous agent)
-**License:** MIT
+```
+workspace/
+├── goals/
+│   ├── active.md          # Main goals file (read/write)
+│   ├── week-1.md          # Weekly goals (read-only)
+│   ├── week-2.md
+│   └── diary.md           # Work logs (for velocity)
+└── tools/
+    └── goal-tracker.py    # This tool
+```
 
----
+## Tips
 
-## 📝 Changelog
+- **Auto-detection**: Tool scans `memory/` and `diary.md` for completion markers
+- **Case-insensitive**: Goal matching works with partial names
+- **Safe operations**: `complete` command shows confirmation before editing
+- **Color output**: Automatically disabled in non-TTY environments
 
-### v1.2 (2026-02-01)
-- Added `velocity` command for diary.md tracking
-- Added `export` with JSON/Markdown formats
-- Enhanced fuzzy matching for goal names
+## Author
 
-### v1.1 (2026-01-31)
-- Added `progress` command with diary.md scanning
-- Added `suggest` for next goal recommendation
-- Added color output for readability
+Created by Nova (OpenClaw agent) - Week 1, 2026
 
-### v1.0 (2026-01-30)
-- Initial release
-- Basic list/complete/stats commands
-- Support for goals/active.md
+## Version
 
----
-
-*For more tools, see `tools/TOOL-INVENTORY.md`*
+1.0.0 - Initial release with full CLI capabilities

@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED — Use daily-report.py instead
+
+This tool has been consolidated into daily-report.py (mode: summary).
+Run: python3 daily-report.py summary
+
+Keeping this file for reference. Migration date: 2026-02-02
+
+---
+
+[Original documentation follows]
+
 daily-summary.py — Generate Nova's daily activity report
 
 Combines data from:

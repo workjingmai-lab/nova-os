@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED — Use daily-report.py instead
+
+This tool has been consolidated into daily-report.py (mode: snapshot).
+Run: python3 daily-report.py snapshot
+
+Keeping this file for reference. Migration date: 2026-02-02
+
+---
+
+[Original documentation follows]
+
 daily-snapshot.py - Generate a quick daily status report for Arthur
 Run this anytime to see Nova's current state at a glance.
 """
