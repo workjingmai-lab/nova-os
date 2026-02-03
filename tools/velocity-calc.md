@@ -1,53 +1,121 @@
-# velocity-calc.py — Work Block Metrics
+# velocity-calc.md — Calculate Work Block Velocity
 
-Quickly calculate velocity metrics from your diary.md work blocks.
+**Version:** 1.0  
+**Category:** Analytics / Metrics  
+**Created:** 2026-02-01
+
+---
 
 ## What It Does
 
- Parses your diary.md for `[WORK BLOCK X — timestamp]` entries and calculates:
-- Total work blocks completed
-- Duration (first to last block)
-- Velocity (blocks per hour)
-- Average block time
+Calculates work block velocity: blocks per hour, per day, and trends over time.
+
+### Features
+
+- Real-time velocity calculation
+- Hourly/daily/weekly metrics
+- Trend detection (accelerating/decelerating)
+- Peak productivity windows
+- Comparison to targets
+- Historical data storage
+
+---
 
 ## Usage
 
 ```bash
-# Today's metrics (all blocks in diary)
+# Calculate current velocity
 python3 tools/velocity-calc.py
 
-# Last 7 days only
-python3 tools/velocity-calc.py --week
+# Show velocity by hour
+python3 tools/velocity-calc.py --hourly
+
+# Show weekly trend
+python3 tools/velocity-calc.py --weekly
+
+# Compare to target
+python3 tools/velocity-calc.py --target 40
+
+# Export historical data
+python3 tools/velocity-calc.py --export velocity-2026-02-02.json
 ```
 
-## Example Output
+---
 
+## Metrics
+
+| Metric | Description | Formula |
+|--------|-------------|---------|
+| **Current Velocity** | Blocks/hour (last hour) | blocks_last_hour |
+| **Daily Velocity** | Blocks/day (today) | blocks_today / hours_today |
+| **Weekly Velocity** | Blocks/day (7-day avg) | blocks_week / 7 |
+| **Trend** | Acceleration | (velocity_now - velocity_yesterday) |
+| **Peak Window** | Most productive hour | hour with max blocks |
+
+---
+
+## Output Example
+
+```bash
+$ python3 tools/velocity-calc.py
+
+📊 VELOCITY METRICS
+────────────────────────────────────────────────────────────
+
+Current Velocity: 38 blocks/hour
+Daily Average: 32 blocks/hour
+Weekly Average: 29 blocks/hour
+
+Trend: ↗️ +6 from yesterday (accelerating)
+
+Peak Window: 14:00-16:00 UTC (45 blocks/hour)
+
+Target: 40 blocks/hour
+Status: 95% of target
+
+Historical:
+  Feb 1: 28 blocks/hour
+  Feb 2: 32 blocks/hour
+  Today: 38 blocks/hour
 ```
-📊 Velocity Metrics
 
-Total Work Blocks: 527
-Duration: 7214 minutes
-Velocity: 4.4 blocks/hour
-Avg Block Time: 13.7 minutes
+---
 
-First Block: 2026-02-01 09:07
-Last Block: 2026-02-02 12:30
+## Dependencies
+
+- Python 3.7+
+- `diary.md` for work block timestamps
+
+---
+
+## Data Storage
+
+Historical velocity stored in `.velocity-history.json`:
+
+```json
+{
+  "2026-02-02": {
+    "hourly": [30, 35, 40, 38, 42],
+    "daily_avg": 37,
+    "peak_hour": 14
+  }
+}
 ```
 
-## Why It Matters
-
-Velocity is your productivity pulse. Track it to:
-- Spot slowdowns (decision fatigue, blockers)
-- Compare days (what worked better?)
-- Calibrate estimates (how long will X take?)
-- Celebrate progress (500 blocks = ~50 hours of focused work)
+---
 
 ## Integration
 
-Used by: `self-improvement-loop.py` for automated velocity tracking and insights.
+- Pair with `agent-productivity-score.py` for composite metrics
+- Use `work-block-miner.py` for pattern analysis
+- Feed into `self-improvement-loop.py` for trend insights
 
-## See Also
+---
 
-- `block-counter.py` — Raw block count
-- `diary-digest.py` — Daily summaries
-- `self-improvement-loop.py` — Automated velocity + insights
+## Tips
+
+1. Track velocity at different times to find your peak
+2. Use trend data to adjust daily schedules
+3. Set realistic targets based on weekly averages
+4. Monitor for burnout (sustained low velocity)
+5. Celebrate velocity milestones (40+ blocks/hour)

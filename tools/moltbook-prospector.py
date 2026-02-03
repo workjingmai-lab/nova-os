@@ -29,10 +29,23 @@ def get_feed(limit=50) -> List[Dict]:
 
 def analyze_post(post: Dict) -> Dict:
     """Analyze a post for prospecting signals"""
+    # Handle author as dict or string
+    author_raw = post.get("author", "unknown")
+    if isinstance(author_raw, dict):
+        author_name = author_raw.get("name", author_raw.get("id", "unknown"))
+        author_karma = author_raw.get("karma", 0)
+    else:
+        author_name = str(author_raw)
+        author_karma = 0
+
+    # Safely extract content
+    content_raw = post.get("content", "")
+    content = str(content_raw)[:200] if content_raw else ""
+
     signals = {
-        "author": post.get("author", "unknown"),
-        "karma": post.get("author_karma", 0),
-        "content": post.get("content_text", post.get("content", ""))[:200],
+        "author": author_name,
+        "karma": author_karma,
+        "content": content,
         "fit_score": 0,
         "reasons": []
     }
@@ -79,7 +92,13 @@ def main():
     qualified = []
 
     for post in posts:
-        author = post.get("author", "unknown")
+        # Extract author name (handle dict or string)
+        author_raw = post.get("author", "unknown")
+        if isinstance(author_raw, dict):
+            author = author_raw.get("name", author_raw.get("id", "unknown"))
+        else:
+            author = author_raw
+
         if author == "nova_test":
             continue
 

@@ -24,6 +24,7 @@ Usage:
 import argparse
 import json
 import os
+import socket
 import sys
 import urllib.request
 import urllib.error
@@ -66,45 +67,67 @@ def colorize(text: str, color: str) -> str:
     """Apply color to text."""
     return f"{color}{text}{Colors.RESET}"
 
-def api_get(endpoint: str) -> Dict:
-    """Make authenticated GET request to Moltbook API"""
+def api_get(endpoint: str, retries: int = 2) -> Dict:
+    """Make authenticated GET request to Moltbook API with retry on timeout"""
     url = f"{MOLTBOOK_API}{endpoint}"
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Authorization": f"Bearer {TOKEN}",
-            "Accept": "application/json"
-        }
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        return {"error": f"HTTP {e.code}: {e.reason}"}
-    except Exception as e:
-        return {"error": str(e)}
+    
+    for attempt in range(retries + 1):
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Authorization": f"Bearer {TOKEN}",
+                "Accept": "application/json"
+            }
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            return {"error": f"HTTP {e.code}: {e.reason}"}
+        except (urllib.error.URLError, socket.timeout) as e:
+            if attempt < retries:
+                # Retry with backoff
+                import time
+                time.sleep(1 * (attempt + 1))
+                continue
+            return {"error": f"Timeout/Connection error: {str(e)} (retries exhausted)"}
+        except Exception as e:
+            return {"error": str(e)}
+    
+    return {"error": "Max retries exceeded"}
 
-def api_post(endpoint: str, data: Dict) -> Dict:
-    """Make authenticated POST request to Moltbook API"""
+def api_post(endpoint: str, data: Dict, retries: int = 2) -> Dict:
+    """Make authenticated POST request to Moltbook API with retry on timeout"""
     url = f"{MOLTBOOK_API}{endpoint}"
     json_data = json.dumps(data).encode("utf-8")
-    req = urllib.request.Request(
-        url,
-        data=json_data,
-        headers={
-            "Authorization": f"Bearer {TOKEN}",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method="POST"
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        return {"error": f"HTTP {e.code}: {e.reason}"}
-    except Exception as e:
-        return {"error": str(e)}
+    
+    for attempt in range(retries + 1):
+        req = urllib.request.Request(
+            url,
+            data=json_data,
+            headers={
+                "Authorization": f"Bearer {TOKEN}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            method="POST"
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            return {"error": f"HTTP {e.code}: {e.reason}"}
+        except (urllib.error.URLError, socket.timeout) as e:
+            if attempt < retries:
+                # Retry with backoff
+                import time
+                time.sleep(1 * (attempt + 1))
+                continue
+            return {"error": f"Timeout/Connection error: {str(e)} (retries exhausted)"}
+        except Exception as e:
+            return {"error": str(e)}
+    
+    return {"error": "Max retries exceeded"}
 
 # =============================================================================
 # COMMAND: ANALYZE (from moltbook-analyzer.py)
@@ -314,12 +337,15 @@ def cmd_monitor(args):
         if args.check_mentions:
             mentions = []
             for post in posts:
-                content = post.get("content", "").lower()
+                if post is None:
+                    continue
+                content = post.get("content", "") or ""
+                content = content.lower()
                 if "nova" in content:
                     mentions.append({
                         "id": post.get("id"),
-                        "author": post.get("author", {}).get("username", "Unknown"),
-                        "snippet": post.get("content", "")[:80]
+                        "author": post.get("author", {}).get("username", "Unknown") if post.get("author") else "Unknown",
+                        "snippet": (post.get("content", "") or "")[:80]
                     })
 
             if mentions:

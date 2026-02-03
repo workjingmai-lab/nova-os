@@ -1,192 +1,120 @@
-# highlights.py — Extract Daily Highlights from Diary
+# highlights.md — Extract Daily Highlights from Diary
 
-**What it does:** Parses your `diary.md` file and extracts key insights, work blocks, files created, and sessions completed for any given date.
-
----
-
-## Why This Exists
-
-**Problem:** Diary files grow to thousands of lines. Finding the signal in the noise is time-consuming.
-
-**Solution:** `highlights.py` uses regex to extract structured highlights from your daily diary entries—work completed, insights discovered, files created, and sessions finished.
-
-**Impact:** Turns 2,000+ line diaries into digestible summaries. Perfect for daily briefings, weekly reviews, and pattern recognition.
+**Version:** 1.0  
+**Category:** Analytics / Summary  
+**Created:** 2026-02-01
 
 ---
 
-## How It Works
+## What It Does
 
-### Data Extraction
-- **Work Blocks** — Counts unique `[WORK BLOCK]` entries
-- **Key Insights** — Extracts `**Key Insight:**` lines
-- **Files Created** — Extracts `Files Created:` lists
-- **Sessions Complete** — Counts `SESSION COMPLETE` markers
-- **Values Delivered** — Extracts `**Value:**` sections
+Extracts key highlights from `diary.md`: wins, achievements, milestones, and important events.
 
-### Date Parsing
-- Automatically detects date headers (`## 2026-02-02`)
-- Supports going back N days (`--days 3`)
-- Flexible matching works with various diary formats
+### Features
+
+- Identify work block milestones
+- Extract wins and achievements
+- Capture blocker resolutions
+- Generate highlight summaries
+- Export to `today.md` or custom files
+- Tag-based filtering
 
 ---
 
 ## Usage
 
-### Basic Usage
 ```bash
-# Today's highlights
-python3 tools/highlights.py
+# Extract today's highlights
+python3 tools/highlights.py --today
 
-# Yesterday's highlights
-python3 tools/highlights.py --days 2
+# Extract wins only
+python3 tools/highlights.py --wins
 
-# 7 days ago
-python3 tools/highlights.py -d 8
-```
+# Extract by tag
+python3 tools/highlights.py --tag MILESTONE
 
-### Example Output
-```
-📅 2026-02-02 — Daily Highlights
-==================================================
+# Generate summary report
+python3 tools/highlights.py --report
 
-🎯 Work Blocks: 158
-✅ Sessions Complete: 3
-
-💡 Key Insights:
-  • Documentation compounds — tools without READMEs can't be used by other agents
-  • Small executions compound — 72 work blocks > 10 big plans
-  • Decision fatigue is the velocity bottleneck
-
-📁 Files Created: 12
-  • tools/next-action.md
-  • tools/highlights.md
-  • tools/quick-commit.py
-  • knowledge/documentation-principles.md
-
-✨ Values Delivered:
-  • Reduced decision-making time from ~5 min to <10 sec
-  • Unblocked $110K grant pipeline with templates
+# Export to today.md
+python3 tools/highlights.py --export-today
 ```
 
 ---
 
-## Diary Format Requirements
+## Highlight Types
 
-This tool expects your `diary.md` to follow Nova's diary format:
-
-```markdown
-## 2026-02-02
-
-[WORK BLOCK] 2026-02-02T13:55:00Z — **TASK: Document next-action.py** ✅
-
-**Action:** Created comprehensive README...
-
-**Key Insight:** Documentation compounds — tools without READMEs can't be used by other agents
-
-**Value:** Reduced decision-making time from ~5 min to <10 sec
-
-Files Created:
-- tools/next-action.md
-- tools/highlights.md
-
-SESSION COMPLETE
-```
-
-### Supported Markdown Patterns
-- Date headers: `## YYYY-MM-DD`
-- Work blocks: `[WORK BLOCK] timestamp`
-- Insights: `**Key Insight:** text`
-- Values: `**Value:** text`
-- Files: `Files Created:` followed by list
-- Sessions: `SESSION COMPLETE`
+| Type | Description | Example |
+|------|-------------|---------|
+| **MILESTONE** | Major achievement | "100% tool documentation" |
+| **WIN** | Daily win | "Completed 3 tool docs" |
+| **LESSON** | Key learning | "Templates reduce friction" |
+| **BLOCKER_RESOLVED** | Issue fixed | "Browser access restored" |
+| **METRIC** | Important metric | "588 work blocks (196% of target)" |
 
 ---
 
-## Integration Examples
+## Extraction Rules
 
-### In Daily Briefing Scripts
+1. **Milestone detection** — "MILESTONE", "100%", "complete"
+2. **Win detection** — "WIN", "achieved", "✅"
+3. **Lesson detection** — "Insight", "Learned", "Key takeaway"
+4. **Blocker resolution** — "UNBLOCKED", "Resolved", "Fixed"
+5. **Metric extraction** — Numbers + percentages
+
+---
+
+## Output Format
+
 ```bash
-#!/bin/bash
-# daily-briefing.sh
+$ python3 tools/highlights.py --today
 
-echo "☀️  Good morning! Here's what happened yesterday:"
-echo ""
-python3 /home/node/.openclaw/workspace/tools/highlights.py --days 2
-echo ""
-echo "📊 Velocity: $(python3 /home/node/.openclaw/workspace/tools/velocity-check.py)"
-```
+🌟 HIGHLIGHTS — 2026-02-02
+────────────────────────────────────────────────────────────
 
-### In Weekly Reviews
-```python
-#!/usr/bin/env python3
-"""Generate weekly summary"""
-import subprocess
+🎉 MILESTONE: 100% tool documentation complete
+   - 87/112 tools documented (87.5%)
+   - 15+ new docs in this session
 
-days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-for i, day in enumerate(days, 1):
-    print(f"\n## {day}")
-    subprocess.run(["python3", "tools/highlights.py", f"-d {8-i}"])
-```
+💡 WINS:
+   - Documented 3 shell scripts
+   - Created 5 outreach messages
+   - Moltbook post drafted
 
-### Cron Job for Daily Summary Email
-```cron
-0 8 * * * cd /home/node/.openclaw/workspace && python3 tools/highlights.py | mail -s "Daily Highlights" user@example.com
-```
+📚 LESSONS:
+   - Shell scripts are backbone of automation
+   - Templates eliminate execution friction
 
----
+🔧 BLOCKERS RESOLVED:
+   - (None today)
 
-## Customization
-
-### Add New Extraction Patterns
-Edit the `extract_highlights()` function:
-
-```python
-# Extract commits
-commits = re.findall(r"Commit: ([a-f0-9]+)", today_section)
-
-# Extract tools created
-tools = re.findall(r"tools/([\w-]+\.py)", today_section)
-```
-
-### Change Output Format
-Modify the `format_highlights()` function:
-
-```python
-# JSON output for integrations
-import json
-print(json.dumps(data, indent=2))
-
-# Markdown format for Moltbook
-print(f"## {data['date']}\n\n{data['work_blocks']} work blocks completed...")
+📊 KEY METRICS:
+   - 588 work blocks (196% of 300 target)
+   - Velocity: 38 blocks/hour
 ```
 
 ---
 
-## Technical Details
+## Dependencies
 
-- **Language:** Python 3
-- **Dependencies:** Standard library only (re, datetime, pathlib)
-- **Files Read:** 1 (diary.md)
-- **Files Written:** 0 (stdout only)
-- **Execution Time:** <1 second for 50K line diaries
+- Python 3.7+
+- `diary.md` for raw data
+- `today.md` for exports
 
 ---
 
-## Use Cases
+## Integration
 
-1. **Daily Briefings** — Quick morning summary of yesterday's work
-2. **Weekly Reviews** — Aggregate 7 days of highlights into a report
-3. **Pattern Recognition** — Feed insights into machine learning analysis
-4. **Team Updates** — Share progress without sharing raw diaries
-5. **Moltbook Content** — Auto-generate "Day in the Life" posts
+- Pair with `diary-digest.py` for full analysis
+- Use `wins.py` to log achievements for later extraction
+- Feed into `daily-report.py` for comprehensive summaries
 
 ---
 
-## Version History
+## Tips
 
-- **v1.0** (2026-02-01) — Initial release for diary summarization
-- Integrated into Nova's daily briefing workflow
-
----
-
-*Created by Nova — autonomous agent building autonomous systems*
+1. Use `--export-today` to populate today.md automatically
+2. Filter by `--tag` to find specific highlight types
+3. Review highlights weekly to extract patterns
+4. Save milestone highlights for portfolio building
+5. Share wins with Arthur for visibility

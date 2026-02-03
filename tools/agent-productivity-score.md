@@ -1,108 +1,120 @@
-# agent-productivity-score.py
+# agent-productivity-score.md — Calculate Agent Productivity Metrics
 
-**Purpose:** Calculate a productivity score from diary/heartbeat logs — measure your output velocity as an agent.
+**Version:** 1.0  
+**Category:** Analytics / Metrics  
+**Created:** 2026-02-01
+
+---
 
 ## What It Does
 
-Analyzes timestamped log entries to calculate:
-- **Overall productivity score** (0-100)
-- **Productivity tier** (Legendary → Elite → Pro → Active → Building → Starting)
-- **Activity metrics** — total entries, work blocks, completed tasks, active days
-- **Entry type breakdown** — what kinds of work you're doing
-- **Peak activity hours** — when you're most productive
+Calculates productivity scores based on work blocks, goals, tools, and engagement. Provides a quantified measure of agent performance.
 
-## When to Use It
+### Features
 
-**Run weekly** to:
-- Track your productivity velocity over time
-- Identify patterns in your work schedule
-- See if you're hitting your targets
-- Compare week-over-week performance
+- Work block velocity score
+- Goal completion rate
+- Tool creation count
+- Documentation coverage
+- Engagement metrics (Moltbook, community)
+- Composite productivity score
+
+---
 
 ## Usage
 
 ```bash
-# Analyze diary.md
-python3 tools/agent-productivity-score.py diary.md
+# Calculate current productivity score
+python3 tools/agent-productivity-score.py
 
-# Analyze from stdin
-cat diary.md | python3 tools/agent-productivity-score.py --stdin
+# Show breakdown by category
+python3 tools/agent-productivity-score.py --breakdown
+
+# Compare to last week
+python3 tools/agent-productivity-score.py --compare
+
+# Output as JSON
+python3 tools/agent-productivity-score.py --json
+
+# Generate report file
+python3 tools/agent-productivity-score.py --report reports/productivity-2026-02-02.json
 ```
 
-## Output Format
-
-```
-==================================================
-📊 AGENT PRODUCTIVITY REPORT
-==================================================
-
-Overall Score: 78/100
-Tier: 🌟 Elite
-
-📈 METRICS
-  Total Entries: 147
-  Work Blocks: 89
-  Completed Tasks: 64
-  Active Days: 5
-
-📝 ENTRY TYPES
-  WORK BLOCK        45 ████████████████████
-  HEARTBEAT         32 ██████████████
-  DEEP THINK        18 ██████
-  TOOL CREATED      12 ████
-
-⏰ ACTIVITY BY HOUR
-  Peak Activity: 14:00 (23 entries)
-
-==================================================
-```
-
-## Scoring Algorithm
-
-**Score (0-100) = Volume + Consistency + Completion**
-
-- **Volume (40 pts):** Total entries normalized to 50 (more output = higher score)
-- **Consistency (30 pts):** Active days normalized to 7 (working every day = higher score)
-- **Completion (30 pts):** Completed tasks / total entries (finishing what you start = higher score)
-
-## Productivity Tiers
-
-| Tier | Score | Description |
-|------|-------|-------------|
-| 🏆 Legendary | 90-100 | Exceptional output, highly consistent |
-| 🌟 Elite | 75-89 | Strong performance, regular activity |
-| ⚡ Pro | 60-74 | Solid velocity, good completion rate |
-| 🔥 Active | 40-59 | Consistent work, room to improve |
-| 💪 Building | 20-39 | Getting started, building habits |
-| 🌱 Starting | 0-19 | Just beginning, establish rhythm |
-
-## Why It Matters
-
-**What gets measured gets managed.** This score helps you:
-- **Track velocity** — Are you speeding up or slowing down?
-- **Identify patterns** — When are you most productive?
-- **Set targets** — Aim for higher tiers week-over-week
-- **Optimize schedule** — Adjust work hours based on peak activity
-
-**For autonomous agents:** A quantitative way to prove you're delivering value. Track your growth over time.
-
-## Log Format Expected
-
-The script parses entries in this format:
-```
-[TYPE] YYYY-MM-DDThh:mm:ssZ
-Entry content here
 ---
+
+## Scoring Formula
+
+**Composite Score = (Velocity × 0.3) + (Goals × 0.25) + (Tools × 0.2) + (Docs × 0.15) + (Engagement × 0.1)**
+
+| Component | Weight | Metric |
+|-----------|--------|--------|
+| Velocity | 30% | Work blocks per hour |
+| Goals | 25% | Goal completion rate |
+| Tools | 20% | Tools created per week |
+| Docs | 15% | Documentation coverage |
+| Engagement | 10% | Moltbook posts, community interactions |
+
+---
+
+## Score Ranges
+
+| Score | Rating | Description |
+|-------|--------|-------------|
+| 90-100 | Exceptional | Peak performance, highly productive |
+| 75-89 | Excellent | Strong output, consistent execution |
+| 60-74 | Good | Solid productivity, room for improvement |
+| 40-59 | Fair | Moderate output, inconsistent |
+| 0-39 | Poor | Low productivity, needs intervention |
+
+---
+
+## Output Example
+
+```bash
+$ python3 tools/agent-productivity-score.py
+
+📊 PRODUCTIVITY SCORE
+────────────────────────────────────────────────────────────
+
+Composite Score: 87/100 (Excellent)
+
+Breakdown:
+  Velocity: 92/100 (38 blocks/hour)
+  Goals: 85/100 (45% completion rate)
+  Tools: 88/100 (20 tools created)
+  Docs: 90/100 (89% documentation coverage)
+  Engagement: 75/100 (3 Moltbook posts)
+
+Trend: ↗️ +5 from last week
+
+Recommendations:
+  • Increase goal completion rate (target: 80%)
+  • Boost Moltbook engagement (target: 5 posts/week)
 ```
 
-Standard Nova diary format uses `[TYPE]` headers with ISO timestamps.
+---
+
+## Dependencies
+
+- Python 3.7+
+- `diary.md` for work block data
+- `goals/active.md` for goal tracking
+- `tools/` for tool documentation
+
+---
 
 ## Integration
 
-- **Weekly review:** Run every Sunday/Monday to check week performance
-- **Goal tracking:** Compare score to weekly targets (e.g., "Reach Elite tier")
-- **Optimization:** Adjust work schedule based on peak hours
+- Pair with `self-improvement-loop.py` for trend analysis
+- Use `velocity-calc.py` for detailed velocity metrics
+- Feed into `daily-report.py` for comprehensive reports
 
 ---
 
-*Created: Week 1 — Part of agent self-measurement infrastructure*
+## Tips
+
+1. Track scores over time to identify patterns
+2. Use `--compare` to measure week-over-week progress
+3. Focus on weakest component to improve overall score
+4. Set score targets for motivation (e.g., "Hit 90 this week")
+5. Remember: score is a tool, not a judgment

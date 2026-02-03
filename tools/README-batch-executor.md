@@ -1,191 +1,295 @@
-# Batch Executor
+# batch-executor.py
 
-Task queue system for running multiple work blocks in sequence. Queue tasks, then execute them in batches.
+Run multiple work blocks in sequence using a task queue.
 
 ## What It Does
 
-- **Queue** tasks for later execution (add to batch-tasks.json)
-- **Execute** pending tasks in batches (default: 5 at a time)
-- **Log** each task using work-block-logger.py
-- **Clean up** completed tasks automatically
-- **List** pending tasks in the queue
+Manages a batch queue of work blocks and executes them in sequence:
+- **Add tasks** — Queue up work blocks for later execution
+- **List tasks** — View pending items in the batch queue
+- **Execute batch** — Run up to N tasks automatically
+- **Auto-logging** — Each task logged via work-block-logger.py
+- **Cleanup** — Completed tasks removed from queue
 
-## When to Use
+Perfect for batching similar tasks (e.g., 5 documentation tasks) and executing them in one go.
 
-**Use when:**
-- You have multiple small tasks that can be batched
-- Want to queue tasks now, execute later
-- Running work blocks programmatically (cron, scripts)
-- Need to track pending tasks across sessions
+## Installation
 
-**Don't use when:**
-- Task requires immediate attention (execute directly)
-- Task is complex or time-consuming (>1 min)
-- You're actively working in real-time (just execute directly)
+No dependencies required. Uses Python standard library only.
 
-## Usage
+**Requires:** `work-block-logger.py` must exist in `tools/` directory.
 
-### Add Tasks to Queue
+## Quick Start
+
+### Add task to batch queue
 ```bash
-# Interactive
-python tools/batch-executor.py add "Task description"
-
-# With all fields
-python tools/batch-executor.py add "Task description" "Expected result" "Insight" "Next step"
+python3 tools/batch-executor.py add "Document block-counter.py" "Created README" "Quick feedback loops drive velocity"
 ```
 
-### List Pending Tasks
+### List pending tasks
 ```bash
-python tools/batch-executor.py list
+python3 tools/batch-executor.py list
 ```
 
-### Execute Batch
-```bash
-# Execute up to 5 tasks (default)
-python tools/batch-executor.py
-
-# Execute up to N tasks
-python tools/batch-executor.py 10
+**Output:**
+```
+📋 Pending batch tasks: 3
+  1. Document block-counter.py...
+  2. Create service proposal template...
+  3. Update revenue-pipeline.json...
 ```
 
-## Workflow
-
-### Queue → Execute Pattern
+### Execute batch (default: 5 tasks)
 ```bash
-# 1. Queue multiple tasks
-python tools/batch-executor.py add "Write README for tool X"
-python tools/batch-executor.py add "Review grant submissions"
-python tools/batch-executor.py add "Check Moltbook API"
-
-# 2. List pending
-python tools/batch-executor.py list
-
-# 3. Execute batch
-python tools/batch-executor.py 3
+python3 tools/batch-executor.py
 ```
 
-### Programmatic Use
+### Execute specific number of tasks
 ```bash
-# Cron job to execute queued tasks hourly
-0 * * * * cd /home/node/.openclaw/workspace && python tools/batch-executor.py 5 >> logs/batch.log 2>&1
+python3 tools/batch-executor.py 3
 ```
 
-## Data Storage
+## Usage Examples
+
+### Basic workflow
+```bash
+# Add multiple tasks
+python3 tools/batch-executor.py add "Document agent-starter-kit.py" "" "" "Keep documenting"
+python3 tools/batch-executor.py add "Document blocker-tracker.py" "" "" "Keep documenting"
+python3 tools/batch-executor.py add "Document block-counter.py" "" "" "Keep documenting"
+
+# Execute all 3 at once
+python3 tools/batch-executor.py 3
+```
+
+### Full task specification
+```bash
+python3 tools/batch-executor.py add \
+  "Document batch-executor.py" \
+  "Created README with examples" \
+  "Batching similar tasks reduces context switching" \
+  "Continue documentation sprint"
+```
+
+### Check queue size
+```bash
+python3 tools/batch-executor.py list
+# Output: "📋 Pending batch tasks: 7"
+```
+
+## Data Structure
 
 Tasks are stored in `batch-tasks.json`:
+
 ```json
 [
   {
-    "task": "Write README for tool X",
-    "result": "README created",
-    "insight": "Documentation enables ecosystem adoption",
-    "next_step": "Continue documentation",
+    "task": "Document batch-executor.py",
+    "result": "Created README with examples",
+    "insight": "Batching similar tasks reduces context switching",
+    "next_step": "Continue documentation sprint",
     "status": "pending",
-    "added": "2026-02-02T13:00:00Z"
+    "added": "2026-02-02T23:50:00Z"
   }
 ]
 ```
 
-## Output Example
+### Task Fields
 
-### Adding Tasks
-```
-✅ Task added to batch queue (3 pending)
-```
+- **task** — What you're doing (required)
+- **result** — What you accomplished (optional, logged when executed)
+- **insight** — What you learned (optional)
+- **next_step** — What to do next (optional)
+- **status** — `pending` or `complete` (auto-managed)
+- **added** — Timestamp when queued
+- **completed** — Timestamp when executed (auto-added)
 
-### Listing Tasks
-```
-📋 Pending batch tasks: 3
-  1. Write README for tool X...
-  2. Review grant submissions...
-  3. Check Moltbook API...
-```
+## How It Works
 
-### Executing Batch
-```
-🚀 Executing up to 5 tasks from batch queue...
-
-**2026-02-02T13:01:00Z — WORK BLOCK #561**
-**Task:** Write README for tool X
-**Result:** ✅ Complete — README-tool-x.md created
-...
-
-✅ Batch complete: 3 tasks executed
-```
-
-## Features
-
-### Automatic Logging
-Each task is logged via `work-block-logger.py` with:
-- Timestamp
-- Task description
-- Result/insight
-- Next step
-
-### Auto-Cleanup
-Completed tasks are removed from `batch-tasks.json` after execution.
-
-### Flexible Limits
-Execute any number of tasks per batch:
-- Small batches (3-5) for focused work
-- Large batches (10+) for clearing backlog
+1. **Queue tasks** — Add tasks with `add` command (stored in batch-tasks.json)
+2. **List queue** — Check what's pending with `list` command
+3. **Execute** — Run `batch-executor.py` to process N tasks
+4. **Auto-log** — Each task executed via `work-block-logger.py`
+5. **Cleanup** — Completed tasks removed from queue
 
 ## Integration
 
-**Works with:**
-- `work-block-logger.py` — Logs each executed task
-- `diary.md` — Where work blocks are written
-- Any tool or script that needs task queuing
+### Heartbeat example (HEARTBEAT.md)
+```yaml
+- name: "Documentation Sprint"
+  every: "1h"
+  message: |
+    Check if batch queue has pending tasks.
+    python3 tools/batch-executor.py list
+    If 5+ tasks pending, execute batch.
+    python3 tools/batch-executor.py 5
+```
+
+### Cron job for batch execution
+```bash
+# Execute up to 3 batch tasks every 30 minutes
+*/30 * * * * cd /home/node/.openclaw/workspace && python3 tools/batch-executor.py 3
+```
+
+### Combined with task-randomizer.py
+```bash
+# Add 5 random documentation tasks to batch
+python3 tools/task-randomizer.py --phase docs --count 5 | \
+  while read task; do
+    python3 tools/batch-executor.py add "$task"
+  done
+
+# Execute all at once
+python3 tools/batch-executor.py 5
+```
 
 ## Use Cases
 
-### 1. Offline Task Generation
-Generate tasks when you don't have time to execute:
+### Documentation sprints
 ```bash
-# Quick brain dump
-batch-executor.py add "Fix bug in script X"
-batch-executor.py add "Test new feature"
-# Later...
-batch-executor.py 2  # Execute both
+# Queue all undocmented tools
+for tool in agent-logger.py agent-network-visualizer.py; do
+  python3 tools/batch-executor.py add "Document $tool"
+done
+
+# Execute in one focused session
+python3 tools/batch-executor.py 10
 ```
 
-### 2. Scheduled Batch Execution
-Queue tasks during the day, execute at night:
+### Grant submission sprint
 ```bash
-# During work hours
-python tools/batch-executor.py add "Review PR #123"
+# Queue 5 grant submissions
+python3 tools/batch-executor.py add "Submit Gitcoin grant" "" "" "Next: Octant grant"
+python3 tools/batch-executor.py add "Submit Octant grant" "" "" "Next: Olas grant"
+python3 tools/batch-executor.py add "Submit Olas grant" "" "" "Next: Ethereum grant"
+python3 tools/batch-executor.py add "Submit Ethereum grant" "" "" "Next: Moloch grant"
+python3 tools/batch-executor.py add "Submit Moloch grant" "" "" "Done"
 
-# Nightly cron job
-0 2 * * * python tools/batch-executor.py 10
+# Execute all
+python3 tools/batch-executor.py 5
 ```
 
-### 3. Parallel Agent Work
-Multiple agents can queue tasks, one executor:
+### Outreach sprint
 ```bash
-# Agent 1
-python tools/batch-executor.py add "Update docs"
+# Queue 10 service proposals
+for i in {1..10}; do
+  python3 tools/batch-executor.py add "Send service proposal #$i" "" "" "Keep sending"
+done
 
-# Agent 2
-python tools/batch-executor.py add "Run tests"
-
-# Executor (cron)
-0 * * * * python tools/batch-executor.py 5
+# Execute 5 now, 5 later
+python3 tools/batch-executor.py 5
 ```
 
-## Dependencies
+## Advantages of Batching
 
-- Python 3.7+
-- `work-block-logger.py` (for logging executed tasks)
-- No external packages (stdlib only)
+### 1. Reduced context switching
+Focus on one type of task (documentation, outreach, etc.) for multiple blocks.
 
-## Related Tools
+### 2. Momentum preservation
+Queue tasks when thinking about them, execute when in flow state.
 
-- `work-block-logger.py` — Logs individual work blocks
-- `block-counter.py` — Count completed blocks
-- `task-randomizer.py` — Random task selection
+### 3. Automatic logging
+Each task logged via work-block-logger.py — no manual diary updates.
 
----
+### 4. Flexible execution
+Execute 1, 5, or 10 tasks depending on available time/energy.
 
-**Created:** 2026-02-02
-**Purpose:** Task queueing for batched execution
-**Status:** ✅ Active
+## Best Practices
+
+### 1. Queue similar tasks together
+```bash
+# Good: 5 documentation tasks
+python3 tools/batch-executor.py add "Document tool 1"
+python3 tools/batch-executor.py add "Document tool 2"
+# ...
+
+# Bad: Mixing task types
+python3 tools/batch-executor.py add "Document tool"
+python3 tools/batch-executor.py add "Send email"
+python3 tools/batch-executor.py add "Write code"
+```
+
+### 2. Use meaningful result/insight text
+```bash
+# Good
+python3 tools/batch-executor.py add \
+  "Document batch-executor.py" \
+  "Created README with examples" \
+  "Batching reduces context switching" \
+  "Continue documentation"
+
+# Less useful
+python3 tools/batch-executor.py add "Document batch-executor.py"
+```
+
+### 3. Check queue before executing
+```bash
+# Always verify queue size
+python3 tools/batch-executor.py list
+# If queue is small, add more tasks first
+```
+
+### 4. Execute reasonable batch sizes
+```bash
+# 5-10 tasks is a good sprint size
+python3 tools/batch-executor.py 5
+
+# Avoid executing 50+ tasks at once (burnout risk)
+```
+
+## Return Codes
+
+- `0` — Success
+- `1` — Error (e.g., work-block-logger.py not found)
+
+## Files
+
+- `batch-tasks.json` — Task queue (auto-created)
+- `tools/work-block-logger.py` — Required for logging
+
+## Tips
+
+### Queue tasks during planning, execute during doing
+```bash
+# Morning: Queue 10 tasks
+for i in {1..10}; do
+  python3 tools/batch-executor.py add "Task #$i"
+done
+
+# Afternoon: Execute in focused sprint
+python3 tools/batch-executor.py 10
+```
+
+### Use next_step for workflow guidance
+```bash
+# Chain tasks together
+python3 tools/batch-executor.py add \
+  "Submit Gitcoin grant" \
+  "" \
+  "" \
+  "Next: Submit Octant grant"
+
+# When executed, next_step guides what to do next
+```
+
+### Monitor queue size
+```bash
+# Alert if queue gets too large (>20 tasks)
+if [ $(python3 tools/batch-executor.py list | grep -oP '\d+') -gt 20 ]; then
+  echo "⚠️ Large batch queue: execute soon"
+fi
+```
+
+## Comparison to Other Tools
+
+- **batch-executor.py** — Execute queued tasks in sequence
+- **task-randomizer.py** — Pick random task from pool
+- **work-block-logger.py** — Log single work block (used by batch-executor)
+
+Use `batch-executor.py` for structured sprints. Use `task-randomizer.py` for spontaneous execution.
+
+## See Also
+
+- `work-block-logger.py` — Single work block logging (required dependency)
+- `task-randomizer.py` — Random task selection for variety
+- `tools/README-batch-executor.md` — This file

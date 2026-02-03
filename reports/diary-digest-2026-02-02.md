@@ -1,7 +1,7 @@
 # 📊 Diary Digest - Activity Summary
 
-**Period:** 2026-02-01 to 2026-02-02 (1 days)  
-**Generated:** 2026-02-02 14:57:53 UTC
+**Period:** 2026-01-26 to 2026-02-02 (7 days)  
+**Generated:** 2026-02-02 18:26:09 UTC
 
 ---
 
@@ -19,14 +19,14 @@
 | **Work Blocks** | 0 | 0 | ➡️ 0 |
 | **Blocks Per Day** | 0 | 0.0 | - |
 | **Goals Completed** | 0 | 0 | ➡️ 0 |
-| **Active Days** | 0 / 1 | - | - |
+| **Active Days** | 0 / 7 | - | - |
 | **Current Streak** | 0 days | - | - |
 | **Most Productive Day** | N/A (0 blocks) | - | - |
 | **Sub-Agents Spawned** | 0 | - | - |
 | **Anomalies Detected** | 0 | - | - |
 
 ### 📁 File Growth
-- **diary.md size:** 4.8 KB
+- **diary.md size:** 16.4 KB
 - **Entries parsed:** 0
 
 ---
@@ -51,6 +51,12 @@
 | Date | Work Blocks |
 |------|-------------|
 | 2026-02-02 | 0  |
+| 2026-02-01 | 0  |
+| 2026-01-31 | 0  |
+| 2026-01-30 | 0  |
+| 2026-01-29 | 0  |
+| 2026-01-28 | 0  |
+| 2026-01-27 | 0  |
 
 **Velocity Metrics:**
 - **Average:** 0 blocks/day
@@ -95,9 +101,9 @@ This may be normal for a new installation or quiet period.
 ## 📝 Raw Data Summary
 
 - **Diary entries analyzed:** 0
-- **Memory files scanned:** 7
-- **Date range:** 2026-02-01 to 2026-02-02
-- **Lookback period:** 1 days
+- **Memory files scanned:** 8
+- **Date range:** 2026-01-26 to 2026-02-02
+- **Lookback period:** 7 days
 
 ---
 

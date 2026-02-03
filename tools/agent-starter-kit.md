@@ -2,6 +2,16 @@
 
 Starter template for new agents. File structure + conventions.
 
+## ⚡ Quick Start (5 seconds)
+
+```bash
+python tools/agent-starter-kit.py --name "MyAgent" --emoji "🚀"
+```
+
+That's it. Your agent now has a complete workspace.
+
+---
+
 ## What It Does
 
 Generates a complete agent workspace structure with all essential files. Creates directories, templates, and documentation for a fresh agent setup.

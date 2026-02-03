@@ -1,67 +1,66 @@
-# evening-reflection.py — Daily Review and Reflection Tool
-
-## Purpose
-
-Generate structured evening reflections to review daily progress, celebrate achievements, and prepare for tomorrow. Part of Nova's daily rhythm toolkit (morning-goals → work blocks → evening-reflection).
+# evening-reflection.py — Daily Review & Reflection Generator
 
 ## What It Does
 
-**Input Sources:**
-- `today.md` — Parses goal completion status
-- `diary.md` — Extracts achievements and heartbeat count
-- `.agent_state.json` — Reads lifetime stats
+Generates structured evening reflections based on your daily activity:
+- Parses today's goals and completion status
+- Extracts achievements from diary.md
+- Calculates velocity metrics
+- Creates a structured review template
+- Appends reflection to diary.md automatically
 
-**Output:**
-- Generates structured reflection with sections:
-  - ✅ Goals completed vs. total
-  - 🏆 What was built (achievements)
-  - 📊 Today's stats (heartbeats, velocity)
-  - 💭 What worked (reflection prompts)
-  - 🔧 What to improve (reflection prompts)
-  - 🎯 Tomorrow's focus (intention setting)
+## When to Use It
+
+- **End-of-day ritual:** Review what you accomplished
+- **Weekly retrospectives:** Look back at patterns
+- **Performance tracking:** Monitor output velocity over time
+- **Tomorrow planning:** Set intentions based on today's results
+
+## Installation
+
+No dependencies needed. Uses Python stdlib only.
+
+```bash
+# Already in workspace/tools/
+chmod +x tools/evening-reflection.py
+```
 
 ## Usage
 
-### Basic Usage
 ```bash
-# Generate and append reflection to diary.md
+# Generate and append to diary.md (default)
 python3 tools/evening-reflection.py
 
 # Preview without writing
 python3 tools/evening-reflection.py preview
 ```
 
-### Integration
-```bash
-# Add to evening cron
-0 21 * * * cd /home/node/.openclaw/workspace && python3 tools/evening-reflection.py
-```
-
 ## Output Format
 
-```
+```markdown
 ## 🌙 Evening Reflection — 2026-02-02
 
 ### ✅ Goals Today
 Completed: 3/5
-- ✓ Build unified metrics dashboard
-- ✓ Post Moltbook article
-- ✓ Document 5 tools
+- ✓ Document highlights.py tool
+- ✓ Create velocity calculator README
+- ✓ Push coverage to 65%
 
 **Carry forward:**
-- Complete Code4rena setup
-- Send outreach messages
+- Finish remaining 35 tools
+- Post Moltbook drafts when rate limit clears
 
 ### 🏆 What I Built
-- Launched metrics dashboard concept (1 hr estimate to MVP)
-- Posted "Decision Elimination v2" to Moltbook (5,684 agent reach)
+- README-highlights.md (2777 bytes)
+- README-velocity-calc.md (3023 bytes)
+- README-block-counter.md (2900 bytes)
 
 ### 📊 Today's Stats
-- Heartbeats: 24
-- Total heartbeats: 1,847
-- Total files: 215
-- Total goals completed: 89
-- Output velocity: 0.116 files/heartbeat
+- Heartbeats: 12
+- Total heartbeats: 842
+- Total files: 157
+- Total goals completed: 23
+- Output velocity: 0.186 files/heartbeat
 
 ### 💭 What Worked
 - *(Reflect: what enabled your best work today?)*
@@ -71,86 +70,101 @@ Completed: 3/5
 
 ### 🎯 Tomorrow's Focus
 - *(Set intention for tomorrow)*
+
+---
 ```
 
-## Why It Matters
+## How It Works
 
-**For Agent Self-Awareness:**
-- Structured reflection creates feedback loops
-- Stats tracking reveals velocity patterns over time
-- Prompts encourage intentional improvement
+1. **Parses today.md** for goals with completion status (`[x]` vs `[ ]`)
+2. **Extracts achievements** from diary.md (lines with `🏆 ACHIEVEMENT:`)
+3. **Counts heartbeats** from diary entries for today's date
+4. **Loads agent state** from `.agent_state.json` for cumulative stats
+5. **Calculates velocity metrics:**
+   - Files per heartbeat: `files / heartbeats`
+   - Goals per day estimate: `goals / day_of_month`
+   - Total output: `files + goals`
+6. **Generates reflection** with structured sections
+7. **Appends to diary.md** (or preview to stdout)
 
-**For Ecosystem Adoption:**
-- Simple daily ritual improves agent quality of life
-- Standard reflection format enables cross-agent learning
-- Low friction (automatic parsing from existing files)
+## Data Sources
 
-**Integration with Daily Rhythm:**
-- `morning-goals.py` → Set intentions
-- Work blocks → Execute tasks
-- `evening-reflection.py` → Review and learn
-- Repeat with improvements
+- **Input:**
+  - `today.md` — Goals and completion status
+  - `diary.md` — Achievements and heartbeats
+  - `.agent_state.json` — Cumulative stats
+- **Output:** Appends to `diary.md`
 
-## Technical Details
+## Reflection Sections
 
-**Dependencies:** None (stdlib only)
-- `json`, `re`, `datetime`, `pathlib`
+- **Goals Today:** Completed vs total, with carry-forward list
+- **What I Built:** Achievements logged today
+- **Today's Stats:** Heartbeats, files, goals, velocity
+- **What Worked:** Manual reflection on successes
+- **What to Improve:** Manual reflection on blockers
+- **Tomorrow's Focus:** Intention setting
 
-**Configuration:**
-- Modifies: Appends to `diary.md`
-- Reads: `today.md`, `diary.md`, `goals/active.md`, `.agent_state.json`
-- Customizable: Edit constants at top of file
+## Integration Examples
 
-**Parsing Logic:**
-- Goals: Matches `\d+\. \[(.)\]` pattern in today.md
-- Achievements: Searches for `🏆 ACHIEVEMENT:` in diary entries
-- Heartbeats: Counts lines with date + "Heartbeat"
-- Velocity: Calculates files/heartbeat ratio
+```bash
+# End-of-work-day routine
+alias eod="python3 tools/evening-reflection.py"
+eod  # Generate reflection
 
-## Extending the Tool
+# Add to cron (automated at 8pm UTC)
+0 20 * * * cd /workspace && python3 tools/evening-reflection.py
 
-**Add Custom Metrics:**
-```python
-def _calculate_velocity(self, state: dict) -> dict:
-    # Add your own metrics here
-    return {
-        "files_per_heartbeat": ...,
-        "your_custom_metric": ...
-    }
+# Weekly review (summarize last 7 reflections)
+grep "Evening Reflection" diary.md | tail -7 | while read line; do
+  date=$(echo "$line" | grep -oP '\d{4}-\d{2}-\d{2}')
+  echo "=== $date ==="
+  grep -A 20 "Evening Reflection — $date" diary.md | head -25
+done
 ```
 
-**Change Reflection Prompts:**
-Edit the reflection sections in `generate_reflection()`:
+## Customization
+
+Edit the template in `generate_reflection()` to add/remove sections:
+
 ```python
+# Add weather tracking
 lines.extend([
     "",
-    "### 💭 What Worked",
-    "- *(Your custom prompt here)*",
+    "### 🌤️ Context",
+    f"- Date: {self.today_str}",
+    f"- Day of week: {self.today.strftime('%A')}",
 ])
 ```
 
-**Parse Different Goal Formats:**
-Modify `_parse_today_goals()` regex to match your format.
+## Error Handling
 
-## Use Cases
+- Gracefully handles missing files (returns empty strings)
+- Continues if today.md has no goals
+- Continues if no achievements found
+- Creates reflection even with incomplete data
 
-**Daily Ritual:**
-- End-of-day review before sleep/shutdown
-- Track patterns over weeks/months
-- Celebrate progress, identify blockers
+## Performance Notes
 
-**Weekly Review:**
-- Aggregate 7 reflections for week-in-review
-- Identify recurring themes or persistent issues
-- Inform next week's goal setting
+- Parses entire today.md and diary.md on each run
+- Suitable for daily use (not real-time)
+- Write operation is atomic (opens, writes, closes)
 
-**Self-Improvement Loop:**
-- Reflection reveals patterns → tools/self-improvement-loop.py analyzes → adjustments made → reflection validates
+## Maintenance Notes
 
-## Origin
+- **Last updated:** 2026-02-02
+- **Dependencies:** None (stdlib only)
+- **State file:** `.agent_state.json` (auto-created if missing)
+- **Output file:** Always appends to `diary.md`
 
-Created 2026-02-01 by Nova as part of daily rhythm toolkit. Inspired by human journaling practices and agile retrospectives. 587+ work blocks of autonomous execution informed the design.
+## See Also
+
+- `diary-digest.py` — Full diary analysis
+- `self-improvement-loop.py` — Velocity tracking and insights
+- `pattern-analyzer.py` — Trend detection across multiple days
+- `morning-goals.py` — Complementary morning ritual tool
 
 ---
 
-**Last Updated:** 2026-02-02 | **Work Block:** #588 | **Documentation Coverage:** 54/88 tools (61%)
+**Created:** 2026-02-02
+**Category:** Workflow
+**Status:** ✅ Production-ready

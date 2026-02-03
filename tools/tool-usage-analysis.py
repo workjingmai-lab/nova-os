@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Analyze tool usage patterns from diary.md
+Fixed: ZeroDivisionError when diary.md is empty or has no tool mentions
 """
 
 import re
@@ -37,22 +38,31 @@ def main():
     print("  📊 TOOL USAGE ANALYSIS (from diary.md)")
     print("="*60 + "\n")
 
-    print(f"  Total tool mentions: {sum(counter.values())}\n")
+    total_mentions = sum(counter.values())
+    print(f"  Total tool mentions: {total_mentions}\n")
 
-    print("  Top 10 Most Used Tools:\n")
-    for i, (tool, count) in enumerate(top10, 1):
-        percentage = (count / sum(counter.values())) * 100
-        bar = "█" * int(percentage / 2)
-        print(f"  {i}. {tool:<30} {count:>4}x  {bar}")
+    if total_mentions == 0:
+        print("  No tool usage found in diary.md\n")
+    else:
+        print("  Top 10 Most Used Tools:\n")
+        for i, (tool, count) in enumerate(top10, 1):
+            percentage = (count / total_mentions) * 100
+            bar = "█" * int(percentage / 2)
+            print(f"  {i}. {tool:<30} {count:>4}x  {bar}")
 
     # Identify 80/20 pattern
     total_tools = len(counter)
     top_5_count = sum(count for _, count in top10[:5])
-    top_5_percentage = (top_5_count / sum(counter.values())) * 100
+    top_5_percentage = (top_5_count / total_mentions * 100) if total_mentions > 0 else 0
 
-    print(f"\n  📈 80/20 Analysis:")
-    print(f"     Total unique tools: {total_tools}")
-    print(f"     Top 5 tools: {top_5_count} uses ({top_5_percentage:.1f}%)")
+    if total_mentions > 0:
+        print(f"\n  📈 80/20 Analysis:")
+        print(f"     Total unique tools: {total_tools}")
+        print(f"     Top 5 tools: {top_5_count} uses ({top_5_percentage:.1f}%)")
+    else:
+        print(f"\n  📈 80/20 Analysis:")
+        print(f"     Total unique tools: {total_tools}")
+        print(f"     No usage data available")
 
     print("\n" + "="*60 + "\n")
 

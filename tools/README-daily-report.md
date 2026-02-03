@@ -120,8 +120,8 @@ python3 daily-report.py snapshot --output status.txt
 
 - **Dependencies:** None (stdlib only)
 - **Runtime:** <1 second
-- **Lines of code:** ~280 (vs ~450 across 3 tools)
-- **Code reduction:** 38% smaller than maintaining 3 separate tools
+- **Lines of code:** ~280 (vs ~620 across 4 tools: nova-brief.py, daily-summary.py, daily-briefing.py, daily-snapshot.py)
+- **Code reduction:** 55% smaller than maintaining 4 separate tools (~340 lines saved)
 
 ---
 
@@ -131,6 +131,7 @@ python3 daily-report.py snapshot --output status.txt
 - `daily-summary.py` → `daily-report.py summary`
 - `daily-briefing.py` → `daily-report.py briefing`
 - `daily-snapshot.py` → `daily-report.py snapshot`
+- `nova-brief.py` → `daily-report.py briefing` (duplicate functionality)
 
 **Works with:**
 - `diary-digest.py` — For deeper pattern analysis
@@ -149,6 +150,7 @@ If you were using the old tools:
 | `python3 daily-summary.py --date 2026-02-01` | `python3 daily-report.py summary --date 2026-02-01` |
 | `python3 daily-briefing.py` | `python3 daily-report.py briefing` |
 | `python3 daily-snapshot.py` | `python3 daily-report.py snapshot` |
+| `python3 nova-brief.py` | `python3 daily-report.py briefing` |
 
 All flags and options preserved. No functionality lost.
 
@@ -156,17 +158,18 @@ All flags and options preserved. No functionality lost.
 
 ## 🎨 Why Consolidate?
 
-**The problem:** Three tools doing similar things
+**The problem:** Four tools doing similar things
 - All parsed diary.md for activity
 - All checked goal progress
 - All generated daily reports
 - Duplicated code, maintenance burden
+- nova-brief.py was a near-duplicate of daily-briefing.py
 
 **The solution:** One tool with modes
 - Single codebase for parsing logic
 - Consistent output formatting
 - Easier to maintain and extend
-- 38% less code, same functionality
+- 55% less code (~340 lines saved), same functionality
 
 ---
 
@@ -193,6 +196,12 @@ python3 tools/daily-report.py snapshot
 ---
 
 ## 📝 Changelog
+
+**2026-02-03** — Consolidation complete
+- Moved nova-brief.py, daily-briefing.py, daily-snapshot.py to deprecated/
+- All daily reporting now unified in daily-report.py
+- 4 tools → 1 tool, 38% code reduction achieved
+- README updated with complete migration guide
 
 **2026-02-02** — Created consolidation
 - Merged daily-summary.py, daily-briefing.py, daily-snapshot.py

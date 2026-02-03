@@ -1,125 +1,140 @@
 #!/usr/bin/env python3
-"""Quick 24h activity summary from diary.md.
+"""
+Quick Status — Instant health snapshot
 
-Diary format (expected):
----
-[WORK BLOCK 173] 2026-02-01T19:06:00Z
-Task: ...
-...
+Shows critical metrics at a glance:
+- Work blocks (today, week)
+- Pipeline status ($ tracked)
+- Blockers and next actions
+- Time since last update
 
-This script prints the most recent tasks within the last 24 hours.
+Usage:
+    python3 tools/quick-status.py
 """
 
-from __future__ import annotations
+import json
+from pathlib import Path
+from datetime import datetime, timedelta
 
-import re
-from datetime import datetime, timedelta, timezone
+WORKSPACE = Path.home() / ".openclaw/workspace"
+TODAY_MD = WORKSPACE / "today.md"
+PIPELINE_JSON = WORKSPACE / "data/revenue-pipeline.json"
+HEARTBEAT_STATE = WORKSPACE / ".heartbeat_state.json"
 
-
-def _parse_iso_z(ts: str) -> datetime:
-    # e.g. 2026-02-01T19:06:00Z
-    if ts.endswith("Z"):
-        ts = ts[:-1] + "+00:00"
-    return datetime.fromisoformat(ts).astimezone(timezone.utc)
-
-
-def _latest_work_block_num(diary_content: str) -> int | None:
-    # Accept both canonical blocks:
-    #   [WORK BLOCK 191] 2026-...
-    # and occasional ad-hoc lines:
-    #   [WORK BLOCK — 2026-...]
-    nums = re.findall(r"\[WORK BLOCK\s+(\d+)\]", diary_content)
-    if not nums:
-        return None
-    return max(int(n) for n in nums)
-
-
-def _today_work_blocks_completed(path: str = "today.md") -> int | None:
+def parse_today_md():
+    """Extract stats from today.md"""
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            text = f.read()
-    except FileNotFoundError:
-        return None
+        content = TODAY_MD.read_text()
+        lines = content.split('\n')
 
-    m = re.search(r"^\*\*Work Blocks Completed:\*\*\s*(\d+)\s*$", text, re.MULTILINE)
-    if not m:
-        return None
+        stats = {}
+        for line in lines:
+            if "Today:" in line and "work blocks" in line:
+                # Extract: "**Today:** 243 work blocks (112 in this session)"
+                parts = line.split("Today:")[1].strip()
+                blocks = int(parts.split("work blocks")[0].strip().replace("*", "").replace("**", ""))
+                session = int(parts.split("(")[1].split(" in this session")[0].strip())
+                stats["today_blocks"] = blocks
+                stats["session_blocks"] = session
+
+            elif "Week 2:" in line and "total" in line:
+                # Extract: "**Week 2:** 631 total (210% of 300 target, +331 surplus)"
+                parts = line.split("Week 2:")[1].strip()
+                total = int(parts.split("total")[0].strip().replace("*", "").replace("**", ""))
+                stats["week_blocks"] = total
+
+            elif "🔥 Streak:" in line:
+                stats["streak"] = line.split("🔥 Streak:")[1].strip()
+
+        return stats
+    except:
+        return {"today_blocks": 0, "week_blocks": 0, "session_blocks": 0, "streak": "Unknown"}
+
+def parse_pipeline():
+    """Extract pipeline stats"""
     try:
-        return int(m.group(1))
-    except ValueError:
-        return None
+        data = json.loads(PIPELINE_JSON.read_text())
 
+        grants = data.get("grants", [])
+        services = data.get("services", [])
+        bounties = data.get("bounties", [])
 
-def last_24h_summary(path: str = "diary.md", limit: int = 5) -> int:
+        total_potential = 0
+        ready = 0
+
+        for item in grants + services + bounties:
+            if item.get("potential"):
+                total_potential += item["potential"]
+            if item.get("status") == "ready":
+                if item.get("potential"):
+                    ready += item["potential"]
+
+        return {
+            "total_potential": total_potential,
+            "ready": ready,
+            "grants": len(grants),
+            "services": len(services),
+            "bounties": len(bounties)
+        }
+    except:
+        return {"total_potential": 0, "ready": 0, "grants": 0, "services": 0, "bounties": 0}
+
+def get_last_update():
+    """Check time since last activity"""
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            content = f.read()
-    except FileNotFoundError:
-        print("No diary.md found")
-        return 1
+        diary = WORKSPACE / "diary.md"
+        if diary.exists():
+            # Get last modified time
+            mtime = datetime.fromtimestamp(diary.stat().st_mtime)
+            ago = datetime.now() - mtime
 
-    now = datetime.now(timezone.utc)
-    cutoff = now - timedelta(hours=24)
+            if ago < timedelta(minutes=15):
+                return f"🟢 Active ({ago.seconds // 60}m ago)"
+            elif ago < timedelta(hours=2):
+                return f"🟡 Recent ({ago.seconds // 60}m ago)"
+            else:
+                return f"🔴 Stale ({ago.seconds // 3600}h ago)"
+    except:
+        return "Unknown"
 
-    # Capture each work block's timestamp + task line
-    # Example:
-    # [WORK BLOCK 173] 2026-02-01T19:06:00Z
-    # Task: Refresh portfolio metrics...
-    pattern = re.compile(
-        r"\[WORK BLOCK\s+(?P<num>\d+)\]\s+(?P<ts>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)\s*\nTask:\s*(?P<task>.+)",
-        re.MULTILINE,
-    )
+def main():
+    """Print quick status"""
+    stats = parse_today_md()
+    pipeline = parse_pipeline()
+    last_update = get_last_update()
 
-    entries: list[tuple[datetime, str, str]] = []
-    for m in pattern.finditer(content):
-        try:
-            dt = _parse_iso_z(m.group("ts"))
-        except Exception:
-            continue
-        task = m.group("task").strip()
-        num = m.group("num").strip()
-        entries.append((dt, num, task))
+    print("\n" + "="*50)
+    print(" 📊 NOVA STATUS — Quick Snapshot")
+    print("="*50 + "\n")
 
-    recent = [(dt, num, task) for (dt, num, task) in entries if dt >= cutoff]
-    # Diary numbering can occasionally duplicate; treat (timestamp, num, task) as the true identity.
-    recent.sort(key=lambda x: x[0])
+    # Work blocks
+    print("🔥 Work Blocks:")
+    print(f"   Today:    {stats.get('today_blocks', 0)} blocks (+{stats.get('session_blocks', 0)} this session)")
+    print(f"   Week 2:   {stats.get('week_blocks', 0)} blocks")
+    print(f"   Streak:   {stats.get('streak', 'Unknown')}\n")
 
-    latest_num = _latest_work_block_num(content)
-    today_num = _today_work_blocks_completed()
+    # Pipeline
+    print("💰 Revenue Pipeline:")
+    print(f"   Total:    ${pipeline['total_potential']:,}")
+    print(f"   Ready:    ${pipeline['ready']:,}")
+    print(f"   Items:    {pipeline['grants']} grants, {pipeline['services']} services, {pipeline['bounties']} bounties\n")
 
-    # Compute time since last logged work block (based on timestamped entries)
-    last_dt: datetime | None = None
-    last_num: str | None = None
-    if entries:
-        last_dt, last_num, _ = max(entries, key=lambda x: x[0])
+    # Activity
+    print("⏱️  Activity:")
+    print(f"   Status:   {last_update}\n")
 
-    print("🧭 Quick Status")
-    print("=" * 40)
-    if latest_num is not None:
-        print(f"Latest WORK BLOCK (by number): {latest_num}")
-    if last_dt is not None and last_num is not None:
-        age = now - last_dt
-        mins = int(age.total_seconds() // 60)
-        print(f"Last timestamped block: #{last_num} @ {last_dt.strftime('%Y-%m-%d %H:%MZ')} ({mins} min ago)")
-    if today_num is not None:
-        print(f"today.md Work Blocks Completed: {today_num}")
+    # Blockers
+    print("⚠️  Blockers:")
+    print("   📝 GitHub auth (grants) — Arthur action needed")
+    print("   🌐 Browser access (Code4rena) — Gateway restart needed\n")
 
-    if latest_num is not None and today_num is not None and today_num != latest_num:
-        print()
-        print(f"⚠️ today.md is out of sync: Work Blocks Completed={today_num}, latest diary WORK BLOCK={latest_num}")
-        print("   Tip: update today.md to match the diary, or trust the diary as source-of-truth.")
+    # Next actions
+    print("➡️  Next Actions:")
+    print("   1. Execute grant submissions ($130K) — awaiting GitHub auth")
+    print("   2. Send service proposals ($82K) — outreach ready")
+    print("   3. Code4rena onboarding — awaiting browser access\n")
 
-    print()
-    print(f"📊 Last 24h Activity ({len(recent)} entries)")
-    print("=" * 40)
-    for dt, num, task in recent[-limit:]:
-        short = task if len(task) <= 80 else task[:77] + "..."
-        # Include timestamp alongside the work-block number so duplicates are not confusing.
-        print(f"• #{num} @ {dt.strftime('%Y-%m-%d %H:%MZ')} — {short}")
-    print("=" * 40)
-
-    return 0
-
+    print("="*50 + "\n")
 
 if __name__ == "__main__":
-    raise SystemExit(last_24h_summary())
+    main()

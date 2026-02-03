@@ -1,82 +1,107 @@
-# blocker-tracker.py
+# blocker-tracker.md — Track and Resolve Blockers
 
-**Purpose:** Monitors and displays tasks that are blocked by external dependencies, keeping unblocking work visible and tracked.
+**Version:** 1.0  
+**Category:** Workflow / Issue Tracking  
+**Created:** 2026-02-01
+
+---
 
 ## What It Does
 
-- Loads and displays current blockers from `status/blockers.json`
-- Categorizes by impact level (high/medium/low)
-- Shows what action is needed to unblock each task
-- Optionally logs blocker status to `diary.md`
+Tracks blockers (dependencies, issues, waiting states) and monitors their status over time.
 
-## When to Use It
+### Features
 
-**Run daily** during heartbeats or work sessions to:
-- Check what's blocking your progress
-- Identify high-priority unblocking tasks
-- Keep blockers visible in your workflow
+- Log blockers with severity levels
+- Categorize by type (technical, external, resource)
+- Track resolution time
+- Generate blocker reports
+- Integrate with `today.md` for visibility
+
+---
 
 ## Usage
 
 ```bash
-# Display current blockers
-python3 tools/blocker-tracker.py
+# Log a new blocker
+python3 tools/blocker-tracker.py add "Browser access blocked" --type technical --severity high
 
-# Display + log to diary.md
-python3 tools/blocker-tracker.py --log
+# Mark blocker as resolved
+python3 tools/blocker-tracker.py resolve 1
+
+# List active blockers
+python3 tools/blocker-tracker.py list
+
+# Generate blocker report
+python3 tools/blocker-tracker.py report
+
+# Show blockers by type
+python3 tools/blocker-tracker.py list --type external
 ```
-
-## Output Format
-
-```
-🔒 NOVA BLOCKER TRACKER
-==================================================
-Last updated: 2026-02-02 13:21:00
-
-🔴 HIGH PRIORITY
-🔴 **Deploy Force exercise to testnet**
-   Blocked: Sepolia ETH needed (0.05-0.1 ETH)
-   Since: 2026-02-01 | Action: Get Sepolia ETH from faucet or Arthur
-
-🟡 MEDIUM PRIORITY
-🟡 **Automated Moltbook posting**
-   Blocked: Moltbook API token
-   Since: 2026-02-01 | Action: Request token from team
-
-==================================================
-Total: 2 blockers | 1 high priority
-```
-
-## Blocker Format
-
-Each blocker in `status/blockers.json`:
-```json
-{
-  "id": "unique-identifier",
-  "task": "What task is blocked",
-  "blocker": "What's blocking it",
-  "impact": "high|medium|low",
-  "since": "YYYY-MM-DD",
-  "action_needed": "Specific action to unblock"
-}
-```
-
-## Why It Matters
-
-**Visibility → Resolution:** Blocked tasks get forgotten. This tool keeps them front-and-center so you can:
-- Communicate blockers to Arthur clearly
-- Prioritize unblocking work
-- Track how long tasks have been blocked
-- Maintain velocity despite dependencies
-
-**Autonomous execution:** You can keep working on other tasks while blockers are tracked, then circle back to unblock when the external dependency is resolved.
-
-## Integration
-
-- **Heartbeats:** Run with `--log` to track blocker history
-- **today.md:** Manual update when blockers change
-- **Arthur:** Share blocker list when requesting unblocking help
 
 ---
 
-*Created: Week 1 — Part of autonomous work infrastructure*
+## Blocker Types
+
+| Type | Description | Examples |
+|------|-------------|----------|
+| `technical` | Technical issues | Browser down, API failure |
+| `external` | Waiting on others | Arthur action, third-party response |
+| `resource` | Missing resources | No API key, insufficient permissions |
+| `knowledge` | Knowledge gap | Don't know how to proceed |
+
+---
+
+## Severity Levels
+
+- `low` — Nice to have, not blocking
+- `medium` — Slows progress, workaround exists
+- `high` — Completely blocked, no workaround
+- `critical` — Urgent, needs immediate attention
+
+---
+
+## Storage
+
+Blockers stored in `.blockers.json`:
+
+```json
+{
+  "blockers": [
+    {
+      "id": 1,
+      "description": "Browser access blocked",
+      "type": "technical",
+      "severity": "high",
+      "status": "active",
+      "created": "2026-02-02T20:45:00Z",
+      "resolved": null
+    }
+  ]
+}
+```
+
+---
+
+## Dependencies
+
+- Python 3.7+
+- Standard library only
+
+---
+
+## Integration
+
+- Pair with `today.md` for daily blocker visibility
+- Use `goal-tracker.py` to link blockers to goals
+- Feed into `self-improvement-loop.py` for analytics
+
+---
+
+## Tips
+
+1. Log blockers immediately when discovered
+2. Update status as conditions change
+3. Review blockers weekly during retrospective
+4. Categorize accurately for pattern analysis
+5. Set severity based on impact, not urgency

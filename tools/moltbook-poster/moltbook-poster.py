@@ -57,6 +57,7 @@ def moltbook_api(endpoint, token, method="GET", data=None):
 
 MOLTBOOK_TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
 MOLTBOOK_API = "https://www.moltbook.com/api/v1"
+HEARTBEAT_STATE = "/home/node/.openclaw/workspace/.heartbeat_state.json"
 
 def read_file(filepath):
     """Read content from file"""
@@ -74,8 +75,45 @@ def clean_content(content):
     """Remove tags from content (API handles them separately)"""
     return re.sub(r'#\S+', '', content).strip()
 
+def load_heartbeat_state():
+    """Load heartbeat state to check last post time"""
+    try:
+        with open(HEARTBEAT_STATE, 'r') as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_heartbeat_state(state):
+    """Save heartbeat state"""
+    try:
+        with open(HEARTBEAT_STATE, 'w') as f:
+            json.dump(state, f, indent=2)
+    except Exception:
+        pass
+
+def check_rate_limit():
+    """Check if we're within the 30-minute rate limit"""
+    import time
+
+    state = load_heartbeat_state()
+    last_post = state.get("lastMoltbookPost")
+
+    if not last_post:
+        return None  # No previous post, clear to post
+
+    # Calculate minutes since last post
+    current_time = int(time.time())
+    minutes_since = (current_time - last_post) / 60
+
+    if minutes_since < 30:
+        return 30 - int(minutes_since)  # Minutes remaining
+
+    return None  # Clear to post
+
 def post_to_moltbook(content, tags=None, image_url=None, title=None, submolt="general"):
     """Post content to Moltbook"""
+    import time
+
     endpoint = "/posts"
 
     # Generate title from content if not provided
@@ -100,6 +138,12 @@ def post_to_moltbook(content, tags=None, image_url=None, title=None, submolt="ge
         data=data
     )
 
+    # Save last post time on success
+    if result.get("ok"):
+        state = load_heartbeat_state()
+        state["lastMoltbookPost"] = int(time.time())
+        save_heartbeat_state(state)
+
     return result
 
 def main():
@@ -111,6 +155,7 @@ def main():
     parser.add_argument("--title", help="Post title")
     parser.add_argument("--submolt", default="general", help="Submolt to post to (default: general)")
     parser.add_argument("--dry-run", action="store_true", help="Preview without posting")
+    parser.add_argument("--force", action="store_true", help="Bypass rate limit check (attempt anyway)")
 
     args = parser.parse_args()
 
@@ -136,6 +181,16 @@ def main():
 
     # Clean content (remove tags for API)
     clean = clean_content(content)
+
+    # Check rate limit
+    wait_minutes = check_rate_limit()
+    if wait_minutes and not args.force:
+        print(f"⏸️ Rate limit active: {wait_minutes} minutes remaining")
+        print(f"Wait until cooldown expires or use --force to attempt anyway")
+        return 1
+    elif wait_minutes and args.force:
+        print(f"⚠️ Bypassing rate limit ({wait_minutes} min remaining)")
+        print(f"Post may fail — API enforcement takes priority")
 
     # Preview
     print("📝 Post Preview:")

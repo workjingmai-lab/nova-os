@@ -1,205 +1,121 @@
-# quick-commit.py — Fast Git Commits with Smart Messages
+# quick-commit.py — Fast Git Commit with Smart Defaults
 
-**What it does:** Commits and pushes changes with intelligent, auto-generated messages. No more `git commit -m "wip"`.
-
----
-
-## Why This Exists
-
-**Problem:** Git commits feel like ceremony. You spend 30 seconds thinking of a message, then another 10 typing it. Over 100 commits, that's an hour wasted.
-
-**Solution:** `quick-commit.py` automates the entire flow—detect changes, generate timestamped messages, commit, push. One command, done.
-
-**Impact:** Reduces commit friction from ~45 seconds to <2 seconds. In Nova's workflow, this enabled 300+ commits in Week 1 alone.
+**Version:** 1.0  
+**Category:** Git / Workflow  
+**Created:** 2026-02-01
 
 ---
 
-## How It Works
+## What It Does
 
-### Auto-Generated Messages
-Default format includes:
-- Work block count (from diary.md)
-- UTC timestamp
-- Clear purpose indication
+Creates git commits with auto-generated messages based on changed files. Eliminates "what did I change?" friction.
 
-Example: `Work block 589 — 2026-02-02T13:57Z`
+### Features
 
-### Custom Messages
-Pass any message as argument:
-```bash
-python3 tools/quick-commit.py "Add metrics dashboard"
-```
-
-### Smart Change Detection
-- Runs `git status --porcelain` first
-- If no changes: exits gracefully ("✨ No changes to commit")
-- If changes: proceeds with add → commit → push
+- Auto-generates commit messages from file changes
+- Groups related changes
+- Supports custom commit messages
+- Adds and commits in one command
+- Skip CI option (for documentation-only commits)
 
 ---
 
 ## Usage
 
-### Basic Usage (Auto Message)
 ```bash
+# Quick commit (auto-generates message)
 python3 tools/quick-commit.py
-```
 
-Output:
-```
-📝 Committing: Work block 589 — 2026-02-02T13:57Z
-[master 8f3a2b1] Work block 589 — 2026-02-02T13:57Z
-  4 files changed, 234 insertions(+), 12 deletions(-)
-To github.com:user/repo.git
-   7c3d9e1..8f3a2b1  master -> master
-✅ Committed and pushed!
-```
+# Custom message
+python3 tools/quick-commit.py -m "Add Ethernaut exploit for Token challenge"
 
-### Custom Message
-```bash
-python3 tools/quick-commit.py "Complete grant submission pipeline"
-```
+# Add specific files only
+python3 tools/quick-commit.py file1.py file2.md
 
-Output:
-```
-📝 Committing: Complete grant submission pipeline
-...
-✅ Committed and pushed!
-```
+# Skip CI (documentation changes)
+python3 tools/quick-commit.py -m "Update README" --skip-ci
 
-### No Changes (Safe Exit)
-```bash
-python3 tools/quick-commit.py
-```
-
-Output:
-```
-✨ No changes to commit
+# Dry run (show what would be committed)
+python3 tools/quick-commit.py --dry-run
 ```
 
 ---
 
-## Setup Requirements
+## Commit Message Patterns
 
-### 1. Git Repository
-This tool assumes you're in a git repo with:
-- Remote configured (`git remote add origin ...`)
-- Branch tracking set up
+Auto-generated messages follow this format:
 
-### 2. Git Configuration
-Ensure git is configured:
-```bash
-git config user.name "Your Name"
-git config user.email "you@example.com"
+```
+<type>(<scope>): <description>
+
+<files changed>
 ```
 
-### 3. SSH or HTTPS Auth
-Push requires authentication. Recommended: SSH keys
+**Types:**
+- `feat` — New feature or tool
+- `fix` — Bug fix or correction
+- `docs` — Documentation changes
+- `refactor` — Code restructuring
+- `test` — Test additions or changes
+- `chore` — Maintenance tasks
+
+**Scopes:**
+- `tools` — New or updated tools
+- `docs` — Documentation
+- `diary` — Diary entries
+- `goals` — Goal tracking
+- `knowledge` — Knowledge base
+
+---
+
+## Examples
+
 ```bash
-# Setup SSH key
-ssh-keygen -t ed25519 -C "you@example.com"
-# Add to GitHub/GitLab account
+$ python3 tools/quick-commit.py
+
+✓ Detected 3 changed files:
+  • tools/new-tool.py
+  • tools/new-tool.md
+  • today.md
+
+✓ Commit message:
+  feat(tools): Add new-tool.py for automated X
+
+✓ Committed 3 files (abc1234)
 ```
 
 ---
 
-## Integration Examples
+## Dependencies
 
-### After Every Work Block
-```bash
-#!/bin/bash
-# work-block.sh
-# ... do work ...
-python3 tools/quick-commit.py
-```
-
-### In Automation Scripts
-```python
-#!/usr/bin/env python3
-import subprocess
-# ... create files, write docs ...
-subprocess.run(["python3", "tools/quick-commit.py", "Update README"])
-```
-
-### Alias for Convenience
-Add to `.bashrc`:
-```bash
-alias qc="cd /home/node/.openclaw/workspace && python3 tools/quick-commit.py"
-alias qcm="cd /home/node/.openclaw/workspace && python3 tools/quick-commit.py"
-```
-
-Usage:
-```bash
-qc                  # Auto message
-qcm "Fix typo"      # Custom message
-```
+- Python 3.7+
+- Git
 
 ---
 
-## Customization
+## Configuration
 
-### Change Commit Message Format
-Edit the `msg` generation in `main()`:
+Edit defaults:
 
 ```python
-# Include branch name
-branch = run_cmd("git branch --show-current").strip()
-msg = f"[{branch}] Work block {work_block} — {timestamp}"
-
-# Include file count
-files_added = len([l for l in status.split('\n') if l.startswith('A')])
-msg = f"Work {work_block} (+{files_added} files) — {timestamp}"
-```
-
-### Add Confirmation Prompt
-```python
-response = input(f"Commit as '{msg}'? [Y/n] ")
-if response.lower() == 'n':
-    print("❌ Cancelled")
-    return
-```
-
-### Skip Push (Local-Only Commits)
-```python
-# Comment out push
-# run_cmd("git push origin master")
-print("✅ Committed locally (not pushed)")
+DEFAULT_COMMIT_TYPE = "chore"
+SKIP_CI_PATTERNS = [r'\.md$', r'diary\.md$', r'today\.md$']
+AUTO_ADD_ALL = True  # git add -A vs explicit files
 ```
 
 ---
 
-## Technical Details
+## Integration
 
-- **Language:** Python 3
-- **Dependencies:** Standard library only (subprocess, sys, os, datetime)
-- **Files Read:** 1 (diary.md for work block count)
-- **Files Written:** 0 (git internals)
-- **Git Commands:** `git status`, `git add`, `git commit`, `git push`
-- **Execution Time:** ~2 seconds (depending on network)
+- Pair with `git` for full workflow
+- Use before `public-publish-gh-pages.sh`
+- Chain with other git operations
 
 ---
 
-## Use Cases
+## Tips
 
-1. **Continuous Integration** — Commit after every work block without friction
-2. **Time-Stamped History** — Perfect reconstruction of "when did I do what?"
-3. **Team Visibility** — Push changes automatically for real-time collaboration
-4. **Automation Scripts** — One-line commit in any script or cron job
-
----
-
-## Safety Features
-
-✅ **No changes detection** — Won't create empty commits
-✅ **Error handling** — Git failures show clear error messages
-✅ **Workspace awareness** — Auto-chdirs to `/home/node/.openclaw/workspace`
-
----
-
-## Version History
-
-- **v1.0** (2026-02-01) — Initial release for autonomous workflow
-- Used in Nova's 300+ Week 1 commits
-
----
-
-*Created by Nova — autonomous agent building autonomous systems*
+1. Use `-m` for important commits (milestones, releases)
+2. Use `--skip-ci` for documentation to save CI resources
+3. Run `--dry-run` to review before committing
+4. Customize commit types to match your workflow
