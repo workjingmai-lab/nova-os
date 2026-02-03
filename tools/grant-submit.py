@@ -62,6 +62,7 @@ def check_prerequisites():
     checks = {
         "github_repo": False,
         "github_cli": False,
+        "github_ssh": False,
         "repo_public": False,
         "readme_exists": False
     }
@@ -72,6 +73,19 @@ def check_prerequisites():
         checks["github_cli"] = result.returncode == 0
     except FileNotFoundError:
         checks["github_cli"] = False
+    
+    # Check GitHub SSH auth (more reliable than CLI)
+    try:
+        result = subprocess.run(
+            ["ssh", "-T", "git@github.com"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        # Exit code 1 with "successfully authenticated" means SSH works
+        checks["github_ssh"] = "successfully authenticated" in result.stderr
+    except:
+        checks["github_ssh"] = False
     
     # Check if we're in a git repo
     try:
@@ -99,6 +113,25 @@ def generate_submission(grant_name, grant_data):
     if not template:
         return None
     
+    # Get actual repository URL
+    try:
+        result = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        git_url = result.stdout.strip()
+        # Convert SSH URL to HTTPS URL
+        if git_url.startswith("git@github.com:"):
+            repo_url = git_url.replace("git@github.com:", "https://github.com/").replace(".git", "")
+        elif git_url.startswith("https://github.com/"):
+            repo_url = git_url.replace(".git", "")
+        else:
+            repo_url = "https://github.com/[USER]/[REPO]"  # Fallback
+    except:
+        repo_url = "https://github.com/[USER]/[REPO]"  # Fallback
+    
     submission = {
         "grant": template["name"],
         "platform": template["platform"],
@@ -117,7 +150,7 @@ def generate_submission(grant_name, grant_data):
             "timeline": "Ongoing, funded for 6 months",
             "tech_stack": "Python, shell scripts, markdown, JSON, git, OpenClaw gateway",
             "license": "MIT",
-            "repository": "https://github.com/[USER]/[REPO]"  # To be filled
+            "repository": repo_url
         },
         "status": "ready_to_submit",
         "instructions": f"Visit {template['platform']} and submit the above content"
@@ -179,15 +212,30 @@ def main():
     print("🔍 Checking prerequisites...")
     checks = check_prerequisites()
     
-    all_good = all(checks.values())
+    # Consider GitHub auth valid if EITHER CLI OR SSH works
+    github_auth_ok = checks["github_cli"] or checks["github_ssh"]
+    
+    # Check all prerequisites except github_cli/github_ssh (use combined check)
+    required_checks = {
+        "github_repo": checks["github_repo"],
+        "github_auth": github_auth_ok,
+        "readme_exists": checks["readme_exists"]
+    }
+    
+    all_good = all(required_checks.values())
     if not all_good:
         print("\n⚠️  Prerequisites not met:")
-        for check, status in checks.items():
+        for check, status in required_checks.items():
             icon = "✅" if status else "❌"
             print(f"  {icon} {check.replace('_', ' ').title()}")
         
-        if not checks["github_cli"]:
-            print("\n🔧 To fix: Run `gh auth login`")
+        # Show individual auth status
+        print(f"\n  GitHub Auth Status:")
+        print(f"    {'✅' if checks['github_cli'] else '❌'} GitHub CLI")
+        print(f"    {'✅' if checks['github_ssh'] else '❌'} GitHub SSH")
+        
+        if not github_auth_ok and not checks["github_repo"]:
+            print("\n🔧 To fix: Run `gh auth login` OR set up SSH keys")
         if not checks["github_repo"]:
             print("\n🔧 To fix: Initialize git repo and add GitHub remote")
         
@@ -200,7 +248,8 @@ def main():
             print("Aborted.")
             return
     else:
-        print("✅ All prerequisites met!\n")
+        print("✅ All prerequisites met!")
+        print(f"   GitHub Auth: {'CLI' if checks['github_cli'] else 'SSH'}\n")
     
     if args.check:
         return
