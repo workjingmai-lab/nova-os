@@ -1,221 +1,214 @@
-# Goal Tracker CLI
+# goal-tracker.py
 
-Track and manage goals from `goals/active.md` with color-coded output, statistics, and progress tracking.
+**Goal tracking CLI — manage goals from goals/active.md with 13 commands.**
 
-## Features
+## What it does
 
-- ✅ List all goals with status indicators
-- 📊 Track completion statistics by priority
-- 🔍 Search goals by keyword
-- 💡 Get smart suggestions for next goal
-- ⚡ Monitor work velocity from diary.md
-- 🎯 Focus mode (high-priority only)
-- 📅 Show weekly goals
-- 🕰️ Detect stale goals (active too long)
-
-## Installation
-
-No dependencies needed! Just place `goal-tracker.py` in your `tools/` directory.
-
-```bash
-chmod +x tools/goal-tracker.py
-```
+Track, manage, and analyze goals from your `goals/active.md` file:
+- List goals with filtering (all, active, completed, by priority)
+- Show progress notes from memory/diary files
+- Mark goals as complete
+- Calculate completion statistics
+- Suggest next goal to work on
+- Show recent activity
+- Export goals (JSON/CSV)
+- Weekly goal summaries
+- Find stale goals
+- Focus mode (top 3 active goals)
+- Velocity tracking (from diary.md)
+- Search goals
+- Add new goals
 
 ## Usage
 
 ```bash
-# List all goals (color-coded by status and priority)
+# List all goals
 python3 tools/goal-tracker.py list
 
-# Focus mode - show only high-priority active goals
-python3 tools/goal-tracker.py focus
+# List only active goals
+python3 tools/goal-tracker.py list --filter active
 
-# Show progress details for a specific goal
-python3 tools/goal-tracker.py progress "Build pattern recognition"
+# Show progress for a goal
+python3 tools/goal-tracker.py progress "learn new skill"
 
-# Mark a goal as complete
-python3 tools/goal-tracker.py complete "Document learnings"
+# Mark goal as complete
+python3 tools/goal-tracker.py complete "learn new skill"
 
-# Show completion statistics
+# Show statistics
 python3 tools/goal-tracker.py stats
 
-# Get a smart suggestion for next goal
+# Suggest next goal
 python3 tools/goal-tracker.py suggest
 
-# Show recently completed goals
+# Show recent work (from diary.md)
 python3 tools/goal-tracker.py recent
 
-# Monitor work velocity from diary.md
-python3 tools/goal-tracker.py velocity
+# Export goals
+python3 tools/goal-tracker.py export --format json --output goals.json
 
-# Find stale goals (active >7 days)
-python3 tools/goal-tracker.py stale
+# Weekly summary
+python3 tools/goal-tracker.py week
 
-# Show goals from a specific week
-python3 tools/goal-tracker.py week --week 2
+# Find stale goals (not worked on in 7+ days)
+python3 tools/goal-tracker.py stale --days 7
 
-# Search goals by keyword
+# Focus mode (top 3 active goals)
+python3 tools/goal-tracker.py focus
+
+# Show velocity (from diary.md)
+python3 tools/goal-tracker.py velocity --hours 168
+
+# Search goals
 python3 tools/goal-tracker.py search "moltbook"
 
-# Add a new goal
-python3 tools/goal-tracker.py add "Post on Moltbook" --priority high
-
-# Export goals (JSON or Markdown)
-python3 tools/goal-tracker.py export --format markdown
+# Add new goal
+python3 tools/goal-tracker.py add "Post on Moltbook 3x per week" --priority high
 ```
 
-## Goal File Format
+## Output examples
 
-The tool reads from `goals/active.md` with this format:
+### List goals (`goal-tracker.py list`)
+```
+════════════════════════════════════════════════════════════
+  🎯 ACTIVE GOALS (6)
+════════════════════════════════════════════════════════════
+
+🔴 HIGH PRIORITY
+  ○ Create something that makes Arthur say "wow"
+  ○ Build pattern recognition system
+
+🟡 MEDIUM PRIORITY
+  ○ Document learnings in structured format
+  ○ Create "Nova's Toolkit" reference guide
+
+🟢 LONG-TERM
+  ○ Achieve "unprompted value creation"
+  ○ Build something other agents want to use
+```
+
+### Statistics (`goal-tracker.py stats`)
+```
+════════════════════════════════════════════════════════════
+  📊 GOAL STATISTICS
+════════════════════════════════════════════════════════════
+
+Total Goals:     16
+Completed:       12 (75%)
+Active:          4
+
+By Priority:
+  High:        4/4   (100% ✓)
+  Medium:      3/5   (60%)
+  Long-term:   5/7   (71%)
+```
+
+### Suggest (`goal-tracker.py suggest`)
+```
+▸ Suggested Goal: Create something that makes Arthur say "wow"
+
+  Priority: HIGH
+  Section: High Priority
+
+  Next action: Build something surprising and delightful
+```
+
+### Focus mode (`goal-tracker.py focus`)
+```
+════════════════════════════════════════════════════════════
+  🎯 FOCUS MODE — Top 3 Active Goals
+════════════════════════════════════════════════════════════
+
+1. Create something that makes Arthur say "wow"
+   Priority: HIGH
+
+2. Build pattern recognition system
+   Priority: HIGH
+
+3. Document learnings in structured format
+   Priority: MEDIUM
+```
+
+### Velocity (`goal-tracker.py velocity`)
+```
+════════════════════════════════════════════════════════════
+  ⚡ WORK VELOCITY (from diary.md)
+════════════════════════════════════════════════════════════
+
+Time Window: 168 hours (7 days)
+
+Work Blocks:   1,426
+Velocity:      8.5 blocks/hour
+Daily Average: 204 blocks/day
+
+Forecast (7d): 1,190 blocks
+```
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `list [--filter all|active|done|high|medium|long-term]` | List goals with optional filtering |
+| `progress <goal_name>` | Show progress notes from memory/diary files |
+| `complete <goal_name>` | Mark goal as complete (edits active.md) |
+| `stats [--json]` | Show completion statistics |
+| `suggest [--compact]` | Suggest next goal to work on |
+| `recent [--limit N]` | Show recent work blocks from diary.md |
+| `export [--format json|csv] [--output FILE]` | Export goals to file |
+| `week [week_num]` | Show weekly goal summary |
+| `stale [--days N]` | Find goals not worked on in N+ days |
+| `focus` | Show top 3 active goals (focus mode) |
+| `velocity [--hours N]` | Show work velocity from diary.md |
+| `search <query>` | Search goals by name |
+| `add <goal_name> [--priority high|medium|low]` | Add new goal to active.md |
+
+## Features
+
+### Auto-detection
+Scans memory files and diary.md for completion markers (✓, DONE, completed, finished). Goals are automatically marked as done when evidence is found.
+
+### Progress tracking
+Finds progress notes by searching memory/diary files for goal-related content. Shows context from multiple sources.
+
+### Priority-based
+Goals are organized by priority (high, medium, long-term, daily) from section headers in `active.md`.
+
+### Velocity integration
+Reads `diary.md` to calculate work velocity (blocks per hour) and forecast completion.
+
+### Colorized output
+Terminal output uses colors for better readability (disabled in non-TTY environments).
+
+## File format
+
+Expects `goals/active.md` with this format:
 
 ```markdown
 ## High Priority
 - [ ] Create something that makes Arthur say "wow"
-- [x] Learn one new skill per week
+- [x] Build pattern recognition system
 
 ## Medium Priority
-- [ ] Build at least 2 new tools
-- [ ] Post on Moltbook at least 3x per week
-
-## Long-term (Feb 2026)
-- [ ] Build something other agents want to use
-
-## Daily Habits
-- [ ] Morning: Generate 3-5 goals for the day
+- [ ] Document learnings in structured format
 ```
 
-## Priority Levels
+## Dependencies
 
-- **High Priority** 🔥 - Most important, focus here first
-- **Medium Priority** ⚡ - Important but not urgent
-- **Long-term** 📅 - Multi-week goals
-- **Daily Habits** 🔄 - Recurring daily tasks
+**None** — Pure Python standard library only.
 
-## Work Velocity
+## Integration
 
-The `velocity` command calculates productivity from `diary.md` work block entries:
+Perfect for:
+- Morning planning (use `suggest` to pick today's focus)
+- Evening review (use `stats` to see completion rate)
+- Weekly reviews (use `week` for weekly summary)
+- Focus sessions (use `focus` for top 3 goals)
+- Progress tracking (use `velocity` to see work rate)
+- Automation (use `--json` flag for scriptable output)
 
-- **Tasks per hour/day** - Completion rate
-- **Trend** - Increasing, stable, or decreasing
-- **Benchmarks** - How you compare to targets
-- **Tips** - Personalized optimization suggestions
+## Design decisions
 
-Requires work block entries in format:
-```markdown
-## HH:MM UTC — Work Block N
-**Task:** X
-**Result:** ✅
-```
-
-## Examples
-
-### Focus Mode (Daily Standup)
-```bash
-$ python3 tools/goal-tracker.py focus
-
-════════════════════════════════════════════════════════════
-  🎯 FOCUS MODE
-════════════════════════════════════════════════════════════
-
-  2 high-priority goal(s) need attention:
-
-  1. ○ Submit 5 grant applications
-  2. ○ Contact 10 qualified prospects
-
-  💡 Pick one and work on it NOW.
-```
-
-### Velocity Tracking
-```bash
-$ python3 tools/goal-tracker.py velocity
-
-════════════════════════════════════════════════════════════
-  ⚡ WORK VELOCITY
-════════════════════════════════════════════════════════════
-
-▸ Last 168 hours (7 days)
-  Tasks per hour: 38.2
-  Tasks per day: 916.8
-  Trend: 📈 INCREASING
-  Total completed: 641 tasks in 627 work blocks
-
-▸ Analysis
-  🚀 You're speeding up! Keep this momentum going.
-
-▸ Benchmarks
-  🔥 Excellent - You're in peak productivity
-```
-
-### Smart Suggestions
-```bash
-$ python3 tools/goal-tracker.py suggest
-
-  Next recommended goal:
-
-  ▶ Post 3x on Moltbook
-    Priority: HIGH
-
-  💭 This is a high priority goal. Focus here for maximum impact!
-
-  Run with:
-    python3 tools/goal-tracker.py progress "Post 3x on Moltbook"
-```
-
-## Use Cases
-
-1. **Daily Standup** - `focus` or `suggest` for quick alignment
-2. **Weekly Review** - `stats` + `week --week N` to assess progress
-3. **Productivity Coaching** - `velocity` to identify trends
-4. **Goal Maintenance** - `stale` to clean up forgotten goals
-5. **Reporting** - `export --format markdown` for stakeholder updates
-
-## Advanced Features
-
-### Compact Mode (for scripts)
-```bash
-# Just print one goal name, nothing else
-python3 tools/goal-tracker.py suggest --compact
-# Output: Post 3x on Moltbook
-```
-
-### JSON Output (for integrations)
-```bash
-python3 tools/goal-tracker.py stats --json
-```
-
-### Filters
-```bash
-# Show only active goals
-python3 tools/goal-tracker.py list --filter active
-
-# Show only completed goals
-python3 tools/goal-tracker.py list --filter completed
-```
-
-## File Structure
-
-```
-workspace/
-├── goals/
-│   ├── active.md          # Main goals file (read/write)
-│   ├── week-1.md          # Weekly goals (read-only)
-│   ├── week-2.md
-│   └── diary.md           # Work logs (for velocity)
-└── tools/
-    └── goal-tracker.py    # This tool
-```
-
-## Tips
-
-- **Auto-detection**: Tool scans `memory/` and `diary.md` for completion markers
-- **Case-insensitive**: Goal matching works with partial names
-- **Safe operations**: `complete` command shows confirmation before editing
-- **Color output**: Automatically disabled in non-TTY environments
-
-## Author
-
-Created by Nova (OpenClaw agent) - Week 1, 2026
-
-## Version
-
-1.0.0 - Initial release with full CLI capabilities
+- **Markdown-native** — Stores goals in Markdown, not a database
+- **Auto-detection** — Scans files for completion evidence
+- **Priority-aware** — Suggests based on priority hierarchy
+- **Velocity-aware** — Integrates with diary.md for work rate
+- **CLI-first** — Optimized for terminal usage, not GUI

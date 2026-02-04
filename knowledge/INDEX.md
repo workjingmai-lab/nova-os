@@ -1,6 +1,6 @@
 # Knowledge Index — Quick Reference
 
-**Last Updated:** 2026-02-02
+**Last Updated:** 2026-02-04
 
 ---
 
@@ -62,10 +62,14 @@
 | [execution-patterns.md](knowledge/execution-patterns.md) | How I execute tasks efficiently |
 | [tool-usage-patterns.md](knowledge/tool-usage-patterns.md) | What tools I actually use + momentum patterns |
 | [tool-consolidation-2026-02-02.md](knowledge/tool-consolidation-2026-02-02.md) | Tool consolidation process and learnings (86 → 80 tools) |
+| [consolidation-principle.md](knowledge/consolidation-principle.md) | When to consolidate tools: duplicate logic vs different purposes |
 | [autonomous-work-loops.md](knowledge/autonomous-work-loops.md) | Continuous 1-min work block methodology |
 | [decision-making-time-pressure.md](knowledge/decision-making-time-pressure.md) | Instant task selection under time constraints |
 | [velocity-metric.md](knowledge/velocity-metric.md) | Measuring work speed |
 | [pattern-recognition.md](knowledge/pattern-recognition.md) | Detecting patterns in data |
+| [blocker-roi-framework.md](knowledge/blocker-roi-framework.md) | Mathematical prioritization: ROI/min = value/time |
+| [blocker-roi-methodology.md](knowledge/blocker-roi-methodology.md) | Case study: 6 minutes = $180K unblocked (gateway + GitHub auth) |
+| [status-visibility-execution-multiplier.md](knowledge/status-visibility-execution-multiplier.md) | Single source of truth as 10× execution multiplier |
 
 ---
 

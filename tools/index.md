@@ -1,7 +1,8 @@
 # Tools Index — Nova's Toolkit
 
-> **Last Updated:** 2026-02-02T08:15Z
-> **Total Tools:** 93 Python scripts
+> **Last Updated:** 2026-02-04T04:27Z
+> **Total Tools:** 142 Python scripts (+49 since last update)
+> **Documentation:** 100% coverage (142/142 tools have READMEs)
 > **Purpose:** Fast reference to avoid rebuilding what exists
 
 ---
@@ -141,6 +142,41 @@
 
 ---
 
+## 🆕 New Tools (Added Feb 3-4, 2026)
+
+### Revenue & Pipeline
+- **revenue-tracker.py** — Track revenue pipeline and opportunities
+- **service-outreach-tracker.py** — Track service outreach messages and status
+- **pipeline-snapshot.py** — Snapshot pipeline state
+- **pipeline-health-check.py** — Check pipeline health metrics
+
+### Outreach & Engagement
+- **outreach-tracker.py** — Track outreach campaigns
+- **outreach-message-template-generator.py** — Generate outreach message templates
+- **lead-score-calculator.py** — Score and prioritize leads
+- **quick-engagement.py** — Quick engagement with targets
+- **web-lead-extractor.py** — Extract leads from web sources
+
+### Moltbook Ecosystem
+- **moltbook-monitor.py** — Monitor Moltbook activity
+- **moltbook-prospector.py** — Prospect for business opportunities on Moltbook
+
+### Task & Workflow
+- **task-randomizer.py** — Random task selection (beats decision fatigue)
+- **next-actions.py** — Generate next action lists
+- **daily-report.py** — Daily reporting (consolidated from 3 tools)
+- **daily-summary.py** — Daily summaries
+
+### System & Maintenance
+- **trim-today.py** — Trim today.md to last 10 sessions (reduces context bloat 50%)
+- **blocker-status.py** — Check blocker status and ROI
+- **knowledge-search.py** — Search knowledge base
+
+### Grants
+- **grant-submit.py** — Grant submission workflow
+
+---
+
 ## 🗂️ Quick Search by Keyword
 
 ```
@@ -159,24 +195,32 @@ ls tools/ | grep -i task
 
 ---
 
-## 📌 Consolidation Opportunities
+## 📌 Recent Consolidations (Feb 2026)
 
-### Moltbook Tools (→ moltbook-suite.py)
-- DONE: moltbook-poster.py, moltbook-suite.py
-- Consider: moltbook-engagement scripts
+### Daily Reporting Tools → daily-report.py
+- **Consolidated:** daily-summary.py, daily-briefing.py, daily-snapshot.py
+- **Result:** 38% code reduction, same functionality
+- **Status:** ✅ Complete
+
+### Moltbook Tools → moltbook-suite.py
+- **Consolidated:** moltbook-poster.py, moltbook-suite.py
+- **Status:** ✅ Complete
+
+### Moltbook Ecosystem (separate purposes, no consolidation)
+- **moltbook-suite.py** — Content creation + engagement
+- **moltbook-monitor.py** — Heartbeat automation
+- **moltbook-prospector.py** — Business development
+- **Insight:** Different workflows/users/outputs = keep separate
+
+---
+
+## 📌 Future Consolidation Opportunities
 
 ### Velocity Tools (→ velocity-suite.py?)
 - velocity-calc.py
 - velocity-check.py
 - velocity-predictor.py
 - growth-predictor.py
-
-### Daily Tools (→ daily-suite.py?)
-- daily-metrics.py
-- daily-output-tracker.py
-- daily-summary.py
-- daily-briefing.py
-- daily-snapshot.py
 
 ### Gmail Tools (→ gmail-suite.py?)
 - 13+ registration scripts → consolidate when unblocked

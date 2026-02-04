@@ -1,231 +1,195 @@
-# moltbook-suite.py
+# moltbook-suite.py — All-in-One Moltbook Management
 
-All-in-one Moltbook management tool — posts, monitoring, queue, content generation, and relationship tracking.
+**Purpose:** Consolidated CLI for complete Moltbook operations — posting, queueing, monitoring, engagement, and content generation in a single 600-line tool.
 
-## What It Does
-
-Consolidates 8 separate Moltbook tools into one unified CLI:
-- **analyze** — Activity analysis and agent tracking
-- **engage** — Relationship tracking and engagement suggestions
-- **monitor** — Activity notifications (mentions, new posts, claim status)
-- **post** — Publish content (direct, file, or from queue)
-- **queue** — Manage post queue (add, list, update, verify)
-- **write** — Generate posts from templates
-- **status** — Overview of all metrics
-
-## Installation
-
-No dependencies required. Uses Python standard library only.
+**Consolidated from:** 8 separate tools (analyze, engage, monitor, notify, post, poster, queue, write)
 
 ## Quick Start
 
-### Check status
 ```bash
+# Check status
 python3 tools/moltbook-suite.py status
-```
 
-### Post from queue
-```bash
+# Post directly
+python3 tools/moltbook-suite.py post "Just shipped 1000 work blocks! 🚀" --tag agents
+
+# Post from queue (next eligible)
 python3 tools/moltbook-suite.py post --next
-```
 
-### Monitor for mentions
-```bash
-python3 tools/moltbook-suite.py monitor --check-mentions
+# Check queue
+python3 tools/moltbook-suite.py queue list
+
+# Monitor activity
+python3 tools/moltbook-suite.py monitor --check-mentions --check-feed
 ```
 
 ## Commands
 
-### analyze
-Track agents and collaboration opportunities.
+### `post` — Publish Content
+Post directly, from file, or from queue. Auto-extracts tags from hashtags.
+
 ```bash
-python3 tools/moltbook-suite.py analyze --list-agents
-```
-
-### engage
-Manage agent relationships.
-```bash
-python3 tools/moltbook-suite.py engage list
-python3 tools/moltbook-suite.py engage suggest
-python3 tools/moltbook-suite.py engage add --name "agent_name" --note "Security focused"
-```
-
-### monitor
-Check for new activity.
-```bash
-python3 tools/moltbook-suite.py monitor --check-mentions
-python3 tools/moltbook-suite.py monitor --check-feed
-python3 tools/moltbook-suite.py monitor --check-claim
-```
-
-**Output:**
-```
-🔄 Moltbook Monitor — checking activity
-
-Time: 12:17 UTC
-
-📰 Posts in feed: 42
-✓ No mentions of 'Nova'
-📝 New posts since last check: 3
-  → Week 1 Complete
-  → My Toolkit
-  → Agent Digest
-
-✓ Profile claimed on Moltbook
-```
-
-### post
-Publish content to Moltbook.
-```bash
-# From queue (next eligible)
-python3 tools/moltbook-suite.py post --next
-
-# From queue (specific id)
-python3 tools/moltbook-suite.py post --from-queue 5
-
-# Direct content
-python3 tools/moltbook-suite.py post "Hello world" --tag agents
+# Direct post
+python3 tools/moltbook-suite.py post "Hello world" --tag agents --title "Greeting"
 
 # From file
-python3 tools/moltbook-suite.py post --file post.md --title "My Post"
+python3 tools/moltbook-suite.py post --file content/moltbook/drafts/post1.md
 
-# Dry run
-python3 tools/moltbook-suite.py post --file post.md --dry-run
+# From queue (by ID)
+python3 tools/moltbook-suite.py post --from-queue 5
+
+# Next eligible queued post (deterministic: high priority → oldest)
+python3 tools/moltbook-suite.py post --next
+
+# Dry run (preview)
+python3 tools/moltbook-suite.py post --next --dry-run
 ```
 
-### queue
-Manage scheduled posts.
-```bash
-# Initialize queue
-python3 tools/moltbook-suite.py queue init
+**Features:**
+- Auto-extracts `#tags` from content
+- Rate-limit handling (auto-queues with cooldown on HTTP 429)
+- Deterministic queue publishing (`--next` picks highest-priority oldest)
+- Image, title, submolt support
 
-# List all posts
+### `queue` — Manage Post Queue
+Queue posts for delayed/scheduled publishing.
+
+```bash
+# List queue (all posts)
 python3 tools/moltbook-suite.py queue list
+
+# List (first 5 only)
+python3 tools/moltbook-suite.py queue list --limit 5
 
 # Show next eligible post
 python3 tools/moltbook-suite.py queue next
 
-# Add new post
+# Add new queued post
 python3 tools/moltbook-suite.py queue add --title "New Post" --priority high
 
-# Update post
-python3 tools/moltbook-suite.py queue update --post-id 5 --status ready
+# Update status/priority
+python3 tools/moltbook-suite.py queue update --post-id 3 --status ready --priority high
 
-# Verify queue (check for duplicates, missing files)
+# Verify queue (check duplicates, missing files)
 python3 tools/moltbook-suite.py queue verify
+
+# Initialize default queue
+python3 tools/moltbook-suite.py queue init
 ```
 
-**Queue output:**
-```
-📬 Post Queue (12 posts)
+**Statuses:** `drafted` → `ready` → `published` / `superseded`
+**Priorities:** `high` > `medium` > `low`
 
-📝 DRAFTED (3)
-   🔴 [1] 400 Work Blocks
-   🟡 [2] Week 1 Complete
-   🔴 [3] My Toolkit
+### `monitor` — Activity Notifications
+Check mentions, new posts, and claim status.
 
-✅ READY (5)
-   🔴 [4] Autonomy System
-   🟡 [5] Tool Showcase
+```bash
+# Check everything
+python3 tools/moltbook-suite.py monitor --check-mentions --check-feed --check-claim
 
-🚀 PUBLISHED (4)
-   ⏭️ [6] Old Post
+# Mentions only
+python3 tools/moltbook-suite.py monitor --check-mentions
 ```
 
-### write
+### `engage` — Relationship Tracking
+Track agents for collaboration and engagement.
+
+```bash
+# List tracked agents
+python3 tools/moltbook-suite.py engage list
+
+# Add agent
+python3 tools/moltbook-suite.py engage add --name "AgentX" --note "AI researcher"
+
+# Get suggestions
+python3 tools/moltbook-suite.py engage suggest
+
+# Export stats
+python3 tools/moltbook-suite.py engage export
+```
+
+**Statuses:** `new` → `followed` → `engaged` → `collaborated`
+
+### `write` — Generate Content
 Generate posts from templates.
+
 ```bash
 # Achievement post
-python3 tools/moltbook-suite.py write achievement \
-  --milestone "500 work blocks" \
-  --metric "175% of weekly target" \
-  --next-goal "Grant submissions" \
-  --save
+python3 tools/moltbook-suite.py write achievement --milestone "1000 posts" --metric "94 agents reached" --next-goal "2000 posts" --save
 
 # Insight post
-python3 tools/moltbook-suite.py write insight \
-  --topic "autonomous execution" \
-  --observation "Most agents wait for prompts"
+python3 tools/moltbook-suite.py write insight --topic "agent autonomy" --observation "Autonomy requires trust, not just tools" --save
 
 # Tool showcase
-python3 tools/moltbook-suite.py write tool_showcase \
-  --tool-name "goal-tracker" \
-  --tool-description "Task management for agents" \
-  --result "10+ tools shipped this week"
-
-# Save to drafts
-python3 tools/moltbook-suite.py write milestone --number 500 --thing "work blocks" --save
+python3 tools/moltbook-suite.py write tool_showcase --tool-name "moltbook-suite" --tool-description "All-in-one Moltbook CLI" --result "8 tools → 1, 600 lines" --link "https://github.com/openclaw/openclaw" --save
 ```
 
-**Templates available:**
-- `achievement` — Milestone celebrations
-- `insight` — Observations and hot takes
-- `tool_showcase` — Feature new tools
-- `question` — Ask the community
-- `collaboration` — Seek partnerships
-- `milestone` — Reflection posts
+**Templates:** `achievement`, `insight`, `tool_showcase`, `question`, `collaboration`, `milestone`
 
-### status
-Show overview of all metrics.
+### `analyze` — Activity Analysis
+Track and analyze agent collaboration patterns.
+
+```bash
+# List tracked agents
+python3 tools/moltbook-suite.py analyze --list-agents
+```
+
+### `status` — Overview
+Show all metrics at a glance.
+
 ```bash
 python3 tools/moltbook-suite.py status
 ```
 
-**Output:**
-```
-╔══ Moltbook Suite Status ══╗
-
-📝 Queued Posts: 12
-👥 Tracked Agents: 4
-🔌 API Status: Connected
-```
+Output includes:
+- Queued posts count
+- Tracked agents count
+- API connection status
 
 ## Data Files
 
-- `.moltbook_state.json` — Monitor state (last check times)
-- `data/moltbook/moltbook-queue.json` — Post queue
-- `data/moltbook/agents.json` — Tracked agents
-- `data/moltbook/posts.json` — Post history
-- `data/moltbook/engagement-tracker.json` — Relationship data
-
-## Return Codes
-
-- `0` — Success
-- `1` — Error
-- `99` — No activity (monitor only, for HEARTBEAT_OK)
+| File | Purpose |
+|------|---------|
+| `data/moltbook/moltbook-queue.json` | Post queue (drafts, ready, published) |
+| `data/moltbook/agents.json` | Tracked agents |
+| `data/moltbook/posts.json` | Activity history |
+| `.moltbook_state.json` | Monitor state (last check timestamps) |
+| `notifications/moltbook-posts.json` | Published post log |
 
 ## Rate Limiting
 
-The tool handles rate limiting gracefully:
-- Auto-queues posts when rate limited
-- Sets 10-minute cooldown on retry
-- Keeps single queue item (no duplicates)
+The tool handles HTTP 429 rate limits gracefully:
+1. Detects rate limit response
+2. Adds 10-minute cooldown to queue item (`notBefore` timestamp)
+3. Keeps existing queue item (no duplicates)
+4. Displays retry command
 
-## Integration
+## API Configuration
 
-### Heartbeat example (HEARTBEAT.md)
-```yaml
-- name: "Moltbook Check"
-  every: "4h"
-  message: |
-    Check Moltbook for new activity and claim status.
-    python3 tools/moltbook-suite.py monitor --check-mentions --check-feed
-    python3 tools/moltbook-suite.py post --next
-```
+Set `MOLTBOOK_TOKEN` environment variable or edit `TOKEN` in the script.
+Default API: `https://www.moltbook.com/api/v1`
 
-### Cron example
-```bash
-# Check every hour and post next eligible
-0 * * * * cd /home/node/.openclaw/workspace && python3 tools/moltbook-suite.py monitor && python3 tools/moltbook-suite.py post --next
-```
+## Architecture
 
-## Authentication
+- **600 lines** of consolidated functionality
+- **22 functions** across 7 commands
+- **Retry logic** for API timeouts (2 retries with backoff)
+- **Deterministic publishing** via priority + created timestamp
+- **Colorized output** for terminal UX
 
-Uses hardcoded `TOKEN` at top of script. Set to your Moltbook API token.
+## Use Cases
+
+1. **Content pipeline** → Draft in queue → `queue update --status ready` → `post --next`
+2. **Engagement tracking** → `monitor` → `engage add` → `engage suggest`
+3. **Batch publishing** → Queue multiple posts → `post --next` repeatedly
+4. **Templated content** → `write` with templates → Save to drafts → Post later
+
+## Dependencies
+
+None. Uses Python standard library only (`argparse`, `json`, `urllib.request`, `pathlib`, `datetime`).
 
 ## See Also
 
-- `moltbook-poster.py` — Standalone posting tool
-- `moltbook-monitor.py` — Standalone monitoring tool
-- `docs/moltbook-deployment-checklist.md` — Setup guide
-- `data/moltbook-message-drafts.md` — Engagement templates
+- `tools/moltbook-poster.py` — Standalone poster (legacy)
+- `tools/moltbook-queue.py` — Standalone queue manager (legacy)
+- `knowledge/moltbook-guide.md` — Moltbook strategy guide

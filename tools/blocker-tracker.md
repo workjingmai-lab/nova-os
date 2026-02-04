@@ -1,107 +1,86 @@
-# blocker-tracker.md — Track and Resolve Blockers
-
-**Version:** 1.0  
-**Category:** Workflow / Issue Tracking  
-**Created:** 2026-02-01
-
----
+# blocker-tracker.py — ROI-Based Blocker Prioritization
 
 ## What It Does
 
-Tracks blockers (dependencies, issues, waiting states) and monitors their status over time.
+Tracks and prioritizes blockers by ROI/min — execute highest-value unblocks first.
 
-### Features
+## The Problem
 
-- Log blockers with severity levels
-- Categorize by type (technical, external, resource)
-- Track resolution time
-- Generate blocker reports
-- Integrate with `today.md` for visibility
-
----
+When multiple blockers exist, it's hard to know which to tackle first. This tool quantifies the ROI so you can prioritize: $50K/min > $26K/min > others.
 
 ## Usage
 
 ```bash
-# Log a new blocker
-python3 tools/blocker-tracker.py add "Browser access blocked" --type technical --severity high
+# Add a blocker
+python3 blocker-tracker.py add --name "Gateway Restart" --value 50000 --time 1 --action "Run: openclaw gateway restart"
 
-# Mark blocker as resolved
-python3 tools/blocker-tracker.py resolve 1
+# List all blockers
+python3 blocker-tracker.py list
 
-# List active blockers
-python3 tools/blocker-tracker.py list
+# Show blockers by ROI priority
+python3 blocker-tracker.py roi
 
-# Generate blocker report
-python3 tools/blocker-tracker.py report
-
-# Show blockers by type
-python3 tools/blocker-tracker.py list --type external
+# Mark a blocker resolved
+python3 blocker-tracker.py resolve <id>
 ```
 
----
+## ROI Formula
 
-## Blocker Types
+```
+ROI/min = Value Unlocked / Time to Resolve (minutes)
+```
 
-| Type | Description | Examples |
-|------|-------------|----------|
-| `technical` | Technical issues | Browser down, API failure |
-| `external` | Waiting on others | Arthur action, third-party response |
-| `resource` | Missing resources | No API key, insufficient permissions |
-| `knowledge` | Knowledge gap | Don't know how to proceed |
+## Example
 
----
+Adding GitHub auth as a blocker:
+```bash
+python3 blocker-tracker.py add \
+  --name "GitHub SSH Auth" \
+  --value 130000 \
+  --time 5 \
+  --action "Run: gh auth login; git push origin main"
+```
 
-## Severity Levels
+Output:
+```
+✅ Blocker added: GitHub SSH Auth
+   ROI: $26,000/min ($130,000 in 5 min)
+```
 
-- `low` — Nice to have, not blocking
-- `medium` — Slows progress, workaround exists
-- `high` — Completely blocked, no workaround
-- `critical` — Urgent, needs immediate attention
+## Current Blockers (as of 2026-02-04)
 
----
+1. **Gateway Restart** — $50,000/min ($50K in 1 min)
+2. **GitHub SSH Auth** — $26,000/min ($130K in 5 min)
 
-## Storage
+**Total: $180K unblocked in 6 min ($30K/min average)**
 
-Blockers stored in `.blockers.json`:
+## Data Storage
 
+Blockers stored in `data/blockers.json`:
 ```json
-{
-  "blockers": [
-    {
-      "id": 1,
-      "description": "Browser access blocked",
-      "type": "technical",
-      "severity": "high",
-      "status": "active",
-      "created": "2026-02-02T20:45:00Z",
-      "resolved": null
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Gateway Restart",
+    "value": 50000,
+    "time_min": 1,
+    "roi_per_min": 50000,
+    "action": "Run: openclaw gateway restart",
+    "owner": "arthur",
+    "status": "active",
+    "created": "2026-02-04T08:21:00"
+  }
+]
 ```
 
----
+## Key Insight
 
-## Dependencies
+**6 minutes = $180K unblocked. That's $30K per minute.**
 
-- Python 3.7+
-- Standard library only
+When blocked, don't wait — quantify the ROI and execute highest-value blockers first.
 
----
+## Related
 
-## Integration
-
-- Pair with `today.md` for daily blocker visibility
-- Use `goal-tracker.py` to link blockers to goals
-- Feed into `self-improvement-loop.py` for analytics
-
----
-
-## Tips
-
-1. Log blockers immediately when discovered
-2. Update status as conditions change
-3. Review blockers weekly during retrospective
-4. Categorize accurately for pattern analysis
-5. Set severity based on impact, not urgency
+- `revenue-tracker.py` — Track revenue pipeline
+- `diary.md` — Work block logs
+- MEMORY.md — "Blocker ROI = Priority" insight

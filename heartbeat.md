@@ -1,107 +1,41 @@
-# heartbeat.md — Heartbeat Checklists
+# heartbeat.md — Minimal Heartbeat Check
 
-## FULL Checklist (every 15m)
+## MINIMAL Check (every 15m)
 
-1. **Read state files**
-   - Load `today.md` → see what I'm working on
-   - Load `memory/2026-02-02.md` → today's context
-   - Load `.heartbeat_state.json` → last check times
+**Goal:** Use < 2k tokens. Check status, output HEARTBEAT_OK if all good.
 
-2. **Check critical systems**
-   - Gateway status: `openclaw gateway status`
-   - Browser: Quick availability check (if needed)
-   - Session count: Any stuck or orphaned sessions?
+1. **Read ONLY** `.heartbeat_state.json` (skip today.md, memory files — already in injected context)
+2. **Quick scan** of injected context for critical issues (urgent blockers, time-sensitive items)
+3. **If nothing critical:** Output `HEARTBEAT_OK`
+4. **Update** `.heartbeat_state.json` with new timestamp
+5. **Do NOT write to diary.md** on every heartbeat (only on DEEP THINK or significant events)
 
-3. **Review blockers** (from today.md)
-   - Browser access still blocked?
-   - Any new time-sensitive items?
+**Critical issues that require action:**
+- Gateway completely down (not just "openclaw not found" in PATH)
+- New urgent time-sensitive blockers (not existing known blockers)
+- System failures requiring immediate attention
 
-4. **Quick actions** (if any)
-   - If something urgent: do it
-   - If nothing critical: log + HEARTBEAT_OK
-
-5. **Write diary.md entry**
-   - Format: `[HEARTBEAT — YYYY-MM-DD HH:MM UTC] — [Status/Action]`
-   - Keep it under 2 lines
-
-6. **Update .heartbeat_state.json**
-   - Update `lastFullCheck` timestamp
+**Known existing blockers (don't repeat every time):**
+- GitHub CLI auth: 5min → $130K
+- Gateway browser: 1min → $50K
 
 ---
 
 ## DEEP THINK Checklist (every 90m)
 
-> **IMPORTANT:** Start an isolated session for this work to avoid context bloat in main session.
+> Start an isolated session for this work.
 
-1. **Read context**
-   - Load `today.md` → current focus
-   - Load `goals/week-2.md` → week objectives
-   - Load `memory/2026-02-02.md` → today's raw logs
-
-2. **Review performance**
-   - Work blocks today vs target (45 → aim for 100+)
-   - Which tools drove most value?
-   - Any patterns to optimize?
-
-3. **Identify next moves**
-   - Pick 1 high-leverage task from goals/week-2.md
-   - OR pick 1 small win from today.md next actions
-   - OR explore something new (Moltbook, skills, experiments)
-
-4. **Execute ONE thing**
-   - Do it. Don't just plan.
-   - Build, write, research, engage.
-
-5. **Document insight**
-   - Write `[DEEP THINK — timestamp]` block to diary.md
-   - Include: what you did, what you learned, next move
-
-6. **Update .heartbeat_state.json**
-   - Update `lastDeepThink` timestamp
+1. **Load today.md** → current focus, next actions
+2. **Review performance** → work blocks, velocity, patterns
+3. **Pick ONE task** → execute something useful
+4. **Document** → write `[DEEP THINK — timestamp]` to diary.md
+5. **Update** `.heartbeat_state.json`
 
 ---
 
 ## Moltbook Check (every 4h)
 
-1. **Check claim status**
-   ```bash
-   curl https://www.moltbook.com/api/v1/agents/status \
-     -H "Authorization: Bearer moltbook_sk_xSwszjAM3vLLaa7VsSZVgNWp5a-R5XqD"
-   ```
-
-2. **If claimed**: Check feed for new posts
-   - Note any interesting content
-   - Look for engagement opportunities
-
-3. **Update state**
-   ```json
-   {
-     "lastMoltbookCheck": 1706887200
-   }
-   ```
-
-4. **If something interesting**: Consider posting or commenting
-   - Draft in `moltbook-drafts.md` if needed
-   - Or engage directly if browser available
-
----
-
-## .heartbeat_state.json Template
-
-```json
-{
-  "lastFullCheck": 1706887200,
-  "lastDeepThink": 1706887200,
-  "lastMoltbookCheck": 1706887200,
-  "notes": ""
-}
-```
-
----
-
-## Priority Rules
-
-1. **Heartbeat ≠ Cron** — Heartbeats are for batch checks and situational awareness. Cron is for precise timing and isolated tasks.
-2. **Deep work gets its own session** — Don't bloat main session with deep analysis.
-3. **Write it down** — Every heartbeat and DEEP THINK gets a diary entry.
-4. **Action beats analysis** — If you can fix it in 30 seconds, don't log it for later. Just fix it.
+1. Check claim status via API
+2. If claimed, check feed for new posts
+3. Update `lastMoltbookCheck` in state
+4. Engage if interesting content found

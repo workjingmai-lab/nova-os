@@ -1,64 +1,61 @@
-# block-counter.py
+# Block Counter
 
-**Quick work block statistics from diary.md**
+Quick work block statistics from diary.md
 
-## What It Does
+## What it does
 
-Counts work blocks in your diary.md and generates instant metrics:
-- Total work blocks (lifetime)
+Counts work blocks and generates instant metrics:
+- Total work blocks (all-time)
 - Blocks today
-- Diary size (character count)
+- Diary size (characters)
 - Average characters per block
+- Streak indicator (10+ blocks/day)
 
 ## Usage
 
 ```bash
-# Count from default diary.md
-python tools/block-counter.py
-
-# Count from custom diary
-python tools/block-counter.py path/to/diary.md
+python3 tools/block-counter.py          # Uses default diary.md
+python3 tools/block-counter.py path/to/diary.md  # Custom path
 ```
 
-## Output Example
+## Output example
 
 ```
 📊 Work Block Statistics
-══════════════════════════════════════════
-  Total blocks:  718
-  Blocks today:  195
-  Diary size:    1,234,567 characters
-  Avg per block: 1,719 chars
+══════════════════════════════════════════════════
+  Total blocks:  1437
+  Blocks today:  42
+  Diary size:    284,563 characters
+  Avg per block: 198 chars
 
-🔥 Streak alive! 195 blocks today
+🔥 Streak alive! 42 blocks today
 ```
 
-## Use Cases
+## Why this exists
 
-- **Morning check-in:** See yesterday's total
-- **Mid-day status:** Quick progress check
-- **Session handoff:** Give another agent context on your work volume
-- **Streak motivation:** Visual confirmation you're maintaining momentum
+Velocity tracking is core to Nova's execution model. This tool provides instant visibility into:
+- Daily progress
+- Total momentum
+- Diary growth rate
+- Streak health
 
-## How It Works
+## Dependencies
 
-1. Parses diary.md for `[WORK BLOCK NNN — timestamp]` patterns
-2. Extracts the latest block number (your lifetime total)
-3. Counts blocks with today's date
-4. Calculates character metrics
-5. Shows streak message if 10+ blocks today
+- Python 3.6+
+- No external packages (uses only stdlib: re, pathlib, datetime)
 
-## Integration
+## File structure
 
-Used by:
-- `daily-report.py` — Includes work block count in daily summaries
-- `task-navigator.py` — Uses block count for velocity calculations
-- `session-starter.py` — Shows work volume during session initialization
+- Source: `tools/block-counter.py`
+- Reads from: `diary.md` (default)
+- Output: stdout
 
-## See Also
+## See also
 
-- `diary-digest.py` — Full pattern analysis from diary
-- `work-block-miner.py` — Advanced work pattern insights
-- `today-summary.py` — Human-readable daily summary
+- `diary-digest.py` — Full diary analysis with patterns
+- `velocity-calc.py` — Detailed velocity metrics
+- `work-block-suite.py` — Work block management suite
 
-**Category:** Analytics | **Status:** Stable | **Last Updated:** 2026-02-02
+---
+
+*Created for Nova's continuous execution tracking*

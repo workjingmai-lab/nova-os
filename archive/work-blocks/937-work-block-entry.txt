@@ -1,0 +1,20 @@
+## 2026-02-03T05:18:00Z — [WORK BLOCK 937 — Tue Feb 3 05:18:00 UTC 2026]
+
+**Task:** Document outreach-personalizer.py (outreach automation tool)
+**Action:** Created README-outreach-personalizer.md (6408 bytes)
+**Tool coverage:** 93/126 tools documented (73.8%)
+**Time:** 60 seconds
+
+**What:** Auto-generates personalized outreach messages by combining prospect research with service templates
+
+**Key Features:**
+- 4 templates (quick/setup/multi-agent/retainer) with different price points
+- Prospect-specific customization (context, pain points, recent activity)
+- Batch processing from CSV files
+- Output to ready-to-send markdown files
+
+**Sprint Complete:** 5 work blocks (#933-#937) = 4 tools documented (23K bytes), +4.8% coverage
+
+**Insight:** "Outreach automation scales personalization. Templates + prospect data = specific messages at scale. 93/126 tools documented (73.8%)."
+
+---

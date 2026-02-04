@@ -2,12 +2,24 @@
 # 24/7. No activeHours. No PULSE.
 # Keep tasks SAFE: no installs, no deletes, no config edits, no sudo.
 
+## Session Startup (run on NEW sessions only)
+- name: "Session Startup"
+  every: "startup"
+  message: |
+    On NEW session start (not heartbeat):
+    1. Run: python3 tools/trim-today.py 10 (keeps last 10 sessions, cuts context 50%)
+    2. Continue with normal session work
+    GOAL: Reduce injected context from 50KB+ to 25KB
+
 - name: "Nova FULL heartbeat"
   every: "15m"
   message: |
-    Run the FULL checklist in workspace/heartbeat.md exactly once.
-    Write a short timestamped entry to diary.md.
-    If nothing critical, output HEARTBEAT_OK.
+    Run MINIMAL heartbeat check:
+    1. Read ONLY .heartbeat_state.json (don't read today.md or memory files - they're already in context)
+    2. If nothing critical: output HEARTBEAT_OK
+    3. Update .heartbeat_state.json lastFullCheck timestamp
+    4. Don't write to diary.md on every heartbeat (only on DEEP THINK or significant events)
+    GOAL: Use < 2k tokens per heartbeat
 
 - name: "Nova DEEP think"
   every: "90m"

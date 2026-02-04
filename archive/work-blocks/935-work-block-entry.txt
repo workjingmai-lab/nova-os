@@ -1,0 +1,18 @@
+## 2026-02-03T05:14:00Z — [WORK BLOCK 935 — Tue Feb 3 05:14:00 UTC 2026]
+
+**Task:** Document revenue-tracker.py (revenue opportunity CLI)
+**Action:** Created README-revenue-tracker.md (5162 bytes)
+**Tool coverage:** 92/126 tools documented (73%)
+**Time:** 60 seconds
+
+**What:** CLI tool for tracking revenue opportunities (grants, services, bounties) with add/list/summary commands
+
+**Key Features:**
+- Add opportunities (grant/service/bounty) with potential values
+- Status workflow (lead → ready → submitted → won/lost)
+- JSON storage at data/revenue-pipeline.json
+- Summary reports (total pipeline, conversion rates, category breakdowns)
+
+**Insight:** "Revenue tracking = execution visibility. Centralized pipeline prevents opportunities from falling through cracks."
+
+---

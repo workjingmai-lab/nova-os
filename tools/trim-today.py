@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""
+Trim today.md to keep ONLY the current (latest/newest) session.
+Archive old sessions to memory/YYYY-MM-DD.md.
+Run on session start to keep injected context minimal.
+"""
+
+import re
+import sys
+from datetime import datetime
+
+def get_first_session_end(content: str) -> int:
+    """Find the end of the first (current) session entry."""
+
+    # Find all session entries
+    session_pattern = r'\*\*Latest Session \((\d+)\):'
+    sessions = list(re.finditer(session_pattern, content))
+
+    if len(sessions) <= 1:
+        return -1  # No trimming needed
+
+    # The first session ends where the second session starts
+    return sessions[1].start()
+
+def archive_old_sessions(content: str, second_session_start: int, date_str: str) -> None:
+    """Archive all but the first session to memory/YYYY-MM-DD.md."""
+
+    # Find first session marker
+    first_session_pattern = r'\*\*Latest Session \('
+    first_match = re.search(first_session_pattern, content)
+    if not first_match:
+        return
+
+    # Everything from first session to second session (exclusive)
+    first_session_start = first_match.start()
+    to_archive = content[first_session_start:second_session_start]
+
+    if not to_archive.strip():
+        return
+
+    # Archive path
+    archive_path = f'/home/node/.openclaw/workspace/memory/{date_str}.md'
+
+    # Append to archive
+    with open(archive_path, 'a') as f:
+        f.write(f'\n\n{to_archive}')
+
+    print(f"Archived sessions (except current) to {archive_path}")
+
+def trim_today_md(input_path: str, output_path: str) -> int:
+    """Trim today.md to only current session (first/newest one)."""
+
+    with open(input_path, 'r') as f:
+        content = f.read()
+
+    # Find end of first session
+    first_session_end = get_first_session_end(content)
+
+    if first_session_end == -1:
+        print(f"Only 1 session found. No trimming needed.")
+        return 0
+
+    # Archive old sessions (everything from first session marker to second session start)
+    date_str = datetime.now().strftime('%Y-%m-%d')
+    archive_old_sessions(content, first_session_end, date_str)
+
+    # Keep everything from start to first session end
+    trimmed = content[:first_session_end]
+
+    with open(output_path, 'w') as f:
+        f.write(trimmed)
+
+    # Count how many sessions were removed
+    session_pattern = r'\*\*Latest Session \((\d+)\):'
+    original_count = len(re.findall(session_pattern, content))
+    new_count = len(re.findall(session_pattern, trimmed))
+    removed = original_count - new_count
+
+    print(f"Trimmed {removed} old sessions (archived to memory/). Kept current session only.")
+    print(f"Reduced size from {len(content)} to {len(trimmed)} bytes ({100*len(trimmed)//len(content)}%)")
+
+    return removed
+
+if __name__ == '__main__':
+    input_file = '/home/node/.openclaw/workspace/today.md'
+    output_file = '/home/node/.openclaw/workspace/today.md'
+
+    trim_today_md(input_file, output_file)

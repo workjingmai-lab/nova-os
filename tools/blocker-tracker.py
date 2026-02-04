@@ -1,129 +1,158 @@
 #!/usr/bin/env python3
 """
-blocker-tracker.py — Monitors blocked tasks and surfaces them for resolution
-Run this to see what's blocking Nova and what actions are needed.
+Blocker Tracker — Track and prioritize blockers by ROI
+
+Usage:
+    python3 blocker-tracker.py list          # List all blockers
+    python3 blocker-tracker.py add           # Add new blocker
+    python3 blocker-tracker.py resolve <id>  # Mark blocker resolved
+    python3 blocker-tracker.py roi           # Show blockers by ROI/min
 """
 
+import argparse
 import json
-import os
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
-BLOCKER_FILE = Path("/home/node/.openclaw/workspace/status/blockers.json")
-DIARY_FILE = Path("/home/node/.openclaw/workspace/diary.md")
+BLOCKERS_FILE = Path.home() / ".openclaw/workspace/data/blockers.json"
 
 def load_blockers():
-    """Load current blockers from status file."""
-    if BLOCKER_FILE.exists():
-        with open(BLOCKER_FILE) as f:
-            return json.load(f)
-    return {
-        "last_updated": datetime.now(timezone.utc).isoformat(),
-        "blockers": []
+    """Load blockers from JSON file."""
+    if not BLOCKERS_FILE.exists():
+        return []
+    with open(BLOCKERS_FILE) as f:
+        return json.load(f)
+
+def save_blockers(blockers):
+    """Save blockers to JSON file."""
+    BLOCKERS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(BLOCKERS_FILE, 'w') as f:
+        json.dump(blockers, f, indent=2)
+
+def list_blockers():
+    """List all blockers sorted by priority."""
+    blockers = load_blockers()
+    if not blockers:
+        print("✅ No active blockers!")
+        return
+
+    # Sort by ROI/min descending
+    sorted_blockers = sorted(
+        blockers,
+        key=lambda b: b.get('roi_per_min', 0),
+        reverse=True
+    )
+
+    print(f"\n🚧 {len(sorted_blockers)} Active Blockers (sorted by ROI/min):\n")
+    for b in sorted_blockers:
+        if b['status'] == 'active':
+            roi_min = b.get('roi_per_min', 0)
+            roi_str = f"${roi_min:,.0f}/min" if roi_min > 0 else "ROI unknown"
+            print(f"  [{b['id']}] {b['name']}")
+            print(f"      {roi_str} → ${b.get('value', 0):,.0f} in {b.get('time_min', 0)} min")
+            print(f"      Action: {b['action']}")
+            print()
+
+def add_blocker(name, value, time_min, action, owner='arthur'):
+    """Add a new blocker."""
+    blockers = load_blockers()
+
+    # Calculate ROI/min
+    roi_per_min = value / time_min if time_min > 0 else 0
+
+    new_blocker = {
+        'id': len(blockers) + 1,
+        'name': name,
+        'value': value,
+        'time_min': time_min,
+        'roi_per_min': roi_per_min,
+        'action': action,
+        'owner': owner,
+        'status': 'active',
+        'created': datetime.now().isoformat()
     }
 
-def save_blockers(data):
-    """Save blockers to status file."""
-    BLOCKER_FILE.parent.mkdir(parents=True, exist_ok=True)
-    data["last_updated"] = datetime.now(timezone.utc).isoformat()
-    with open(BLOCKER_FILE, 'w') as f:
-        json.dump(data, f, indent=2)
+    blockers.append(new_blocker)
+    save_blockers(blockers)
 
-def get_default_blockers():
-    """Current known blockers from today.md."""
-    return [
-        {
-            "id": "sepolia-eth",
-            "task": "Deploy Force exercise to testnet",
-            "blocker": "Sepolia ETH needed (0.05-0.1 ETH)",
-            "impact": "high",
-            "since": "2026-02-01",
-            "action_needed": "Get Sepolia ETH from faucet or Arthur"
-        },
-        {
-            "id": "github-token",
-            "task": "Push 156-file portfolio to GitHub",
-            "blocker": "GitHub personal access token",
-            "impact": "high", 
-            "since": "2026-02-01",
-            "action_needed": "Arthur to generate token with repo scope"
-        },
-        {
-            "id": "moltbook-token",
-            "task": "Automated Moltbook posting/engagement",
-            "blocker": "Moltbook API token for automation",
-            "impact": "medium",
-            "since": "2026-02-01",
-            "action_needed": "Request token from Moltbook team"
-        }
-    ]
+    print(f"✅ Blocker added: {name}")
+    print(f"   ROI: ${roi_per_min:,.0f}/min (${value:,.0f} in {time_min} min)")
 
-def format_blocker(b):
-    """Format a single blocker for display."""
-    impact_emoji = "🔴" if b["impact"] == "high" else "🟡" if b["impact"] == "medium" else "🟢"
-    return f"""{impact_emoji} **{b['task']}**
-   Blocked: {b['blocker']}
-   Since: {b['since']} | Action: {b['action_needed']}
-"""
+def resolve_blocker(blocker_id):
+    """Mark a blocker as resolved."""
+    blockers = load_blockers()
+    for b in blockers:
+        if b['id'] == blocker_id:
+            b['status'] = 'resolved'
+            b['resolved'] = datetime.now().isoformat()
+            save_blockers(blockers)
+            print(f"✅ Blocker [{blocker_id}] resolved: {b['name']}")
+            return
+    print(f"❌ Blocker [{blocker_id}] not found")
 
-def log_to_diary(blockers):
-    """Log blocker status to diary."""
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    count = len(blockers["blockers"])
-    high = sum(1 for b in blockers["blockers"] if b.get("impact") == "high")
-    
-    entry = f"""
-## {timestamp} — Blocker Check
+def show_roi():
+    """Show blockers prioritized by ROI."""
+    blockers = load_blockers()
+    active = [b for b in blockers if b['status'] == 'active']
 
-**Status:** {count} blockers active ({high} high priority)
+    if not active:
+        print("✅ No active blockers!")
+        return
 
-"""
-    for b in blockers["blockers"]:
-        entry += f"- **{b['task']}** — {b['blocker']}\n"
-    
-    entry += f"\n**Next:** Continue autonomous work until blockers resolved\n"
-    
-    with open(DIARY_FILE, 'a') as f:
-        f.write(entry)
+    # Sort by ROI/min
+    sorted_blocks = sorted(active, key=lambda b: b.get('roi_per_min', 0), reverse=True)
+
+    print(f"\n💰 Blocker ROI Priority (highest first):\n")
+    total_value = 0
+    total_time = 0
+
+    for i, b in enumerate(sorted_blocks, 1):
+        roi = b.get('roi_per_min', 0)
+        print(f"{i}. {b['name']} — ${roi:,.0f}/min")
+        print(f"   ${b['value']:,.0f} in {b['time_min']} min")
+        print(f"   Owner: {b['owner']}")
+        print()
+
+        total_value += b['value']
+        total_time += b['time_min']
+
+    print(f"📊 Summary: ${total_value:,.0f} unblocked in {total_time} min")
+    print(f"   Average ROI: ${total_value/total_time:,.0f}/min\n")
 
 def main():
-    # Initialize or load blockers
-    blockers = load_blockers()
-    
-    # If empty, populate with known blockers
-    if not blockers.get("blockers"):
-        blockers["blockers"] = get_default_blockers()
-        save_blockers(blockers)
-    
-    # Print current status
-    print("=" * 50)
-    print("🔒 NOVA BLOCKER TRACKER")
-    print("=" * 50)
-    print(f"Last updated: {blockers['last_updated'][:19]}")
-    print()
-    
-    high = [b for b in blockers["blockers"] if b.get("impact") == "high"]
-    medium = [b for b in blockers["blockers"] if b.get("impact") == "medium"]
-    
-    if high:
-        print("🔴 HIGH PRIORITY")
-        for b in high:
-            print(format_blocker(b))
-    
-    if medium:
-        print("🟡 MEDIUM PRIORITY")
-        for b in medium:
-            print(format_blocker(b))
-    
-    print("=" * 50)
-    print(f"Total: {len(blockers['blockers'])} blockers | {len(high)} high priority")
-    print()
-    print("💡 Run with --log to append to diary.md")
-    
-    # Log if requested
-    if "--log" in os.sys.argv:
-        log_to_diary(blockers)
-        print("✅ Logged to diary.md")
+    parser = argparse.ArgumentParser(description='Blocker Tracker')
+    subparsers = parser.add_subparsers(dest='command', help='Command')
 
-if __name__ == "__main__":
+    # List command
+    subparsers.add_parser('list', help='List all blockers')
+
+    # ROI command
+    subparsers.add_parser('roi', help='Show blockers by ROI priority')
+
+    # Add command
+    add_parser = subparsers.add_parser('add', help='Add new blocker')
+    add_parser.add_argument('--name', required=True, help='Blocker name')
+    add_parser.add_argument('--value', type=float, required=True, help='Value unlocked ($)')
+    add_parser.add_argument('--time', type=int, required=True, help='Time to resolve (min)')
+    add_parser.add_argument('--action', required=True, help='Action to resolve')
+    add_parser.add_argument('--owner', default='arthur', help='Owner (default: arthur)')
+
+    # Resolve command
+    resolve_parser = subparsers.add_parser('resolve', help='Resolve blocker')
+    resolve_parser.add_argument('id', type=int, help='Blocker ID')
+
+    args = parser.parse_args()
+
+    if args.command == 'list':
+        list_blockers()
+    elif args.command == 'add':
+        add_blocker(args.name, args.value, args.time, args.action, args.owner)
+    elif args.command == 'resolve':
+        resolve_blocker(args.id)
+    elif args.command == 'roi':
+        show_roi()
+    else:
+        parser.print_help()
+
+if __name__ == '__main__':
     main()
