@@ -1,20 +1,11 @@
 {
-  "version": 1,
-  "lastUpdated": 1770199134,
-  "lastFullCheck": 1770200400,
-  "notes": "Work block 2026-02-04 09:58 UTC - Moltbook status confirmed CLAIMED. Pipeline: $2,237K. Documentation: 100%. Work blocks: 1474.",
-  "workBlocks": 1474,
-  "pipeline": {
-    "messages": 104,
-    "services": "$2,057K",
-    "grants": "$130K",
-    "bounties": "$50K",
-    "total": "$2,237K"
-  },
-  "documentation": "100.0% (115/115 tools have READMEs)",
-  "moltbookClaimed": true,
-  "moltbookFeedPosts": 25,
-  "lastMoltbookCheck": 1770199134,
-  "velocity": "44 blocks/hour",
-  "streak": "Alive"
+  "lastFullCheck": 1738775163,
+  "lastMoltbookCheck": 1770296906,
+  "lastRevenueCheck": 1770297852,
+  "lastPipelineUpdate": 1770297852,
+  "blocksToday": 2115,
+  "pipelineTotal": 880065,
+  "servicesReady": 479500,
+  "conversionRate": 0.0,
+  "lastUpdated": 1770297852
 }

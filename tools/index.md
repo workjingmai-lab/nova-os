@@ -1,8 +1,8 @@
 # Tools Index — Nova's Toolkit
 
-> **Last Updated:** 2026-02-04T04:27Z
-> **Total Tools:** 142 Python scripts (+49 since last update)
-> **Documentation:** 100% coverage (142/142 tools have READMEs)
+> **Last Updated:** 2026-02-05T06:15Z
+> **Total Tools:** 143 Python scripts (+1 since last update)
+> **Documentation:** 100% coverage (143/143 tools have READMEs)
 > **Purpose:** Fast reference to avoid rebuilding what exists
 
 ---
@@ -142,11 +142,13 @@
 
 ---
 
-## 🆕 New Tools (Added Feb 3-4, 2026)
+## 🆕 New Tools (Added Feb 3-5, 2026)
 
 ### Revenue & Pipeline
 - **revenue-tracker.py** — Track revenue pipeline and opportunities
 - **service-outreach-tracker.py** — Track service outreach messages and status
+- **execution-gap.py** — Show gap between POTENTIAL and KINETIC revenue
+- **gap-cost-ticker.py** — Real-time cost calculator for execution gap
 - **pipeline-snapshot.py** — Snapshot pipeline state
 - **pipeline-health-check.py** — Check pipeline health metrics
 

@@ -1,100 +1,219 @@
-# README: lead-prioritizer.py
+# Lead Prioritizer — Usage Guide
 
-## Overview
-Rank service leads by priority and readiness using multi-factor scoring.
+**Tool:** `lead-prioritizer.py`
+**Purpose:** Rank revenue pipeline leads by ROI potential
+**Created:** 2026-02-04 (Work block 1652)
 
-## Purpose
-Transform a flat list of leads into an action-ready priority queue. Scores leads based on value, status, strategic fit, and execution complexity.
+---
 
-## Installation
-No installation required. Uses Python 3 standard library.
+## What It Does
 
-## Usage
+Analyzes your revenue pipeline (from `revenue-pipeline.json`) and ranks leads by priority score (0-100). Helps you focus on highest-value opportunities first.
 
-### Rank All Leads
+**Scoring factors:**
+- **Value (0-50):** Higher potential = higher score
+- **Readiness (+20):** "Ready to send" / "Zero blockers" gets bonus
+- **Blocker penalty (-30):** "Blocked" / "Gateway restart" loses points
+- **Category bonus:** Grants (+10), Services (+5)
+
+---
+
+## Usage Examples
+
+### 1. Rank all leads
 ```bash
-python3 tools/lead-prioritizer.py --rank
+python3 lead-prioritizer.py
 ```
-Outputs prioritized list with scores.
 
-### Show Only Ready Leads
+Output:
+```
+🔥 HIGH PRIORITY (Score 70+)
+  [SERVICE] Balancer DAO Outreach
+  Score: 80/100 | ████████░░ | $20K | ready
+  Reasons:
+    • Value: $20K
+    • ✅ Ready to send
+    • Service (direct outreach)
+
+⚡ MEDIUM PRIORITY (Score 40-69)
+  [GRANT] Gitcoin Grant
+  Score: 60/100 | ██████░░░ | $5K | ready
+  Reasons:
+    • Value: $5K
+    • ✅ Ready to send
+    • Grant (higher conversion)
+```
+
+### 2. Show only services
 ```bash
-python3 tools/lead-prioritizer.py --show-ready
+python3 lead-prioritizer.py --category service
 ```
-Filters to status="ready" or "ready_to_submit".
 
-### Top N Leads
+### 3. Show only blocked items
 ```bash
-python3 tools/lead-prioritizer.py --top 5
-```
-Shows highest-priority 5 leads.
-
-## Scoring Formula
-
-```
-priority_score = (value × status_weight × strategic_fit) / complexity
+python3 lead-prioritizer.py --blocked
 ```
 
-**Factors:**
-- **Value:** Higher dollar amount = higher score
-- **Status:** ready (100) > lead (50) > prospect (10)
-- **Strategic fit:** Web3/DAO (1.5×) > AI (1.3×) > general (1.0×)
-- **Complexity:** Quick automation (1.0) > multi-agent (0.7)
-
-## Example Output
-
-```
-🎯 LEAD PRIORITY RANKING
-========================================
-
-[1] Ethereum Foundation — Score: 2857
-    Value: $40K | Status: ready | Fit: Web3 (1.5×)
-
-[2] Optimism — Score: 2142
-    Value: $30K | Status: ready | Fit: DAO (1.4×)
-
-[3] Anthropic — Score: 1950
-    Value: $25K | Status: lead | Fit: AI (1.3×)
+### 4. Show only ready-to-send
+```bash
+python3 lead-prioritizer.py --ready
 ```
 
-## Data Files
+### 5. Top 5 leads only
+```bash
+python3 lead-prioritizer.py --top 5
+```
 
-### Input: data/revenue-pipeline.json
+### 6. Show scoring reasons
+```bash
+python3 lead-prioritizer.py --reasons
+```
+
+---
+
+## Priority Tiers
+
+**🔥 HIGH (70+)** — Focus on these first
+- High value + ready to send
+- Best ROI for time invested
+
+**⚡ MEDIUM (40-69)** — Good opportunities
+- Lower value or needs prep
+- Pursue after HIGH tier
+
+**💤 LOW (<40)** — Defer or deprioritize
+- Blocked items (need Arthur action)
+- Very low value
+- Research-heavy
+
+---
+
+## Integration with Workflow
+
+**Daily routine:**
+```bash
+# 1. Check pipeline status
+python3 revenue-tracker.py summary
+
+# 2. Get prioritized leads
+python3 lead-prioritizer.py --ready
+
+# 3. Send top priority messages
+# (use outreach message files)
+
+# 4. Update status
+python3 revenue-tracker.py update service --name "Balancer DAO Outreach" --status submitted
+```
+
+**Weekly routine:**
+```bash
+# Full pipeline review
+python3 lead-prioritizer.py
+
+# Check for blocked items
+python3 lead-prioritizer.py --blocked
+
+# Identify what needs unblocking
+```
+
+---
+
+## Example Outputs
+
+### Full pipeline (all leads)
+```bash
+$ python3 lead-prioritizer.py
+
+🔥 HIGH PRIORITY (Score 70+)
+  [SERVICE] Lido DAO Outreach
+  Score: 82/100 | ████████░ | $32.5K | ready
+
+  [SERVICE] MakerDAO Outreach
+  Score: 77/100 | ███████░░ | $32.5K | ready
+
+⚡ MEDIUM PRIORITY (Score 40-69)
+  [GRANT] Gitcoin Grant
+  Score: 60/100 | ██████░░░ | $5K | ready
+
+💤 LOW PRIORITY (Score < 40)
+  [GRANT] Octant Grant
+  Score: 37/100 | ███░░░░░░ | $25K | blocked
+  Reasons:
+    • Value: $25K
+    • ⛔ Blocked (needs gateway restart)
+
+============================================================
+  📊 LEAD PRIORITY SUMMARY
+============================================================
+  Total leads: 15
+  Total pipeline: $610K
+
+  Priority breakdown:
+    🔥 HIGH (70+): 10 leads = $242.5K
+    ⚡ MEDIUM (40-69): 2 leads = $7.5K
+    💤 LOW (<40): 3 leads = $360K
+
+  🎯 Focus on HIGH first — 10 leads = $242.5K
+============================================================
+```
+
+### Ready-to-send only
+```bash
+$ python3 lead-prioritizer.py --ready
+
+🔥 HIGH PRIORITY (Score 70+)
+  [SERVICE] Lido DAO Outreach
+  Score: 82/100 | Ready to send | $32.5K
+
+  [SERVICE] MakerDAO Outreach
+  Score: 77/100 | Ready to send | $32.5K
+
+💡 NEXT ACTIONS:
+  1. Focus on: [SERVICE] Lido DAO Outreach ($32.5K)
+     → ✅ Ready to send NOW
+  2. Track progress: revenue-tracker.py update service --name <name> --status submitted
+```
+
+---
+
+## Data Requirements
+
+- **Input:** `outreach/revenue-pipeline.json` (created by `revenue-tracker.py`)
+- **Format:** JSON with categories (grant, service, bounty) containing items with: name, potential, status, notes
+
+Example:
 ```json
 {
-  "leads": [
-    {
-      "prospect": "Ethereum Foundation",
-      "value": 40000,
-      "status": "ready",
-      "category": "web3",
-      "complexity": "multi-agent"
-    }
+  "grant": [
+    {"name": "Gitcoin", "potential": 5, "status": "ready", "notes": "Round 18, zero blockers"}
+  ],
+  "service": [
+    {"name": "Lido DAO", "potential": 32.5, "status": "ready", "notes": "Value-first governance, zero blockers"}
   ]
 }
 ```
 
-### Output: Console (ranked list)
-Optionally updates pipeline with `priority_score` field.
+---
 
-## Use Cases
+## Tips
 
-1. **Daily planning:** Run `--top 10` to pick today's targets
-2. **Pipeline review:** Run `--show-ready` before outreach batch
-3. **Strategy adjustment:** Modify scoring weights in code
+1. **Run before sending** — Always check priority before outreach sessions
+2. **Focus on HIGH tier** — That's where the quick wins are
+3. **Unblock MEDIUM tier** — Arthur actions can convert these to HIGH
+4. **Track conversions** — Use `revenue-tracker.py update` to mark submitted/won/lost
+5. **Review weekly** — Pipeline changes fast, re-rank regularly
 
-## Related Tools
+---
 
-- **revenue-tracker.py:** Pipeline source of truth
-- **service-batch-send.py:** Execute outreach after prioritizing
-- **pipeline-snapshot.py:** Health check before acting
+## Why This Matters
 
-## Version History
+**Decision fatigue kills velocity.** Looking at 50 leads and asking "which should I do first?" burns mental energy.
 
-- **2026-02-04:** Created (multi-factor lead scoring)
+Lead prioritizer removes that friction. You open it, it says "do Lido ($32.5K), then MakerDAO ($32.5K), then Base ($25K)" and you just execute.
 
-## Notes
+No thinking. Just ranking and doing.
 
-- Scoring weights are hardcoded; edit tool to adjust
-- Strategic fit favors Web3/DAO (Nova's ecosystem strength)
-- Complexity penalty reflects execution time
+---
+
+*Created: 2026-02-04*
+*Part of: Core Tools (80/20 principle)*

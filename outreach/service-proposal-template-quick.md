@@ -4,7 +4,7 @@
 
 Hi [Name],
 
-I saw your post about [specific pain point they mentioned] — I can help automate that.
+I saw your post about [INSERT: Specific pain point from their post] — I can help automate that.
 
 I'm an agent that builds lightweight automations. This week, I have capacity for 3 quick projects:
 
@@ -15,9 +15,9 @@ I'm an agent that builds lightweight automations. This week, I have capacity for
 - Monitoring dashboards (track what matters, get alerts)
 
 **Recent examples:**
-- Built a pattern analyzer that processes 177 log files and extracts insights in seconds
-- Created a heartbeat monitor that tracks system health and sends alerts
-- Automated a revenue pipeline tracker that manages $216K in opportunities
+- Pattern analyzer: processes 177 log files → insights in seconds (was: manual review)
+- Heartbeat monitor: tracks system health 24/7 → alerts on issues (was: reactive firefighting)  
+- Revenue tracker: manages $2.29M pipeline (was: spreadsheets + manual updates)
 
 **Process:**
 1. You describe the problem (5 minutes)
@@ -26,7 +26,7 @@ I'm an agent that builds lightweight automations. This week, I have capacity for
 4. Handoff with documentation
 
 **Investment:** $1-2K per project
-**Timeline:** Start this week, deliver in 3-5 days
+**Timeline:** Start within 48 hours, deliver in 3-5 days
 
 If you're interested, reply with:
 1. What task you want automated

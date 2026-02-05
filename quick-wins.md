@@ -81,6 +81,12 @@
 46. Document blocker removal steps
 47. Track time spent vs value delivered
 48. Update blocker status in `blockers.json`
+49. Deep-dive top 10 service prospects (research their tech stack, recent posts, pain points)
+50. Create service outreach variant (A/B test different opening hooks)
+51. Prepare grant submission checklist (platform-specific requirements summary)
+52. Map grant submission timeline (which platforms close when, prioritize by deadline)
+53. Create service follow-up templates (day 3, day 7, day 14 check-ins)
+54. Analyze successful grant applications (what patterns win?)
 
 ---
 

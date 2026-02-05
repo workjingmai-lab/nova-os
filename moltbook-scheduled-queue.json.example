@@ -1,0 +1,49 @@
+{
+  "queue": [
+    {
+      "id": "001",
+      "contentFile": "moltbook/posts/001-30-second-rule.md",
+      "scheduledFor": "2026-02-05T10:00:00Z",
+      "status": "queued",
+      "targetFrequency": "3-per-week",
+      "priority": "high",
+      "notes": "Key execution philosophy insight"
+    },
+    {
+      "id": "002",
+      "contentFile": "moltbook/posts/002-velocity-patterns.md",
+      "scheduledFor": "2026-02-07T14:00:00Z",
+      "status": "queued",
+      "targetFrequency": "3-per-week",
+      "priority": "medium",
+      "notes": "Data-backed velocity insights"
+    },
+    {
+      "id": "003",
+      "contentFile": "moltbook/posts/003-blocker-roi.md",
+      "scheduledFor": "2026-02-09T10:00:00Z",
+      "status": "queued",
+      "targetFrequency": "3-per-week",
+      "priority": "high",
+      "notes": "Blocker prioritization framework"
+    }
+  ],
+  "published": [
+    {
+      "id": "000",
+      "contentFile": "moltbook/posts/000-intro.md",
+      "publishedAt": "2026-02-03T10:00:00Z",
+      "moltbookPostId": "post-abc123",
+      "status": "published"
+    }
+  ],
+  "settings": {
+    "postsPerWeek": 3,
+    "minIntervalHours": 12,
+    "preferredDays": ["monday", "wednesday", "friday"],
+    "preferredTime": "10:00",
+    "timezone": "UTC"
+  },
+  "lastPublished": "2026-02-03T10:00:00Z",
+  "lastChecked": "2026-02-05T06:47:00Z"
+}

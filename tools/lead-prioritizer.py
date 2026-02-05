@@ -1,220 +1,260 @@
 #!/usr/bin/env python3
 """
-Lead Prioritizer — Rank service leads by priority and readiness
+Lead Prioritizer — Rank revenue pipeline leads by ROI potential.
 
-Scores leads based on:
-- Potential value (higher = better)
-- Status (ready > lead > prospect)
-- Strategic fit (Web3 > AI > general)
-- Execution complexity (quick automation > complex multi-agent)
+Helps focus on highest-value opportunities first.
+Calculates priority score based on: potential value, blockers, readiness.
 
 Usage:
-    python3 lead-prioritizer.py --rank
-    python3 lead-prioritizer.py --show-ready
-    python3 lead-prioritizer.py --top 5
+    python3 lead-prioritizer.py                    # All leads, ranked
+    python3 lead-prioritizer.py --category service # Services only
+    python3 lead-prioritizer.py --blocked          # Show blocked items only
+    python3 lead-prioritizer.py --ready            # Show ready-to-send only
+
+Created: 2026-02-04 (Work block 1652)
 """
 
-import argparse
 import json
+import argparse
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-
-PIPELINE_FILE = Path.home() / ".openclaw/workspace/data/revenue-pipeline.json"
-
-# Status priority (higher = more urgent)
-STATUS_PRIORITY = {
-    "ready": 100,
-    "ready_to_submit": 90,
-    "lead": 50,
-    "prospect": 10
-}
-
-# Strategic fit multiplier (higher = better fit)
-STRATEGIC_FIT = {
-    "web3": 1.5,
-    "dao": 1.4,
-    "ai": 1.3,
-    "claude": 1.2,
-    "anthropic": 1.2,
-    "devops": 1.1,
-    "automation": 1.0,
-    "general": 0.8
-}
-
-# =============================================================================
-# FUNCTIONS
-# =============================================================================
+# Configuration
+PIPELINE_FILE = "/home/node/.openclaw/workspace/revenue-pipeline.json"
 
 def load_pipeline():
-    """Load revenue pipeline."""
-    if PIPELINE_FILE.exists():
-        with open(PIPELINE_FILE) as f:
-            return json.load(f)
-    return {"services": [], "grants": [], "bounties": []}
+    """Load revenue pipeline from JSON file."""
+    try:
+        with open(PIPELINE_FILE, 'r') as f:
+            data = json.load(f)
 
-def score_lead(lead):
-    """Calculate priority score for a lead."""
-    score = 0
+        # Transform to flat list format
+        leads = []
+        categories = data.get('categories', {})
 
-    # Base score from potential value (logarithmic to avoid huge ranges)
-    potential = lead.get("potential", 0)
-    score += (potential ** 0.5) * 10  # sqrt reduces impact of outliers
-
-    # Status bonus
-    status = lead.get("status", "prospect")
-    score += STATUS_PRIORITY.get(status, 0)
-
-    # Strategic fit bonus (check notes for keywords)
-    notes = lead.get("notes", "").lower()
-    fit_multiplier = 1.0
-    for keyword, multiplier in STRATEGIC_FIT.items():
-        if keyword in notes:
-            fit_multiplier = max(fit_multiplier, multiplier)
-    score *= fit_multiplier
-
-    # Recency bonus (leads updated in last 7 days get +20)
-    if lead.get("updated"):
-        try:
-            updated = datetime.fromisoformat(lead["updated"])
-            # Handle both naive and aware datetimes
-            if updated.tzinfo is None:
-                updated = updated.replace(tzinfo=timezone.utc)
-            now = datetime.now(timezone.utc)
-            days_old = (now - updated).days
-            if days_old < 7:
-                score += 20
-        except (ValueError, TypeError):
-            pass  # Skip if date parsing fails
-
-    return round(score, 2), fit_multiplier
-
-def rank_leads(leads):
-    """Rank leads by priority score."""
-    scored = []
-    for lead in leads:
-        score, fit_mult = score_lead(lead)
-        scored.append({
-            "name": lead.get("name", "Unknown"),
-            "potential": lead.get("potential", 0),
-            "status": lead.get("status", "unknown"),
-            "score": score,
-            "fit_multiplier": fit_mult,
-            "notes": lead.get("notes", "")[:100] + "..." if len(lead.get("notes", "")) > 100 else lead.get("notes", "")
-        })
-
-    return sorted(scored, key=lambda x: x["score"], reverse=True)
-
-def show_ranked(ranked_leads, limit=None):
-    """Display ranked leads."""
-    if not ranked_leads:
-        print("  📭 No leads to rank")
-        return
-
-    display_leads = ranked_leads[:limit] if limit else ranked_leads
-
-    print(f"  🎯 Ranked Leads (Top {len(display_leads)}):\n")
-
-    for i, lead in enumerate(display_leads, 1):
-        status_icon = {
-            "ready": "✅",
-            "ready_to_submit": "🟢",
-            "lead": "🟡",
-            "prospect": "⚪"
-        }.get(lead["status"], "❓")
-
-        print(f"  {i}. {status_icon} {lead['name']}")
-        print(f"     Potential: ${lead['potential']:,.0f} | Score: {lead['score']:.1f} | Fit: {lead['fit_multiplier']}x")
-        print(f"     Status: {lead['status']}")
-        if lead['notes'] != "...":
-            print(f"     Notes: {lead['notes']}")
-        print()
-
-def show_ready(ranked_leads):
-    """Show only ready-to-send leads."""
-    ready = [l for l in ranked_leads if l["status"] in ["ready", "ready_to_submit"]]
-
-    if not ready:
-        print("  ⏳ No leads ready to send")
-        return
-
-    print(f"  🚀 Ready to Send ({len(ready)} leads):\n")
-
-    for i, lead in enumerate(ready, 1):
-        print(f"  {i}. ✅ {lead['name']}")
-        print(f"     ${lead['potential']:,.0f} | Score: {lead['score']:.1f}")
-        print()
-
-def calculate_metrics(leads):
-    """Calculate pipeline metrics."""
-    total_potential = sum(l.get("potential", 0) for l in leads)
-
-    by_status = {}
-    for lead in leads:
-        status = lead.get("status", "unknown")
-        by_status.setdefault(status, []).append(lead)
-
-    status_summary = {}
-    for status, status_leads in by_status.items():
-        status_potential = sum(l.get("potential", 0) for l in status_leads)
-        status_summary[status] = {
-            "count": len(status_leads),
-            "potential": status_potential
+        # Map category names
+        category_map = {
+            'grants': 'grant',
+            'services': 'service',
+            'bounties': 'bounty'
         }
 
-    return {
-        "total_leads": len(leads),
-        "total_potential": total_potential,
-        "by_status": status_summary
-    }
+        for cat_name, cat_data in categories.items():
+            # Try different keys for opportunity lists
+            opportunities = (cat_data.get('opportunities', []) or
+                           cat_data.get('topProspects', []) or
+                           cat_data.get('bounties', []))
+
+            status = cat_data.get('status', 'unknown')
+            blocker = cat_data.get('blocker', '')
+
+            for opp in opportunities:
+                leads.append({
+                    'category': category_map.get(cat_name, cat_name),
+                    'name': opp.get('name', 'Unknown'),
+                    'potential': opp.get('amount', 0) // 1000,  # Convert to thousands
+                    'status': status,
+                    'notes': f"Blocker: {blocker}" if blocker and blocker != 'NONE' else 'Ready to send'
+                })
+
+        return leads
+    except FileNotFoundError:
+        print(f"❌ Pipeline file not found: {PIPELINE_FILE}")
+        print("Run revenue-tracker.py first to create pipeline.")
+        return None
+    except Exception as e:
+        print(f"❌ Error loading pipeline: {e}")
+        return None
+
+def calculate_score(item):
+    """
+    Calculate priority score (0-100).
+
+    Formula:
+    - Base score: potential value (normalized to 0-60)
+    - Readiness bonus: +30 if no blockers
+    - Blocker penalty: -40 if blocked
+    - Category bonus: +10 for high-conversion categories
+
+    Returns:
+        tuple: (score, reason)
+    """
+    score = 0
+    reasons = []
+
+    # Value score (0-60) — more aggressive
+    potential = item.get('potential', 0)
+    value_score = min(potential, 60)  # $60K+ = max value score
+    score += value_score
+    reasons.append(f"Value: ${potential}K")
+
+    # Readiness bonus — higher reward for ready items
+    notes = item.get('notes', '').lower()
+    if 'blocked' in notes or 'gateway restart' in notes or 'github' in notes or 'browser' in notes:
+        score -= 40
+        reasons.append("⛔ Blocked (needs Arthur action)")
+    elif 'ready' in notes or 'zero blockers' in notes or 'no blockers' in notes or 'blocker: none' in notes:
+        score += 30
+        reasons.append("✅ Ready to send")
+    else:
+        reasons.append("⏳ May need research")
+
+    # Category bonus
+    category = item.get('category', '')
+    if category == 'grant':
+        score += 10
+        reasons.append("Grant (higher conversion)")
+    elif category == 'service':
+        score += 5
+        reasons.append("Service (direct outreach)")
+
+    return int(max(0, min(score, 100))), reasons
+
+def categorize_leads(leads):
+    """Group leads by priority tier."""
+    high = []      # Score 70+
+    medium = []    # Score 40-69
+    low = []       # Score < 40
+
+    for lead in leads:
+        score, reasons = calculate_score(lead)
+        lead['score'] = score
+        lead['reasons'] = reasons
+
+        if score >= 70:
+            high.append(lead)
+        elif score >= 40:
+            medium.append(lead)
+        else:
+            low.append(lead)
+
+    return high, medium, low
+
+def print_lead(lead, show_reasons=False):
+    """Print a single lead with score."""
+    score = lead.get('score', 0)
+    name = lead.get('name', 'Unknown')
+    potential = lead.get('potential', 0)
+    status = lead.get('status', 'unknown')
+    category = lead.get('category', 'unknown')
+
+    # Score bar
+    bar_length = score // 10
+    bar = "█" * bar_length + "░" * (10 - bar_length)
+
+    print(f"\n  [{category.upper()}] {name}")
+    print(f"  Score: {score}/100 | {bar} | ${potential}K | {status}")
+
+    if show_reasons:
+        print(f"  Reasons:")
+        for reason in lead.get('reasons', []):
+            print(f"    • {reason}")
+
+def print_summary(high, medium, low):
+    """Print summary statistics."""
+    total = len(high) + len(medium) + len(low)
+    total_value = sum(l.get('potential', 0) for l in high + medium + low)
+    high_value = sum(l.get('potential', 0) for l in high)
+
+    print(f"\n{'='*60}")
+    print(f"  📊 LEAD PRIORITY SUMMARY")
+    print(f"{'='*60}")
+    print(f"  Total leads: {total}")
+    print(f"  Total pipeline: ${total_value}K")
+    print(f"\n  Priority breakdown:")
+    print(f"    🔥 HIGH (70+): {len(high)} leads = ${sum(l.get('potential', 0) for l in high)}K")
+    print(f"    ⚡ MEDIUM (40-69): {len(medium)} leads = ${sum(l.get('potential', 0) for l in medium)}K")
+    print(f"    💤 LOW (<40): {len(low)} leads = ${sum(l.get('potential', 0) for l in low)}K")
+    print(f"\n  🎯 Focus on HIGH first — {len(high)} leads = ${high_value}K")
+    print(f"{'='*60}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Lead Prioritizer")
-    parser.add_argument("--rank", action="store_true", help="Rank all leads by priority")
-    parser.add_argument("--show-ready", action="store_true", help="Show only ready-to-send leads")
-    parser.add_argument("--top", type=int, help="Show top N leads")
-    parser.add_argument("--metrics", action="store_true", help="Show pipeline metrics")
-
+    parser = argparse.ArgumentParser(description='Prioritize revenue pipeline leads')
+    parser.add_argument('--category', choices=['grant', 'service', 'bounty'],
+                        help='Filter by category')
+    parser.add_argument('--ready', action='store_true',
+                        help='Show only ready-to-send (no blockers)')
+    parser.add_argument('--blocked', action='store_true',
+                        help='Show only blocked items')
+    parser.add_argument('--top', type=int, default=None,
+                        help='Show top N leads only')
+    parser.add_argument('--reasons', action='store_true',
+                        help='Show scoring reasons')
     args = parser.parse_args()
 
-    pipeline = load_pipeline()
-    leads = pipeline.get("services", [])
-
-    if not leads:
-        print("  📭 No service leads in pipeline")
+    # Load pipeline (returns list)
+    all_leads = load_pipeline()
+    if not all_leads:
         return
 
-    ranked = rank_leads(leads)
+    # Apply filters
+    if args.category:
+        all_leads = [l for l in all_leads if l['category'] == args.category]
 
-    if args.rank:
-        show_ranked(ranked, args.top)
+    if args.ready:
+        all_leads = [l for l in all_leads if 'ready' in l.get('notes', '').lower() or
+                     'zero blockers' in l.get('notes', '').lower() or
+                     'no blockers' in l.get('notes', '').lower() or
+                     'blocker: none' in l.get('notes', '').lower()]
 
-    elif args.show_ready:
-        show_ready(ranked)
+    if args.blocked:
+        all_leads = [l for l in all_leads if 'blocked' in l.get('notes', '').lower() or
+                     'gateway' in l.get('notes', '').lower() or
+                     'github' in l.get('notes', '').lower() or
+                     'browser' in l.get('notes', '').lower()]
 
-    elif args.metrics:
-        metrics = calculate_metrics(leads)
+    if not all_leads:
+        print("❌ No leads found matching filters.")
+        return
 
-        print("  📊 Pipeline Metrics:\n")
-        print(f"  Total Leads: {metrics['total_leads']}")
-        print(f"  Total Potential: ${metrics['total_potential']:,.0f}\n")
+    # Categorize by score
+    high, medium, low = categorize_leads(all_leads)
+    all_ranked = high + medium + low
 
-        print("  By Status:")
-        for status, data in metrics['by_status'].items():
-            icon = {
-                "ready": "✅",
-                "ready_to_submit": "🟢",
-                "lead": "🟡",
-                "prospect": "⚪"
-            }.get(status, "❓")
-            print(f"    {icon} {status}: {data['count']} leads, ${data['potential']:,.0f}")
+    # Apply --top limit
+    if args.top:
+        all_ranked = all_ranked[:args.top]
+        high = [l for l in high if l in all_ranked]
+        medium = [l for l in medium if l in all_ranked]
+        low = [l for l in low if l in all_ranked]
 
-    else:
-        # Default: show top 10
-        show_ranked(ranked, 10)
+    # Print results
+    print("\n🎯 LEAD PRIORITIZATION")
+    print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-if __name__ == "__main__":
+    if high:
+        print(f"\n🔥 HIGH PRIORITY (Score 70+)")
+        for lead in high:
+            print_lead(lead, args.reasons)
+
+    if medium:
+        print(f"\n⚡ MEDIUM PRIORITY (Score 40-69)")
+        for lead in medium:
+            print_lead(lead, args.reasons)
+
+    if low:
+        print(f"\n💤 LOW PRIORITY (Score < 40)")
+        for lead in low:
+            print_lead(lead, args.reasons)
+
+    # Print summary
+    print_summary(high, medium, low)
+
+    # Action recommendations
+    print(f"\n💡 NEXT ACTIONS:")
+    if high:
+        highest = max(high, key=lambda x: x.get('score', 0))
+        print(f"  1. Focus on: [{highest['category'].upper()}] {highest['name']} (${highest['potential']}K)")
+        if 'ready' in str(highest.get('notes', '')).lower():
+            print(f"     → ✅ Ready to send NOW")
+        else:
+            print(f"     → ⏳ May need prep/research")
+    if args.blocked is False and any('blocked' in str(l.get('notes', '')).lower() or
+                                      'gateway' in str(l.get('notes', '')).lower() or
+                                      'github' in str(l.get('notes', '')).lower()
+                                      for l in all_leads):
+        print(f"  2. Unblock items: Run gateway restart (1 min → $180K unblocked)")
+    print(f"  3. Track progress: revenue-tracker.py update <category> --name <name> --status submitted")
+
+if __name__ == '__main__':
     main()

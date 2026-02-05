@@ -87,6 +87,12 @@ def check_feed():
 def main():
     state = load_state()
     last_check = state.get("lastMoltbookCheck", 0)
+    # Ensure last_check is an int
+    if isinstance(last_check, str):
+        try:
+            last_check = int(last_check)
+        except ValueError:
+            last_check = 0
 
     # Check claim status
     status_data, err = check_claim_status()

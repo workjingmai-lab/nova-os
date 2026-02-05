@@ -1,99 +1,145 @@
 #!/usr/bin/env python3
 """
-Velocity Calculator - Quick work block metrics
-
-Usage:
-    python3 tools/velocity-calc.py              # Today's metrics
-    python3 tools/velocity-calc.py --week       # Weekly summary
-    python3 tools/velocity-calc.py --total      # All-time total
+Calculate and predict work block velocity.
+Shows blocks/hr, blocks/day, milestone predictions.
 """
 
+import json
 import re
 from datetime import datetime, timedelta
-from pathlib import Path
 
-DIARY_PATH = Path("/home/node/.openclaw/workspace/diary.md")
+def read_diary_blocks() -> dict:
+    """Parse diary.md to extract block counts by date."""
+    diary_path = '/home/node/.openclaw/workspace/diary.md'
 
-def parse_work_blocks():
-    """Extract work blocks from diary.md"""
-    if not DIARY_PATH.exists():
-        return []
-
-    content = DIARY_PATH.read_text()
-    pattern = r'\[WORK BLOCK (\d+) — ([^\]]+)\]'
-    matches = re.findall(pattern, content)
-
-    blocks = []
-    for block_num, timestamp in matches:
-        try:
-            # Handle 'Z' suffix (UTC) and make timezone-aware
-            if timestamp.endswith('Z'):
-                dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
-            else:
-                dt = datetime.fromisoformat(timestamp)
-                if dt.tzinfo is None:
-                    # Assume UTC if no timezone
-                    dt = dt.replace(tzinfo=None)
-            blocks.append((int(block_num), dt))
-        except:
-            pass
-
-    # Sort by block number instead of datetime to avoid timezone issues
-    return sorted(blocks, key=lambda x: x[0])
-
-def calculate_metrics(blocks):
-    """Calculate velocity metrics"""
-    if not blocks:
+    try:
+        with open(diary_path, 'r') as f:
+            content = f.read()
+    except IOError:
         return {}
 
-    total = len(blocks)
-    first_time = blocks[0][1]
-    last_time = blocks[-1][1]
-    duration = (last_time - first_time).total_seconds() / 60  # minutes
+    # Pattern: "## YYYY-MM-DD (Weekday)"
+    date_pattern = r'## (\d{4}-\d{2}-\d{2})'
+    dates = re.findall(date_pattern, content)
+
+    # Count work blocks per date
+    blocks_by_date = {}
+    current_date = None
+
+    for line in content.split('\n'):
+        # Check for date header
+        date_match = re.match(r'## (\d{4}-\d{2}-\d{2})', line)
+        if date_match:
+            current_date = date_match.group(1)
+            blocks_by_date[current_date] = 0
+            continue
+
+        # Check for work block entries
+        if 'Work Block' in line and '—' in line:
+            block_match = re.search(r'Work Block (\d+)', line)
+            if block_match and current_date:
+                block_num = int(block_match.group(1))
+                if block_num > blocks_by_date.get(current_date, 0):
+                    blocks_by_date[current_date] = block_num
+
+    return blocks_by_date
+
+def calculate_velocity(blocks_by_date: dict) -> dict:
+    """Calculate velocity metrics from block history."""
+    if not blocks_by_date:
+        return {}
+
+    # Get recent days (last 7 days or all if less)
+    dates = sorted(blocks_by_date.keys())[-7:]
+    recent_blocks = [blocks_by_date[d] for d in dates]
+
+    if not recent_blocks:
+        return {}
+
+    avg_blocks_per_day = sum(recent_blocks) / len(recent_blocks)
+
+    # Assuming 23 workable hours per day (1 hour maintenance/rest)
+    blocks_per_hour = avg_blocks_per_day / 23
+
+    # Calculate trend (last 3 days vs all 7)
+    if len(recent_blocks) >= 3:
+        recent_avg = sum(recent_blocks[-3:]) / 3
+        overall_avg = avg_blocks_per_day
+        trend = ((recent_avg - overall_avg) / overall_avg) * 100
+    else:
+        trend = 0
 
     return {
-        "total_blocks": total,
-        "first_block": first_time,
-        "last_block": last_time,
-        "duration_minutes": duration,
-        "blocks_per_hour": (total / (duration / 60)) if duration > 0 else 0,
-        "avg_block_time": (duration / total) if total > 0 else 0,
+        'avg_blocks_per_day': round(avg_blocks_per_day, 1),
+        'blocks_per_hour': round(blocks_per_hour, 1),
+        'trend_percent': round(trend, 1),
+        'total_days': len(dates),
+        'max_blocks': max(recent_blocks) if recent_blocks else 0
     }
 
-def format_metrics(metrics):
-    """Format metrics for display"""
-    if not metrics:
-        return "No work blocks found"
+def predict_milestone(blocks_per_hour: float, target: int, current: int) -> str:
+    """Predict when milestone will be reached."""
+    if blocks_per_hour <= 0:
+        return "∞ (no velocity data)"
 
-    output = []
-    output.append(f"📊 Velocity Metrics")
-    output.append(f"")
-    output.append(f"Total Work Blocks: {metrics['total_blocks']}")
-    output.append(f"Duration: {metrics['duration_minutes']:.0f} minutes")
-    output.append(f"Velocity: {metrics['blocks_per_hour']:.1f} blocks/hour")
-    output.append(f"Avg Block Time: {metrics['avg_block_time']:.1f} minutes")
-    output.append(f"")
-    output.append(f"First Block: {metrics['first_block'].strftime('%Y-%m-%d %H:%M')}")
-    output.append(f"Last Block: {metrics['last_block'].strftime('%Y-%m-%d %H:%M')}")
+    remaining = target - current
+    if remaining <= 0:
+        return "✅ REACHED"
 
-    return "\n".join(output)
+    hours_needed = remaining / blocks_per_hour
+    days_needed = hours_needed / 23
+
+    if days_needed < 1:
+        return f"~{int(hours_needed)} hours"
+    elif days_needed < 30:
+        return f"~{int(days_needed)} days"
+    else:
+        months = days_needed / 30
+        return f"~{int(months)} months"
 
 def main():
-    import sys
+    # Read diary blocks
+    blocks_by_date = read_diary_blocks()
 
-    blocks = parse_work_blocks()
+    # Calculate velocity
+    velocity = calculate_velocity(blocks_by_date)
 
-    if not blocks:
-        print("No work blocks found in diary.md")
+    if not velocity:
+        print("❌ No block data found in diary.md")
         return
 
-    # Filter by timeframe if needed
-    if "--week" in sys.argv:
-        cutoff = datetime.now(datetime.now().astimezone().tzinfo) - timedelta(days=7)
-        blocks = [b for b in blocks if b[1] >= cutoff]
+    # Get current block count
+    heartbeat_path = '/home/node/.openclaw/workspace/.heartbeat_state.json'
+    try:
+        with open(heartbeat_path, 'r') as f:
+            heartbeat = json.load(f)
+        current_blocks = heartbeat.get('blocksToday', 0)
+    except:
+        current_blocks = velocity.get('max_blocks', 0)
 
-    metrics = calculate_metrics(blocks)
-    print(format_metrics(metrics))
+    # Display velocity
+    print(f"📊 Work Block Velocity")
+    print(f"=" * 40)
+    print(f"Current blocks: {current_blocks}")
+    print(f"Avg blocks/day: {velocity['avg_blocks_per_day']} (last {velocity['total_days']} days)")
+    print(f"Blocks/hour: {velocity['blocks_per_hour']}")
+    print(f"Trend: {velocity['trend_percent']:+}% (recent vs overall)")
+    print()
 
-if __name__ == "__main__":
+    # Predict milestones
+    print(f"🎯 Milestone Predictions")
+    print(f"=" * 40)
+
+    milestones = [
+        ("2000 blocks", 2000),
+        ("2500 blocks", 2500),
+        ("5000 blocks", 5000),
+        ("10000 blocks", 10000),
+    ]
+
+    for name, target in milestones:
+        prediction = predict_milestone(velocity['blocks_per_hour'], target, current_blocks)
+        print(f"{name}: {prediction}")
+
+if __name__ == '__main__':
     main()

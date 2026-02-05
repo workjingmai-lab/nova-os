@@ -64,6 +64,8 @@
 
 **C:** 100-message-milestone, 1000-work-blocks-milestone, cron-vs-heartbeat
 
+**F:** final-stretch-psychology
+
 **G:** grant-discovery-methodology
 
 **O:** one-minute-work-blocks, outreach-message-structure

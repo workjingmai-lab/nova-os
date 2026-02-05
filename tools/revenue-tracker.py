@@ -5,6 +5,7 @@ Track grants, services, and bounties in one centralized system.
 
 Usage:
   python tools/revenue-tracker.py add grant --name "Gitcoin" --potential 5000 --status "ready"
+  python tools/revenue-tracker.py update grants --name "Gitcoin" --status "submitted"
   python tools/revenue-tracker.py add service --name "Quick Automation" --potential 2000 --status "lead"
   python tools/revenue-tracker.py list
   python tools/revenue-tracker.py summary
@@ -85,6 +86,27 @@ def list_pipeline(category=None, status=None):
                 print(f"   Notes: {item['notes']}")
             print()
 
+def update_opportunity(category, name, status=None, potential=None, notes=None):
+    """Update an existing revenue opportunity."""
+    pipeline = load_pipeline()
+
+    for item in pipeline[category]:
+        if item["name"].lower() == name.lower():
+            if status:
+                item["status"] = status
+            if potential is not None:
+                item["potential"] = float(potential)
+            if notes is not None:
+                item["notes"] = notes
+            item["updated"] = datetime.now().isoformat()
+
+            save_pipeline(pipeline)
+            print(f"✅ Updated {category[:-1]}: {name}")
+            print(f"   Status: {item['status']} | Potential: ${item['potential']:,.0f}")
+            return
+
+    print(f"❌ {category[:-1].capitalize()} not found: {name}")
+
 def show_summary():
     """Show revenue pipeline summary."""
     pipeline = load_pipeline()
@@ -120,6 +142,93 @@ def show_summary():
     print(f"WON: ${total_won:,.0f}")
     print(f"Conversion rate: {(total_won/total_potential*100) if total_potential > 0 else 0:.1f}%")
 
+def show_followups():
+    """Show opportunities needing follow-up based on Day 0/3/7/14/21 schedule."""
+    pipeline = load_pipeline()
+
+    print("\n📋 FOLLOW-UP REMINDERS")
+    print("=" * 60)
+    print("Schedule: Day 0, 3, 7, 14, 21 after last contact\n")
+
+    followup_needed = []
+
+    for category in ["grants", "services", "bounties"]:
+        for item in pipeline[category]:
+            # Skip won/lost items
+            if item["status"] in ["won", "lost"]:
+                continue
+
+            # Get last contacted date (updated if last_contacted not set)
+            last_contacted_str = item.get("last_contacted", item.get("created", item.get("updated")))
+            last_contacted = datetime.fromisoformat(last_contacted_str)
+            # Strip timezone info for day calculation
+            if last_contacted.tzinfo:
+                last_contacted = last_contacted.replace(tzinfo=None)
+            days_since = (datetime.now() - last_contacted).days
+
+            # Check if follow-up is due (Day 0/3/7/14/21)
+            followup_days = [0, 3, 7, 14, 21]
+            if days_since in followup_days:
+                followup_needed.append({
+                    "category": category,
+                    "name": item["name"],
+                    "potential": item["potential"],
+                    "status": item["status"],
+                    "days_since": days_since,
+                    "last_contacted": last_contacted_str
+                })
+
+    if not followup_needed:
+        print("✅ No follow-ups due today!\n")
+        print("Upcoming follow-ups (next 7 days):")
+        # Show upcoming follow-ups
+        for category in ["grants", "services", "bounties"]:
+            for item in pipeline[category]:
+                if item["status"] in ["won", "lost"]:
+                    continue
+                last_contacted_str = item.get("last_contacted", item.get("created", item.get("updated")))
+                last_contacted = datetime.fromisoformat(last_contacted_str)
+                # Strip timezone info
+                if last_contacted.tzinfo:
+                    last_contacted = last_contacted.replace(tzinfo=None)
+                days_since = (datetime.now() - last_contacted).days
+                followup_days = [0, 3, 7, 14, 21]
+                for fd in followup_days:
+                    if 0 < fd - days_since <= 7:
+                        print(f"  • {item['name']} ({category}): Day {fd} in {fd - days_since} days")
+        return
+
+    # Sort by days since (oldest first)
+    followup_needed.sort(key=lambda x: x["days_since"], reverse=True)
+
+    print(f"🔔 {len(followup_needed)} follow-up(s) due:\n")
+
+    for item in followup_needed:
+        status_icon = {
+            "lead": "🔵",
+            "ready": "🟢",
+            "submitted": "🟡",
+        }.get(item["status"], "⚪")
+
+        print(f"{status_icon} {item['name']} ({item['category']})")
+        print(f"   Potential: ${item['potential']:,.0f} | Status: {item['status']}")
+        print(f"   ⏰ Day {item['days_since']} follow-up due ({item['days_since']} days since last contact)")
+        print()
+
+def record_contact(category, name):
+    """Record a contact/follow-up with an opportunity."""
+    pipeline = load_pipeline()
+
+    for item in pipeline[category]:
+        if item["name"].lower() == name.lower():
+            item["last_contacted"] = datetime.now().isoformat()
+            item["updated"] = datetime.now().isoformat()
+            save_pipeline(pipeline)
+            print(f"✅ Contact recorded for {category[:-1]}: {name}")
+            return
+
+    print(f"❌ {category[:-1].capitalize()} not found: {name}")
+
 def main():
     parser = argparse.ArgumentParser(description="Revenue Opportunity Tracker")
     subparsers = parser.add_subparsers(dest="command", help="Command")
@@ -137,8 +246,24 @@ def main():
     list_parser.add_argument("--category", choices=["grants", "services", "bounties"], help="Filter by category")
     list_parser.add_argument("--status", help="Filter by status")
 
+    # Update command
+    update_parser = subparsers.add_parser("update", help="Update opportunity")
+    update_parser.add_argument("category", choices=["grants", "services", "bounties"], help="Category")
+    update_parser.add_argument("--name", required=True, help="Opportunity name")
+    update_parser.add_argument("--status", help="New status (lead/ready/submitted/won/lost)")
+    update_parser.add_argument("--potential", type=float, help="New potential value ($)")
+    update_parser.add_argument("--notes", help="Update notes")
+
     # Summary command
     subparsers.add_parser("summary", help="Show pipeline summary")
+
+    # Followup command
+    subparsers.add_parser("followup", help="Show follow-up reminders")
+
+    # Contact command
+    contact_parser = subparsers.add_parser("contact", help="Record contact/follow-up")
+    contact_parser.add_argument("category", choices=["grants", "services", "bounties"], help="Category")
+    contact_parser.add_argument("--name", required=True, help="Opportunity name")
 
     args = parser.parse_args()
 
@@ -148,10 +273,16 @@ def main():
         if args.category == "bounty":
             plural = "bounties"
         add_opportunity(plural, args.name, args.potential, args.status, args.notes)
+    elif args.command == "update":
+        update_opportunity(args.category, args.name, args.status, args.potential, args.notes)
     elif args.command == "list":
         list_pipeline(args.category, args.status)
     elif args.command == "summary":
         show_summary()
+    elif args.command == "followup":
+        show_followups()
+    elif args.command == "contact":
+        record_contact(args.category, args.name)
     else:
         parser.print_help()
 

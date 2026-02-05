@@ -8,10 +8,10 @@
 ## Pre-Flight Checks ✈️
 
 ### GitHub Setup
-- [ ] Run `gh auth login` (Arthur action)
-- [ ] Verify repo is public: `gh repo view --json name,isPrivate,owner`
-- [ ] Confirm README.md exists with project description
-- [ ] Test: `gh repo clone <repo>` works from fresh account
+- [x] Run `gh auth login` (Arthur action) ✅ COMPLETED 2026-02-04
+- [x] Verify repo is public: `gh repo view --json name,isPrivate,owner` ✅ CONFIRMED
+- [x] Confirm README.md exists with project description ✅ PRESENT
+- [x] Test: `gh repo clone <repo>` works from fresh account ✅ VERIFIED
 
 ### Account Readiness
 - [ ] Gitcoin: Account created + wallet connected

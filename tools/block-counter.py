@@ -19,26 +19,49 @@ def count_blocks(diary_path="diary.md"):
 
     content = path.read_text()
 
-    # Count work blocks (format: ## [WORK BLOCK NNN — date])
-    block_pattern = r'\[WORK BLOCK (\d+)'
-    blocks = re.findall(block_pattern, content)
+    # Count work blocks (multiple formats supported)
+    # Format 1: ## [WORK BLOCK NNN — date]
+    # Format 2: ### Work Block NNNN: description
+    patterns = [
+        r'\[WORK BLOCK (\d+)',  # Old format
+        r'### Work Block (\d+):',  # New format
+    ]
+
+    blocks = []
+    for pattern in patterns:
+        found = re.findall(pattern, content)
+        blocks.extend(found)
 
     if not blocks:
         print("📊 No work blocks found in diary.md")
         return 0
 
-    # Get latest block number
-    latest_block = int(blocks[-1])
-    total_blocks = len(blocks)
+    # Get latest block number (max of all found)
+    latest_block = max(int(b) for b in blocks) if blocks else 0
+    total_blocks = len(set(blocks))  # Unique blocks only
 
-    # Estimate blocks today (parse dates from recent blocks)
-    date_pattern = r'\[WORK BLOCK \d+ — ([\d\-T:Z]+)'
-    dates = re.findall(date_pattern, content)
+    # Count blocks today by finding blocks under current date header
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    date_header_pattern = rf'## {today}'
 
+    # Find today's section
+    today_section = ""
+    if re.search(date_header_pattern, content):
+        # Split by date headers and find today's section
+        sections = re.split(r'## \d{4}-\d{2}-\d{2}', content)
+        # Find the section that comes after today's date header
+        date_headers = re.findall(r'## (\d{4}-\d{2}-\d{2})', content)
+        for i, date in enumerate(date_headers):
+            if date == today and i + 1 < len(sections):
+                today_section = sections[i + 1]
+                break
+
+    # Count blocks in today's section
     today_count = 0
-    if dates:
-        today = datetime.utcnow().strftime("%Y-%m-%d")
-        today_count = sum(1 for d in dates if d.startswith(today))
+    if today_section:
+        for pattern in patterns:
+            found = re.findall(pattern, today_section)
+            today_count += len(found)
 
     print(f"📊 Work Block Statistics")
     print(f"═" * 40)

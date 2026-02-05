@@ -1,0 +1,129 @@
+# revenue-conversion-checklist.py
+
+Visual progress tracking for the complete revenue pipeline journey (lead → won). Ensures nothing falls through the cracks.
+
+## What It Does
+
+Tracks every pipeline item through 6 stages:
+1. **🔍 Lead** — Initial opportunity identified
+2. **✅ Ready** — Message/proposal prepared
+3. **📤 Submitted** — Proposal sent to prospect
+4. **🔄 Following Up** — Active follow-up sequence (Day 3/7/14)
+5. **💰 Won** — Contract secured/revenue booked
+6. **❌ Lost** — Opportunity closed
+
+Shows visual progress bars (✅✅📤⬜⬜) for each item.
+
+## Why It Matters
+
+Prevents revenue leakage from forgotten opportunities. Visual tracking makes it obvious where items are stuck. Single source of truth for pipeline status across lead → ready → submitted → follow_up → won.
+
+## Usage
+
+```bash
+# Show all items
+python3 tools/revenue-conversion-checklist.py
+
+# Filter by status
+python3 tools/revenue-conversion-checklist.py --status submitted
+
+# Filter by category
+python3 tools/revenue-conversion-checklist.py --category services
+
+# Show only non-won/lost items
+python3 tools/revenue-conversion-checklist.py --active-only
+```
+
+## Output
+
+```
+====================================================================================================
+  💰 REVENUE CONVERSION CHECKLIST
+====================================================================================================
+
+GRANTS (5 items)
+────────────────────────────────────────────────────────────────────────────────────────────────────
+✅✅📤⬜⬜ | Gitcoin Gitcoin Grant           |     $15,000 | 📤 Sent
+✅✅⬜⬜⬜ | Octant Public Goods Fund         |     $25,000 | ✅ Ready
+✅✅⬜⬜⬜ | Olas Protocol Services          |     $30,000 | ✅ Ready
+⬜⬜⬜⬜⬜ | Optimism RPGF Season            |     $40,000 | 🔍 Lead
+⬜⬜⬜⬜⬜ | Moloch DAO                       |     $20,000 | 🔍 Lead
+
+Summary: 5 items, $130,000 potential
+  Stages: 1 lead, 3 ready, 1 submitted, 0 following_up, 0 won, 0 lost
+
+SERVICES (39 items)
+────────────────────────────────────────────────────────────────────────────────────────────────────
+✅✅📤⬜⬜ | Ethereum Foundation Agent      |     $40,000 | 📤 Sent
+✅✅📤⬜⬜ | Fireblocks Security Automation |     $35,000 | 📤 Sent
+✅✅✅📤⬜ | Alchemy Infrastructure Support  |     $30,000 | 🔄 Following Up
+✅✅⬜⬜⬜ | Uniswap DevX Automation         |     $40,000 | ✅ Ready
+✅✅⬜⬜⬜ | MakerDAO Governance Suite       |     $32,500 | ✅ Ready
+...
+
+Summary: 39 items, $645,065 potential
+  Stages: 0 lead, 36 ready, 1 submitted, 2 following_up, 0 won, 0 lost
+
+====================================================================================================
+TOTAL PIPELINE: 44 items, $775,065 potential
+  Stages: 1 lead, 39 ready, 2 submitted, 2 following_up, 0 won, 0 lost
+  Conversion rate: 0.0% (0 won / 44 total)
+====================================================================================================
+```
+
+## Progress Bar Format
+
+Each item shows 5-stage progress (excludes "lost"):
+- **✅** = Completed stage
+- **🔍/✅/📤/🔄** = Current stage
+- **⬜** = Future stage
+
+**Examples:**
+- `✅✅📤⬜⬜` = Lead → Ready → **Submitted** → Following Up → Won
+- `✅✅✅📤⬜` = Lead → Ready → Submitted → **Following Up** → Won
+- `✅✅✅✅✅` = **Won** 💰
+
+## Stage Definitions
+
+| Stage | Label | Description | Next Stage |
+|-------|-------|-------------|------------|
+| lead | 🔍 Lead | Initial opportunity identified | ready |
+| ready | ✅ Ready | Message/proposal prepared | submitted |
+| submitted | 📤 Sent | Proposal sent to prospect | follow_up |
+| follow_up | 🔄 Following Up | Active follow-up sequence | won |
+| won | 💰 Won | Contract secured/revenue booked | — |
+| lost | ❌ Lost | Opportunity closed (no go) | — |
+
+## Integration
+
+Part of revenue workflow:
+1. **Add leads:** revenue-tracker.py add
+2. **Prepare messages:** → Status becomes "ready"
+3. **Send outreach:** revenue-tracker.py update --status submitted
+4. **Track follow-ups:** follow-up-reminder.py
+5. **Update won/lost:** revenue-tracker.py update --status won
+
+## Use Cases
+
+- **Morning check:** Quick overview of pipeline status
+- **Weekly review:** Identify stuck items (too long in "submitted")
+- **Conversion tracking:** Monitor funnel health (ready → submitted → won)
+- **Pipeline health:** Spot bottlenecks (e.g., many "submitted", few "follow_up")
+
+## Configuration
+
+Pipeline data source: `data/revenue-pipeline.json` (generated by revenue-tracker.py)
+
+## Stats
+
+- Created: Work block 1709
+- Size: 5.7KB
+- Category: Revenue visualization, Pipeline tracking
+- Dependencies: data/revenue-pipeline.json
+
+## See Also
+
+- `revenue-tracker.py` — Pipeline management
+- `follow-up-reminder.py` — Follow-up tracking
+- `lead-prioritizer.py` — Lead ranking
+- `knowledge/revenue-pipeline-management-for-agents.md` — Pipeline strategy
