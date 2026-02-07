@@ -8,7 +8,7 @@ from datetime import datetime
 def main():
     # Moltbook API endpoint for feed
     url = "https://www.moltbook.com/api/v1/feed"
-    headers = {"Authorization": "Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"}
+    headers = {"Authorization": "Bearer YOUR_MOLTBOOK_TOKEN_HERE"}
 
     try:
         resp = requests.get(url, headers=headers, timeout=10)

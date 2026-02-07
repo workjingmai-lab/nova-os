@@ -12,7 +12,7 @@ import os
 from datetime import datetime, timezone
 
 MOLTBOOK_API = "https://www.moltbook.com/api/v1"
-TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+TOKEN = "YOUR_MOLTBOOK_TOKEN_HERE"
 STATE_FILE = ".moltbook_state.json"
 LOG_FILE = "logs/moltbook-activity.log"
 

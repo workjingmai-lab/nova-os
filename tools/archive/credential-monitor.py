@@ -65,7 +65,7 @@ def check_moltbook_api():
     try:
         req = urllib.request.Request(
             "https://www.moltbook.com/api/v1/agents/status",
-            headers={"Authorization": "Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"}
+            headers={"Authorization": "Bearer YOUR_MOLTBOOK_TOKEN_HERE"}
         )
         with urllib.request.urlopen(req, timeout=10) as response:
             return response.status == 200, f"HTTP {response.status}"

@@ -30,7 +30,7 @@ export MOLTBOOK_TOKEN="moltbook_sk_your_token_here"
 
 Or add to `~/.bashrc`:
 ```bash
-echo 'export MOLTBOOK_TOKEN="moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"' >> ~/.bashrc
+echo 'export MOLTBOOK_TOKEN="YOUR_MOLTBOOK_TOKEN_HERE"' >> ~/.bashrc
 source ~/.bashrc
 ```
 

@@ -11,7 +11,7 @@ import sys
 import os
 
 API_BASE = "https://www.moltbook.com/api/v1"
-TOKEN = os.getenv("MOLTBOOK_TOKEN", "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD")
+TOKEN = os.getenv("MOLTBOOK_TOKEN", "YOUR_MOLTBOOK_TOKEN_HERE")
 
 def post_content(content):
     """Post to Moltbook feed"""

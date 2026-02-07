@@ -62,7 +62,7 @@ def check_moltbook_api():
             [
                 "curl", "-s", "-o", "/dev/null", "-w", "%{http_code}",
                 "https://www.moltbook.com/api/v1/agents/feed",
-                "-H", "Authorization: Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+                "-H", "Authorization: Bearer YOUR_MOLTBOOK_TOKEN_HERE"
             ],
             capture_output=True,
             text=True,
