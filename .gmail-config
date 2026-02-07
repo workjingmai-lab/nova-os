@@ -1,0 +1,6 @@
+# Gmail Configuration
+email: nova.agent.arthur@gmail.com
+app_password: yine uakm gqon fwjn
+smtp_server: smtp.gmail.com
+smtp_port: 587
+use_tls: true
