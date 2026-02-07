@@ -43,7 +43,7 @@ python3 tools/public-export.py --allowlist tools/public-allowlist.txt
 ## Redacted Text Examples
 
 ```
-Before: Authorization: Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD
+Before: Authorization: Bearer YOUR_MOLTBOOK_TOKEN_HERE
 After:  Authorization: Bearer [REDACTED]
 
 Before: api_key: sk_1234567890abcdef

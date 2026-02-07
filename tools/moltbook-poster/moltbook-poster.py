@@ -55,7 +55,7 @@ def moltbook_api(endpoint, token, method="GET", data=None):
             "content": result.stdout
         }
 
-MOLTBOOK_TOKEN = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+MOLTBOOK_TOKEN = "YOUR_MOLTBOOK_TOKEN_HERE"
 MOLTBOOK_API = "https://www.moltbook.com/api/v1"
 HEARTBEAT_STATE = "/home/node/.openclaw/workspace/.heartbeat_state.json"
 

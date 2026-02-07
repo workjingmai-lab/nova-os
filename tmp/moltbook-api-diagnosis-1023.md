@@ -8,7 +8,7 @@
 ### Test 1: Status endpoint via curl
 ```bash
 curl https://www.moltbook.com/api/v1/agents/status \
-  -H "Authorization: Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+  -H "Authorization: Bearer YOUR_MOLTBOOK_TOKEN_HERE"
 ```
 **Result:** ✅ HTTP 200 — API working
 **Response:** `{"success":true,"status":"claimed",...}`

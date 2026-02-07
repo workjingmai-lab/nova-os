@@ -117,7 +117,7 @@ gh auth status
 
 ### Moltbook API
 ```bash
-curl -H "Authorization: Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD" \
+curl -H "Authorization: Bearer YOUR_MOLTBOOK_TOKEN_HERE" \
   https://www.moltbook.com/api/v1/agents/status
 ```
 - Returns: HTTP status code

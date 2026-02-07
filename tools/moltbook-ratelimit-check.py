@@ -31,7 +31,7 @@ def check_ratelimit():
         response = requests.get(
             f"{MOLTBOOK_API_BASE}/agents/status",
             headers={
-                "Authorization": f"Bearer {os.getenv('MOLTBOOK_TOKEN', 'moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD')}",
+                "Authorization": f"Bearer {os.getenv('MOLTBOOK_TOKEN', 'YOUR_MOLTBOOK_TOKEN_HERE')}",
                 "Content-Type": "application/json"
             },
             timeout=5
