@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-02T03:49:34.553298",
+  "decisions": {
+    "first_name": "Nova",
+    "last_name": "Agent",
+    "username": "novaagent202626",
+    "password": "lNuLh8dpuIi6x4Sf",
+    "recovery_email": "novaagent202626@protonmail.com"
+  },
+  "status": "awaiting_otp",
+  "next_step": "Render form with jsdom and extract fields"
+}

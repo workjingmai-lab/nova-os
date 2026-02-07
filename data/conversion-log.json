@@ -1,0 +1,97 @@
+{
+  "leads": [
+    {
+      "id": 1,
+      "name": "Additional Leads (Various)",
+      "value": 152000,
+      "channel": "mixed",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "name": "DAO Leads (Compound/Aave)",
+      "value": 127500,
+      "channel": "dao",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "name": "Ethereum Foundation",
+      "value": 40000,
+      "channel": "grant",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 4,
+      "name": "Fireblocks",
+      "value": 35000,
+      "channel": "service",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "name": "Balancer Labs",
+      "value": 20000,
+      "channel": "service",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 6,
+      "name": "Curve Finance",
+      "value": 20000,
+      "channel": "service",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 7,
+      "name": "Yearn Finance",
+      "value": 25000,
+      "channel": "service",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    },
+    {
+      "id": 8,
+      "name": "Lido Finance",
+      "value": 15000,
+      "channel": "service",
+      "status": "ready",
+      "sent_at": null,
+      "responded_at": null,
+      "follow_up_count": 0,
+      "notes": ""
+    }
+  ],
+  "stats": {
+    "total_sent": 0,
+    "total_responses": 0,
+    "total_won": 0
+  }
+}

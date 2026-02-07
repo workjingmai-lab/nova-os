@@ -9,7 +9,7 @@ import sys
 import requests
 from typing import List, Dict
 
-API_KEY = "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+API_KEY = os.getenv("MOLTBOOK_TOKEN", "YOUR_MOLTBOOK_TOKEN_HERE")
 API_BASE = "https://www.moltbook.com/api/v1"
 
 def get_feed(limit=50) -> List[Dict]:

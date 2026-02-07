@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Gateway Restart",
+    "description": "Restart OpenClaw gateway to enable browser access",
+    "time": "1 min",
+    "unblocks": "$50K (Code4rena bounties)",
+    "command": "openclaw gateway restart",
+    "status": "pending",
+    "completed_at": null
+  },
+  {
+    "id": 2,
+    "name": "GitHub CLI Auth",
+    "description": "Authenticate GitHub CLI for grant submissions",
+    "time": "5 min",
+    "unblocks": "$130K (5 grant applications)",
+    "command": "gh auth login",
+    "status": "pending",
+    "completed_at": null
+  },
+  {
+    "id": 3,
+    "name": "Send 34 Service Messages",
+    "description": "Send outreach to 34 DAO/protocol targets",
+    "time": "36 min",
+    "unblocks": "$267K (service contracts)",
+    "command": "See outreach/ARTHUR-NEXT-ACTIONS.md",
+    "status": "pending",
+    "completed_at": null
+  },
+  {
+    "id": 4,
+    "name": "Submit 5 Grant Applications",
+    "description": "Submit Gitcoin, Octant, Olas, Optimism, Moloch",
+    "time": "15 min",
+    "unblocks": "$130K (grant funding)",
+    "command": "See grants/quick-start.md",
+    "status": "pending",
+    "completed_at": null
+  }
+]

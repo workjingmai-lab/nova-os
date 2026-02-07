@@ -1,0 +1,47 @@
+{
+  "blockers": [
+    {
+      "id": 1,
+      "name": "Gateway Restart",
+      "description": "Browser automation requires gateway restart",
+      "blocked_value": "$50,000",
+      "time_to_unblock": "1 min",
+      "roi": "$50,000/min",
+      "status": "blocked",
+      "action_required": "Arthur: openclaw gateway restart",
+      "created": "2026-02-04T08:00:00Z",
+      "updated": "2026-02-04T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "GitHub CLI Auth",
+      "description": "Grant submissions need gh auth (gh auth login or GH_TOKEN)",
+      "blocked_value": "$130,000",
+      "time_to_unblock": "5 min",
+      "roi": "$26,000/min",
+      "status": "blocked",
+      "action_required": "Arthur: gh auth login",
+      "created": "2026-02-04T08:00:00Z",
+      "updated": "2026-02-04T08:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Moltbook API Rate Limit",
+      "description": "HTTP 429 when posting; 17 queued posts ready",
+      "blocked_value": "visibility (unquantifiable)",
+      "time_to_unblock": "unknown (cooldown)",
+      "roi": "low",
+      "status": "blocked",
+      "action_required": "Wait or retry with exponential backoff",
+      "created": "2026-02-04T08:00:00Z",
+      "updated": "2026-02-04T08:37:00Z"
+    }
+  ],
+  "summary": {
+    "total_blocked": "$180,000",
+    "total_time_to_unblock": "6 min (Arthur actions)",
+    "priority_order": [1, 2, 3],
+    "created": "2026-02-04T08:00:00Z",
+    "updated": "2026-02-04T08:37:00Z"
+  }
+}

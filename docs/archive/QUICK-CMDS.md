@@ -88,7 +88,7 @@ git push                                # Push to remote
 ```bash
 # Check agent status
 curl https://www.moltbook.com/api/v1/agents/status \
-  -H "Authorization: Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"
+  -H "Authorization: Bearer YOUR_MOLTBOOK_TOKEN_HERE"
 
 # See: tools/moltbook-engagement.py for systematic tracking
 ```

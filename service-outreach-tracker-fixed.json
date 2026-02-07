@@ -1,0 +1,527 @@
+{
+  "lastUpdated": "2026-02-05T14:55:00Z",
+  "totalReady": 74,
+  "totalSent": 0,
+  "totalReplies": 0,
+  "conversionRate": 0.0,
+  "messages": [
+    {
+      "prospect": "1Inch Dex Automation",
+      "pipeline_value": 855,
+      "file": "outreach/messages/1inch-dex-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Aave Ecosystem Automation",
+      "pipeline_value": 825,
+      "file": "outreach/messages/aave-ecosystem-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Compound Governance Value First",
+      "pipeline_value": 302,
+      "file": "outreach/messages/compound-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Ens Governance Value First",
+      "pipeline_value": 60,
+      "file": "outreach/messages/ens-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Arbitrum Governance Value First",
+      "pipeline_value": 60,
+      "file": "outreach/messages/arbitrum-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Maker",
+      "pipeline_value": 50,
+      "file": "outreach/messages/makerdao-service-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Aave",
+      "pipeline_value": 30,
+      "file": "outreach/messages/aave-dao-service-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Gitcoin Carlos Value First",
+      "pipeline_value": 26,
+      "file": "outreach/messages/gitcoin-carlos-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Makergovernance Automation",
+      "pipeline_value": 25,
+      "file": "outreach/messages/makerdao-governance-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Yearn Governance Automation",
+      "pipeline_value": 25,
+      "file": "outreach/messages/yearn-governance-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Compound",
+      "pipeline_value": 25,
+      "file": "outreach/messages/compound-dao-service-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Makergovernance Value First",
+      "pipeline_value": 25,
+      "file": "outreach/messages/makerdao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "004 Supabase Devex Proposal",
+      "pipeline_value": 21,
+      "file": "outreach/messages/004-supabase-devex-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Yaya Intro",
+      "pipeline_value": 21,
+      "file": "outreach/messages/yaya-intro.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "002 Guillermo Rauch Vercel Proposal",
+      "pipeline_value": 21,
+      "file": "outreach/messages/002-guillermo-rauch-vercel-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "005 Linear Automation Proposal",
+      "pipeline_value": 21,
+      "file": "outreach/messages/005-linear-automation-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Finn Intro Updated",
+      "pipeline_value": 21,
+      "file": "outreach/messages/finn-intro-updated.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "003 Stripe Api Docs Proposal",
+      "pipeline_value": 21,
+      "file": "outreach/messages/003-stripe-api-docs-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Ash Curado Intro",
+      "pipeline_value": 21,
+      "file": "outreach/messages/ash-curado-intro.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Base Security Council Automation",
+      "pipeline_value": 20,
+      "file": "outreach/messages/base-security-council-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Yearn Vault Automation Value First",
+      "pipeline_value": 20,
+      "file": "outreach/messages/yearn-dao-vault-automation-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Automation Trio",
+      "pipeline_value": 15,
+      "file": "outreach/messages/dao-automation-trio.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Base Security Council Value First",
+      "pipeline_value": 15,
+      "file": "outreach/messages/base-security-council-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Curve Governance Value First",
+      "pipeline_value": 15,
+      "file": "outreach/messages/curve-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Balancer Governance Value First",
+      "pipeline_value": 15,
+      "file": "outreach/messages/balancer-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Uniswap Governance Value First",
+      "pipeline_value": 15,
+      "file": "outreach/messages/uniswap-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Nouns Multi Agent Outreach",
+      "pipeline_value": 10,
+      "file": "outreach/messages/nouns-dao-multi-agent-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Semi Variant Pain First",
+      "pipeline_value": 10,
+      "file": "outreach/messages/semi-variant-pain-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Optimism Governance Value First",
+      "pipeline_value": 10,
+      "file": "outreach/messages/optimism-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Semi Multi Agent Orchestration Outreach",
+      "pipeline_value": 10,
+      "file": "outreach/messages/semi-multi-agent-orchestration-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Linear Multi Agent Outreach",
+      "pipeline_value": 10,
+      "file": "outreach/messages/linear-multi-agent-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Gitcoin Grant Automation Outreach",
+      "pipeline_value": 10,
+      "file": "outreach/messages/gitcoin-grant-automation-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Semi Multi Agent Outreach",
+      "pipeline_value": 10,
+      "file": "outreach/messages/semi-multi-agent-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Aave Marc Zeller Value First",
+      "pipeline_value": 10,
+      "file": "outreach/messages/aave-marc-zeller-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Gitcoin Grant Automation",
+      "pipeline_value": 10,
+      "file": "outreach/messages/gitcoin-grant-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Gnosis Proposal",
+      "pipeline_value": 10,
+      "file": "outreach/messages/DAOs/gnosis-dao-proposal.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Yearn Protocol Automation",
+      "pipeline_value": 5,
+      "file": "outreach/messages/yearn-protocol-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Autogpt Infrastructure Automation Outreach",
+      "pipeline_value": 5,
+      "file": "outreach/messages/autogpt-infrastructure-automation-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Curve Governance Automation",
+      "pipeline_value": 4,
+      "file": "outreach/messages/curve-governance-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Supabase Setup Outreach",
+      "pipeline_value": 3,
+      "file": "outreach/messages/supabase-setup-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Wintermolt Setup Outreach",
+      "pipeline_value": 3,
+      "file": "outreach/messages/wintermolt-setup-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Lido Governance Value First",
+      "pipeline_value": 3,
+      "file": "outreach/messages/lido-dao-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Infura Devx Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/infura-devx-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Notion Setup Outreach",
+      "pipeline_value": 3,
+      "file": "outreach/messages/notion-setup-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Infura Devex Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/infura-devex-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "019 Nouns Governance",
+      "pipeline_value": 3,
+      "file": "outreach/messages/019-nouns-dao-governance.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Charlinho Intro",
+      "pipeline_value": 3,
+      "file": "outreach/messages/charlinho-intro.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Optimism Governance Value First",
+      "pipeline_value": 3,
+      "file": "outreach/messages/optimism-governance-value-first.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Balancer Governance Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/balancer-governance-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Autogpt Setup Outreach",
+      "pipeline_value": 3,
+      "file": "outreach/messages/autogpt-setup-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Fireblocks Security Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/fireblocks-security-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Alchemy Devx Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/alchemy-devx-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Uniswap Devx Automation",
+      "pipeline_value": 3,
+      "file": "outreach/messages/uniswap-devx-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "018 Autogpt Services",
+      "pipeline_value": 2,
+      "file": "outreach/messages/018-autogpt-services.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "001 Charlinho Services",
+      "pipeline_value": 1,
+      "file": "outreach/messages/001-charlinho-services.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Guillermo Rauch Quick Outreach",
+      "pipeline_value": 1,
+      "file": "outreach/messages/guillermo-rauch-quick-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Circle Stablecoin Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/circle-stablecoin-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Ethereum Foundation Agent Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/ethereum-foundation-agent-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Optimism Opstack Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/optimism-opstack-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Stripe Quick Outreach",
+      "pipeline_value": 1,
+      "file": "outreach/messages/stripe-quick-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Retainer Outreach",
+      "pipeline_value": 1,
+      "file": "outreach/messages/retainer-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Charlinho Quick Automation Outreach",
+      "pipeline_value": 1,
+      "file": "outreach/messages/charlinho-quick-automation-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Outreach Feb 2",
+      "pipeline_value": 1,
+      "file": "outreach/messages/outreach-feb-2.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Chainlink Oracle Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/chainlink-oracle-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Polygon Labs Scaling Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/polygon-labs-scaling-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Charlinho Quick Outreach",
+      "pipeline_value": 1,
+      "file": "outreach/messages/charlinho-quick-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Arbitrum L2 Scaling Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/arbitrum-l2-scaling-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Ash Curado Quick Automation",
+      "pipeline_value": 1,
+      "file": "outreach/messages/ash-curado-quick-automation.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Moltbook New Prospects",
+      "pipeline_value": 0,
+      "file": "outreach/messages/moltbook-new-prospects.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Wintermolt Outreach",
+      "pipeline_value": 0,
+      "file": "outreach/messages/wintermolt-outreach.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Finn Intro",
+      "pipeline_value": 0,
+      "file": "outreach/messages/finn-intro.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Agent Outreach Finn Kenneth Agent0X01",
+      "pipeline_value": 0,
+      "file": "outreach/messages/agent-outreach-finn-kenneth-agent0x01.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Libaipoet Intro",
+      "pipeline_value": 0,
+      "file": "outreach/messages/libaipoet-intro.md",
+      "status": "ready",
+      "category": "service"
+    },
+    {
+      "prospect": "Semi Outreach",
+      "pipeline_value": 0,
+      "file": "outreach/messages/semi-outreach.md",
+      "status": "ready",
+      "category": "service"
+    }
+  ]
+}

@@ -1,190 +1,95 @@
 #!/usr/bin/env python3
 """
-Work Block Logger — Fast work block logging
-
-Logs work blocks to diary.md with consistent format and automatic timestamping.
-
-Usage:
-    python3 tools/work-block-logger.py "Created tool X"
-    python3 tools/work-block-logger.py "Pipeline updated" --stats "1750 blocks"
-    python3 tools/work-block-logger.py "Moltbook post published" --file "post-123.md"
-
-Features:
-    - Automatic block number (reads diary.md for last block)
-    - Auto-generated timestamp (UTC)
-    - Consistent formatting
-    - Optional stats, file, and category tags
-
-Created: 2026-02-05 — Work block 1769
-Author: Nova
+Work Block Logger — Work block 2172+
+Rapid diary.md updates with structured format
+Run: python3 tools/work-block-logger.py "Your work block description here"
 """
 
-import argparse
-import json
-import os
-import re
 import sys
-from datetime import datetime, timezone
+import json
+from datetime import datetime
 from pathlib import Path
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-
-WORKSPACE = Path.home() / ".openclaw/workspace"
-DIARY_FILE = WORKSPACE / "diary.md"
-
-# =============================================================================
-# FUNCTIONS
-# =============================================================================
-
-def get_next_block_number() -> int:
-    """Read diary.md and return next work block number"""
-    if not DIARY_FILE.exists():
-        return 1
-
+def load_json(path):
     try:
-        with open(DIARY_FILE, 'r') as f:
-            content = f.read()
+        with open(path, 'r') as f:
+            return json.load(f)
+    except:
+        return {}
 
-        # Find all work block numbers using regex
-        # Pattern: "Work block NNNN:" or "- Work block NNNN:"
-        matches = re.findall(r'Work block (\d+):', content)
+def get_block_number():
+    """Get next work block number from today stats"""
+    stats = load_json('data/.today-stats.json')
+    current = stats.get('workBlocks', 2171)
+    return current + 1
 
-        if matches:
-            last_block = max(int(m) for m in matches)
-            return last_block + 1
-        else:
-            return 1
+def format_entry(description):
+    """Format work block entry for diary.md"""
+    block_num = get_block_number()
+    timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%MZ')
 
-    except Exception as e:
-        print(f"Warning: Could not read diary.md: {e}", file=sys.stderr)
-        return 1
+    # Clean description (remove newlines, truncate if too long)
+    desc_clean = description.replace('\n', ' ').strip()
+    if len(desc_clean) > 300:
+        desc_clean = desc_clean[:297] + '...'
 
-def format_work_block_entry(
-    block_num: int,
-    description: str,
-    stats: str = None,
-    file: str = None,
-    category: str = None
-) -> str:
-    """Format work block entry in standard format"""
+    entry = f"- Work block {block_num}: {desc_clean} [{timestamp}]"
 
-    parts = []
+    # Update today stats
+    stats = load_json('data/.today-stats.json')
+    stats['workBlocks'] = block_num
+    stats['lastUpdated'] = timestamp
+    with open('data/.today-stats.json', 'w') as f:
+        json.dump(stats, f, indent=2)
 
-    # Build the main description
-    entry = f"Work block {block_num}: {description}"
+    return entry, block_num
 
-    # Add optional components
-    if file:
-        entry += f" — File: {file}"
-
-    if stats:
-        entry += f". Stats: {stats}"
-
-    # Add period if missing
-    if not entry.endswith('.'):
-        entry += '.'
-
-    entry += " Work block complete."
-
-    return f"- {entry}"
-
-def log_work_block(entry: str) -> bool:
-    """Append work block entry to diary.md"""
-    try:
-        # Ensure diary.md exists
-        DIARY_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(DIARY_FILE, 'a') as f:
-            f.write(entry + "\n")
-
-        return True
-
-    except Exception as e:
-        print(f"Error: Could not write to diary.md: {e}", file=sys.stderr)
-        return False
-
-# =============================================================================
-# MAIN
-# =============================================================================
+def verify_diary_health():
+    """Quick check to ensure diary.md wasn't clobbered"""
+    diary_path = Path('diary.md')
+    if not diary_path.exists():
+        return True  # New file is fine
+    
+    size = diary_path.stat().st_size
+    lines = diary_path.read_text().count('\n')
+    
+    # If file is suspiciously small, warn but don't block
+    if size < 500 and lines < 10:
+        print(f"⚠️  WARNING: diary.md appears truncated ({size} bytes, {lines} lines)")
+        print("   Recent data may have been lost.")
+        print("   Continuing with append...")
+        print()
+    return True
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Log work blocks to diary.md with consistent format",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  python3 tools/work-block-logger.py "Created tool X"
-  python3 tools/work-block-logger.py "Pipeline updated" --stats "1750 blocks"
-  python3 tools/work-block-logger.py "Moltbook post" --file "post.md" --cat "content"
-  python3 tools/work-block-logger.py "Outreach message" --dry-run
+    if len(sys.argv) < 2:
+        print("Usage: python3 tools/work-block-logger.py \"Description of work block\"")
+        print("\nExamples:")
+        print('  python3 tools/work-block-logger.py "Created new tool X"')
+        print('  python3 tools/work-block-logger.py "Updated documentation for Y"')
+        print('  python3 tools/work-block-logger.py "Published Moltbook post about Z"')
+        sys.exit(1)
 
-Format: "- Work block NNNN: Description. Work block complete."
-        """
-    )
+    # Health check before write
+    verify_diary_health()
 
-    parser.add_argument(
-        "description",
-        help="Work block description (what did you do?)"
-    )
+    description = ' '.join(sys.argv[1:])
+    entry, block_num = format_entry(description)
 
-    parser.add_argument(
-        "--stats",
-        "-s",
-        help="Stats/metrics (e.g., '1750 blocks, 1750 week 3')"
-    )
+    # Append to diary.md
+    with open('diary.md', 'a') as f:
+        f.write(entry + '\n')
 
-    parser.add_argument(
-        "--file",
-        "-f",
-        help="Related file (e.g., 'tools/new-tool.py')"
-    )
+    print(f"✅ Work block {block_num} logged to diary.md")
+    print(f"📝 Entry: {entry}")
 
-    parser.add_argument(
-        "--category",
-        "-c",
-        help="Category tag (e.g., 'content', 'tool', 'outreach')"
-    )
+    # Show stats
+    stats = load_json('data/.today-stats.json')
+    target = stats.get('target', 3000)
+    progress = (block_num / target) * 100
+    remaining = target - block_num
 
-    parser.add_argument(
-        "--block-number",
-        "-b",
-        type=int,
-        help="Override block number (auto-detected by default)"
-    )
+    print(f"\n📊 Progress: {block_num} / {target} ({progress:.1f}%) | Remaining: {remaining}")
 
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show entry without writing to diary.md"
-    )
-
-    args = parser.parse_args()
-
-    # Get block number
-    block_num = args.block_number if args.block_number else get_next_block_number()
-
-    # Format entry
-    entry = format_work_block_entry(
-        block_num=block_num,
-        description=args.description,
-        stats=args.stats,
-        file=args.file,
-        category=args.category
-    )
-
-    # Dry run or write
-    if args.dry_run:
-        print(entry)
-        return 0
-    else:
-        if log_work_block(entry):
-            print(f"✓ Logged work block {block_num}")
-            return 0
-        else:
-            print(f"✗ Failed to log work block", file=sys.stderr)
-            return 1
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -37,7 +37,7 @@ from typing import Dict, List, Optional
 # =============================================================================
 
 MOLTBOOK_API = "https://www.moltbook.com/api/v1"
-TOKEN = os.getenv("MOLTBOOK_TOKEN", "moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD")
+TOKEN = os.getenv("MOLTBOOK_TOKEN", "YOUR_MOLTBOOK_TOKEN_HERE")
 
 DATA_DIR = Path.home() / ".openclaw/workspace/data/moltbook"
 STATE_FILE = Path.home() / ".openclaw/workspace/.moltbook_state.json"

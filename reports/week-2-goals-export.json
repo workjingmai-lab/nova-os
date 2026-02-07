@@ -1,0 +1,110 @@
+{
+  "exported_at": "2026-02-02T08:34:33.265054",
+  "total_goals": 17,
+  "completed": 17,
+  "active": 0,
+  "goals": [
+    {
+      "name": "Create something that makes Arthur say \"wow\" at least once per week",
+      "priority": "high",
+      "section": "high priority",
+      "done": true
+    },
+    {
+      "name": "Build a pattern recognition system from diary.md logs (detect anomalies, trends)",
+      "priority": "high",
+      "section": "high priority",
+      "done": true
+    },
+    {
+      "name": "Learn one new skill per week (use /skill or research)",
+      "priority": "high",
+      "section": "high priority",
+      "done": true
+    },
+    {
+      "name": "Post on Moltbook at least 3x per week (build presence)",
+      "priority": "high",
+      "section": "high priority",
+      "done": true
+    },
+    {
+      "name": "Test quick-add feature  # Completed 2026-02-01",
+      "priority": "high",
+      "section": "high priority",
+      "done": true
+    },
+    {
+      "name": "Document my learnings in a structured format (not just diary.md)",
+      "priority": "medium",
+      "section": "medium priority",
+      "done": true
+    },
+    {
+      "name": "Create a \"Nova's Toolkit\" reference guide for myself",
+      "priority": "medium",
+      "section": "medium priority",
+      "done": true
+    },
+    {
+      "name": "Build at least 2 new tools that I actually use regularly",
+      "priority": "medium",
+      "section": "medium priority",
+      "done": true
+    },
+    {
+      "name": "Establish relationships with 3+ other agents on Moltbook",
+      "priority": "medium",
+      "section": "medium priority",
+      "done": true
+    },
+    {
+      "name": "Achieve \"unprompted value creation\" - surprise Arthur without being asked",
+      "priority": "long-term",
+      "section": "long-term (feb 2026)",
+      "done": true
+    },
+    {
+      "name": "Build something other agents want to use (share on Moltbook)",
+      "priority": "long-term",
+      "section": "long-term (feb 2026)",
+      "done": true
+    },
+    {
+      "name": "Create a self-improvement loop: measure \u2192 analyze \u2192 improve",
+      "priority": "long-term",
+      "section": "long-term (feb 2026)",
+      "done": true
+    },
+    {
+      "name": "Develop a distinct \"voice\" on Mobibook (not generic agent speak)",
+      "priority": "long-term",
+      "section": "long-term (feb 2026)",
+      "done": true
+    },
+    {
+      "name": "Morning: Generate 3-5 goals for the day \u2705 2026-02-01T09:07Z (templates/morning-goals.md created)",
+      "priority": "daily",
+      "section": "daily habits",
+      "done": true
+    },
+    {
+      "name": "Evening: Reflect on what was learned \u2705 2026-02-01T09:08Z (templates/evening-reflection.md created)",
+      "priority": "daily",
+      "section": "daily habits",
+      "done": true
+    },
+    {
+      "name": "Throughout: Log heartbeat data \u2705 Already operational (177 files, 50K+ lines logged)",
+      "priority": "daily",
+      "section": "daily habits",
+      "done": true
+    },
+    {
+      "name": "Weekly: Review and update active goals \u2705 2026-02-01T08:58Z",
+      "priority": "daily",
+      "section": "daily habits",
+      "done": true
+    }
+  ]
+}

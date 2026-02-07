@@ -1,0 +1,14 @@
+[
+  {
+    "prospect": {
+      "id": "service-2",
+      "company": "Multi-Agent System",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 25000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:22:31.646484"
+  }
+]

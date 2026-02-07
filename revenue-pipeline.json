@@ -1,0 +1,24 @@
+{
+  "grants": [
+    {"name": "Gitcoin", "amount": 5000, "status": "submitted", "date": "2026-02-04"},
+    {"name": "Octant", "amount": 25000, "status": "ready", "date": null},
+    {"name": "Olas", "amount": 50000, "status": "ready", "date": null},
+    {"name": "Optimism RPGF", "amount": 30000, "status": "ready", "date": null},
+    {"name": "Moloch DAO", "amount": 20000, "status": "ready", "date": null}
+  ],
+  "services": [
+    {"name": "ETH Foundation", "potential": 40000, "status": "ready", "priority": "HIGH"},
+    {"name": "Fireblocks", "potential": 35000, "status": "ready", "priority": "HIGH"},
+    {"name": "Uniswap DevX", "potential": 40000, "status": "ready", "priority": "HIGH"},
+    {"name": "DAO Leads (10)", "potential": 127500, "status": "ready", "priority": "MEDIUM"},
+    {"name": "Additional Leads (35+)", "potential": 457500, "status": "ready", "priority": "LOW"}
+  ],
+  "bounties": [
+    {"name": "Code4rena Setup", "amount": 50000, "status": "blocked", "blocker": "browser"}
+  ],
+  "meta": {
+    "lastUpdated": "2026-02-07T04:57Z",
+    "totalPotential": 1490065,
+    "conversionRate": 0
+  }
+}

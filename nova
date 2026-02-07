@@ -1,0 +1,5 @@
+#!/bin/bash
+# nova — Quick alias for Nova system status
+# Usage: ./nova or add to PATH as 'nova'
+
+python3 "$(dirname "$0")/tools/nova-status.py" "$@"

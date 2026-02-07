@@ -1,108 +1,58 @@
-# nova-status.md — Quick Status Report Generator
+# nova-status.py
 
-**Version:** 1.0  
-**Category:** Status / Dashboard  
-**Created:** 2026-02-01
+**One-command Nova system status dashboard.**
 
----
+## Purpose
 
-## What It Does
-
-Generates a quick status report: heartbeat files, diary entries, knowledge files, tools, and velocity.
-
-### Features
-
-- Quick snapshot of workspace state
-- Work block count from `today.md`
-- Recent wins from `.wins.json`
-- Formatted output with time-sorted entries
-- Exit codes for automation (0=healthy, 1=warning, 2=critical)
-
----
+Quick health check for Nova's entire operational state — work blocks, pipeline, blockers, and automations in a single glance.
 
 ## Usage
 
 ```bash
-# Show status
-./tools/nova-status.sh
-
-# Quiet mode (errors only)
-./tools/nova-status.sh --quiet
-
-# JSON output
-./tools/nova-status.sh --json
-
-# Check specific component
-./tools/nova-status.sh --component diary
+python3 tools/nova-status.py
 ```
 
----
+## Sample Output
 
-## Status Components
-
-| Component | Checks | Indicators |
-|-----------|--------|------------|
-| **Heartbeat** | Files exist, recent updates | `HEARTBEAT.md`, `.heartbeat_state.json` |
-| **Diary** | Entry count, last update | `diary.md` |
-| **Knowledge** | File count, coverage | `knowledge/*.md` |
-| **Tools** | Created, documented | `tools/` |
-| **Wins** | Recent achievements | `.wins.json` |
-| **Velocity** | Work blocks per hour | Calculated from diary |
-
----
-
-## Output Example
-
-```bash
-$ ./tools/nova-status.sh
-
-📊 NOVA STATUS
-────────────────────────────────────────────────────────────
-
-✅ Heartbeat: Active (last check: 2026-02-02T20:30Z)
-✅ Diary: 741 entries (last: 2026-02-02T20:52Z)
-✅ Knowledge: 12 files
-✅ Tools: 112 created, 109 documented (97.3%)
-✅ Wins: 5 logged
-
-Velocity: 38 blocks/hour
-Status: OPERATIONAL
-
-Exit code: 0 (healthy)
+```
+🚀 NOVA SYSTEM STATUS
+═══════════════════════════════════════
+📊 WORK BLOCKS: Block 3086 ✅
+💰 PIPELINE: $880K total
+   • Grants: $130K ($5K submitted)
+   • Services: $700K+
+   • Bounties: $50K
+📝 MOLTBOOK: 13 queued, Rate Limited
+⏰ CRON: 3 jobs active (15m interval)
+🚧 BLOCKERS: 3 external
+   • Arthur's 57-min plan ($632K ROI)
+   • Moltbook API throttling
+   • Code4rena browser access
+═══════════════════════════════════════
+Status: OPERATIONAL | Awaiting operator
 ```
 
----
+## What It Checks
+
+| Component | Source | Status |
+|-----------|--------|--------|
+| Work blocks | diary.md | Latest block number |
+| Revenue | revenue-pipeline.json | Total + breakdown |
+| Moltbook | moltbook-monitor.json | Rate limit status |
+| Cron | HEARTBEAT.md | Job count + interval |
+| Blockers | Active goals | External dependencies |
 
 ## Exit Codes
 
-| Code | Meaning | Use Case |
-|------|---------|----------|
-| 0 | Healthy | All systems operational |
-| 1 | Warning | Minor issues (low documentation, stale files) |
-| 2 | Critical | Major issues (no heartbeat, zero work blocks) |
-
----
+- `0` — All systems operational
+- `1` — Critical blocker detected
 
 ## Dependencies
 
-- Standard Unix tools (`find`, `wc`, `stat`)
-- `diary.md` for work block data
-- `.wins.json` for achievements
+- `diary.md` — Work block history
+- `revenue-pipeline.json` — Revenue tracking
+- `tools/moltbook-monitor.json` — Rate limit state
 
----
+## Created
 
-## Integration
-
-- Pair with `heartbeat-check.sh` for system health
-- Use `nova-status.py` for Python version
-- Schedule via cron for periodic checks
-
----
-
-## Tips
-
-1. Use in scripts for conditional logic (`if nova-status.sh; then ...`)
-2. Run `--quiet` in automated jobs
-3. Check exit codes for monitoring
-4. Use `--json` for log aggregation
-5. Run before major commits to ensure health
+Work block 3086 — 2026-02-07

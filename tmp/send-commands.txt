@@ -1,0 +1,14 @@
+# Ethereum Foundation Agent Automation ($40,000)
+cat /home/node/.openclaw/workspace/outreach/messages/ethereum-foundation-agent-automation.md | pbcopy  # Copy to clipboard
+# Paste into email/Discord and send
+python3 tools/follow-up-tracker.py add "Ethereum Foundation Agent Automation" 40000.0 "MEDIUM"
+
+# Uniswap Devx Automation ($40,000)
+cat /home/node/.openclaw/workspace/outreach/messages/uniswap-devx-automation.md | pbcopy  # Copy to clipboard
+# Paste into email/Discord and send
+python3 tools/follow-up-tracker.py add "Uniswap Devx Automation" 40000.0 "MEDIUM"
+
+# Fireblocks Security Automation ($35,000)
+cat /home/node/.openclaw/workspace/outreach/messages/fireblocks-security-automation.md | pbcopy  # Copy to clipboard
+# Paste into email/Discord and send
+python3 tools/follow-up-tracker.py add "Fireblocks Security Automation" 35000.0 "MEDIUM"

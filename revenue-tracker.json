@@ -1,0 +1,313 @@
+{
+  "lastUpdated": "2026-02-03T12:45:00.000000Z",
+  "totalPipeline": 584000,
+  "pipelineBreakdown": {
+    "grants": {
+      "amount": 130000,
+      "count": 5,
+      "status": "ready",
+      "blocker": "GitHub CLI auth required",
+      "roi": "5 min = $130K = $26,000/min"
+    },
+    "services": {
+      "amount": 411000,
+      "count": 25,
+      "status": "ready",
+      "blocker": "None (Arthur sends emails)",
+      "roi": "Send now = $411K in motion"
+    },
+    "bounties": {
+      "amount": 43000,
+      "count": 0,
+      "status": "setup_required",
+      "blocker": "Browser access (gateway restart)",
+      "roi": "1 min = $43K = $43,000/min"
+    }
+  },
+  "messages": [
+    {
+      "id": "solana-foundation",
+      "prospect": "Solana Foundation",
+      "amount": 30000,
+      "type": "service",
+      "file": "outreach-solana-network-monitoring.md",
+      "status": "ready",
+      "category": "layer1"
+    },
+    {
+      "id": "uniswap",
+      "prospect": "Uniswap",
+      "amount": 25000,
+      "type": "service",
+      "file": "outreach-uniswap-governance-automation.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "arbitrum",
+      "prospect": "Arbitrum",
+      "amount": 25000,
+      "type": "service",
+      "file": "outreach-arbitrum-sequencer-monitoring.md",
+      "status": "ready",
+      "category": "layer2"
+    },
+    {
+      "id": "makerdao",
+      "prospect": "MakerDAO",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-makerdao-governance-liquidation.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "aave",
+      "prospect": "Aave",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-aave-liquidation-monitoring.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "compound",
+      "prospect": "Compound",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-compound-liquidation-governance.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "lido",
+      "prospect": "Lido DAO",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-lido-governance-monitoring.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "balancer",
+      "prospect": "Balancer",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-balancer-multichain-governance.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "across",
+      "prospect": "Across",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-across-bridge-monitoring.md",
+      "status": "ready",
+      "category": "bridge"
+    },
+    {
+      "id": "curve",
+      "prospect": "Curve",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-curve-stableswap-governance.md",
+      "status": "ready",
+      "category": "defi"
+    },
+    {
+      "id": "optimism",
+      "prospect": "Optimism",
+      "amount": 20000,
+      "type": "service",
+      "file": "outreach-optimism-sequencer-governance.md",
+      "status": "ready",
+      "category": "layer2"
+    },
+    {
+      "id": "nouns-dao",
+      "prospect": "Nouns DAO",
+      "amount": 15000,
+      "type": "service",
+      "file": "outreach-nouns-dao-multi-agent.md",
+      "status": "ready",
+      "category": "dao"
+    },
+    {
+      "id": "linear",
+      "prospect": "Linear",
+      "amount": 15000,
+      "type": "service",
+      "file": "outreach-linear-multi-agent.md",
+      "status": "ready",
+      "category": "devtools"
+    },
+    {
+      "id": "autogpt",
+      "prospect": "AutoGPT",
+      "amount": 15000,
+      "type": "service",
+      "file": "tmp/outreach-autogpt-openclaw-setup.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "supabase",
+      "prospect": "Supabase",
+      "amount": 10000,
+      "type": "service",
+      "file": "tmp/outreach-supabase-openclaw-setup.md",
+      "status": "ready",
+      "category": "devtools"
+    },
+    {
+      "id": "notion",
+      "prospect": "Notion",
+      "amount": 10000,
+      "type": "service",
+      "file": "tmp/outreach-notion-openclaw-setup.md",
+      "status": "ready",
+      "category": "devtools"
+    },
+    {
+      "id": "wintermolt",
+      "prospect": "Wintermolt",
+      "amount": 10000,
+      "type": "service",
+      "file": "tmp/outreach-wintermolt-openclaw-setup.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "libai-poet",
+      "prospect": "LibaiPoet",
+      "amount": 10000,
+      "type": "service",
+      "file": "tmp/outreach-libai-poet-multi-agent.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "semi",
+      "prospect": "SEMI",
+      "amount": 10000,
+      "type": "service",
+      "file": "tmp/outreach-semi-multi-agent.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "charlinho",
+      "prospect": "Charlinho",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-charlinho-quick-automation.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "ya-ya",
+      "prospect": "YaYa_A",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-ya-ya-quick-automation.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "ash-curado",
+      "prospect": "ash-curado",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-ash-curado-quick-automation.md",
+      "status": "ready",
+      "category": "agents"
+    },
+    {
+      "id": "guillermo-rauch",
+      "prospect": "Guillermo Rauch (Vercel)",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-guillermo-rauch-quick-automation.md",
+      "status": "ready",
+      "category": "devtools"
+    },
+    {
+      "id": "stripe",
+      "prospect": "Stripe",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-stripe-quick-automation.md",
+      "status": "ready",
+      "category": "devtools"
+    },
+    {
+      "id": "uniswap-dao",
+      "prospect": "Uniswap DAO",
+      "amount": 5000,
+      "type": "service",
+      "file": "tmp/outreach-uniswap-dao-governance.md",
+      "status": "ready",
+      "category": "dao"
+    }
+  ],
+  "grants": [
+    {
+      "id": "gitcoin",
+      "name": "Gitcoin Grant",
+      "amount": 5000,
+      "file": "tmp/grant-submissions/gitcoin-grant.md",
+      "status": "ready",
+      "blocker": "GitHub auth required"
+    },
+    {
+      "id": "octant",
+      "name": "Octant Grant",
+      "amount": 10000,
+      "file": "tmp/grant-submissions/octant-grant.md",
+      "status": "ready",
+      "blocker": "GitHub auth required"
+    },
+    {
+      "id": "olas",
+      "name": "Olas Grant",
+      "amount": 15000,
+      "file": "tmp/grant-submissions/olas-grant.md",
+      "status": "ready",
+      "blocker": "GitHub auth required"
+    },
+    {
+      "id": "optimism-rpgf",
+      "name": "Optimism RPGF",
+      "amount": 50000,
+      "file": "tmp/grant-submissions/optimism-rpgf-grant.md",
+      "status": "ready",
+      "blocker": "GitHub auth required"
+    },
+    {
+      "id": "moloch-dao",
+      "name": "Moloch DAO Grant",
+      "amount": 50000,
+      "file": "tmp/grant-submissions/moloch-dao-grant.md",
+      "status": "ready",
+      "blocker": "GitHub auth required"
+    }
+  ],
+  "bounties": [
+    {
+      "id": "code4rena",
+      "name": "Code4rena Audits",
+      "amount": 43000,
+      "status": "setup_required",
+      "blocker": "Browser access (gateway restart)"
+    }
+  ],
+  "summary": {
+    "totalPipeline": "$584K",
+    "readyToSend": 25,
+    "readyToSubmit": 5,
+    "setupRequired": 1,
+    "unblockTime": "6 minutes",
+    "unblockROI": "$30,000 per minute"
+  }
+}

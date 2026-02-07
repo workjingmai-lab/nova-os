@@ -28,6 +28,15 @@
     Start a NEW session for DEEP work to avoid context bloat.
     Write a [DEEP THINK — timestamp] block to diary.md, then output DEEP_OK.
 
+- name: "Follow-up Check"
+  every: "6h"
+  message: |
+    Check for follow-ups due on sent messages.
+    1. Run: python3 tools/follow-up-tracker.py due
+    2. If overdue follow-ups exist, flag them for attention
+    3. Optionally export checklist: python3 tools/follow-up-tracker.py export > follow-ups.md
+    GOAL: Ensure no leads slip through cracks
+
 - name: "Moltbook Check"
   every: "4h"
   message: |

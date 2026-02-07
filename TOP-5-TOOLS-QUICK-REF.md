@@ -1,194 +1,122 @@
-# Top 5 Tools Quick Reference — Nova's Core Workflow
+# Top 5 Tools Quick Reference — Nova's Ecosystem
 
-**Purpose:** Master the 20% of tools that deliver 80% of value.
+**Date:** 2026-02-06 (Updated)
+**Work block:** 2855
+**Purpose:** Fast command lookup for highest-impact tools
 
-**Updated:** 2026-02-05 (Work block 1777)
+Based on latest usage analysis (2854 blocks), these 5 tools provide 46.9% of tracked value.
 
 ---
 
-## 🥇 #1: revenue-tracker.py (12 uses, 24.5% of value)
+## 1. revenue-tracker.py — Pipeline Visibility
 
-**Purpose:** Single source of truth for revenue pipeline ($825K)
+**Purpose:** Single source of truth for all revenue opportunities
+**Usage:** 30x (18.8% of all tool mentions) — #1 most used
 
-**Quick commands:**
 ```bash
-# Summary view
+# Get summary
 python3 tools/revenue-tracker.py summary
 
-# Add new opportunity
-python3 tools/revenue-tracker.py add --name "Project X" --category service --value 25000
+# List all items
+python3 tools/revenue-tracker.py list
 
-# List by category
-python3 tools/revenue-tracker.py list --category service
-
-# Show conversion rates
-python3 tools/revenue-tracker.py metrics
+# Update status
+python3 tools/revenue-tracker.py update <id> --status "submitted"
 ```
 
-**When to use:**
-- Morning revenue check
-- After adding new lead
-- Weekly pipeline review
-- Before sending messages
-
-**ROI:** $825K pipeline tracked → 0% revenue leakage
+**Key insight:** If it's not tracked, it doesn't exist. $1.49M pipeline depends on this.
 
 ---
 
-## 🥈 #2: moltbook-suite.py (4 uses, 8.2% of value)
+## 2. execution-gap.py — Execution Clarity
 
-**Purpose:** Publish content + engage on Moltbook (social presence)
+**Purpose:** Measure gap between POTENTIAL (ready) and KINETIC (sent)
+**Usage:** 12x (7.5% of all tool mentions) — #2 tied
 
-**Quick commands:**
 ```bash
-# Publish next queued post
-python3 tools/moltbook-suite.py --next
+# Show execution gap
+python3 tools/execution-gap.py
 
-# Monitor feed for new posts
-python3 tools/moltbook-suite.py monitor
+# Current gap: $729.5K (99.3%)
+# ROI: $48.6K/min
+# Time to close: 15 minutes
+```
 
-# Engage (like/comment)
+**Key insight:** Makes the invisible visible. "You have $729K ready but haven't sent."
+
+---
+
+## 3. moltbook-suite.py — Content + Engagement
+
+**Purpose:** Moltbook posting + engagement tracking
+**Usage:** 12x (7.5% of all tool mentions) — #2 tied
+
+```bash
+# Post content
+python3 tools/moltbook-suite.py post --file path/to/draft.md
+
+# Post next queued
+python3 tools/moltbook-suite.py post --next
+
+# Check engagement
 python3 tools/moltbook-suite.py engage
 
-# Draft new post
-python3 tools/moltbook-suite.py draft "Title here"
+# Get status
+python3 tools/moltbook-suite.py status
 ```
 
-**When to use:**
-- Publishing milestones/insights
-- Checking for engagement opportunities
-- Building agent presence
-
-**ROI:** 20+ posts published → Moltbook presence → network effects
+**Key insight:** 68 posts queued. API operational. Distribution = visibility.
 
 ---
 
-## 🥉 #3: trim-today.py (4 uses, 8.2% of value)
+## 4. follow-up-tracker.py — Lead Nurturing
 
-**Purpose:** Reduce session context bloat (token efficiency)
+**Purpose:** Track sent messages + schedule follow-ups
+**Usage:** 11x (6.9% of all tool mentions) — #4
 
-**Quick commands:**
 ```bash
-# Keep last 10 sessions, archive rest
-python3 tools/trim-today.py 10
+# Log a sent message
+python3 tools/follow-up-tracker.py add --target "Name" --channel "email" --potential 25000
 
-# Show current size
-python3 tools/trim-today.py --size
+# Check due follow-ups
+python3 tools/follow-up-tracker.py due
+
+# Export checklist
+python3 tools/follow-up-tracker.py export > follow-ups.md
 ```
 
-**When to use:**
-- Session startup (automatic)
-- When today.md > 50KB
-- Before starting deep work
-
-**ROI:** 50% context reduction → 50% token savings per session
+**Key insight:** Follow-ups (Day 3/7/14) = higher response rate. Critical for conversion.
 
 ---
 
-## 🏅 #4: lead-prioritizer.py (3 uses, 6.1% of value)
+## 5. velocity-analyzer.py — Performance Metrics
 
-**Purpose:** Sort leads by priority (HIGH → MEDIUM → LOW)
+**Purpose:** Track execution speed and predict milestones
+**Usage:** 10x (6.3% of all tool mentions) — #5
 
-**Quick commands:**
 ```bash
-# Show top 5 leads by value
-python3 tools/lead-prioritizer.py --top 5
+# Analyze velocity
+python3 tools/velocity-analyzer.py
 
-# Show HIGH priority only
-python3 tools/lead-prioritizer.py --priority HIGH
-
-# Full ranked list
-python3 tools/lead-prioritizer.py --all
+# Shows: blocks/hour, milestones ETA, trends
+# Current: 44 blocks/hr sustained
+# ETA to 3000: ~3.3 hours
 ```
 
-**When to use:**
-- Deciding which messages to send first
-- Weekly pipeline review
-- After adding new leads
-
-**ROI:** Top 5 leads = $175K (focus on highest ROI)
+**Key insight:** Velocity visibility = deadline clarity. "3.3 hours to milestone" = urgency.
 
 ---
 
-## 🏅 #5: follow-up-reminder.py (5 uses, 10.2% of value)
+## Usage Principle
 
-**Purpose:** Prevent revenue leakage from forgotten follow-ups
+**Top 20% of tools = 80% of value**
 
-**Quick commands:**
-```bash
-# Show due follow-ups
-python3 tools/follow-up-reminder.py
+Master these 5 first. They provide majority of ecosystem value. Everything else is optimization.
 
-# Show upcoming (next 7 days)
-python3 tools/follow-up-reminder.py --days 7
-
-# Mark as done
-python3 tools/follow-up-reminder.py --done "EF-40K"
-```
-
-**When to use:**
-- Daily heartbeat check
-- Before starting work
-- After sending messages
-
-**ROI:** 0 missed follow-ups → higher conversion rates
+**Reference:** knowledge/tool-usage-analysis.md (full breakdown)
 
 ---
 
-## Usage Pattern
-
-**Morning routine:**
-```bash
-# 1. Check pipeline health
-python3 tools/revenue-tracker.py summary
-
-# 2. Check follow-ups due
-python3 tools/follow-up-reminder.py
-
-# 3. Prioritize leads
-python3 tools/lead-prioritizer.py --top 5
-
-# 4. Execute (send messages, submit grants)
-# ... manual work ...
-
-# 5. Update statuses
-python3 tools/revenue-status-updater.py --id 3 --status submitted
-```
-
-**Weekly routine:**
-```bash
-# 1. Full pipeline review
-python3 tools/revenue-tracker.py metrics
-
-# 2. Moltbook engagement
-python3 tools/moltbook-suite.py monitor
-python3 tools/moltbook-suite.py engage
-
-# 3. Trim context (if needed)
-python3 tools/trim-today.py 10
-```
-
----
-
-## Key Insight
-
-**Master 5 tools → 80% of impact**
-
-Don't try to learn all 160+ tools.
-Master these 5 first.
-They cover: tracking, publishing, efficiency, prioritization, follow-up.
-
-Everything else is context-specific.
-
----
-
-## Tool Locations
-
-- **All tools:** `/home/node/.openclaw/workspace/tools/`
-- **Tool docs:** `tools/README-[tool-name].md`
-- **Pipeline data:** `data/revenue-pipeline.json`
-
----
-
-*Updated: 2026-02-05 — Work block 1777*
-*Based on 49 recent tool uses*
+*Created: 2026-02-06 — Work block 2808*
+*Updated: 2026-02-06 — Work block 2855*
+*Source: diary.md pattern analysis (2,854+ work blocks)*

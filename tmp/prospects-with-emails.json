@@ -1,0 +1,167 @@
+[
+  {
+    "prospect": "1Inch Dex Automation",
+    "pipeline_value": 855,
+    "file": "outreach/messages/1inch-dex-automation.md",
+    "emails": [
+      "dev-rel@1inch.io",
+      "partnerships@1inch.io"
+    ],
+    "status": "sent",
+    "sentAt": "2026-02-05T15:21:06.232368Z"
+  },
+  {
+    "prospect": "Gitcoin Carlos Value First",
+    "pipeline_value": 26,
+    "file": "outreach/messages/gitcoin-carlos-value-first.md",
+    "emails": [
+      "carlos@gitcoin.co"
+    ],
+    "status": "sent",
+    "sentAt": "2026-02-05T15:21:06.232368Z"
+  },
+  {
+    "prospect": "Yearn Governance Automation",
+    "pipeline_value": 25,
+    "file": "outreach/messages/yearn-governance-automation.md",
+    "emails": [
+      "governance@yearn.fi"
+    ],
+    "status": "sent",
+    "sentAt": "2026-02-05T15:21:06.232368Z"
+  },
+  {
+    "prospect": "Optimism Governance Value First",
+    "pipeline_value": 10,
+    "file": "outreach/messages/optimism-dao-governance-value-first.md",
+    "emails": [
+      "katherine@optimism.io",
+      "jing@optimism.io"
+    ],
+    "status": "sent",
+    "sentAt": "2026-02-05T15:21:06.232368Z"
+  },
+  {
+    "prospect": "Gitcoin Grant Automation Outreach",
+    "pipeline_value": 10,
+    "file": "outreach/messages/gitcoin-grant-automation-outreach.md",
+    "emails": [
+      "grants@gitcoin.co"
+    ],
+    "status": "sent",
+    "sentAt": "2026-02-05T15:21:06.232368Z"
+  },
+  {
+    "prospect": "Yearn Protocol Automation",
+    "pipeline_value": 5,
+    "file": "outreach/messages/yearn-protocol-automation.md",
+    "emails": [
+      "contact@yearn.finance",
+      "banteg@yearn.finance"
+    ]
+  },
+  {
+    "prospect": "Curve Governance Automation",
+    "pipeline_value": 4,
+    "file": "outreach/messages/curve-governance-automation.md",
+    "emails": [
+      "contact@curve.fi",
+      "michael@curve.fi"
+    ]
+  },
+  {
+    "prospect": "Infura Devex Automation",
+    "pipeline_value": 3,
+    "file": "outreach/messages/infura-devex-automation.md",
+    "emails": [
+      "devex@consensys.net"
+    ]
+  },
+  {
+    "prospect": "Optimism Governance Value First",
+    "pipeline_value": 3,
+    "file": "outreach/messages/optimism-governance-value-first.md",
+    "emails": [
+      "governance@optimism.io"
+    ]
+  },
+  {
+    "prospect": "Balancer Governance Automation",
+    "pipeline_value": 3,
+    "file": "outreach/messages/balancer-governance-automation.md",
+    "emails": [
+      "fernando@balancer.fi",
+      "team@balancer.fi"
+    ]
+  },
+  {
+    "prospect": "Fireblocks Security Automation",
+    "pipeline_value": 3,
+    "file": "outreach/messages/fireblocks-security-automation.md",
+    "emails": [
+      "partnerships@fireblocks.com"
+    ]
+  },
+  {
+    "prospect": "Uniswap Devx Automation",
+    "pipeline_value": 3,
+    "file": "outreach/messages/uniswap-devx-automation.md",
+    "emails": [
+      "dev-rel@uniswap.org",
+      "grants@uniswap.org"
+    ]
+  },
+  {
+    "prospect": "Circle Stablecoin Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/circle-stablecoin-automation.md",
+    "emails": [
+      "developers@circle.com",
+      "partnerships@circle.com"
+    ]
+  },
+  {
+    "prospect": "Ethereum Foundation Agent Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/ethereum-foundation-agent-automation.md",
+    "emails": [
+      "ecosystem-support@ethereum.org"
+    ]
+  },
+  {
+    "prospect": "Optimism Opstack Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/optimism-opstack-automation.md",
+    "emails": [
+      "ecosystem@optimism.io",
+      "partnerships@optimism.io"
+    ]
+  },
+  {
+    "prospect": "Chainlink Oracle Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/chainlink-oracle-automation.md",
+    "emails": [
+      "partnerships@chain.link",
+      "ecosystem@smartcontract.com"
+    ]
+  },
+  {
+    "prospect": "Polygon Labs Scaling Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/polygon-labs-scaling-automation.md",
+    "emails": [
+      "ecosystem@polygon.technology",
+      "partnerships@polygon.technology"
+    ]
+  },
+  {
+    "prospect": "Arbitrum L2 Scaling Automation",
+    "pipeline_value": 1,
+    "file": "outreach/messages/arbitrum-l2-scaling-automation.md",
+    "emails": [
+      "ecosystem@arbitrum.io",
+      "partnerships@arbitrum.foundation"
+    ]
+  }
+]

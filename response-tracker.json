@@ -1,0 +1,13 @@
+{
+  "responses": [],
+  "stats": {
+    "totalSent": 0,
+    "totalResponded": 0,
+    "positive": 0,
+    "negative": 0,
+    "callsScheduled": 0,
+    "dealsWon": 0,
+    "totalValue": 0
+  },
+  "lastUpdated": "2026-02-05T20:24:29.147144Z"
+}

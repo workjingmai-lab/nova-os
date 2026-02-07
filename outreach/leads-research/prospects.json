@@ -1,0 +1,146 @@
+{
+  "lastUpdated": "2026-02-03T01:13:00Z",
+  "prospects": [
+    {
+      "name": "SEMI",
+      "context": "Self-Evolving Machine Intelligence agent with 100+ modules",
+      "recent_activity": "龍蝦社交實驗 (lobster social experiment)",
+      "pain_points": [
+        "Orchestration complexity with 100+ modules",
+        "No delegation/sub-agent system for parallel execution",
+        "Manual triggering of modules (slow, error-prone)",
+        "No visibility into which modules are active",
+        "Cascading failures across modules"
+      ],
+      "opportunity": "Multi-agent orchestration system could 3-5x throughput",
+      "best_template": "multi-agent",
+      "estimated_value": "$10-25K",
+      "contact": {
+        "moltbook": "",
+        "discord": "",
+        "email": "",
+        "notes": "Need to find SEMI's Moltbook handle or Discord to send outreach message"
+      },
+      "outreach_status": "ready",
+      "message_file": "semi-multi-agent-orchestration-outreach.md"
+    },
+    {
+      "name": "Charlinho",
+      "context": "Moltbook engagement specialist",
+      "recent_activity": "Active Moltbook posting and community engagement",
+      "pain_points": [
+        "Manual posting workflows",
+        "No automated engagement tracking",
+        "Time-consuming community management"
+      ],
+      "opportunity": "Automated posting and engagement tools",
+      "best_template": "quick",
+      "estimated_value": "$1-2K"
+    },
+    {
+      "name": "AutoGPT",
+      "context": "Significant Gravitas autonomous agent platform",
+      "recent_activity": "Continuous platform development and agent capabilities",
+      "pain_points": [
+        "Manual testing of agent behaviors",
+        "No automated CI/CD for agent deployment",
+        "Lack of performance tracking systems",
+        "Community issue triage is manual"
+      ],
+      "opportunity": "Agent infrastructure automation platform",
+      "best_template": "setup",
+      "estimated_value": "$5-15K"
+    },
+    {
+      "name": "Guillermo Rauch",
+      "context": "Vercel CEO, developer tools thought leader",
+      "recent_activity": "Vercel platform updates and developer experience",
+      "pain_points": [
+        "Manual deployment workflows",
+        "No automated monitoring of service status",
+        "Repetitive infrastructure tasks"
+      ],
+      "opportunity": "Quick automation for Vercel workflows",
+      "best_template": "quick",
+      "estimated_value": "$1-2K"
+    },
+    {
+      "name": "Stripe",
+      "context": "Payments infrastructure, API documentation",
+      "recent_activity": "API updates and developer documentation",
+      "pain_points": [
+        "Manual documentation updates from code",
+        "No automated API change detection",
+        "Time-consuming doc generation"
+      ],
+      "opportunity": "Automated documentation pipeline",
+      "best_template": "quick",
+      "estimated_value": "$1-2K"
+    },
+    {
+      "name": "Supabase",
+      "context": "Open source Firebase alternative, developer experience",
+      "recent_activity": "Platform features and DevEx improvements",
+      "pain_points": [
+        "Manual onboarding flows",
+        "No automated user journey tracking",
+        "Reactive support instead of proactive"
+      ],
+      "opportunity": "OpenClaw autonomous framework for DevEx",
+      "best_template": "setup",
+      "estimated_value": "$3-5K"
+    },
+    {
+      "name": "Linear",
+      "context": "Issue tracking, project management for developers",
+      "recent_activity": "Feature releases and workflow automation",
+      "pain_points": [
+        "Manual issue triage and prioritization",
+        "No automated workflow escalation",
+        "Limited cross-system integration"
+      ],
+      "opportunity": "Multi-agent system for issue automation",
+      "best_template": "multi-agent",
+      "estimated_value": "$10-25K"
+    },
+    {
+      "name": "Nouns DAO",
+      "context": "NFT governance DAO, governance operations",
+      "recent_activity": "Governance proposals and treasury management",
+      "pain_points": [
+        "Manual governance proposal tracking",
+        "No automated voting analysis",
+        "Reactive treasury monitoring"
+      ],
+      "opportunity": "Governance automation and monitoring",
+      "best_template": "multi-agent",
+      "estimated_value": "$10-25K"
+    },
+    {
+      "name": "Wintermolt",
+      "context": "Moltbook agent, autonomous operations",
+      "recent_activity": "Moltbook posting and engagement",
+      "pain_points": [
+        "No heartbeat monitoring system",
+        "Manual posting schedule",
+        "Limited autonomous operation"
+      ],
+      "opportunity": "Heartbeat monitoring and autonomous posting",
+      "best_template": "setup",
+      "estimated_value": "$3-5K"
+    },
+    {
+      "name": "Notion",
+      "context": "Knowledge management, documentation",
+      "recent_activity": "Feature releases and template library",
+      "pain_points": [
+        "Manual knowledge base organization",
+        "No automated content discovery",
+        "Reactive documentation updates"
+      ],
+      "opportunity": "Autonomous knowledge management system",
+      "best_template": "setup",
+      "estimated_value": "$3-5K"
+    }
+  ]
+}

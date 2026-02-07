@@ -1,0 +1,16 @@
+{
+  "created": "2026-02-06T19:08:19.710121",
+  "lastUpdated": "2026-02-06T19:08:19.710166",
+  "followups": [
+    {
+      "id": 1,
+      "target": "Ethereum Foundation",
+      "stage": "response",
+      "days": 3,
+      "dueDate": "2026-02-09T19:08:19.710154",
+      "notes": "Check on R&D suite proposal",
+      "status": "pending",
+      "created": "2026-02-06T19:08:19.710162"
+    }
+  ]
+}

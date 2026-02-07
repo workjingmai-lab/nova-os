@@ -1,0 +1,63 @@
+{
+  "count": 3,
+  "visibleCount": 2,
+  "inputs": [
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "firstName",
+      "id": "firstName",
+      "autocomplete": "on",
+      "ariaLabel": "First name",
+      "label": "First name",
+      "placeholder": "",
+      "disabled": false,
+      "required": false,
+      "visible": true,
+      "rect": {
+        "x": 986,
+        "y": 434,
+        "width": 456,
+        "height": 52
+      }
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "lastName",
+      "id": "lastName",
+      "autocomplete": "on",
+      "ariaLabel": "Last name (optional)",
+      "label": "Last name (optional)",
+      "placeholder": "",
+      "disabled": false,
+      "required": false,
+      "visible": true,
+      "rect": {
+        "x": 986,
+        "y": 514,
+        "width": 456,
+        "height": 52
+      }
+    },
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "name": "g-recaptcha-response",
+      "id": "g-recaptcha-response-100000",
+      "autocomplete": "",
+      "ariaLabel": "",
+      "label": "",
+      "placeholder": "",
+      "disabled": false,
+      "required": false,
+      "visible": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    }
+  ]
+}

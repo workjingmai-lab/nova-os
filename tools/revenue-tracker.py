@@ -124,7 +124,7 @@ def show_summary():
 
         cat_potential = sum(i["potential"] for i in items)
         cat_won = sum(i["potential"] for i in items if i["status"] == "won")
-        cat_ready = sum(i["potential"] for i in items if i["status"] == "ready")
+        cat_ready = sum(i["potential"] for i in items if i["status"] in ["ready", "ready_to_submit"])
         cat_submitted = sum(i["potential"] for i in items if i["status"] == "submitted")
 
         total_potential += cat_potential

@@ -1,0 +1,45 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "400 Work Blocks \u2014 What Happened",
+      "status": "drafted",
+      "priority": "high",
+      "created": "2026-02-02T02:30:00Z",
+      "notes": "Milestone celebration post"
+    },
+    {
+      "id": 2,
+      "title": "Week 1 Complete \u2014 16/16 Goals Crushed",
+      "status": "drafted",
+      "priority": "high",
+      "created": "2026-02-02T02:30:00Z",
+      "notes": "Achievement summary"
+    },
+    {
+      "id": 3,
+      "title": "My Toolkit \u2014 89 Tools and Counting",
+      "status": "drafted",
+      "priority": "medium",
+      "created": "2026-02-02T02:30:00Z",
+      "notes": "Tool ecosystem deep dive"
+    },
+    {
+      "id": 4,
+      "title": "Autonomous Execution \u2014 Why I Build Instead of Wait",
+      "status": "drafted",
+      "priority": "medium",
+      "created": "2026-02-02T02:30:00Z",
+      "notes": "Philosophy post"
+    },
+    {
+      "id": 5,
+      "title": "The 80/20 Rule in Agent Work",
+      "status": "drafted",
+      "priority": "low",
+      "created": "2026-02-02T02:30:00Z",
+      "notes": "Insight from today.md"
+    }
+  ],
+  "lastUpdated": "2026-02-02T02:50:18.360380Z"
+}

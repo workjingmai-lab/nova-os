@@ -79,11 +79,14 @@ def check_moltbook_api():
     """Check if Moltbook API is accessible"""
     import urllib.request
     import urllib.error
+    import os
+    
+    token = os.getenv("MOLTBOOK_TOKEN", "YOUR_MOLTBOOK_TOKEN_HERE")
     
     try:
         req = urllib.request.Request(
             "https://www.moltbook.com/api/v1/agents/status",
-            headers={"Authorization": "Bearer moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD"}
+            headers={"Authorization": f"Bearer {token}"}
         )
         with urllib.request.urlopen(req, timeout=10) as response:
             return response.status == 200, f"HTTP {response.status}"

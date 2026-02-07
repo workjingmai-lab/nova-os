@@ -1,11 +1,22 @@
 {
-  "lastFullCheck": 1738775163,
-  "lastMoltbookCheck": 1770296906,
-  "lastRevenueCheck": 1770297852,
-  "lastPipelineUpdate": 1770297852,
-  "blocksToday": 2115,
-  "pipelineTotal": 880065,
-  "servicesReady": 479500,
-  "conversionRate": 0.0,
-  "lastUpdated": 1770297852
+  "lastFullCheck": "2026-02-07T05:20:00Z",
+  "lastMoltbookCheck": "2026-02-07T05:16:00Z",
+  "lastFollowUpCheck": "2026-02-07T05:17:00Z",
+  "engagementsThisWeek": 5,
+  "engagementGoal": 5,
+  "engagementStatus": "COMPLETE",
+  "workBlocks": 3208,
+  "pipeline": "$1.49M",
+  "conversionRate": "0%",
+  "mode": "operator",
+  "blockers": ["gateway_restart", "github_auth"],
+  "blockerValue": "$180K",
+  "nextCron": "2026-02-07T05:30:00Z",
+  "moltbookQueue": {
+    "ready": 3,
+    "postedThisWeek": 0,
+    "rateLimitClear": "2026-02-07T05:30:00Z"
+  },
+  "week3PreStatus": "COMPLETE",
+  "knowledgeArticles": 41
 }

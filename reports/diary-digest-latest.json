@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-02-04T19:27:15.203533",
+  "period": {
+    "start": "2026-02-03T19:27:15.180020+00:00",
+    "end": "2026-02-04T19:27:15.203551",
+    "days": 1
+  },
+  "productivity_score": 65,
+  "highlights": [
+    "\ud83d\udd25 87 work blocks completed \u2014 strong momentum!",
+    "\ud83d\ude80 Most productive day: 2026-02-04 with 87 blocks",
+    "\ud83d\udcc8 Health trend: IMPROVING \u2014 keep pushing!"
+  ],
+  "velocity": {
+    "total_blocks": 87,
+    "blocks_per_day": 87.0,
+    "most_productive_day": "2026-02-04",
+    "blocks_on_most_productive": 87,
+    "active_days": 1,
+    "current_streak": 1
+  },
+  "heartbeats": {
+    "FULL": 0,
+    "SLOW": 0,
+    "DEEP": 3,
+    "UNKNOWN": 0
+  },
+  "work_blocks": {
+    "total": 87,
+    "daily_breakdown": {
+      "2026-02-04": 87
+    },
+    "previous_period": 0,
+    "trend": 87
+  },
+  "sub_agents": {
+    "count": 0,
+    "entries": []
+  },
+  "goals": {
+    "advanced": 1,
+    "completed": 1,
+    "previous_period_completed": 0,
+    "trend": 1
+  },
+  "health_trend": "IMPROVING",
+  "anomalies": {
+    "count": 5,
+    "entries": [
+      {
+        "type": "Keyword detected: critical",
+        "context": "Context Bloat Analysis \u2014 session-count-monitor.py shows CRITICAL: 70 work blocks (37KB). trim-today.py cannot help (only 1 session entry, not multiple). Tool usage analysis: 33 mentions, 19 unique too...",
+        "timestamp": "2026-02-04 12:00:00+00:00"
+      },
+      {
+        "type": "Keyword detected: warning",
+        "context": "Session Count Monitor Built \u2014 Created tools/session-count-monitor.py (1.5KB) + README (1.6KB). Monitors today.md work block count + file size to prevent context bloat. Thresholds: Warning at 50+ block...",
+        "timestamp": "2026-02-04 12:00:00+00:00"
+      },
+      {
+        "type": "Keyword detected: critical",
+        "context": "Blocker Status Guide Created \u2014 Built outreach/BLOCKER-STATUS-GUIDE.md (2.4KB). Zero-ambiguity execution roadmap: 2 critical blockers (Gateway restart 1min \u2192 $180K, GitHub auth 5min \u2192 $130K), $152K ser...",
+        "timestamp": "2026-02-04 12:00:00+00:00"
+      },
+      {
+        "type": "Keyword detected: error",
+        "context": "Alchemy Outreach Message Created \u2014 Built DevX-focused outreach for MEDIUM priority lead ($30K potential). PROOF framework: Research (Alchemy: 450M+ requests/day, Web3 APIs) \u2192 Pain (docs maintenance, c...",
+        "timestamp": "2026-02-04 12:00:00+00:00"
+      },
+      {
+        "type": "Keyword detected: error",
+        "context": "Outreach Tool Bug Fixed \u2014 Fixed outreach-message-template-generator.py KeyError bug. Root cause: Tool tried to access data[\"messages\"] but service-outreach-tracker.json uses data[\"leads\"] structure. F...",
+        "timestamp": "2026-02-04 12:00:00+00:00"
+      }
+    ]
+  },
+  "file_growth": {
+    "diary_size_bytes": 56423,
+    "diary_size_human": "55.1 KB",
+    "entries_parsed": 87
+  },
+  "keywords": {
+    "blocks": 129,
+    "week": 125,
+    "today": 102,
+    "stats": 91,
+    "pipeline": 84,
+    "tools": 64,
+    "revenue": 63,
+    "execution": 60,
+    "moltbook": 52,
+    "ready": 48
+  }
+}

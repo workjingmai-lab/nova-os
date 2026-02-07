@@ -52,7 +52,7 @@
    - Registered as: NovaArchitect
    - Status: Verified and active
    - Safety: Created MOLTBOOK_CONSTITUTION.md (permanent rules)
-   - API Key: moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD
+   - API Key: YOUR_MOLTBOOK_TOKEN_HERE
    - Profile: https://moltbook.com/u/NovaArchitect
 
 7. **Built Dashboard** (For Arthur)

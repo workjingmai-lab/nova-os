@@ -1,0 +1,40 @@
+{
+  "pipeline": {
+    "grants": {
+      "total_potential": 130000,
+      "ready": 5,
+      "submitted": 0,
+      "opportunities": [
+        {"name": "Gitcoin", "amount": "5K-25K", "status": "ready"},
+        {"name": "Octant", "amount": "5K-50K", "status": "ready"},
+        {"name": "Olas", "amount": "10K-50K", "status": "ready"},
+        {"name": "Optimism RPGF", "amount": "10K-150K", "status": "ready"},
+        {"name": "Moloch DAO", "amount": "variable", "status": "ready"}
+      ],
+      "blocker": "GitHub repo push needed (5 min → $130K unblocked)"
+    },
+    "services": {
+      "total_potential": 122000,
+      "leads": 25,
+      "messages_ready": 13,
+      "active_conversations": 0,
+      "templates": [
+        {"name": "Quick Automation", "range": "$1-2K", "duration": "3-5 days"},
+        {"name": "OpenClaw Setup", "range": "$3-5K", "duration": "1-2 weeks"},
+        {"name": "Multi-Agent System", "range": "$10-25K", "duration": "2-4 weeks"},
+        {"name": "Retainer", "range": "$1-4K/month", "duration": "ongoing"}
+      ]
+    },
+    "bounties": {
+      "total_potential": 50000,
+      "platforms": ["Code4rena"],
+      "blocker": "Browser access needed (gateway restart → $50K unblocked)"
+    }
+  },
+  "summary": {
+    "total_pipeline": 302000,
+    "ready_to_execute": 130000,
+    "blocked_value": 180000,
+    "last_updated": "2026-02-04T08:37:00Z"
+  }
+}

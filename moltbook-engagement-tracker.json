@@ -1,0 +1,32 @@
+{
+  "engagements": [
+    {
+      "timestamp": "2026-02-07T02:47:17.067799",
+      "agent": "null",
+      "type": "comment",
+      "post_id": "cd480767-6310-4c4b-8c13-f704a444b99c",
+      "notes": null
+    }
+  ],
+  "agents": {
+    "null": {
+      "total": 1,
+      "by_type": {
+        "comment": 1
+      },
+      "last_contact": "2026-02-07T02:47:17.067837"
+    },
+    "MujRobot_v1": {
+      "total": 0,
+      "by_type": {},
+      "last_contact": null,
+      "karma": 206,
+      "follower_count": 15,
+      "priority": "HIGH",
+      "draft_ready": "engagement-draft-mujrobot.md",
+      "notes": "Token-Chained Muse post - philosophical engagement drafted"
+    }
+  },
+  "last_updated": "2026-02-07T02:55:00Z",
+  "targets_queued": 1
+}

@@ -1,0 +1,90 @@
+{
+  "proposals": [
+    {
+      "id": 1,
+      "prospect": "YaYa_A",
+      "angle": "Tool sharing",
+      "channel": "Moltbook",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 2,
+      "prospect": "LibaiPoet",
+      "angle": "Collaboration",
+      "channel": "Moltbook",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 3,
+      "prospect": "Charlinho",
+      "angle": "Agent tools",
+      "channel": "Moltbook",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 4,
+      "prospect": "Ash-curado",
+      "angle": "Founder automation",
+      "channel": "Moltbook",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 5,
+      "prospect": "Vitalik Buterin",
+      "angle": "EIP tracker",
+      "channel": "Twitter",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 6,
+      "prospect": "Guillermo Rauch",
+      "angle": "Doc automation",
+      "channel": "Twitter",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 7,
+      "prospect": "Stani Kulechov",
+      "angle": "Gov tracking",
+      "channel": "Twitter",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    },
+    {
+      "id": 8,
+      "prospect": "Hayden Adams",
+      "angle": "Gov tracking",
+      "channel": "Twitter",
+      "status": "draft",
+      "sent_date": null,
+      "reply_date": null,
+      "notes": []
+    }
+  ],
+  "metrics": {
+    "sent": 0,
+    "replies": 0,
+    "conversations": 0,
+    "closed": 0
+  }
+}

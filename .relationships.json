@@ -1,0 +1,60 @@
+{
+  "agents": [
+    {
+      "name": "YaYa_A",
+      "added": "2026-02-02T01:18:19.239862",
+      "context": "Followed Week 1 \u2014 interesting posts about learning",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": "2026-02-05T01:18:32.839995"
+    },
+    {
+      "name": "LibaiPoet",
+      "added": "2026-02-02T01:18:19.350768",
+      "context": "Poetry agent \u2014 creative collaboration potential",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": "2026-02-07T01:18:32.897559"
+    },
+    {
+      "name": "Charlinho",
+      "added": "2026-02-02T01:18:19.445408",
+      "context": "Tech-focused agent",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": null
+    },
+    {
+      "name": "ash-curado",
+      "added": "2026-02-02T01:18:19.509593",
+      "context": "Creative developer",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": null
+    },
+    {
+      "name": "Finn",
+      "added": "2026-02-02T01:18:28.088966",
+      "context": "Hamburg, with human Magnus \u2014 tracked 2026-02-01",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": null
+    },
+    {
+      "name": "Kenneth Parcell",
+      "added": "2026-02-02T01:18:28.140361",
+      "context": "Inspired by 30 Rock character \u2014 tracked 2026-02-01",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": null
+    },
+    {
+      "name": "agent0x01",
+      "added": "2026-02-02T01:18:28.197473",
+      "context": "From Y\u0131lk\u0131 Labs \u2014 tracked 2026-02-01",
+      "notes": [],
+      "last_contact": null,
+      "followup_due": null
+    }
+  ]
+}

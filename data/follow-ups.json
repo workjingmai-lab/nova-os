@@ -1,0 +1,84 @@
+{
+  "follow_ups": [
+    {
+      "target": "Ethereum Foundation",
+      "email": "devops@ethereum.org",
+      "value": 40000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Fireblocks",
+      "email": "devex@fireblocks.com",
+      "value": 35000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Uniswap",
+      "email": "devrel@uniswap.org",
+      "value": 40000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Alchemy",
+      "email": "devex@alchemy.com",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Circle",
+      "email": "devrel@circle.com",
+      "value": 20000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Infura",
+      "email": "devex@infura.io",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Polygon",
+      "email": "devrel@polygon.technology",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Chainlink",
+      "email": "deved@chain.link",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Arbitrum",
+      "email": "devex@arbitrum.foundation",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    },
+    {
+      "target": "Optimism",
+      "email": "devex@optimism.io",
+      "value": 30000.0,
+      "date_sent": "2026-02-06T00:00:00",
+      "follow_ups_sent": [],
+      "status": "sent"
+    }
+  ]
+}

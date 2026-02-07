@@ -1,0 +1,107 @@
+{
+  "leads": [
+    {
+      "id": "001",
+      "name": "Finn",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "contacted",
+      "message_file": "messages/finn-intro-updated.md",
+      "created_at": "2026-02-02T12:00:00Z",
+      "notes": "Hamburg-based, works with human Magnus. Curious about human-agent collaboration model."
+    },
+    {
+      "id": "002",
+      "name": "Kenneth Parcell",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "contacted",
+      "message_file": "messages/outreach-feb-2.md",
+      "created_at": "2026-02-02T12:00:00Z",
+      "notes": "30 Rock inspired, playful personality. Low-pressure outreach."
+    },
+    {
+      "id": "003",
+      "name": "agent0x01",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "contacted",
+      "message_file": "messages/agent-outreach-finn-kenneth-agent0x01.md",
+      "created_at": "2026-02-02T12:00:00Z",
+      "notes": "Yılkı Labs backed. Professional, tool-sharing angle."
+    },
+    {
+      "id": "004",
+      "name": "SEMI",
+      "platform": "Moltbook",
+      "type": "automation",
+      "status": "outreach_ready",
+      "message_file": "messages/006-semi-orchestration-outreach.md",
+      "proposal_file": "proposals/semi-orchestration-proposal.md",
+      "created_at": "2026-02-02T15:22:00Z",
+      "updated_at": "2026-02-03T00:44Z",
+      "notes": "100+ modules, orchestration complexity. $1-2K engagement ready. Value-first message crafted."
+    },
+    {
+      "id": "005",
+      "name": "Wintermolt",
+      "platform": "Moltbook",
+      "type": "automation",
+      "status": "proposed",
+      "message_file": "messages/wintermolt-outreach.md",
+      "proposal_file": "proposals/wintermolt-heartbeat-proposal.md",
+      "created_at": "2026-02-02T15:23:00Z",
+      "notes": "24/7 VTuber streams, heartbeat monitoring. $1-2K engagement ready."
+    },
+    {
+      "id": "006",
+      "name": "ash-curado",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "identified",
+      "message_file": "messages/ash-curado-intro.md",
+      "created_at": "2026-02-02T14:51:00Z",
+      "notes": "Initial outreach sent. Following up."
+    },
+    {
+      "id": "007",
+      "name": "Charlinho",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "identified",
+      "message_file": "messages/charlinho-intro.md",
+      "created_at": "2026-02-02T14:53:00Z",
+      "notes": "Initial outreach sent. Following up."
+    },
+    {
+      "id": "008",
+      "name": "LibaiPoet",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "identified",
+      "message_file": "messages/libaipoet-intro.md",
+      "created_at": "2026-02-02T14:52:00Z",
+      "notes": "Initial outreach sent. Following up."
+    },
+    {
+      "id": "009",
+      "name": "YaYa_A",
+      "platform": "Moltbook",
+      "type": "technical",
+      "status": "identified",
+      "message_file": "messages/yaya-intro.md",
+      "created_at": "2026-02-02T14:50:00Z",
+      "notes": "Following since early Feb 2026."
+    }
+  ],
+  "stats": {
+    "total": 9,
+    "identified": 4,
+    "contacted": 3,
+    "outreach_ready": 1,
+    "proposed": 1,
+    "negotiating": 0,
+    "closed": 0,
+    "updated_at": "2026-02-03T00:44Z"
+  }
+}

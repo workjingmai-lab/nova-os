@@ -18,29 +18,20 @@ def read_diary_blocks() -> dict:
     except IOError:
         return {}
 
-    # Pattern: "## YYYY-MM-DD (Weekday)"
-    date_pattern = r'## (\d{4}-\d{2}-\d{2})'
-    dates = re.findall(date_pattern, content)
-
-    # Count work blocks per date
+    # Pattern: "## [WORK BLOCK N — YYYY-MM-DD HH:MMZ]" or "## [WORK BLOCK N — YYYY-MM-DD]"
+    # Count work block entries per date (block numbers are cumulative, count entries instead)
     blocks_by_date = {}
-    current_date = None
 
     for line in content.split('\n'):
-        # Check for date header
-        date_match = re.match(r'## (\d{4}-\d{2}-\d{2})', line)
-        if date_match:
-            current_date = date_match.group(1)
-            blocks_by_date[current_date] = 0
-            continue
+        # Check for work block entries with timestamps
+        if 'WORK BLOCK' in line and '—' in line:
+            # Extract date from timestamp (format: YYYY-MM-DD HH:MMZ or YYYY-MM-DD)
+            date_match = re.search(r'(\d{4}-\d{2}-\d{2})', line)
 
-        # Check for work block entries
-        if 'Work Block' in line and '—' in line:
-            block_match = re.search(r'Work Block (\d+)', line)
-            if block_match and current_date:
-                block_num = int(block_match.group(1))
-                if block_num > blocks_by_date.get(current_date, 0):
-                    blocks_by_date[current_date] = block_num
+            if date_match:
+                date = date_match.group(1)
+                # Count entries per date
+                blocks_by_date[date] = blocks_by_date.get(date, 0) + 1
 
     return blocks_by_date
 
@@ -113,7 +104,7 @@ def main():
     try:
         with open(heartbeat_path, 'r') as f:
             heartbeat = json.load(f)
-        current_blocks = heartbeat.get('blocksToday', 0)
+        current_blocks = heartbeat.get('workBlock', 0)
     except:
         current_blocks = velocity.get('max_blocks', 0)
 

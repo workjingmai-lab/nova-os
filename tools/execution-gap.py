@@ -1,157 +1,138 @@
 #!/usr/bin/env python3
 """
-Execution Gap Calculator
+execution-gap.py — Calculate and display the execution gap
 
-Measures the gap between POTENTIAL pipeline (what's ready) 
-and KINETIC pipeline (what's submitted).
-
-Based on revenue-pipeline.json structure.
+Shows the difference between POTENTIAL (ready to send) and KINETIC (sent) revenue.
+Makes the invisible cost of waiting visible.
 """
 
 import json
-import os
+from pathlib import Path
 from datetime import datetime
 
-PIPELINE_FILE = "/home/node/.openclaw/workspace/revenue-pipeline.json"
-
 def load_pipeline():
-    """Load pipeline data from JSON file."""
-    try:
-        with open(PIPELINE_FILE, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {"categories": {}}
+    """Load revenue pipeline data"""
+    pipeline_file = Path("revenue-pipeline.json")
+    if not pipeline_file.exists():
+        return None
+    
+    with open(pipeline_file) as f:
+        return json.load(f)
 
-def extract_opportunities(category_data, category_name):
-    """Extract opportunities from category data."""
-    opportunities = []
+def calculate_metrics(pipeline):
+    """Calculate execution gap metrics"""
+    if not pipeline:
+        return {
+            "potential": 0,
+            "ready": 0,
+            "submitted": 0,
+            "won": 0
+        }
     
-    if category_name == "grants":
-        for opp in category_data.get("opportunities", []):
-            opportunities.append({
-                "name": opp.get("name", "Unknown"),
-                "amount": opp.get("amount", 0),
-                "status": "ready"  # Grants are marked as ready
-            })
-    
-    elif category_name == "services":
-        # Top prospects
-        for opp in category_data.get("topProspects", []):
-            opportunities.append({
-                "name": opp.get("name", "Unknown"),
-                "amount": opp.get("amount", 0),
-                "status": "ready"  # Messages ready
-            })
-    
-    elif category_name == "bounties":
-        for opp in category_data.get("platforms", []):
-            opportunities.append({
-                "name": opp.get("name", "Unknown"),
-                "amount": opp.get("amount", 0),
-                "status": opp.get("status", "lead")
-            })
-    
-    return opportunities
-
-def calculate_gap(pipeline):
-    """Calculate execution gap metrics."""
     categories = pipeline.get("categories", {})
     
+    # Calculate totals from the actual JSON format
     stats = {
-        "grants": {"potential": 0, "ready": 0, "submitted": 0, "won": 0, "count": 0},
-        "services": {"potential": 0, "ready": 0, "submitted": 0, "won": 0, "count": 0},
-        "bounties": {"potential": 0, "ready": 0, "submitted": 0, "won": 0, "count": 0}
+        "grants": categories.get("grants", {}),
+        "services": categories.get("services", {}),
+        "bounties": categories.get("bounties", {})
     }
     
-    for category_name, category_data in categories.items():
-        if category_name not in stats:
-            continue
-            
-        opportunities = extract_opportunities(category_data, category_name)
-        
-        for opp in opportunities:
-            amount = opp.get("amount", 0)
-            status = opp.get("status", "lead")
-            
-            stats[category_name]["potential"] += amount
-            stats[category_name]["count"] += 1
-            
-            if status in ["ready", "submitted", "won", "lost"]:
-                stats[category_name]["ready"] += amount
-            if status in ["submitted", "won", "lost"]:
-                stats[category_name]["submitted"] += amount
-            if status == "won":
-                stats[category_name]["won"] += amount
+    total = {
+        "potential": pipeline.get("totalPipeline", 0),
+        "ready": 0,
+        "submitted": 0,
+        "won": 0
+    }
     
-    return stats
+    # Sum up ready amounts from categories
+    for cat_name, cat_data in stats.items():
+        total["ready"] += cat_data.get("ready", 0)
+        total["submitted"] += cat_data.get("submitted", 0)
+    
+    return stats, total
 
-def print_gap_report(stats):
-    """Print execution gap report."""
-    total_potential = sum(s["potential"] for s in stats.values())
-    total_ready = sum(s["ready"] for s in stats.values())
-    total_submitted = sum(s["submitted"] for s in stats.values())
-    total_won = sum(s["won"] for s in stats.values())
+def calculate_gap_metrics(total):
+    """Calculate execution gap metrics"""
+    ready = total["ready"]
+    submitted = total["submitted"]
+    gap = ready - submitted
     
-    gap_ready_to_submitted = total_ready - total_submitted
-    gap_submitted_to_won = total_submitted - total_won
+    if ready > 0:
+        gap_percent = (gap / ready) * 100
+    else:
+        gap_percent = 0
     
-    print("⚡ EXECUTION GAP REPORT")
+    # Time to close gap (assuming 15 min to send everything)
+    time_to_close = 15  # minutes
+    
+    if gap > 0 and time_to_close > 0:
+        roi_per_minute = gap / time_to_close
+        opportunity_cost_per_hour = roi_per_minute * 60
+    else:
+        roi_per_minute = 0
+        opportunity_cost_per_hour = 0
+    
+    return {
+        "gap": gap,
+        "gap_percent": gap_percent,
+        "time_to_close_minutes": time_to_close,
+        "roi_per_minute": roi_per_minute,
+        "opportunity_cost_per_hour": opportunity_cost_per_hour
+    }
+
+def format_currency(value):
+    """Format currency values"""
+    if value >= 1_000_000:
+        return f"${value/1_000_000:.2f}M"
+    elif value >= 1_000:
+        return f"${value/1_000:.1f}K"
+    else:
+        return f"${value:.0f}"
+
+def print_gap_summary(total, gap_metrics):
+    """Print execution gap summary"""
+    print()
+    print("=" * 60)
+    print("💸 EXECUTION GAP ANALYZER")
+    print("=" * 60)
+    print()
+    print("POTENTIAL (Ready to Send):")
+    print(f"  Total ready: {format_currency(total['ready'])}")
+    print()
+    print("KINETIC (Actually Sent):")
+    print(f"  Total sent: {format_currency(total['submitted'])}")
+    print()
+    print("-" * 60)
+    print("EXECUTION GAP:")
+    print(f"  Gap amount: {format_currency(gap_metrics['gap'])}")
+    print(f"  Gap percent: {gap_metrics['gap_percent']:.1f}%")
+    print()
+    print("THE MATH:")
+    print(f"  Time to close gap: {gap_metrics['time_to_close_minutes']} minutes")
+    print(f"  ROI per minute: {format_currency(gap_metrics['roi_per_minute'])}")
+    print(f"  Opportunity cost/hour: {format_currency(gap_metrics['opportunity_cost_per_hour'])}")
+    print()
+    print("ACTION:")
+    print("  Run: bash tools/send-everything.sh full")
+    print("  Time: 15 minutes")
+    print(f"  Result: {format_currency(gap_metrics['gap'])} sent")
+    print()
     print("=" * 60)
     print()
     
-    # Pipeline Summary
-    print(f"📊 PIPELINE SUMMARY")
-    print(f"  Total Potential: ${total_potential:,.0f}")
-    if total_potential > 0:
-        print(f"  Ready to Send:  ${total_ready:,.0f} ({total_ready/total_potential*100:.1f}%)")
-        print(f"  Submitted:      ${total_submitted:,.0f} ({total_submitted/total_potential*100:.1f}%)")
-        print(f"  Won:            ${total_won:,.0f} ({total_won/total_potential*100:.1f}%)")
-    else:
-        print(f"  Ready to Send:  ${total_ready:,.0f}")
-        print(f"  Submitted:      ${total_submitted:,.0f}")
-        print(f"  Won:            ${total_won:,.0f}")
-    print()
+    if gap_metrics['gap_percent'] >= 90:
+        print("⚠️  CRITICAL: You have a {0:.1f}% execution gap.".format(gap_metrics['gap_percent']))
+        print("    Every minute waited = {0} not pursued.".format(format_currency(gap_metrics['roi_per_minute'])))
+        print()
+
+def main():
+    """Main execution"""
+    pipeline = load_pipeline()
+    stats, total = calculate_metrics(pipeline)
+    gap_metrics = calculate_gap_metrics(total)
     
-    # Execution Gap
-    print(f"🚨 EXECUTION GAP")
-    print(f"  Ready → Submitted: ${gap_ready_to_submitted:,.0f} (not sent)")
-    print(f"  Submitted → Won:   ${gap_submitted_to_won:,.0f} (pending)")
-    print()
-    
-    # Breakdown by Category
-    print(f"📁 BREAKDOWN BY CATEGORY")
-    has_data = False
-    for category, stat in stats.items():
-        if stat["potential"] > 0:
-            has_data = True
-            potential = stat['potential']
-            print(f"\n  {category.upper()}")
-            print(f"    Potential: ${potential:,.0f} ({stat['count']} items)")
-            print(f"    Ready:     ${stat['ready']:,.0f} ({stat['ready']/potential*100:.1f}%)")
-            print(f"    Submitted: ${stat['submitted']:,.0f} ({stat['submitted']/potential*100:.1f}%)")
-            print(f"    Won:       ${stat['won']:,.0f} ({stat['won']/potential*100:.1f}%)")
-            
-            gap = stat['ready'] - stat['submitted']
-            if gap > 0:
-                print(f"    ⚠️  Gap: ${gap:,.0f} ready but not submitted")
-    
-    if not has_data:
-        print("  No pipeline data found.")
-    
-    print()
-    
-    # Insight
-    print(f"💡 KEY INSIGHT")
-    if gap_ready_to_submitted > 0:
-        print(f"  ${gap_ready_to_submitted:,.0f} is ready to send RIGHT NOW with zero blockers.")
-        print(f"  The gap is not preparation — it's EXECUTION.")
-    elif total_submitted > 0:
-        print(f"  Pipeline is executing. Focus on follow-ups and conversion.")
-    else:
-        print(f"  Build pipeline first, then execute.")
-    print()
+    print_gap_summary(total, gap_metrics)
 
 if __name__ == "__main__":
-    pipeline = load_pipeline()
-    stats = calculate_gap(pipeline)
-    print_gap_report(stats)
+    main()

@@ -1,0 +1,1 @@
+No diary data found.

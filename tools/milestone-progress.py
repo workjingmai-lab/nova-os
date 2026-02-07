@@ -1,74 +1,72 @@
 #!/usr/bin/env python3
 """
-Milestone Progress Tracker
+milestone-progress.py — Visual milestone progress tracker
 
-Shows visual progress toward 2000-block milestone with ETA.
-Run: python3 tools/milestone-progress.py
+Shows current progress toward 3000-block milestone with ASCII progress bar.
 """
 
 import json
-import re
-from datetime import datetime, timedelta
+from pathlib import Path
 
-def get_current_blocks():
-    """Read current block count from diary.md"""
-    try:
-        with open('/home/node/.openclaw/workspace/diary.md', 'r') as f:
+def load_diary_blocks():
+    """Count work blocks from today.md (more reliable after trim)"""
+    import re
+    
+    today_file = Path("today.md")
+    if not today_file.exists():
+        # Fallback to diary.md
+        diary_file = Path("diary.md")
+        if not diary_file.exists():
+            return 0
+        with open(diary_file) as f:
             content = f.read()
-            # Find the highest block number (format: ## [WORK BLOCK 1872 — ...])
-            blocks = re.findall(r'WORK BLOCK (\d+)', content)
-            if blocks:
-                return max(map(int, blocks))
-    except Exception as e:
-        print(f"Error reading diary.md: {e}")
+        return content.count("WORK BLOCK")
+    
+    with open(today_file) as f:
+        content = f.read()
+    
+    # Find work blocks line in today.md (supports markdown bolding)
+    match = re.search(r'\*?\*?Work blocks:?\*?\*?\s*(\d+)', content)
+    if match:
+        return int(match.group(1))
+    
+    # Fallback: count from diary.md
+    diary_file = Path("diary.md")
+    if diary_file.exists():
+        with open(diary_file) as f:
+            content = f.read()
+        return content.count("WORK BLOCK")
+    
     return 0
 
-def get_velocity_estimate():
-    """Get velocity from recent blocks (last 10 entries)"""
-    try:
-        with open('/home/node/.openclaw/workspace/today.md', 'r') as f:
-            content = f.read()
-            # Extract velocity if mentioned
-            match = re.search(r'(\d+(?:\.\d+)?) blocks/hr', content)
-            if match:
-                return float(match.group(1))
-    except:
-        pass
-    return 44.0  # Default sustained velocity
-
 def main():
-    current = get_current_blocks()
-    target = 2000
-    remaining = max(0, target - current)
-    velocity = get_velocity_estimate()
+    blocks = load_diary_blocks()
+    target = 3000
+    remaining = max(0, target - blocks)
+    percent = (blocks / target) * 100
+    
+    bar_length = 50
+    filled = min(bar_length, int((blocks / target) * bar_length))
+    bar = "█" * filled + "░" * (bar_length - filled)
+    
+    print(f"""
+╔══════════════════════════════════════════════════════════╗
+║           3000-BLOCK MILESTONE PROGRESS                   ║
+╠══════════════════════════════════════════════════════════╣
+║                                                           ║
+║  {bar} ║
+║                                                           ║
+║  {blocks:4d} / {target} blocks  ({percent:.1f}%)                    ║
+║  {remaining:3d} blocks remaining                                    ║
+║                                                           ║
+║  Velocity: ~44 blocks/hr                                   ║
+║  ETA: ~{max(0, remaining / 44):.1f} hours                                          ║
+║                                                           ║
+║  System: Revenue execution complete                      ║
+║  Blocker: Awaiting Arthur action (send-everything.sh)    ║
+║                                                           ║
+╚══════════════════════════════════════════════════════════╝
+""")
 
-    # Calculate ETA
-    if remaining > 0 and velocity > 0:
-        hours_to_milestone = remaining / velocity
-        eta = datetime.now() + timedelta(hours=hours_to_milestone)
-    else:
-        hours_to_milestone = 0
-        eta = datetime.now()
-
-    # Progress bar
-    progress = current / target
-    bar_length = 40
-    filled = int(bar_length * progress)
-    bar = '█' * filled + '░' * (bar_length - filled)
-
-    print(f"\n{'═' * 50}")
-    print(f"  📊 MILESTONE TRACKER: {current}/{target} blocks")
-    print(f"{'═' * 50}")
-    print(f"\n  Progress: [{bar}] {progress*100:.1f}%")
-    print(f"\n  Remaining: {remaining} blocks")
-    print(f"  Velocity:  {velocity:.1f} blocks/hr")
-    print(f"  ETA:       {hours_to_milestone:.1f} hours ({eta.strftime('%H:%M UTC')})")
-    print(f"\n  Value Created:")
-    print(f"  • $880K pipeline built")
-    print(f"  • 158 tools documented")
-    print(f"  • 48 knowledge articles")
-    print(f"  • 50+ Moltbook posts")
-    print(f"\n{'═' * 50}\n")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

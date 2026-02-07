@@ -1,159 +1,116 @@
 #!/usr/bin/env python3
 """
-service-batch-send.py — Batch send service outreach messages
-
-Usage:
-    python3 tools/service-batch-send.py --top 10          # Send top 10 ($305K)
-    python3 tools/service-batch-send.py --tiered         # Tiered rollout (25 → wait → remaining)
-    python3 tools/service-batch-send.py --all            # Send all 100 ($1,979K)
-
-Options:
-    --top N         Send top N messages by pipeline value
-    --tiered        Send first 25, wait 24h, analyze, then continue
-    --all           Send all 100 messages
-    --dry-run       Show what would be sent without sending
-    --from N        Start from message N (for resume)
-
-Requirements:
-    - revenue-pipeline.json must exist and have status="ready"
-    - Message files must exist in tmp/service-outreach/
-    - Send mechanism configured (message channel)
-
-Exit codes:
-    0 — Success
-    1 — Missing files or config
-    2 — No ready messages found
-    3 — Send failed
+Service Message Batch Sender
+Helps Arthur send multiple outreach messages in one session
 """
 
 import json
-import sys
 from pathlib import Path
-from typing import List, Dict
 
-def load_pipeline() -> List[Dict]:
-    """Load service outreach messages from JSON tracker."""
-    path = Path("/home/node/.openclaw/workspace/service-outreach-tracker.json")
-    if not path.exists():
-        print(f"❌ Missing: {path}")
-        sys.exit(1)
+OUTREACH_DIR = Path("/home/node/.openclaw/workspace/outreach/messages")
+TRACKER_FILE = Path("/home/node/.openclaw/workspace/follow-up-tracker.json")
 
-    with open(path) as f:
-        data = json.load(f)
-        return data.get("messages", [])
+def list_ready_messages(limit=None):
+    """List all ready outreach messages"""
+    messages = []
 
-def filter_ready(messages: List[Dict]) -> List[Dict]:
-    """Filter messages with status='ready'."""
-    ready = [m for m in messages if m.get("status") == "ready"]
-    print(f"📊 Ready messages: {len(ready)}/{len(messages)}")
-    return ready
+    for file in sorted(OUTREACH_DIR.glob("*.md")):
+        with open(file) as f:
+            content = f.read()
 
-def sort_by_value(messages: List[Dict]) -> List[Dict]:
-    """Sort messages by pipeline_value (descending)."""
-    return sorted(messages, key=lambda m: m.get("pipeline_value", 0), reverse=True)
+        # Extract metadata from content
+        name = file.stem.replace("-", " ").title()
+        potential = extract_potential(content)
 
-def load_message_file(msg: Dict) -> str:
-    """Load message content from file."""
-    # msg['file'] contains the path relative to workspace (e.g., "tmp/outreach-xxx.md")
-    file_path = msg.get('file')
-    if not file_path:
-        print(f"⚠️  Message missing 'file' field: {msg.get('prospect', 'unknown')}")
-        return None
+        messages.append({
+            "file": file,
+            "name": name,
+            "potential": potential,
+            "content": content
+        })
 
-    msg_path = Path("/home/node/.openclaw/workspace") / file_path
-    if not msg_path.exists():
-        print(f"⚠️  Missing file: {msg_path}")
-        return None
-    with open(msg_path) as f:
-        return f.read()
+    # Sort by potential value (descending)
+    messages.sort(key=lambda x: x["potential"], reverse=True)
 
-def send_message(msg: Dict, content: str, dry_run: bool = False) -> bool:
-    """Send a message (placeholder for actual send logic)."""
-    prospect = msg.get('prospect', 'Unknown')
-    value = msg.get('pipeline_value', 0)
+    if limit:
+        messages = messages[:limit]
 
-    if dry_run:
-        print(f"📤 [DRY-RUN] Would send to: {prospect} (${value}K)")
-        return True
+    return messages
 
-    # TODO: Implement actual send via message channel
-    # This is a placeholder - integrate with your send mechanism
-    print(f"📤 Sending to: {prospect} (${value}K)")
-    return True
+def extract_potential(content):
+    """Extract potential value from message content"""
+    for line in content.split("\n"):
+        if "Potential Value:" in line or "Value:" in line:
+            # Extract dollar amount
+            parts = line.split("$")
+            if len(parts) > 1:
+                try:
+                    amount_str = parts[1].split()[0].replace(",", "")
+                    return float(amount_str)
+                except:
+                    pass
+    return 0
+
+def generate_send_plan(top_n=None):
+    """Generate send plan for top N prospects"""
+    messages = list_ready_messages(top_n)
+
+    print(f"📋 SEND PLAN: Top {len(messages)} prospects")
+    print("=" * 60)
+
+    total_value = sum(m["potential"] for m in messages)
+
+    for i, msg in enumerate(messages, 1):
+        print(f"\n{i}. {msg['name']} — ${msg['potential']:,.0f}")
+        print(f"   File: {msg['file']}")
+        print(f"   Preview: {msg['content'][:100]}...")
+
+    print(f"\n💰 Total value: ${total_value:,.0f}")
+    print(f"⏱️  Estimated time: {len(messages) * 2} minutes")
+
+    return messages
+
+def generate_commands(messages):
+    """Generate shell commands for sending"""
+    commands = []
+
+    for msg in messages:
+        commands.append(f"# {msg['name']} (${msg['potential']:,.0f})")
+        commands.append(f"cat {msg['file']} | pbcopy  # Copy to clipboard")
+        commands.append(f"# Paste into email/Discord and send")
+        commands.append(f"python3 tools/follow-up-tracker.py add \"{msg['name']}\" {msg['potential']} \"MEDIUM\"")
+        commands.append("")
+
+    return "\n".join(commands)
 
 def main():
-    args = sys.argv[1:]
+    """Main function"""
+    import sys
 
-    if "--help" in args or "-h" in args:
-        print(__doc__)
+    if len(sys.argv) < 2:
+        print("Usage:")
+        print("  service-batch-send.py --top N     # Show top N prospects")
+        print("  service-batch-send.py --all       # Show all prospects")
+        print("  service-batch-send.py --commands  # Generate copy-paste commands")
         return
 
-    dry_run = "--dry-run" in args
+    if sys.argv[1] == "--top":
+        n = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+        messages = generate_send_plan(n)
 
-    # Load and filter pipeline
-    pipeline = load_pipeline()
-    ready = filter_ready(pipeline)
-    if not ready:
-        print("❌ No ready messages found")
-        sys.exit(2)
+    elif sys.argv[1] == "--all":
+        messages = generate_send_plan()
 
-    # Sort by value
-    ready_sorted = sort_by_value(ready)
+    elif sys.argv[1] == "--commands":
+        n = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+        messages = list_ready_messages(n)
+        commands = generate_commands(messages)
+        print(commands)
 
-    # Determine which messages to send
-    to_send = []
-
-    if "--all" in args:
-        to_send = ready_sorted
-        print(f"🚀 Sending ALL {len(to_send)} messages")
-
-    elif "--top" in args:
-        try:
-            idx = args.index("--top")
-            n = int(args[idx + 1])
-            to_send = ready_sorted[:n]
-            print(f"🎯 Sending top {len(to_send)} messages")
-        except (ValueError, IndexError):
-            print("❌ --top requires a number (e.g., --top 10)")
-            sys.exit(1)
-
-    elif "--tiered" in args:
-        to_send = ready_sorted[:25]  # First tier: top 25
-        print(f"📊 Tiered rollout: Phase 1 = {len(to_send)} messages")
-        print(f"⏸️  Wait 24h, analyze responses, then continue")
-
-    else:
-        print("❌ Specify --top N, --tiered, or --all")
-        print("   Use --help for usage")
-        sys.exit(1)
-
-    # Show summary
-    total_value = sum(m.get("pipeline_value", 0) for m in to_send)
-    print(f"💰 Pipeline value: ${total_value}K")
-    print()
-
-    # Send messages
-    failed = 0
-    for msg in to_send:
-        content = load_message_file(msg)
-        if content is None:
-            failed += 1
-            continue
-
-        if not send_message(msg, content, dry_run):
-            print(f"❌ Failed to send: {msg['company']}")
-            failed += 1
-
-    # Summary
-    print()
-    if dry_run:
-        print(f"✅ [DRY-RUN] Would send {len(to_send) - failed} messages")
-    else:
-        print(f"✅ Sent {len(to_send) - failed} messages")
-
-    if failed > 0:
-        print(f"⚠️  {failed} failed")
-        sys.exit(3)
+        # Save to file for easy reference
+        with open("/home/node/.openclaw/workspace/tmp/send-commands.txt", "w") as f:
+            f.write(commands)
+        print(f"\n✅ Commands saved to tmp/send-commands.txt")
 
 if __name__ == "__main__":
     main()

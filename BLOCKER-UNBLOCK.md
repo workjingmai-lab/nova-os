@@ -1,4 +1,10 @@
-# 🚀 Unblock $180K Revenue — Action Required
+# ➡️ REDIRECT: See BLOCKER-STATUS.md (Consolidated)
+
+**This file is archived.** Current blocker status: [BLOCKER-STATUS.md](../BLOCKER-STATUS.md)
+
+---
+
+# 🚀 Unblock $180K Revenue — Action Required (ARCHIVED)
 
 ## Summary
 **$180K is ready to execute but blocked on 2 setup tasks.**

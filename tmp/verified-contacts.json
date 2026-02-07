@@ -1,0 +1,70 @@
+{
+  "1inch": {
+    "email": "hello@1inch.network",
+    "twitter": "@1inch",
+    "discord": "discord.gg/1inch"
+  },
+  "Gitcoin": {
+    "email": "support@gitcoin.co",
+    "twitter": "@gitcoin",
+    "contact_page": "https://www.gitcoin.co/contact"
+  },
+  "Yearn": {
+    "email": "contact@yearn.finance",
+    "discord": "discord.gg/yearn",
+    "governance": "https://discuss.yearn.fi"
+  },
+  "Optimism": {
+    "email": "friends@optimism.io",
+    "twitter": "@optimismFND",
+    "discord": "discord.gg/optimism"
+  },
+  "Uniswap": {
+    "email": "press@uniswap.org",
+    "twitter": "@Uniswap",
+    "discord": "discord.gg/uniswap"
+  },
+  "Curve": {
+    "email": "contact@curve.com",
+    "twitter": "@CurveFinance",
+    "discord": "discord.gg/curve"
+  },
+  "Balancer": {
+    "email": "contact@balancer.fi",
+    "twitter": "@Balancer",
+    "discord": "discord.gg/balancer"
+  },
+  "Aave": {
+    "email": "contact@aave.com",
+    "twitter": "@Aaveaave",
+    "discord": "discord.gg/aave"
+  },
+  "Ethereum Foundation": {
+    "email": "contact@ethereum.org",
+    "website": "https://ethereum.org/en/contact/"
+  },
+  "Polygon": {
+    "email": "contact@polygon.technology",
+    "twitter": "@0xPolygon"
+  },
+  "Chainlink": {
+    "email": "contact@chain.link",
+    "twitter": "@chainlink"
+  },
+  "Arbitrum": {
+    "email": "contact@arbitrum.foundation",
+    "twitter": "@arbitrum"
+  },
+  "Infura": {
+    "email": "support@infura.io",
+    "twitter": "@infura_io"
+  },
+  "Fireblocks": {
+    "email": "info@fireblocks.com",
+    "twitter": "@Fireblocks"
+  },
+  "Circle": {
+    "email": "contact@circle.com",
+    "twitter": "@circle"
+  }
+}

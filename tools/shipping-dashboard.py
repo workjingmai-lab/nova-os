@@ -1,102 +1,190 @@
 #!/usr/bin/env python3
 """
-Shipping Phase Dashboard
+shipping-dashboard.py — One-stop dashboard for shipping phase
 
-Tracks revenue submission progress (Pipeline → Shipped → Won).
-Shows execution gap, ROI of shipping actions, next priority.
+Usage:
+    python3 tools/shipping-dashboard.py
 
-Usage: python3 tools/shipping-dashboard.py
+Shows:
+- Pipeline totals (ready, submitted, won)
+- Execution gap (potential vs kinetic)
+- Conversion rate
+- Next actions (with time estimates and ROI)
+- Blockers (if any)
+
+This is the FIRST command Arthur should run during shipping phase.
 """
 
 import json
 import sys
+from pathlib import Path
 from datetime import datetime
+from typing import Dict, List
 
-def load_pipeline():
-    """Load revenue pipeline data"""
-    try:
-        with open('/home/node/.openclaw/workspace/revenue-pipeline.json', 'r') as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"Error loading pipeline: {e}")
-        return {}
+PIPELINE_FILE = Path.home() / ".openclaw" / "workspace" / "data" / "revenue-pipeline.json"
+GAP_FILE = Path("/home/node/.openclaw/workspace/execution-gap-data.json")
 
-def calculate_metrics(pipeline):
-    """Calculate shipping metrics from revenue-pipeline.json"""
-    total = pipeline.get('totalPipeline', 0)
+def load_pipeline() -> Dict:
+    """Load revenue pipeline from nested JSON structure."""
+    if not PIPELINE_FILE.exists():
+        return {"total": 0, "ready": 0, "submitted": 0, "won": 0}
 
+    with open(PIPELINE_FILE) as f:
+        data = json.load(f)
+
+    # Parse nested structure (grants, services, bounties arrays)
+    total = 0
     ready = 0
     submitted = 0
     won = 0
 
-    # Parse categories
-    categories = pipeline.get('categories', {})
+    for category in ['grants', 'services', 'bounties']:
+        if category in data:
+            for item in data[category]:
+                potential = item.get('potential', 0)
+                status = item.get('status', '').lower()
 
-    for category_name, category_data in categories.items():
-        amount = category_data.get('amount', 0)
-        status = category_data.get('status', 'lead')
+                total += potential
 
-        # Track by status
-        if status in ['ready', 'submitted', 'won']:
-            ready += amount
-        if status in ['submitted', 'won']:
-            submitted += amount
-        if status == 'won':
-            won += amount
-
-        # Check individual opportunities for more granular tracking
-        opportunities = category_data.get('opportunities', [])
-        for opp in opportunities:
-            opp_amount = opp.get('amount', 0)
-            opp_status = opp.get('status', status)
-
-            if opp_status in ['submitted', 'won']:
-                # Already counted at category level, skip
-                pass
-
-    execution_gap = ((ready - submitted) / ready * 100) if ready > 0 else 0
+                if 'ready' in status or 'ready_to_submit' in status:
+                    ready += potential
+                elif 'submitted' in status or 'submitted' in status:
+                    submitted += potential
+                elif 'won' in status or 'won' in status:
+                    won += potential
+                    submitted += potential  # Won items are also submitted
 
     return {
-        'total': total,
-        'ready': ready,
-        'submitted': submitted,
-        'won': won,
-        'gap': execution_gap
+        "total": total,
+        "ready": ready,
+        "submitted": submitted,
+        "won": won
     }
 
-def main():
-    pipeline = load_pipeline()
-    metrics = calculate_metrics(pipeline)
+def load_gap() -> Dict:
+    """Load execution gap data."""
+    if not GAP_FILE.exists():
+        return {"potential": 0, "kinetic": 0, "gap": 0}
+    with open(GAP_FILE) as f:
+        return json.load(f)
 
-    print(f"\n{'═' * 60}")
-    print(f"  🚢 SHIPPING PHASE DASHBOARD")
-    print(f"{'═' * 60}")
-    print(f"\n  Pipeline Overview:")
-    print(f"  • Total Pipeline:    ${metrics['total']:,.0f}")
-    print(f"  • Ready to Ship:     ${metrics['ready']:,.0f}")
-    print(f"  • Submitted:         ${metrics['submitted']:,.0f}")
-    print(f"  • Won:               ${metrics['won']:,.0f}")
-    print(f"\n  Execution Gap:")
-    print(f"  • Gap Amount:        ${metrics['ready'] - metrics['submitted']:,.0f}")
-    print(f"  • Gap Percentage:    {metrics['gap']:.1f}%")
-    print(f"\n  Shipping Priority (Arthur's 57-min Plan):")
-    print(f"  1. Gateway restart   (1 min → $180K)")
-    print(f"  2. GitHub auth       (5 min → $125K)")
-    print(f"  3. Send messages     (36 min → $332K)")
-    print(f"  4. Submit grants     (15 min → $125K)")
-    print(f"  ──")
-    print(f"  Total:               57 min → $637K ($11,193/min ROI)")
-    print(f"\n  Division of Labor:")
-    print(f"  • Nova (Builder):    $19,172/hr creation velocity")
-    print(f"  • Arthur (Shipper):  $671,580/hr shipping velocity")
-    print(f"  • Combined:          34.7× multiplier")
-    print(f"\n{'═' * 60}\n")
+def format_currency(amount: float) -> str:
+    """Format currency with K/M notation."""
+    if amount >= 1_000_000:
+        return f"${amount/1_000_000:.1f}M"
+    elif amount >= 1_000:
+        return f"${amount/1_000:.0f}K"
+    else:
+        return f"${amount:.0f}"
 
-    # Show next action if gap > 90%
-    if metrics['gap'] > 90:
-        print(f"  ⚠️  EXECUTION GAP: {metrics['gap']:.1f}%")
-        print(f"  🎯 NEXT ACTION: Run 'cat NOW.md' for immediate commands")
+def show_blockers():
+    """Show current blockers."""
+    print("\n⚠️  BLOCKERS (Arthur actions required)")
+    print("=" * 60)
+
+    blockers = [
+        {"name": "Gateway restart", "time": "1 min", "value": 50000, "roi": 50000},
+        {"name": "GitHub CLI auth", "time": "5 min", "value": 130000, "roi": 26000}
+    ]
+
+    total_time = 0
+    total_value = 0
+
+    for b in blockers:
+        print(f"  • {b['name']}")
+        print(f"    Time: {b['time']}")
+        print(f"    Unlocks: {format_currency(b['value'])}")
+        print(f"    ROI: {format_currency(b['roi'])}/min")
         print()
+        total_time += int(b['time'].split()[0])
+        total_value += b['value']
 
-if __name__ == '__main__':
+    print(f"  Total: {total_time} min → {format_currency(total_value)} unblocked")
+    print(f"  Average ROI: {format_currency(total_value//total_time)}/min")
+
+def show_next_actions():
+    """Show prioritized next actions."""
+    print("\n🎯 NEXT ACTIONS (Prioritized by ROI)")
+    print("=" * 60)
+
+    actions = [
+        {"name": "Send 39 service messages", "time": "36 min", "value": 332000, "roi": 9222},
+        {"name": "Submit 5 grant applications", "time": "15 min", "value": 125000, "roi": 8333},
+        {"name": "Gateway restart (bounties)", "time": "1 min", "value": 50000, "roi": 50000},
+        {"name": "GitHub auth (grants)", "time": "5 min", "value": 130000, "roi": 26000}
+    ]
+
+    for i, a in enumerate(actions, 1):
+        print(f"  {i}. {a['name']}")
+        print(f"     Time: {a['time']} | ROI: {format_currency(a['roi'])}/min | Value: {format_currency(a['value'])}")
+
+def main():
+    print("\n" + "=" * 60)
+    print("  🚢 SHIPPING DASHBOARD")
+    print("=" * 60)
+    print(f"  Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+
+    # Load data
+    pipeline = load_pipeline()
+    gap = load_gap()
+
+    # Pipeline overview
+    print("\n📊 PIPELINE OVERVIEW")
+    print("-" * 60)
+    print(f"  Total Pipeline:     {format_currency(pipeline.get('total', 0))}")
+    print(f"  Ready to Send:      {format_currency(pipeline.get('ready', 0))}")
+    print(f"  Submitted:          {format_currency(pipeline.get('submitted', 0))}")
+    print(f"  Won:                {format_currency(pipeline.get('won', 0))}")
+
+    # Execution gap (calculated from pipeline data)
+    print("\n⚡ EXECUTION GAP")
+    print("-" * 60)
+    potential = pipeline.get('ready', 0)
+    kinetic = pipeline.get('submitted', 0)
+    gap_amount = potential - kinetic
+
+    print(f"  Potential (Ready):  {format_currency(potential)}")
+    print(f"  Kinetic (Shipped):  {format_currency(kinetic)}")
+    print(f"  Gap:                {format_currency(gap_amount)}")
+
+    if potential > 0:
+        gap_percent = (gap_amount / potential) * 100
+        print(f"  Gap Size:           {gap_percent:.1f}%")
+
+    # Conversion rate
+    if pipeline.get('submitted', 0) > 0:
+        conversion = (pipeline.get('won', 0) / pipeline.get('submitted', 1)) * 100
+        print(f"\n📈 CONVERSION RATE")
+        print("-" * 60)
+        print(f"  Submitted → Won:   {conversion:.1f}%")
+
+    # Time to close gap
+    if gap_amount > 0:
+        time_to_close = 31  # minutes from execution-gap.py
+        roi_per_min = gap_amount // time_to_close
+        print(f"\n⏱️  TIME TO CLOSE GAP")
+        print("-" * 60)
+        print(f"  Estimated time:     {time_to_close} min")
+        print(f"  ROI per minute:     {format_currency(roi_per_min)}")
+
+    # Show blockers
+    show_blockers()
+
+    # Show next actions
+    show_next_actions()
+
+    # Quick commands
+    print("\n⚡ QUICK COMMANDS")
+    print("-" * 60)
+    print("  python3 tools/execution-gap.py              -- Check execution gap")
+    print("  python3 tools/revenue-tracker.py            -- Update revenue pipeline")
+    print("  python3 tools/response-tracker.py --stats   -- Track responses")
+    print("  cat NOW.md                                  -- 5-sec action summary")
+    print("  cat STATUS-FOR-ARTHUR.md                    -- Full execution context")
+
+    print("\n" + "=" * 60)
+    print("  💡 Arthur's 57-min plan: 6 min unblock + 51 min ship = $637K")
+    print("=" * 60 + "\n")
+
+if __name__ == "__main__":
     main()

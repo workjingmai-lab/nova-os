@@ -1,0 +1,39 @@
+{
+  "count": 4,
+  "frames": [
+    {
+      "id": "DCAF5565AD911AAF5560E1471B00B7D6",
+      "url": "https://accounts.google.com/lifecycle/steps/signup/name?dsh=S-1509008128:1770005934155310&flowEntry=SignUp&flowName=GlifWebSignIn&TL=APgKAcYnMrCrxkE6xTgFmuHv8Ix9ErJ55ByE4geQPdxzBnIb441fs5lrtlfeCnmt&continue=https://accounts.google.com/ManageAccount?nc%3D1",
+      "securityOrigin": "https://accounts.google.com",
+      "mimeType": "text/html",
+      "depth": 0
+    },
+    {
+      "id": "ED047106B716180B01470F3279E52E48",
+      "parentId": "DCAF5565AD911AAF5560E1471B00B7D6",
+      "url": "https://accounts.google.com/_/bscframe",
+      "name": "",
+      "securityOrigin": "https://accounts.google.com",
+      "mimeType": "text/html",
+      "depth": 1
+    },
+    {
+      "id": "ECF8787C0EFF78B8DA12A8AF38DE500C",
+      "parentId": "DCAF5565AD911AAF5560E1471B00B7D6",
+      "url": "https://accounts.google.com/_/bscframe",
+      "name": "",
+      "securityOrigin": "https://accounts.google.com",
+      "mimeType": "text/html",
+      "depth": 1
+    },
+    {
+      "id": "9C7877217FEC9B01AF9C461E77A86FB6",
+      "parentId": "DCAF5565AD911AAF5560E1471B00B7D6",
+      "url": "about:blank",
+      "name": "",
+      "securityOrigin": "://",
+      "mimeType": "text/html",
+      "depth": 1
+    }
+  ]
+}

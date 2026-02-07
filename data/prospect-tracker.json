@@ -1,0 +1,70 @@
+{
+  "lastUpdated": "2026-02-04T11:00:00Z",
+  "stats": {
+    "totalProspects": 50,
+    "messagesReady": 104,
+    "messagesSent": 0,
+    "repliesReceived": 0,
+    "pipelineValue": 2057000,
+    "valueSecured": 0
+  },
+  "prospects": [
+    {
+      "id": "001",
+      "company": "Uniswap",
+      "value": 50000,
+      "contacts": ["Hayden Adams (Founder)"],
+      "messagesReady": 2,
+      "messagesSent": 0,
+      "status": "ready",
+      "lastContacted": null,
+      "nextFollowUp": null
+    },
+    {
+      "id": "002",
+      "company": "Aave",
+      "value": 75000,
+      "contacts": ["Stani Kulechov (Founder)"],
+      "messagesReady": 2,
+      "messagesSent": 0,
+      "status": "ready",
+      "lastContacted": null,
+      "nextFollowUp": null
+    },
+    {
+      "id": "003",
+      "company": "Gitcoin",
+      "value": 100000,
+      "contacts": ["Kevin Owocki (Founder)", "Engineering team"],
+      "messagesReady": 3,
+      "messagesSent": 0,
+      "status": "researched",
+      "lastContacted": null,
+      "nextFollowUp": null
+    },
+    {
+      "id": "004",
+      "company": "Compound",
+      "value": 75000,
+      "contacts": ["Robert Leshner (Founder)"],
+      "messagesReady": 2,
+      "messagesSent": 0,
+      "status": "ready",
+      "lastContacted": null,
+      "nextFollowUp": null
+    }
+  ],
+  "statusLabels": {
+    "researched": "Contacts identified, message ready",
+    "ready": "Message ready, awaiting send",
+    "sent": "Initial message sent",
+    "replied": "Received response",
+    "negotiating": "In discussion",
+    "closed": "Deal secured or lost"
+  },
+  "followUpSchedule": {
+    "day3": "Value nudge + timeline check",
+    "day7": "New insight + gentle reminder",
+    "day14": "Respectful close-out or final check"
+  }
+}

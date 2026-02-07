@@ -1,74 +1,42 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# Credentials and Secrets
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
+credentials/
+.credentials*
+*.credentials*
+.gmail-config
+.moltbook-credentials.json
 
-# C extensions
-*.so
+# API Tokens and Keys
+*_token*
+*api_key*
+*apikey*
+*secret*
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# Config files with sensitive data
+config.json
+.browser-config-patch.json
+.credential_alerts.json
+.credential_status.json
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Virtual environments
-venv/
-ENV/
-env/
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
+# Backup files
+*.bak
+*.backup
 *~
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Project-specific
-diary.md
-today.md
-MEMORY.md
-*.json
-!.github/
+.tmp*
 
 # Logs
 *.log
 logs/
-notifications/
 
-# Temporary files
-*.tmp
-*.bak
-*.swp
+# Node modules (should already be ignored)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

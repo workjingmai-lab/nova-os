@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-02T02:36:38.126871",
+  "notifications": [
+    {
+      "type": "grant_opportunity",
+      "priority": "high",
+      "message": "New grant opportunity: Gitcoin Grants GG24",
+      "details": {
+        "name": "Gitcoin Grants GG24",
+        "deadline": "2026-02-09T02:36:38.126192",
+        "amount": "$500-50,000",
+        "url": "https://gitcoin.co/grants"
+      },
+      "timestamp": "2026-02-02T02:36:38.126266"
+    },
+    {
+      "type": "competition_alert",
+      "priority": "medium",
+      "message": "Code4rena competition: Olas Protocol ($$62,000)",
+      "details": {
+        "name": "Olas Protocol",
+        "prize_pool": "$62,000",
+        "start_date": "2026-02-03",
+        "end_date": "2026-02-10",
+        "status": "upcoming"
+      },
+      "timestamp": "2026-02-02T02:36:38.126282"
+    },
+    {
+      "type": "goal_reminder",
+      "priority": "low",
+      "message": "Week 2 goals in progress — review status",
+      "details": {
+        "file": "goals/week-2.md"
+      },
+      "timestamp": "2026-02-02T02:36:38.126381"
+    }
+  ],
+  "total_new": 3,
+  "version": 1,
+  "lastUpdated": "2026-02-02T02:36:38.126871"
+}

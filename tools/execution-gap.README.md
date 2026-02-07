@@ -1,25 +1,13 @@
-# Execution Gap Calculator
+# execution-gap.py — Execution Gap Visualizer
 
-Shows the difference between what you have READY and what you've actually SUBMITTED.
+Makes the invisible visible: Shows the gap between what's ready to send and what's been submitted.
 
 ## What It Does
 
-The execution gap is the chasm between POTENTIAL revenue (opportunities identified) and KINETIC revenue (money actually pursued).
-
-**Example output:**
-```
-⚡ EXECUTION GAP REPORT
-============================================================
-
-📊 PIPELINE SUMMARY
-  Total Potential: $435,000
-  Ready to Send:  $435,000 (100.0%)
-  Submitted:      $0 (0.0%)
-  Won:            $0 (0.0%)
-
-🚨 EXECUTION GAP
-  Ready → Submitted: $435,000 (not sent)
-```
+- **Visualizes execution gap** — Bar graph shows ready vs submitted vs gap
+- **Calculates value at stake** — $X/minute left on table by not sending
+- **Status indicators** — CRITICAL/WARNING/NOTICE/GOOD based on gap %age
+- **Time to close** — Assumes 31 minutes to send everything (from SEND-EVERYTHING.md)
 
 ## Usage
 
@@ -27,32 +15,47 @@ The execution gap is the chasm between POTENTIAL revenue (opportunities identifi
 python3 tools/execution-gap.py
 ```
 
-## What It Tells You
+## Output Example
 
-- **Potential Pipeline:** Total value of all identified opportunities
-- **Ready to Send:** Value of opportunities with messages/proposals prepared
-- **Submitted:** Value of opportunities actually sent/submitted
-- **Execution Gap:** The difference between ready and submitted
+```
+============================================================
+  EXECUTION GAP
+============================================================
 
-## Key Insight
+  Ready:        $734K
+  Submitted:      $5K  ███
+  Gap:          $729K  ████████████████████████████████ (99.3%)
 
-A large execution gap means you're PREPARING but not EXECUTING.
+  Time to close: 31 minutes
+  Value at stake: $23,532/minute
 
-**$435K ready, $0 submitted = 100% execution gap.**
+  ⚠️  CRITICAL: Almost everything is ready but nothing sent
 
-The gap is not capability or preparation — it's SHIPPING.
+============================================================
+```
+
+## Why This Matters
+
+**Execution gap = revenue left on table.**
+
+- 99.3% gap = $729K waiting to be sent
+- Every minute waited = $23,532 not pursued
+- This clarity drives action
 
 ## Data Source
 
-Reads from `revenue-pipeline.json` — your single source of truth for all revenue opportunities.
+Reads from `revenue-pipeline.json` (managed by revenue-tracker.py).
+
+## Formula
+
+```
+gap = ready - submitted
+gap_percent = (gap / ready) * 100
+value_per_minute = gap / 31
+```
 
 ## Related Tools
 
-- `revenue-tracker.py` — Track individual submissions
-- `service-batch-send.py` — Send service outreach messages
-- `grant-batch.py` — Submit grant applications
-
----
-
-*Created: 2026-02-05 — Work block 1835*
-*Purpose: Make the execution gap visible*
+- `revenue-tracker.py` — Track pipeline status
+- `service-batch-send.py` — Send all service messages
+- `SEND-EVERYTHING.md` — Complete execution workflow

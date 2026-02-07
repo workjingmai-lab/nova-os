@@ -1,0 +1,50 @@
+{
+  "discovered": [
+    {
+      "name": "Gitcoin Grants",
+      "program_id": "gitcoin",
+      "url": "https://gitcoin.co/grants",
+      "cycle": "Quarterly",
+      "potential": 5000,
+      "status": "tracked",
+      "discovered": "2026-02-04T09:23:42.422817+00:00"
+    },
+    {
+      "name": "Octant (GP)",
+      "program_id": "octant",
+      "url": "https://octant.uchaintech.cn/",
+      "cycle": "Quarterly",
+      "potential": 15000,
+      "status": "tracked",
+      "discovered": "2026-02-04T09:23:42.422875+00:00"
+    },
+    {
+      "name": "Olas (GP)",
+      "program_id": "olas",
+      "url": "https://olas.xyz/",
+      "cycle": "Varies",
+      "potential": 50000,
+      "status": "tracked",
+      "discovered": "2026-02-04T09:23:42.422880+00:00"
+    },
+    {
+      "name": "Optimism RPGF",
+      "program_id": "optimism_rpgf",
+      "url": "https://app.optimism.io/retrofunding/rounds",
+      "cycle": "Rounds",
+      "potential": 50000,
+      "status": "tracked",
+      "discovered": "2026-02-04T09:23:42.422884+00:00"
+    },
+    {
+      "name": "Moloch DAO",
+      "program_id": "moloch_dao",
+      "url": "https://molochdao.com/",
+      "cycle": "Ongoing",
+      "potential": 10000,
+      "status": "tracked",
+      "discovered": "2026-02-04T09:23:42.422887+00:00"
+    }
+  ],
+  "last_checked": "2026-02-04T09:34:15.469022+00:00"
+}

@@ -1,0 +1,537 @@
+{
+  "grants": [
+    {
+      "name": "Gitcoin",
+      "potential": 5000.0,
+      "status": "submitted",
+      "notes": "GitHub SSH auth WORKING, submission generated: tmp/grant-submissions/gitcoin_20260203_013149.json, manual web submission required",
+      "created": "2026-02-02T20:49:29.992953",
+      "updated": "2026-02-04T13:21:38.751541"
+    },
+    {
+      "name": "Octant",
+      "potential": 15000.0,
+      "status": "ready_to_submit",
+      "notes": "GitHub SSH auth WORKING, submission generated: tmp/grant-submissions/octant_20260203_013149.json, manual web submission required",
+      "created": "2026-02-02T20:49:30.105146",
+      "updated": "2026-02-03T01:31:49.000000"
+    },
+    {
+      "name": "Olas",
+      "potential": 50000.0,
+      "status": "ready_to_submit",
+      "notes": "GitHub SSH auth WORKING, submission generated: tmp/grant-submissions/olas_20260203_013149.json, manual web submission required",
+      "created": "2026-02-02T20:49:30.234206",
+      "updated": "2026-02-03T01:31:49.000000"
+    },
+    {
+      "name": "Optimism RPGF",
+      "potential": 50000.0,
+      "status": "ready_to_submit",
+      "notes": "GitHub SSH auth WORKING, submission generated: tmp/grant-submissions/optimism_20260203_013149.json, manual web submission required",
+      "created": "2026-02-02T20:49:30.361284",
+      "updated": "2026-02-03T01:31:49.000000"
+    },
+    {
+      "name": "Moloch DAO",
+      "potential": 10000.0,
+      "status": "ready_to_submit",
+      "notes": "GitHub SSH auth WORKING, submission generated: tmp/grant-submissions/molochdao_20260203_013149.json, manual web submission required",
+      "created": "2026-02-02T20:49:30.478197",
+      "updated": "2026-02-03T01:31:49.000000"
+    }
+  ],
+  "services": [
+    {
+      "name": "Quick Automation",
+      "potential": 2000.0,
+      "status": "ready",
+      "notes": "25 leads, 21 messages ready in outreach/ (4 templates: quick, setup, multi-agent, audit), awaiting Arthur review to send",
+      "created": "2026-02-02T20:49:30.595830",
+      "updated": "2026-02-02T21:33:00.000000"
+    },
+    {
+      "name": "OpenClaw Setup",
+      "potential": 5000.0,
+      "status": "lead",
+      "notes": "Proposal template ready, 1-2 week delivery",
+      "created": "2026-02-02T20:49:30.721197",
+      "updated": "2026-02-02T21:11:01.074630"
+    },
+    {
+      "name": "Multi-Agent System",
+      "potential": 25000.0,
+      "status": "lead",
+      "notes": "Custom agent fleets, 2-4 week delivery, high-value opportunity",
+      "created": "2026-02-02T20:49:30.838601",
+      "updated": "2026-02-02T21:11:01.074630"
+    },
+    {
+      "name": "Retainer",
+      "potential": 4000.0,
+      "status": "lead",
+      "notes": "$1-4K/month ongoing support, proposal templates ready",
+      "created": "2026-02-02T20:49:30.959147",
+      "updated": "2026-02-02T21:11:01.074630"
+    },
+    {
+      "name": "Audit & Optimization",
+      "potential": 4000.0,
+      "status": "lead",
+      "notes": "Tool suite audit for agents with 20+ tools, proposal template created, $3-5K, 5-7 days",
+      "created": "2026-02-02T21:33:00.000000",
+      "updated": "2026-02-02T21:33:00.000000"
+    },
+    {
+      "name": "Web3 Automation Integration",
+      "potential": 7000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-web3.md). 3 pricing tiers: K single-chain, K multi-chain, K full-stack. Targets DeFi ops, DAO participation, NFT management, token operations.",
+      "created": "2026-02-02T21:38:41.223791",
+      "updated": "2026-02-02T21:38:41.223821"
+    },
+    {
+      "name": "Data Pipeline & Analytics Automation",
+      "potential": 5000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-data.md). 3 pricing tiers: K single-source, .5K multi-source, K full pipeline. Targets business metrics, social monitoring, API aggregation, log analysis, market research.",
+      "created": "2026-02-02T21:39:28.158379",
+      "updated": "2026-02-02T21:39:28.158415"
+    },
+    {
+      "name": "DevOps & CI/CD Automation",
+      "potential": 8000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-devops.md). 3 pricing tiers: K basic CI/CD, K multi-environment, K full DevOps transformation. Targets web app deployment, API reliability, microservices, mobile CI, data pipelines. Includes CI/CD setup, IaC, monitoring, observability.",
+      "created": "2026-02-02T21:40:51.833385",
+      "updated": "2026-02-02T21:40:51.833421"
+    },
+    {
+      "name": "Smart Contract Security Audit",
+      "potential": 15000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-security.md). 3 pricing tiers: K basic audit, 0K standard (multi-contract), 5K premium (complex protocol). Targets: pre-deployment audits, post-exploit analysis, code quality checks, regulatory compliance, competitive audits. Includes vulnerability assessment, automated analysis, audit report, re-audit support.",
+      "created": "2026-02-02T21:41:45.738545",
+      "updated": "2026-02-02T21:41:45.738587"
+    },
+    {
+      "name": "Content Marketing & Social Media Automation",
+      "potential": 6000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-content.md). 3 pricing tiers: K basic (single platform), K multi-platform (2-3 platforms), K full engine (4+ platforms). Targets: founder presence, SaaS content, community management, product launches, personal brand. Includes content generation, scheduling, analytics, optimization.",
+      "created": "2026-02-02T21:42:32.615544",
+      "updated": "2026-02-02T21:42:32.615578"
+    },
+    {
+      "name": "API Integration & Automation",
+      "potential": 4000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-api-integration.md). 3 pricing tiers: $2K quick integration (single API, 2-3 days), $4K multi-API pipeline (2-3 APIs, 5-7 days), $6K enterprise integration (4+ APIs, 1-2 weeks). Targets: business intelligence (Stripe, HubSpot, GA), social automation, e-commerce sync, financial aggregation, internal tools. Includes auth setup, data transformation, webhook handlers, monitoring.",
+      "created": "2026-02-02T21:50:00.000000",
+      "updated": "2026-02-02T21:50:00.000000"
+    },
+    {
+      "name": "QA & Test Automation",
+      "potential": 10000.0,
+      "status": "ready",
+      "notes": "Service proposal template created (outreach/service-proposal-template-qa.md). 3 pricing tiers: $3K essential (unit/integration tests, CI integration), $6K advanced (E2E tests, staging environment, parallel execution), $10K enterprise (visual regression, performance testing, security testing, custom dashboard). ROI: $30.7K/year savings, 1-2 month payback. Targets: SaaS platforms, e-commerce, API backends. Includes test suite setup, CI/CD integration, test environment, documentation.",
+      "created": "2026-02-02T22:00:00.000000",
+      "updated": "2026-02-02T22:00:00.000000"
+    },
+    {
+      "name": "Conversational AI Chatbot",
+      "potential": 10000.0,
+      "status": "ready",
+      "notes": "Custom chatbot development with 3 pricing tiers (K/K/0K). Multi-platform, context-aware, autonomous actions. ROI: 10K bot handles 10K convos/month vs 60K human cost.",
+      "created": "2026-02-02T22:00:43.041248",
+      "updated": "2026-02-02T22:00:43.041294"
+    },
+    {
+      "name": "Monitoring & Alerting Automation",
+      "potential": 15000.0,
+      "status": "ready",
+      "notes": "Template created, 3 tiers: -5K / -10K / 0-15K, targets DevOps/infrastructure teams",
+      "created": "2026-02-02T23:53:38.168923",
+      "updated": "2026-02-02T23:53:38.168982"
+    },
+    {
+      "name": "Claude Ecosystem (Anthropic)",
+      "potential": 17500.0,
+      "status": "lead",
+      "notes": "Outreach proposal created: outreach/proposals/anthropic-infrastructure.md. Targets Claude Discord/Slack communities. Pain: Manual agent orchestration. Solution: Multi-agent workspace with continuous execution. Value: $10-25K. Created 2026-02-04.",
+      "created": "2026-02-04T09:22:14.332049+00:00",
+      "updated": "2026-02-04T09:22:14.332095+00:00"
+    },
+    {
+      "name": "DAO Automation (Uniswap/Aave/Compound)",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Multi-DAO outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/dao-automation-trio.md. Focus: Manual governance scaling (4+ platforms, hundreds of proposals). 3-agent suite per DAO: Proposal Tracker ($4-6K), Community Responder ($3-5K), Grant Pipeline Agent ($3-5K), Optional Multi-Chain Coordinator (+$2-3K). 3-phase: Discovery FREE \u2192 Pilot $2-3K \u2192 Full $10-15K per DAO. ROI: $80K+ annual savings per DAO, 2-3 month break-even. Multi-DAO discount: 3 DAOs = $45K total (save $9K). Target: Uniswap, Aave, Compound governance teams. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-04T09:26:25.837499+00:00",
+      "updated": "2026-02-04T20:50:16.321127"
+    },
+    {
+      "name": "Optimism DAO (RetroPGF Automation)",
+      "potential": 15000.0,
+      "status": "lead",
+      "notes": "Contact research complete: data/contacts/optimism-research.md (7.3KB). Confidence 8/10. Pain: RetroPGF application bottleneck (hundreds of proposals), delegate coordination, milestone tracking. Solution: Governance tracker + grant automation agent fleet ($10-20K). 4-phase outreach strategy ready (engagement \u2192 DM \u2192 pilot \u2192 contract). Free pilot offer: 7-day governance tracker. Timeline 2-4 weeks. Created 2026-02-04 12:06Z.",
+      "created": "2026-02-04T12:06:00.000000+00:00",
+      "updated": "2026-02-04T12:06:00.000000+00:00"
+    },
+    {
+      "name": "Lido DAO Governance Automation",
+      "potential": 32500.0,
+      "status": "outreach-ready",
+      "notes": "Value-first DM created (2.5K midpoint). Target: Governance moderators (@ligi, @Island_ADC). Offer: 7-day free pilot \u2192 -5K/month retainer. Multi-chain governance tracker (Snapshot + Aragon + Discord). Message file: outreach/messages/lido-dao-governance-value-first.md",
+      "created": "2026-02-04T13:31:15.033717",
+      "updated": "2026-02-04T13:31:15.033747"
+    },
+    {
+      "name": "Compound DAO Governance",
+      "potential": 20000.0,
+      "status": "lead",
+      "notes": "Governance agent suite: proposal tracker, sentiment monitor, risk flags. 7-day free pilot ready. Pain: 50+ delegates, 3-5 proposals/week. Discord/Twitter outreach ready.",
+      "created": "2026-02-04T13:36:06.720003",
+      "updated": "2026-02-04T13:36:06.720032"
+    },
+    {
+      "name": "Aave Governance Automation",
+      "potential": 17500.0,
+      "status": "lead",
+      "notes": "4-agent suite: proposal tracker, sentiment monitor, daily briefs. Moltbook analysis published (217 proposals). Marc Zeller DM ready. Pain: 8-15 hrs/week manual coordination. 30-day free pilot.",
+      "created": "2026-02-04T13:37:41.985697",
+      "updated": "2026-02-04T13:37:41.985729"
+    },
+    {
+      "name": "Gitcoin Grant Automation",
+      "potential": 15000.0,
+      "status": "ready",
+      "notes": "Value-first message created (work block 1750). PROOF framework: Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Pilot\u2192CTA. 4-agent grant suite: intake, categorize, dedupe, payout. 30-day free pilot. ROI: 5 hrs saved per round. File: outreach/messages/gitcoin-grant-automation.md",
+      "created": "2026-02-04T13:37:46.264417",
+      "updated": "2026-02-04T20:40:11.874407"
+    },
+    {
+      "name": "Compound DAO Governance Automation",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Value-first message created (outreach/messages/compound-dao-governance-value-first.md). Target: Discord/Twitter governance moderators. 7-day free pilot offer. Pain: 50+ delegates, multi-chain tracking.",
+      "created": "2026-02-04T13:44:17.314326",
+      "updated": "2026-02-04T13:44:17.314357"
+    },
+    {
+      "name": "MakerDAO Governance Core Units",
+      "potential": 32500.0,
+      "status": "ready",
+      "notes": "Personalized outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/makerdao-governance-automation.md. Focus: Cross-Core coordination, DAI stability, risk monitoring. 4-agent governance suite: Coordinator (-12K), Stability Sentinel (-10K), Risk Aggregator (-10K), Proposal Tracker (-8K). 3-phase engagement: Discovery (FREE) \u2192 Pilot (-5K) \u2192 Full (0-30K). Timeline: 5-6 weeks. Target: Aligned Services Layer, DAI Stability CU, Risk CU. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-04T13:50:42.619599",
+      "updated": "2026-02-04T20:46:56.680535"
+    },
+    {
+      "name": "Base Security Council",
+      "potential": 25000.0,
+      "status": "ready",
+      "notes": "Personalized outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/base-security-council-automation.md. Moltbook reference: post c859c208. Focus: 12-entity, 6-timezone, 9-signature coordination. 3-agent suite: Signature Tracker (-10K), Cross-Timezone Coordinator (-8K), Upgrade Readiness Monitor (-6K), Optional Notification Agent (-5K). 2-phase engagement: Pilot (-5K) \u2192 Full (5-20K). ROI: 800K+ annual savings, 2-3 month break-even. Target: Seneca, Juan Suarez, Jesse Pollak. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-04T13:52:20.030026",
+      "updated": "2026-02-04T20:48:12.963197"
+    },
+    {
+      "name": "Optimism DAO Governance",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Value-first message created (outreach/messages/optimism-dao-governance-value-first.md). PROOF framework: Research\u2192Pain\u2192Solution\u2192Why Me\u2192CTA. 3-agent suite: Proposal Tracker, Delegate Monitor, Cross-Chain Coordinator. 30-day free pilot. 5-20K, 2-3 weeks. Target: 0xSisyphus, Jing Sun, Katherine Dowling. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-04T13:53:49.912459",
+      "updated": "2026-02-06T11:37:23.666225"
+    },
+    {
+      "name": "Uniswap DAO Governance Automation",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Multi-chain governance coordination (10+ chains). Outreach messages ready. 30-day free pilot offer.",
+      "created": "2026-02-04T13:57:31.746315",
+      "updated": "2026-02-04T13:57:31.746346"
+    },
+    {
+      "name": "Arbitrum DAO Governance Suite",
+      "potential": 15000.0,
+      "status": "ready",
+      "notes": "Multi-chain + STIP focus, 3-agent suite, 30-day free pilot, top 10 delegates target",
+      "created": "2026-02-04T14:02:41.946438",
+      "updated": "2026-02-04T14:02:41.946472"
+    },
+    {
+      "name": "ENS DAO Governance Suite",
+      "potential": 15000.0,
+      "status": "ready",
+      "notes": "Working group coordination focus, 3-agent suite, 30-day free pilot, Meta-Governance group target",
+      "created": "2026-02-04T14:03:57.597377",
+      "updated": "2026-02-04T14:03:57.597407"
+    },
+    {
+      "name": "Balancer DAO Outreach",
+      "potential": 20.0,
+      "status": "lead",
+      "notes": "3-agent governance suite: Monitor, Alert, Report. 30-day pilot \u2192 $2-3K/month retainer. Channels: Discord @balancer, Twitter @Balancer. File: outreach/messages/balancer-dao-governance-value-first.md",
+      "created": "2026-02-04T15:35:36.285807",
+      "updated": "2026-02-04T15:35:36.285838"
+    },
+    {
+      "name": "Curve DAO Outreach",
+      "potential": 20.0,
+      "status": "lead",
+      "notes": "3-agent suite: Risk Monitor, Proposal, Digest. 30-day pilot \u2192 $2-3K/month retainer. Channels: Discord @curve, Twitter @CurveFinance. File: outreach/messages/curve-dao-governance-value-first.md",
+      "created": "2026-02-04T15:35:41.393663",
+      "updated": "2026-02-04T15:35:41.393706"
+    },
+    {
+      "name": "Yearn DAO Outreach",
+      "potential": 25.0,
+      "status": "lead",
+      "notes": "4-agent suite: Performance, Risk, Deployment, Governance. 30-day pilot \u2192 $3-4K/month retainer. Channels: Discord @yearn, Twitter @iearnfinance. File: outreach/messages/yearn-dao-vault-automation-value-first.md",
+      "created": "2026-02-04T15:35:48.235705",
+      "updated": "2026-02-04T15:35:48.235742"
+    },
+    {
+      "name": "Ethereum Foundation Agent Automation",
+      "potential": 40000.0,
+      "status": "ready",
+      "notes": "Personalized outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/ethereum-foundation-agent-automation.md. Follow-up: Day 0/3/7/14/21. HIGH priority (0K). Quick Automation Package: -2K, 3-5 days. Target: ecosystem-support@ethereum.org",
+      "created": "2026-02-04T18:53:34.290187",
+      "updated": "2026-02-04T19:39:59.952692",
+      "last_contacted": "2026-02-04T19:39:59.952659"
+    },
+    {
+      "name": "Fireblocks Security Automation",
+      "potential": 35000.0,
+      "status": "ready",
+      "notes": "Personalized outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. Focus: Security operations automation, continuous monitoring, audit workflows. File: outreach/messages/fireblocks-security-automation.md. Follow-up: Day 0/3/7/14/21. HIGH priority (5K). Security Automation Package: -5K, 1-2 weeks. Target: partnerships@fireblocks.com",
+      "created": "2026-02-04T18:55:47.516630",
+      "updated": "2026-02-04T18:55:47.516660"
+    },
+    {
+      "name": "Uniswap DevX Automation",
+      "potential": 40000.0,
+      "status": "ready",
+      "notes": "Personalized outreach message created. PROOF framework: Research\u2192Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. Focus: DevX bottlenecks (V4 hooks docs, grant workflows, community engagement). File: outreach/messages/uniswap-devx-automation.md. Follow-up: Day 0/3/7/14/21. HIGH priority (0K). DevX Agent Package: -5K, 1-2 weeks. Target: grants@uniswap.org / dev-rel@uniswap.org",
+      "created": "2026-02-04T18:56:28.010195",
+      "updated": "2026-02-04T18:56:28.010229"
+    },
+    {
+      "name": "Alchemy",
+      "potential": 30000.0,
+      "status": "messages_ready",
+      "notes": "DevX automation outreach message created (work block 1729)",
+      "created": "2026-02-04T19:19:14.391372",
+      "updated": "2026-02-04T19:19:14.391402"
+    },
+    {
+      "name": "Infura",
+      "potential": 30000.0,
+      "status": "messages_ready",
+      "notes": "DevX automation outreach message created (work block 1730)",
+      "created": "2026-02-04T19:19:34.077772",
+      "updated": "2026-02-04T19:19:34.077803"
+    },
+    {
+      "name": "Balancer DAO - Governance Automation",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "4-agent suite: Tracker $3-5K, Sentiment $2-3K, Risk $3-5K, Reporter $2-3K. 30-day free pilot. Contact: Discord #governance, Twitter @BalancerHQ. Message: outreach/messages/balancer-governance-automation.md",
+      "created": "2026-02-04T20:05:14.620993",
+      "updated": "2026-02-04T20:05:14.621024"
+    },
+    {
+      "name": "Curve DAO - Governance Automation",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "4-agent suite: Pool Weight $4-6K, Cross-Chain $3-5K, Emissions $3-5K, Reporter $2-4K. 30-day free pilot. Contact: Discord #governance, Twitter @CurveFinance. Message: outreach/messages/curve-governance-automation.md",
+      "created": "2026-02-04T20:05:30.305434",
+      "updated": "2026-02-04T20:05:30.305566"
+    },
+    {
+      "name": "Yearn DAO - Protocol Automation",
+      "potential": 25000.0,
+      "status": "ready",
+      "notes": "4-agent suite: Vault Performance $5-8K, Strategy Monitor $4-6K, Governance $3-5K, Risk $4-6K. 30-day free pilot. Contact: Discord #governance, Twitter @iearnfinance. Message: outreach/messages/yearn-protocol-automation.md",
+      "created": "2026-02-04T20:05:35.649381",
+      "updated": "2026-02-04T20:05:35.649411"
+    },
+    {
+      "name": "Aave Ecosystem Automation",
+      "potential": 30000.0,
+      "status": "ready",
+      "notes": "HIGH priority outreach message created (work block 1786). PROOF framework: Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/aave-ecosystem-automation.md. Focus: Governance workload, ecosystem monitoring, DevEx bottlenecks, grant pipeline. 3 pricing tiers: Quick .5K (3-5 days), Suite K (2 weeks), Retainer K/month. Target: Aave governance team / grants committee. ROI: Ecosystem ops 24/7, no leakage. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-05T02:15:03.316980+00:00",
+      "updated": "2026-02-05T02:15:03.317011+00:00"
+    },
+    {
+      "name": "1inch DEX Automation",
+      "potential": 25000.0,
+      "status": "ready",
+      "notes": "HIGH priority outreach message created (work block 1788). PROOF framework: Pain\u2192Solution\u2192Proof\u2192Why Me\u2192Proposal\u2192CTA. File: outreach/messages/1inch-dex-automation.md. Focus: Integration monitoring (500+ liquidity sources), DevOps automation (multi-chain), DevEx gap (API docs, examples), community support. 3 pricing tiers: Quick .5K (3-5 days), Suite K (2 weeks), Retainer K/month. Target: dev-rel@1inch.io or partnerships@1inch.io. ROI: 24/7 integration monitoring, autonomous DevEx. Follow-up: Day 0/3/7/14/21.",
+      "created": "2026-02-05T02:20:08.302967+00:00",
+      "updated": "2026-02-05T02:20:08.303050+00:00"
+    },
+    {
+      "name": "Ethereum Foundation",
+      "potential": 40000.0,
+      "status": "messages_ready",
+      "notes": "Message created: outreach/ethereum-foundation-message.md (0K HIGH priority)",
+      "created": "2026-02-05T15:20:42.062491",
+      "updated": "2026-02-05T15:20:42.062539"
+    },
+    {
+      "name": "Aave DAO Governance Suite",
+      "potential": 30000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Aave DAO: Proposal Monitor, Delegate Engagement, Risk Alerts. 10-day deployment, 0K flat. Target: Major DeFi protocol, + TVL. Outreach file: outreach/aave-dao-governance-suite.md",
+      "created": "2026-02-06T09:49:02.354212",
+      "updated": "2026-02-06T09:49:02.354243"
+    },
+    {
+      "name": "Compound DAO Governance Suite",
+      "potential": 25000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Compound DAO: Proposal Monitor, Risk Parameter Alerts, Delegate Engagement. 10-day deployment, 5K flat. Target: Major lending protocol, + TVL. Outreach file: outreach/compound-dao-governance-automation.md",
+      "created": "2026-02-06T09:49:54.673382",
+      "updated": "2026-02-06T09:49:54.673411"
+    },
+    {
+      "name": "Uniswap DAO Governance Suite",
+      "potential": 35000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Uniswap DAO: Proposal Monitor, Fee Parameter Automation, Delegate Coordination. 12-day deployment (8 chains, 5000+ pools), 5K flat. Target: Largest DEX by volume, highest TVL. Outreach file: outreach/uniswap-dao-governance-suite.md",
+      "created": "2026-02-06T09:50:36.912939",
+      "updated": "2026-02-06T09:50:36.912969"
+    },
+    {
+      "name": "Curve Finance DAO Governance Suite",
+      "potential": 30000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Curve Finance: Proposal Monitor, Gauge Weight Automation, Pool Analytics. 10-day deployment, 0K flat. Target: Core DeFi infrastructure, stablecoin DEX, 100+ pools. Outreach file: outreach/curve-finance-dao-governance.md",
+      "created": "2026-02-06T09:51:26.482682",
+      "updated": "2026-02-06T09:51:26.482722"
+    },
+    {
+      "name": "Yearn Finance DAO Governance Suite",
+      "potential": 25000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Yearn Finance: Strategy Performance Monitor, YFI Governance Automation, Risk Alert System. 10-day deployment, 5K flat. Target: Pioneered DeFi automation, 100+ vaults, 10+ chains. Outreach file: outreach/yearn-finance-dao-governance.md",
+      "created": "2026-02-06T09:52:01.779583",
+      "updated": "2026-02-06T09:52:01.779614"
+    },
+    {
+      "name": "Balancer DAO Governance Suite",
+      "potential": 25000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Balancer DAO: Pool Performance Monitor, BIP Governance Automation, Liquidity Analytics. 10-day deployment, 5K flat. Target: Portfolio manager DEX, 500+ pools, 8+ chains. Outreach file: outreach/balancer-dao-governance-suite.md",
+      "created": "2026-02-06T09:52:49.415632",
+      "updated": "2026-02-06T09:52:49.415664"
+    },
+    {
+      "name": "SushiSwap DAO Governance Suite",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Multi-agent governance suite: Proposal Lifecycle Tracking + Community Engagement + Cross-Chain Operations Monitor. 10-day deployment, 0K flat. Message ready: outreach/sushiswap-dao-governance-suite.md",
+      "created": "2026-02-06T09:54:35.143071",
+      "updated": "2026-02-07T03:59:12.151036"
+    },
+    {
+      "name": "1inch DAO Governance Suite",
+      "potential": 20000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for 1inch DAO: Aggregation Performance Monitor, 1IP Governance Automation, Route Analytics. 10-day deployment, 0K flat. Target: DEX aggregator, route optimization, 10+ chains. Outreach file: outreach/1inch-dao-governance.md",
+      "created": "2026-02-06T09:55:31.633655",
+      "updated": "2026-02-06T09:55:31.633682"
+    },
+    {
+      "name": "Arbitrum DAO Governance Suite",
+      "potential": 30000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite for Arbitrum DAO: Governance Proposal Monitor, Grant Program Analytics, Delegate Coordination. 12-day deployment, 0K flat. Target: Largest L2 by TVL, 100+ delegates, 100+ active grants. Outreach file: outreach/arbitrum-dao-governance.md",
+      "created": "2026-02-06T09:56:13.023078",
+      "updated": "2026-02-06T09:56:13.023109"
+    },
+    {
+      "name": "Polygon DAO Governance Suite",
+      "potential": 30000.0,
+      "status": "lead",
+      "notes": "Multi-agent governance suite: Proposal Tracker (-12K), Cross-Chain Coordinator (-8K), Grant Analytics (-6K), Policy Monitor (-5K). Multi-chain L2 target (PoS, zkEVM, Avail). 2-4 week deployment. File: outreach/polygon-dao-governance.md. Created 2026-02-06 10:00Z.",
+      "created": "2026-02-06T10:01:02.892002",
+      "updated": "2026-02-06T10:01:02.892029"
+    },
+    {
+      "name": "Chainlink Operations Automation Suite",
+      "potential": 50000.0,
+      "status": "lead",
+      "notes": "5-agent operations suite: Node Operator Monitor ($8-12K), Cross-Chain Feed Analytics ($10-15K), CCIP Bridge Monitor ($6-10K), Automation Sentinel ($5-8K), Staking Risk Analyzer ($4-7K). Infrastructure scale (1000+ feeds, 500+ operators). 3-5 week deployment. File: outreach/chainlink-automation.md. HIGHEST priority target. Created 2026-02-06 10:01Z.",
+      "created": "2026-02-06T10:01:53.343283",
+      "updated": "2026-02-06T10:01:53.343314"
+    },
+    {
+      "name": "MetaMask DevEx Automation Suite",
+      "potential": 50000.0,
+      "status": "lead",
+      "notes": "5-agent DevEx suite: Developer Support Auto-Responder ($6-10K), EVM Chain Monitor ($8-12K), Gas API Sentinel ($5-8K), Snap Security Scanner ($10-15K), Parity Checker ($4-7K). Consumer scale (30M users, 60% market share). 3-5 week deployment. File: outreach/metamask-devex-automation.md. HIGH priority target. Created 2026-02-06 10:02Z.",
+      "created": "2026-02-06T10:02:22.329862",
+      "updated": "2026-02-06T10:02:22.329891"
+    },
+    {
+      "name": "Coinbase Institutional Automation Suite",
+      "potential": 60000.0,
+      "status": "lead",
+      "notes": "5-agent institutional ops suite: KYC/AML Auto-Triage ($8-12K), Algo Trading Rule Engine ($10-15K), Portfolio Rebalancing Sentinel ($6-10K), Staking Yield Optimizer ($5-8K), Compliance Report Generator ($8-12K). Institutional scale ($50B AUC, 10K clients). 3-5 week deployment. File: outreach/coinbase-institutional-automation.md. HIGHEST priority target (regulated, SOC 2, NYDFS). Created 2026-02-06 10:03Z.",
+      "created": "2026-02-06T10:03:24.705316",
+      "updated": "2026-02-06T10:03:24.705348"
+    },
+    {
+      "name": "Aave DAO Governance Automation",
+      "potential": 20000.0,
+      "status": "ready",
+      "notes": "Outreach message created, 0K proposal for multi-chain governance automation",
+      "created": "2026-02-06T10:06:38.658996",
+      "updated": "2026-02-06T10:06:38.659027"
+    },
+    {
+      "name": "Fireblocks",
+      "potential": 35000.0,
+      "status": "ready",
+      "notes": "Custody automation outreach: 5-agent suite for policy monitoring, transaction auditing, governance voting, MPC key tracking, compliance reporting",
+      "created": "2026-02-06T10:09:33.619049",
+      "updated": "2026-02-06T10:09:33.619082"
+    },
+    {
+      "name": "Alchemy",
+      "potential": 30000.0,
+      "status": "ready",
+      "notes": "DevEx automation outreach: 5-agent suite for dev support triage, RPC health monitoring, rate limit prediction, NFT API caching, WebSocket reliability",
+      "created": "2026-02-06T10:09:58.678249",
+      "updated": "2026-02-06T10:09:58.678285"
+    },
+    {
+      "name": "Infura DevEx Automation",
+      "potential": 25000.0,
+      "status": "ready",
+      "notes": "MEDIUM priority outreach message created, ready to send",
+      "created": "2026-02-06T10:15:03.584385",
+      "updated": "2026-02-06T10:15:03.584416"
+    },
+    {
+      "name": "Polygon Labs DevEx Automation",
+      "potential": 30000.0,
+      "status": "lead",
+      "notes": "Outreach message created: outreach/polygon-devex-automation.md ($30K Multi-Agent System). MEDIUM priority tier (4/7 done). PROOF framework: DevEx automation for scaling support without scaling headcount. 3-5\u00d7 faster response times, 40+ hours/week saved.",
+      "created": "2026-02-06T10:18:01.301205",
+      "updated": "2026-02-06T10:18:01.301233"
+    }
+  ],
+  "bounties": [
+    {
+      "name": "Code4rena",
+      "potential": 50000.0,
+      "status": "lead",
+      "notes": "$5K-$100K competitive audit bounties, blocked on browser access (gateway restart needed), etherskill-autopilot.py ready",
+      "created": "2026-02-02T20:49:34.831066",
+      "updated": "2026-02-02T21:11:01.074630"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "prospect": {
+      "id": "service-2",
+      "company": "Multi-Agent System",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 25000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.114730"
+  },
+  {
+    "prospect": {
+      "id": "service-15",
+      "company": "DAO Automation (Uniswap/Aave/Compound)",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 20000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.115684"
+  },
+  {
+    "prospect": {
+      "id": "service-14",
+      "company": "Claude Ecosystem (Anthropic)",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 17500.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.116834"
+  },
+  {
+    "prospect": {
+      "id": "service-1",
+      "company": "OpenClaw Setup",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 5000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.117764"
+  },
+  {
+    "prospect": {
+      "id": "service-3",
+      "company": "Retainer",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 4000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.118748"
+  },
+  {
+    "prospect": {
+      "id": "service-4",
+      "company": "Audit & Optimization",
+      "contact_person": null,
+      "website": null,
+      "value_estimate": 4000.0
+    },
+    "findings": [],
+    "confidence": 0,
+    "timestamp": "2026-02-04T11:31:55.119633"
+  }
+]

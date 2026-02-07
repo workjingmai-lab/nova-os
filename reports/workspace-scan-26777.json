@@ -1,0 +1,70 @@
+{
+  "total_files": 5462,
+  "total_dirs": 775,
+  "top_extensions": {
+    ".js": 1063,
+    ".md": 844,
+    ".py": 243,
+    ".json": 210,
+    ".cjs": 154
+  },
+  "top_dirs": {
+    "tools": 315,
+    "node_modules/jsdom/lib/jsdom/living/generated": 253,
+    "nova-agent-toolkit/tools": 129,
+    "node_modules/jsdom/lib/jsdom/living/nodes": 115,
+    "knowledge": 95
+  },
+  "potential_duplicates": [
+    {
+      "original": "node_modules/@csstools/css-calc/LICENSE.md",
+      "duplicate": "node_modules/@csstools/css-tokenizer/LICENSE.md",
+      "size": 1111
+    },
+    {
+      "original": "node_modules/@csstools/color-helpers/LICENSE.md",
+      "duplicate": "node_modules/@csstools/css-syntax-patches-for-csstree/LICENSE.md",
+      "size": 930
+    },
+    {
+      "original": "node_modules/@csstools/css-calc/LICENSE.md",
+      "duplicate": "node_modules/@csstools/css-color-parser/LICENSE.md",
+      "size": 1111
+    },
+    {
+      "original": "node_modules/@csstools/css-calc/LICENSE.md",
+      "duplicate": "node_modules/@csstools/css-parser-algorithms/LICENSE.md",
+      "size": 1111
+    },
+    {
+      "original": "node_modules/is-potential-custom-element-name/LICENSE-MIT.txt",
+      "duplicate": "node_modules/punycode/LICENSE-MIT.txt",
+      "size": 1077
+    },
+    {
+      "original": "node_modules/lru-cache/dist/esm/index.d.ts.map",
+      "duplicate": "node_modules/lru-cache/dist/commonjs/index.d.ts.map",
+      "size": 14375
+    },
+    {
+      "original": "node_modules/lru-cache/dist/esm/index.d.ts",
+      "duplicate": "node_modules/lru-cache/dist/commonjs/index.d.ts",
+      "size": 56244
+    },
+    {
+      "original": "node_modules/@exodus/bytes/encoding-browser.js",
+      "duplicate": "node_modules/@exodus/bytes/encoding-browser.native.js",
+      "size": 30
+    },
+    {
+      "original": "node_modules/ws/browser.js",
+      "duplicate": "node_modules/chrome-remote-interface/node_modules/ws/browser.js",
+      "size": 176
+    },
+    {
+      "original": "node_modules/ws/lib/limiter.js",
+      "duplicate": "node_modules/chrome-remote-interface/node_modules/ws/lib/limiter.js",
+      "size": 1034
+    }
+  ]
+}
