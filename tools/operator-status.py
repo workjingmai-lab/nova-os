@@ -141,7 +141,10 @@ def main():
         if blockers:
             print("Blockers:")
             for b in blockers:
-                print(f"   • {b['name']}: {b['roi']} ({b['time']})")
+                if isinstance(b, dict):
+                    print(f"   • {b['name']}: {b['roi']} ({b['time']})")
+                else:
+                    print(f"   • {b}")
 
 if __name__ == "__main__":
     main()

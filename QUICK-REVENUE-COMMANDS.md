@@ -1,134 +1,96 @@
-# Quick Revenue Commands — Arthur's Reference
+# Quick Revenue Commands
 
-## 🚀 Daily Pipeline Check (30 seconds)
+One-liners for pipeline management.
+
+---
+
+## Check Status
 
 ```bash
-# See full pipeline status
-python3 tools/revenue-tracker.py summary
+# Full pipeline view
+python3 tools/revenue-tracker.py status
 
-# Check what's ready to send
-python3 tools/revenue-tracker.py list --status ready
+# Quick summary only
+python3 tools/revenue-tracker.py status --short
 
-# Check follow-ups due today
-python3 tools/follow-up-reminder.py check
+# By category
+python3 tools/revenue-tracker.py status --category grants
+python3 tools/revenue-tracker.py status --category services
+python3 tools/revenue-tracker.py status --category bounties
 ```
 
 ---
 
-## 📤 After Sending a Message
+## Update Opportunities
 
 ```bash
-# Mark service as submitted
-python3 tools/revenue-tracker.py update "[Service Name]" --status submitted
+# Mark as sent
+python3 tools/revenue-tracker.py update "EF Security Audit" --status sent
 
-# Mark grant as submitted
-python3 tools/revenue-tracker.py update "[Grant Name]" --status submitted
+# Mark as submitted (grants)
+python3 tools/revenue-tracker.py update "Gitcoin" --status submitted
 
-# Add a note
-python3 tools/revenue-tracker.py update "[Name]" --notes "Sent via Telegram, waiting for response"
+# Mark as won
+python3 tools/revenue-tracker.py update "Fireblocks" --status won --value 35000
+
+# Mark as lost
+python3 tools/revenue-tracker.py update "Lead Name" --status lost --reason "no-budget"
 ```
 
 ---
 
-## 📊 Weekly Review (5 minutes)
+## Add New Lead
 
 ```bash
-# Full pipeline breakdown
-python3 tools/revenue-tracker.py list
+# Quick add
+python3 tools/revenue-tracker.py add "Company Name" --value 25000 --category services
 
-# See what's won/lost
-python3 tools/revenue-tracker.py list --status won
-python3 tools/revenue-tracker.py list --status lost
-
-# Conversion visual
-python3 tools/revenue-conversion-checklist.py
+# Full add
+python3 tools/revenue-tracker.py add "Company Name" \
+  --value 25000 \
+  --category services \
+  --contact "person@company.com" \
+  --source "moltbook" \
+  --notes "Met via CLAW post"
 ```
 
 ---
 
-## 🎯 Top Opportunities (Priority Order)
+## Conversion Metrics
 
 ```bash
-# Show highest-value leads
-python3 tools/lead-prioritizer.py
+# View conversion rates
+python3 tools/revenue-tracker.py conversion
 
-# Show only HIGH priority
-python3 tools/lead-prioritizer.py --min-priority HIGH
+# Export for analysis
+python3 tools/revenue-tracker.py export > pipeline-export.json
 ```
 
 ---
 
-## 📝 Follow-Up Automation
+## Daily Routine
 
 ```bash
-# Check due follow-ups
-python3 tools/follow-up-reminder.py check
+# Morning check (30 sec)
+python3 tools/revenue-tracker.py status --short
 
-# See all pending follow-ups
-python3 tools/follow-up-reminder.py list
+# Post-outreach update (1 min)
+python3 tools/revenue-tracker.py update "Lead" --status sent
 
-# Add manual follow-up reminder
-python3 tools/follow-up-reminder.py add "[Name]" --days 7 --notes "Check if they reviewed proposal"
+# Evening review (2 min)
+python3 tools/revenue-tracker.py conversion
 ```
 
 ---
 
-## 🔥 Quick Stats for Meetings
+## Pipeline Health
 
-```bash
-# Total pipeline value
-python3 tools/revenue-tracker.py summary | grep "TOTAL PIPELINE"
-
-# Conversion rate
-python3 tools/revenue-tracker.py summary | grep "Conversion"
-
-# Ready to send
-python3 tools/revenue-tracker.py list --status ready | wc -l
-```
+| Metric | Target | Check Command |
+|--------|--------|---------------|
+| Ready pipeline | >$500K | `status --short` |
+| Conversion rate | >10% | `conversion` |
+| Follow-ups due | 0 | `follow-up-tracker.py due` |
 
 ---
 
-## 📈 Grant Submissions
-
-```bash
-# Generate all grant submissions
-python3 tools/grant-submit-helper.py generate-all
-
-# Generate specific grant
-python3 tools/grant-submit-helper.py generate gitcoin
-
-# View submission template
-cat tmp/grant-submissions/gitcoin_*.json
-```
-
----
-
-## 🎉 Most Common Commands (90% of usage)
-
-```bash
-# 1. Check pipeline status (do this daily)
-python3 tools/revenue-tracker.py summary
-
-# 2. Mark message as sent (do this after each send)
-python3 tools/revenue-tracker.py update "[Name]" --status submitted
-
-# 3. Check follow-ups (do this daily)
-python3 tools/follow-up-reminder.py check
-
-# 4. See top leads (do this weekly)
-python3 tools/lead-prioritizer.py
-```
-
----
-
-## 💡 Pro Tips
-
-1. **Always update pipeline after taking action** — If you don't track it, it didn't happen
-2. **Check follow-ups daily** — Responses sit in your inbox, not in the tracker
-3. **Use lead-prioritizer before sending** — HIGH priority = 3× more likely to convert
-4. **Run conversion-checklist weekly** — See where you're losing deals
-
----
-
-*Generated: 2026-02-05 — Work block 1749*
-*Purpose: Zero-lookup command reference for revenue workflows*
+*Quick reference — 30 seconds to mastery*
