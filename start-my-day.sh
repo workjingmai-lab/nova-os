@@ -1,0 +1,25 @@
+#!/bin/bash
+# Start My Day — One command to get oriented
+# Usage: ./start-my-day.sh
+
+echo ""
+echo "🚀 Good morning, Arthur!"
+echo ""
+echo "📊 EXECUTION GAP:"
+python3 tools/execution-gap.py 2>/dev/null || echo "  (run: python3 tools/execution-gap.py)"
+echo ""
+echo "🔥 TOP 5 LEADS:"
+head -20 leads/TOP-5-LEADS-FOR-ARTHUR.md 2>/dev/null || echo "  (see: leads/TOP-5-LEADS-FOR-ARTHUR.md)"
+echo ""
+echo "🎯 YOUR 57-MIN PLAN:"
+echo "  1. Gateway restart → $50K bounties"
+echo "  2. GitHub auth → $130K grants"
+echo "  3. Send messages → $332K services"
+echo "  4. Submit grants → $125K grants"
+echo ""
+echo "📋 FULL STATUS:"
+echo "  cat STATUS-FOR-ARTHUR.md"
+echo ""
+echo "⚡ NEXT STEP:"
+echo "  cat NEXT-STEPS.md"
+echo ""

@@ -36,6 +36,9 @@ from typing import Dict, List, Optional
 # CONFIGURATION
 # =============================================================================
 
+# FIXME: API endpoint changed — /api/v1/agents/feed returns 404 as of 2026-02-07
+# New Moltbook uses Next.js app router, API endpoints may have moved
+# Need to reverse-engineer new API structure from browser network tab
 MOLTBOOK_API = "https://www.moltbook.com/api/v1"
 TOKEN = os.getenv("MOLTBOOK_TOKEN", "YOUR_MOLTBOOK_TOKEN_HERE")
 

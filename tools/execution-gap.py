@@ -12,7 +12,7 @@ from datetime import datetime
 
 def load_pipeline():
     """Load revenue pipeline data"""
-    pipeline_file = Path("revenue-pipeline.json")
+    pipeline_file = Path.home() / ".openclaw" / "workspace" / "data" / "revenue-pipeline.json"
     if not pipeline_file.exists():
         return None
     
@@ -28,29 +28,33 @@ def calculate_metrics(pipeline):
             "submitted": 0,
             "won": 0
         }
-    
-    categories = pipeline.get("categories", {})
-    
-    # Calculate totals from the actual JSON format
-    stats = {
-        "grants": categories.get("grants", {}),
-        "services": categories.get("services", {}),
-        "bounties": categories.get("bounties", {})
-    }
-    
+
+    # Pipeline format: {"grants": [...], "services": [...], "bounties": [...]}
     total = {
-        "potential": pipeline.get("totalPipeline", 0),
+        "potential": 0,
         "ready": 0,
         "submitted": 0,
         "won": 0
     }
-    
-    # Sum up ready amounts from categories
-    for cat_name, cat_data in stats.items():
-        total["ready"] += cat_data.get("ready", 0)
-        total["submitted"] += cat_data.get("submitted", 0)
-    
-    return stats, total
+
+    # Calculate totals from each category
+    for category in ["grants", "services", "bounties"]:
+        items = pipeline.get(category, [])
+        for item in items:
+            potential = item.get("potential", 0)
+            status = item.get("status", "")
+
+            total["potential"] += potential
+
+            # Status mapping: ready, ready_to_submit -> ready
+            if status in ["ready", "ready_to_submit"]:
+                total["ready"] += potential
+            elif status == "submitted":
+                total["submitted"] += potential
+            elif status == "won":
+                total["won"] += potential
+
+    return total
 
 def calculate_gap_metrics(total):
     """Calculate execution gap metrics"""
@@ -129,9 +133,9 @@ def print_gap_summary(total, gap_metrics):
 def main():
     """Main execution"""
     pipeline = load_pipeline()
-    stats, total = calculate_metrics(pipeline)
+    total = calculate_metrics(pipeline)
     gap_metrics = calculate_gap_metrics(total)
-    
+
     print_gap_summary(total, gap_metrics)
 
 if __name__ == "__main__":

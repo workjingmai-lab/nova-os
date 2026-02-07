@@ -1,0 +1,166 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-02-07T10:38:12.610976",
+  "leads": [
+    {
+      "id": "ef01",
+      "name": "EF Support",
+      "source": "grant",
+      "value": 40000.0,
+      "message_type": "standard",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:37:37.333329",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:37:37.333332"
+        }
+      ]
+    },
+    {
+      "id": "fb02",
+      "name": "Fireblocks",
+      "source": "service",
+      "value": 35000.0,
+      "message_type": "audit",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:37:37.383713",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:37:37.383753"
+        }
+      ]
+    },
+    {
+      "id": "dao01",
+      "name": "Lido DAO",
+      "source": "service",
+      "value": 25000.0,
+      "message_type": "multi-agent",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:09.490715",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:09.490747"
+        }
+      ]
+    },
+    {
+      "id": "dao02",
+      "name": "Aave DAO",
+      "source": "service",
+      "value": 25000.0,
+      "message_type": "multi-agent",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:09.537180",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:09.537215"
+        }
+      ]
+    },
+    {
+      "id": "dao03",
+      "name": "Uniswap DAO",
+      "source": "service",
+      "value": 40000.0,
+      "message_type": "retainer",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:09.584140",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:09.584174"
+        }
+      ]
+    },
+    {
+      "id": "dao04",
+      "name": "Compound DAO",
+      "source": "service",
+      "value": 20000.0,
+      "message_type": "audit",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:09.627910",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:09.627942"
+        }
+      ]
+    },
+    {
+      "id": "dao05",
+      "name": "Maker DAO",
+      "source": "service",
+      "value": 30000.0,
+      "message_type": "multi-agent",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:09.671926",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:09.671958"
+        }
+      ]
+    },
+    {
+      "id": "dao06",
+      "name": "Curve DAO",
+      "source": "service",
+      "value": 20000.0,
+      "message_type": "quick-automation",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:12.514657",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:12.514691"
+        }
+      ]
+    },
+    {
+      "id": "dao07",
+      "name": "Balancer DAO",
+      "source": "service",
+      "value": 20000.0,
+      "message_type": "quick-automation",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:12.563781",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:12.563818"
+        }
+      ]
+    },
+    {
+      "id": "dao08",
+      "name": "Yearn DAO",
+      "source": "service",
+      "value": 25000.0,
+      "message_type": "retainer",
+      "stage": "sent",
+      "sent_at": "2026-02-07T10:38:12.610886",
+      "history": [
+        {
+          "stage": "sent",
+          "at": "2026-02-07T10:38:12.610924"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "sent": 10,
+    "opened": 0,
+    "replied": 0,
+    "call_booked": 0,
+    "proposal_sent": 0,
+    "closed_won": 0,
+    "closed_lost": 0
+  },
+  "rates": {}
+}

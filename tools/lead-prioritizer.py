@@ -12,6 +12,7 @@ Usage:
     python3 lead-prioritizer.py --ready            # Show ready-to-send only
 
 Created: 2026-02-04 (Work block 1652)
+Updated: 2026-02-07 (Work block 3272) - Added flat format support
 """
 
 import json
@@ -30,32 +31,72 @@ def load_pipeline():
 
         # Transform to flat list format
         leads = []
-        categories = data.get('categories', {})
+        
+        # Support both old format (with 'categories') and new format (flat arrays)
+        if 'categories' in data:
+            # Old format
+            categories = data.get('categories', {})
+            category_map = {
+                'grants': 'grant',
+                'services': 'service',
+                'bounties': 'bounty'
+            }
 
-        # Map category names
-        category_map = {
-            'grants': 'grant',
-            'services': 'service',
-            'bounties': 'bounty'
-        }
+            for cat_name, cat_data in categories.items():
+                # Try different keys for opportunity lists
+                opportunities = (cat_data.get('opportunities', []) or
+                               cat_data.get('topProspects', []) or
+                               cat_data.get('bounties', []))
 
-        for cat_name, cat_data in categories.items():
-            # Try different keys for opportunity lists
-            opportunities = (cat_data.get('opportunities', []) or
-                           cat_data.get('topProspects', []) or
-                           cat_data.get('bounties', []))
+                status = cat_data.get('status', 'unknown')
+                blocker = cat_data.get('blocker', '')
 
-            status = cat_data.get('status', 'unknown')
-            blocker = cat_data.get('blocker', '')
-
-            for opp in opportunities:
-                leads.append({
-                    'category': category_map.get(cat_name, cat_name),
-                    'name': opp.get('name', 'Unknown'),
-                    'potential': opp.get('amount', 0) // 1000,  # Convert to thousands
-                    'status': status,
-                    'notes': f"Blocker: {blocker}" if blocker and blocker != 'NONE' else 'Ready to send'
-                })
+                for opp in opportunities:
+                    leads.append({
+                        'category': category_map.get(cat_name, cat_name),
+                        'name': opp.get('name', 'Unknown'),
+                        'potential': opp.get('amount', opp.get('potential', 0)) // 1000,  # Convert to thousands
+                        'status': opp.get('status', status),
+                        'notes': f"Blocker: {blocker}" if blocker and blocker != 'NONE' else 'Ready to send'
+                    })
+        else:
+            # New flat format (grants[], services[], bounties[] at root level)
+            category_map = {
+                'grants': 'grant',
+                'services': 'service',
+                'bounties': 'bounty'
+            }
+            
+            for category_name, category_type in category_map.items():
+                if category_name in data:
+                    opportunities = data[category_name]
+                    
+                    for opp in opportunities:
+                        # Handle both 'amount' and 'potential' keys
+                        value = opp.get('amount', opp.get('potential', 0))
+                        
+                        # Build notes string
+                        notes = ''
+                        if 'blocker' in opp:
+                            notes = f"Blocker: {opp['blocker']}"
+                        elif opp.get('status') == 'ready':
+                            notes = 'Ready to send'
+                        elif opp.get('status') == 'blocked':
+                            notes = 'Blocked'
+                        else:
+                            notes = f"Status: {opp.get('status', 'unknown')}"
+                        
+                        # Add priority if exists
+                        if 'priority' in opp:
+                            notes += f" | Priority: {opp['priority']}"
+                        
+                        leads.append({
+                            'category': category_type,
+                            'name': opp.get('name', 'Unknown'),
+                            'potential': value // 1000,  # Convert to thousands
+                            'status': opp.get('status', 'unknown'),
+                            'notes': notes
+                        })
 
         return leads
     except FileNotFoundError:
@@ -93,7 +134,7 @@ def calculate_score(item):
     if 'blocked' in notes or 'gateway restart' in notes or 'github' in notes or 'browser' in notes:
         score -= 40
         reasons.append("⛔ Blocked (needs Arthur action)")
-    elif 'ready' in notes or 'zero blockers' in notes or 'no blockers' in notes or 'blocker: none' in notes:
+    elif 'ready' in notes or 'zero blockers' in notes or 'no blockers' in notes or 'blocker: none' in notes or notes == 'ready to send':
         score += 30
         reasons.append("✅ Ready to send")
     else:
@@ -195,7 +236,8 @@ def main():
         all_leads = [l for l in all_leads if 'ready' in l.get('notes', '').lower() or
                      'zero blockers' in l.get('notes', '').lower() or
                      'no blockers' in l.get('notes', '').lower() or
-                     'blocker: none' in l.get('notes', '').lower()]
+                     'blocker: none' in l.get('notes', '').lower() or
+                     l.get('notes', '') == 'Ready to send']
 
     if args.blocked:
         all_leads = [l for l in all_leads if 'blocked' in l.get('notes', '').lower() or
@@ -245,7 +287,7 @@ def main():
     if high:
         highest = max(high, key=lambda x: x.get('score', 0))
         print(f"  1. Focus on: [{highest['category'].upper()}] {highest['name']} (${highest['potential']}K)")
-        if 'ready' in str(highest.get('notes', '')).lower():
+        if 'ready' in str(highest.get('notes', '')).lower() or highest.get('notes', '') == 'Ready to send':
             print(f"     → ✅ Ready to send NOW")
         else:
             print(f"     → ⏳ May need prep/research")

@@ -1,101 +1,96 @@
 # work-block-tracker.py
 
-Quick logging of completed work blocks with auto-timestamp and state tracking.
+Track work block completion rates, predict milestones, and analyze work patterns.
 
-## What It Does
+---
 
-Logs completed work blocks to `diary.md` and updates `today.md` stats with one command. Tracks total blocks completed and maintains state between sessions.
+## Usage
 
-## When to Use It
-
-- **After completing any work block** — Log it immediately
-- **Tracking velocity** — See how many blocks you complete per hour
-- **Maintaining streak** — Quick logging ensures accurate tracking
-- **Session handoff** — State persists between sessions
-
-## How to Use It
-
-### Basic usage (1-minute block):
 ```bash
-python3 tools/work-block-tracker.py "Documented tool-organizer.py"
+# View current status
+python3 tools/work-block-tracker.py status
+
+# Predict when you'll hit a milestone
+python3 tools/work-block-tracker.py predict --target 4000
+
+# Analyze work patterns
+python3 tools/work-block-tracker.py analyze
 ```
 
-### With duration:
-```bash
-python3 tools/work-block-tracker.py "Created Moltbook post" --duration 2
-```
-
-### With type:
-```bash
-python3 tools/work-block-tracker.py "Published grant submission" --type "Revenue"
-```
-
-### Combined:
-```bash
-python3 tools/work-block-tracker.py "Fixed GitHub auth" --duration 5 --type "Unblock"
-```
-
-## What It Outputs
-
-**To diary.md:**
-```markdown
-## 2026-02-03 (Block 967)
-
-### [WORK BLOCK] — Documentation
-**Time:** 2026-02-03T06:25:00Z
-**Duration:** ~1 minute(s)
-**Type:** Documentation
-
-**Task:** Documented work-block-tracker.py
-
-**Status:** ✅ COMPLETE
-
-**Velocity:** 1 work block completed in 1 minute(s)
-```
-
-**To today.md:**
-- Updates "Work Blocks Completed" count
-- Adds latest session summary
-
-**To .work-block-state.json:**
-```json
-{
-  "total_blocks": 967,
-  "last_block": 967
-}
-```
+---
 
 ## Features
 
-- **Auto-incrementing block numbers** — Never lose track
-- **State persistence** — Survives session restarts
-- **Flexible logging** — Optional duration and type fields
-- **Dual output** — diary.md + today.md updated together
-- **Quick timestamp** — UTC timezone, ISO format
+### Status View
+Shows:
+- Current block number
+- Total completed blocks
+- Elapsed time
+- Current velocity (blocks/hour)
+- Milestone progress (1000, 2000, 3000, 4000, 5000)
+- Work category breakdown
 
-## Why It Matters
+### Milestone Prediction
+Predicts:
+- Blocks remaining to target
+- Hours remaining
+- Predicted date and time
 
-**Quick logging = accurate tracking.**
+### Pattern Analysis
+Categorizes work into:
+- Documentation (articles, knowledge)
+- Tool Development (scripts, code)
+- Outreach/Content (messages, posts)
+- Research/Analysis
+- Other
 
-One command = diary + today + state updated. No manual updates, no copy-paste, no forgotten blocks.
+---
 
-When you're in the flow, logging should be frictionless. This tool makes it one command.
+## Example Output
 
-## File Locations
+```
+==================================================
+📊 WORK BLOCK VELOCITY TRACKER
+==================================================
+Current Block:     3276
+Total Completed:   9
+Elapsed Time:      0.11 hours
+Current Velocity:  78.4 blocks/hour
+==================================================
 
-- **Tool:** `tools/work-block-tracker.py`
-- **State:** `.work-block-state.json`
-- **Diary:** `diary.md` (append after "---\n")
-- **Today:** `today.md` (updates block count)
+🏆 MILESTONE PROGRESS:
+  ✅ 1,000 blocks — ACHIEVED
+  ✅ 2,000 blocks — ACHIEVED
+  ✅ 3,000 blocks — ACHIEVED
+  ⏳ 4,000 blocks — 724 to go
+  ⏳ 5,000 blocks — 1724 to go
+
+📁 WORK CATEGORY BREAKDOWN:
+  Documentation: 3 (33.3%)
+  Outreach/Content: 2 (22.2%)
+  Tool Development: 2 (22.2%)
+```
+
+---
+
+## Data Sources
+
+- **diary.md** — Parses work block entries
+- **.heartbeat_state.json** — Reads session timing data
+
+---
+
+## Tips
+
+1. Run `status` after each work session to track progress
+2. Use `predict` to set realistic milestone targets
+3. Check `analyze` to balance work categories
+4. Velocity of 40-80 blocks/hour is typical for focused work
+
+---
 
 ## Related Tools
 
-- `work-block-logger.py` — Alternative logger (simpler)
-- `wins.py` — Track consecutive days with 10+ blocks
-- `goal-tracker.py` — Compare blocks vs goals
-
-## Insight
-
-> **The 1-second rule:** Log immediately, not "later."
-> 
-> Later = never. Immediate = accurate.
+- `velocity-calc.py` — Detailed velocity calculations
+- `daily-output-tracker.py` — Daily productivity tracking
+- `work-pattern-analyzer.py` — Historical pattern analysis

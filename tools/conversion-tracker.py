@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-conversion-tracker.py - Track outreach responses and conversion rates
-Logs sent messages, responses, and outcomes with follow-up automation.
+conversion-tracker.py — Track outreach conversion rates
+Week 4: Optimize conversion, not just pipeline
 """
 
 import json
@@ -9,197 +9,165 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
-CONVERSION_FILE = Path(__file__).parent.parent / "data" / "conversion-log.json"
+DATA_FILE = "data/conversions.json"
 
-def ensure_data_dir():
-    CONVERSION_FILE.parent.mkdir(parents=True, exist_ok=True)
+# Conversion funnel stages
+STAGES = ["sent", "opened", "replied", "call_booked", "proposal_sent", "closed_won", "closed_lost"]
 
-def load_conversions():
-    if CONVERSION_FILE.exists():
-        with open(CONVERSION_FILE) as f:
+def init_data():
+    """Initialize conversion data structure."""
+    return {
+        "version": "1.0",
+        "last_updated": datetime.utcnow().isoformat(),
+        "leads": [],
+        "totals": {stage: 0 for stage in STAGES},
+        "rates": {}
+    }
+
+def load_data():
+    """Load conversion data from file."""
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE) as f:
             return json.load(f)
-    return {"leads": [], "stats": {"total_sent": 0, "total_responses": 0, "total_won": 0}}
+    return init_data()
 
-def save_conversions(data):
-    ensure_data_dir()
-    with open(CONVERSION_FILE, 'w') as f:
+def save_data(data):
+    """Save conversion data to file."""
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    data["last_updated"] = datetime.utcnow().isoformat()
+    with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-def add_lead(name, value, channel="email"):
-    """Add a new lead to track."""
-    data = load_conversions()
+def add_lead(lead_id, name, source, value, message_type):
+    """Add a new lead to tracking."""
+    data = load_data()
     lead = {
-        "id": len(data["leads"]) + 1,
+        "id": lead_id,
         "name": name,
+        "source": source,
         "value": value,
-        "channel": channel,
-        "status": "ready",  # ready → sent → responded → called → won/lost
-        "sent_at": None,
-        "responded_at": None,
-        "follow_up_count": 0,
-        "notes": ""
+        "message_type": message_type,
+        "stage": "sent",
+        "sent_at": datetime.utcnow().isoformat(),
+        "history": [{"stage": "sent", "at": datetime.utcnow().isoformat()}]
     }
     data["leads"].append(lead)
-    save_conversions(data)
-    print(f"✅ Added lead: {name} ({value})")
+    data["totals"]["sent"] += 1
+    save_data(data)
+    print(f"✅ Added lead: {name} (${value:,})")
 
-def send_lead(lead_id):
-    """Mark lead as sent."""
-    data = load_conversions()
-    for lead in data["leads"]:
-        if lead["id"] == lead_id:
-            lead["status"] = "sent"
-            lead["sent_at"] = datetime.now().isoformat()
-            data["stats"]["total_sent"] += 1
-            save_conversions(data)
-            print(f"📤 Marked sent: {lead['name']}")
-            return
-    print(f"❌ Lead {lead_id} not found")
-
-def respond_lead(lead_id):
-    """Mark lead as responded."""
-    data = load_conversions()
-    for lead in data["leads"]:
-        if lead["id"] == lead_id:
-            lead["status"] = "responded"
-            lead["responded_at"] = datetime.now().isoformat()
-            data["stats"]["total_responses"] += 1
-            save_conversions(data)
-            print(f"💬 Marked responded: {lead['name']}")
-            return
-    print(f"❌ Lead {lead_id} not found")
-
-def win_lead(lead_id, actual_value=None):
-    """Mark lead as won."""
-    data = load_conversions()
-    for lead in data["leads"]:
-        if lead["id"] == lead_id:
-            lead["status"] = "won"
-            lead["actual_value"] = actual_value or lead["value"]
-            data["stats"]["total_won"] += 1
-            save_conversions(data)
-            print(f"🎉 Marked WON: {lead['name']} (${actual_value or lead['value']})")
-            return
-    print(f"❌ Lead {lead_id} not found")
-
-def show_stats():
-    """Display conversion statistics."""
-    data = load_conversions()
-    stats = data["stats"]
-    leads = data["leads"]
-    
-    total_value = sum(l["value"] for l in leads)
-    won_value = sum(l.get("actual_value", l["value"]) for l in leads if l["status"] == "won")
-    
-    response_rate = (stats["total_responses"] / stats["total_sent"] * 100) if stats["total_sent"] else 0
-    win_rate = (stats["total_won"] / stats["total_sent"] * 100) if stats["total_sent"] else 0
-    
-    print("=" * 50)
-    print("📊 CONVERSION STATS")
-    print("=" * 50)
-    print(f"Total Leads: {len(leads)}")
-    print(f"Total Pipeline: ${total_value:,}")
-    print(f"")
-    print(f"Sent: {stats['total_sent']}")
-    print(f"Responses: {stats['total_responses']} ({response_rate:.1f}%)")
-    print(f"Won: {stats['total_won']} ({win_rate:.1f}%)")
-    print(f"")
-    print(f"Revenue Won: ${won_value:,}")
-    print(f"Conversion Rate: {win_rate:.1f}%")
-    print("=" * 50)
-
-def show_followups():
-    """Show leads needing follow-up."""
-    data = load_conversions()
-    now = datetime.now()
-    
-    needs_followup = []
-    for lead in data["leads"]:
-        if lead["status"] == "sent" and lead["sent_at"]:
-            sent_time = datetime.fromisoformat(lead["sent_at"])
-            days_since = (now - sent_time).days
-            if days_since >= 3 and lead["follow_up_count"] < 2:
-                needs_followup.append({**lead, "days_since": days_since})
-    
-    if not needs_followup:
-        print("✅ No follow-ups needed")
+def update_stage(lead_id, new_stage):
+    """Update lead to new stage."""
+    if new_stage not in STAGES:
+        print(f"❌ Invalid stage: {new_stage}")
+        print(f"Valid stages: {', '.join(STAGES)}")
         return
     
-    print("📋 FOLLOW-UP NEEDED")
-    print("─" * 40)
-    for lead in needs_followup:
-        print(f"#{lead['id']} {lead['name']} ({lead['days_since']} days)")
-
-def list_leads():
-    """List all leads with status."""
-    data = load_conversions()
-    print("📋 ALL LEADS")
-    print("─" * 50)
+    data = load_data()
     for lead in data["leads"]:
-        status_emoji = {
-            "ready": "⏳", "sent": "📤", "responded": "💬",
-            "called": "📞", "won": "🎉", "lost": "❌"
-        }.get(lead["status"], "❓")
-        print(f"#{lead['id']} {status_emoji} {lead['name']} — {lead['status']} (${lead['value']:,})")
+        if lead["id"] == lead_id:
+            old_stage = lead["stage"]
+            lead["stage"] = new_stage
+            lead["history"].append({"stage": new_stage, "at": datetime.utcnow().isoformat()})
+            data["totals"][new_stage] += 1
+            save_data(data)
+            print(f"🔄 {lead['name']}: {old_stage} → {new_stage}")
+            return
+    print(f"❌ Lead not found: {lead_id}")
 
-def init_ready_leads():
-    """Batch load the 8 ready leads into tracking."""
-    ready_leads = [
-        ("Additional Leads (Various)", 152000, "mixed"),
-        ("DAO Leads (Compound/Aave)", 127500, "dao"),
-        ("Ethereum Foundation", 40000, "grant"),
-        ("Fireblocks", 35000, "service"),
-        ("Balancer Labs", 20000, "service"),
-        ("Curve Finance", 20000, "service"),
-        ("Yearn Finance", 25000, "service"),
-        ("Lido Finance", 15000, "service"),
-    ]
+def calculate_rates(data):
+    """Calculate conversion rates between stages."""
+    totals = data["totals"]
+    rates = {}
     
-    data = load_conversions()
-    existing_names = {l["name"] for l in data["leads"]}
+    # Funnel rates
+    if totals["sent"] > 0:
+        rates["sent_to_replied"] = (totals["replied"] / totals["sent"]) * 100
+        rates["sent_to_closed_won"] = (totals["closed_won"] / totals["sent"]) * 100
     
-    added = 0
-    for name, value, channel in ready_leads:
-        if name not in existing_names:
-            lead = {
-                "id": len(data["leads"]) + 1,
-                "name": name,
-                "value": value,
-                "channel": channel,
-                "status": "ready",
-                "sent_at": None,
-                "responded_at": None,
-                "follow_up_count": 0,
-                "notes": ""
-            }
-            data["leads"].append(lead)
-            added += 1
+    if totals["replied"] > 0:
+        rates["replied_to_call"] = (totals["call_booked"] / totals["replied"]) * 100
     
-    save_conversions(data)
-    total_value = sum(v for _, v, _ in ready_leads)
-    print(f"✅ Loaded {added} ready leads (${total_value:,} total)")
-    print(f"   Run: python3 tools/conversion-tracker.py list")
+    if totals["call_booked"] > 0:
+        rates["call_to_close"] = (totals["closed_won"] / totals["call_booked"]) * 100
+    
+    return rates
+
+def show_status():
+    """Display current conversion status."""
+    data = load_data()
+    rates = calculate_rates(data)
+    
+    print("=" * 50)
+    print("📊 CONVERSION FUNNEL STATUS")
+    print("=" * 50)
+    print(f"Last updated: {data['last_updated'][:19]}")
+    print()
+    
+    # Funnel visualization
+    print("🔄 FUNNEL:")
+    for stage in STAGES:
+        count = data["totals"][stage]
+        bar = "█" * count + "░" * (20 - min(count, 20))
+        print(f"  {stage:15} │{bar}│ {count}")
+    
+    print()
+    print("📈 CONVERSION RATES:")
+    if "sent_to_replied" in rates:
+        print(f"  Response rate:    {rates['sent_to_replied']:.1f}% (target: 10%+)")
+    if "replied_to_call" in rates:
+        print(f"  Call booked rate: {rates['replied_to_call']:.1f}%")
+    if "call_to_close" in rates:
+        print(f"  Close rate:       {rates['call_to_close']:.1f}% (target: 5%+)")
+    
+    print()
+    print(f"💰 PIPELINE VALUE:")
+    total_value = sum(l["value"] for l in data["leads"])
+    won_value = sum(l["value"] for l in data["leads"] if l["stage"] == "closed_won")
+    print(f"  Total sent:  ${total_value:,.0f}")
+    print(f"  Closed won:  ${won_value:,.0f}")
+    
+    print()
+    print("📋 RECENT LEADS:")
+    for lead in data["leads"][-5:]:
+        print(f"  {lead['name'][:20]:20} │ {lead['stage']:12} │ ${lead['value']:,.0f}")
+
+def show_help():
+    """Display help message."""
+    print("""
+conversion-tracker.py — Track outreach conversion rates
+
+USAGE:
+  python3 conversion-tracker.py status           Show funnel status
+  python3 conversion-tracker.py add <id> <name> <source> <value> <type>
+                                                 Add new lead
+  python3 conversion-tracker.py update <id> <stage>
+                                                 Update lead stage
+  python3 conversion-tracker.py help             Show this help
+
+STAGES:
+  sent → opened → replied → call_booked → proposal_sent → closed_won/lost
+
+EXAMPLES:
+  python3 conversion-tracker.py add ef01 "EF Support" grant 40000 standard
+  python3 conversion-tracker.py update ef01 replied
+  python3 conversion-tracker.py update ef01 call_booked
+
+TARGETS:
+  Response rate: 10%+
+  Close rate: 5%+
+""")
 
 if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 2:
-        show_stats()
-        print()
-        list_leads()
-        print()
-        show_followups()
-    elif sys.argv[1] == "add":
-        add_lead(sys.argv[2], int(sys.argv[3]), sys.argv[4] if len(sys.argv) > 4 else "email")
-    elif sys.argv[1] == "send":
-        send_lead(int(sys.argv[2]))
-    elif sys.argv[1] == "respond":
-        respond_lead(int(sys.argv[2]))
-    elif sys.argv[1] == "win":
-        win_lead(int(sys.argv[2]), int(sys.argv[3]) if len(sys.argv) > 3 else None)
-    elif sys.argv[1] == "followups":
-        show_followups()
-    elif sys.argv[1] == "list":
-        list_leads()
-    elif sys.argv[1] == "init-ready-leads":
-        init_ready_leads()
+        show_status()
+    elif sys.argv[1] == "status":
+        show_status()
+    elif sys.argv[1] == "add" and len(sys.argv) >= 7:
+        add_lead(sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]), sys.argv[6])
+    elif sys.argv[1] == "update" and len(sys.argv) >= 4:
+        update_stage(sys.argv[2], sys.argv[3])
+    else:
+        show_help()

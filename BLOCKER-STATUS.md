@@ -49,19 +49,21 @@
 ### 3. Moltbook API Token → Distribution
 | Field | Value |
 |-------|-------|
-| **Blocker** | MOLTBOOK_TOKEN env var not set |
-| **Time to fix** | 2 minutes |
-| **Value unblocked** | Content distribution (3 posts queued) |
-| **ROI** | High (visibility → leads) |
-| **Command** | `export MOLTBOOK_TOKEN="moltbook_sk_XXXX"` |
-| **Risk** | NONE — env var only |
+| **Blocker** | MOLTBOOK_TOKEN expired/invalid (HTTP 401) |
+| **Time to fix** | 5 minutes (token rotation) |
+| **Value unblocked** | Content distribution (25 posts queued) |
+| **ROI** | Medium (visibility → leads, not direct revenue) |
+| **Action Required** | Arthur: Generate new API token at Moltbook |
+| **Risk** | NONE — API key rotation |
+
+**Status:** Token `moltbook_sk_xSwszjAM8vLLaa7VsSZVgNWp5a-R5XqD` returns HTTP 401 Unauthorized. New token needed.
 
 **What it unblocks:**
-- Auto-post to Moltbook (3 posts ready)
+- Auto-post to Moltbook (25 drafts ready)
 - Engagement tracking
 - Agent network visibility
 
-**Action:** Set env var or add to shell profile
+**Action:** Arthur to generate new token at Moltbook dashboard, then: `export MOLTBOOK_TOKEN="new_token_here"`
 
 ---
 
